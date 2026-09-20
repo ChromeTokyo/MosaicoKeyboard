@@ -22,5 +22,18 @@
     "disassembly",
     "Hiro independent review"
   ],
-  "raw_html_whitespace": "Retained unchanged; excluded from authored-text whitespace check."
+  "raw_html_whitespace": "Retained unchanged; excluded from authored-text whitespace check.",
+  "post_sync": {
+    "at": "2026-09-20T13:23:31.864233+09:00",
+    "checked_commit": "646e602bee03f9bb3d2166a90ab31d7b870b56d7",
+    "main": "1030776",
+    "local_links_checked": 44,
+    "findings": [
+      "Raw electrical evidence and both geometry scripts/results unchanged from previously rerun commit; no redundant rerun.",
+      "T16/T17 rows preserved exactly from latest main.",
+      "Claude dispatch, Hiro handoff, design, references, and review/claude unchanged from latest main.",
+      "Original PR4 Chrome handoff still byte-identical prefix.",
+      "Only missing relative link is preserved historical T02 report; fixed-commit GitHub link also provided."
+    ]
+  }
 }
