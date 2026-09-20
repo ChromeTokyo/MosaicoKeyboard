@@ -1,0 +1,769 @@
+{
+  "schema": "mosaico-library-policy/1",
+  "status": "名单内容待 Chrome 填写与裁决；提案，待 Chrome 采纳、Hiro 复核",
+  "notice": [
+    "本清单声明每个位号是否允许使用本地占位封装。位号在清单中缺席即为错误，生成器硬失败。",
+    "policy 允许值：require_library（必须有可用库）、allow_placeholder（允许本地占位）、unresolved（未裁决，生成器默认硬失败）。",
+    "entries 中的 policy 与 derived_from 由 --write-policy 按仓库现状机械推出，不含任何器件选型或封装取舍，必须由 Chrome 逐行复核后改写。",
+    "reason、placeholder_geometry 两列一律留空，review_state 一律为「未审查」，由 Chrome 填写、Hiro 复核。",
+    "本清单取消了原生成器中空编码的语义重载：编码只表示编码，是否允许占位只由 policy 表示。"
+  ],
+  "entries": [
+    {
+      "refdes": "U1",
+      "lcsc": "C130204",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C130204，且 references/C130204.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW1",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW2",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW3",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW4",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW5",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW6",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW7",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW8",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW9",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW10",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW11",
+      "lcsc": "C720477",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C720477，且 references/C720477.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R1",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R2",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R3",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R4",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R5",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R6",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R7",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R8",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R9",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R10",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R11",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R12",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R13",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R14",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R15",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R16",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R17",
+      "lcsc": "C25804",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25804，且 references/C25804.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C1",
+      "lcsc": "C1591",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C1591，且 references/C1591.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C2",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "J1",
+      "lcsc": "C165948",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C165948，且 references/C165948.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R18",
+      "lcsc": "C23186",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23186，且 references/C23186.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R19",
+      "lcsc": "C23186",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23186，且 references/C23186.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U2",
+      "lcsc": "C54313",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C54313，且 references/C54313.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "J2",
+      "lcsc": "C160353",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C160353，且 references/C160353.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R20",
+      "lcsc": "C4177",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C4177，且 references/C4177.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R21",
+      "lcsc": "C22978",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C22978，且 references/C22978.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R22",
+      "lcsc": "C25819",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25819，且 references/C25819.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R23",
+      "lcsc": "C23162",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23162，且 references/C23162.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R24",
+      "lcsc": "C23162",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23162，且 references/C23162.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "D1",
+      "lcsc": "C2296",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C2296，且 references/C2296.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "D2",
+      "lcsc": "C2296",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C2296，且 references/C2296.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C3",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C4",
+      "lcsc": "C96446",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C96446，且 references/C96446.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C5",
+      "lcsc": "C45783",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C45783，且 references/C45783.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U3",
+      "lcsc": "C919459",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C919459，且 references/C919459.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "L1",
+      "lcsc": "C5832342",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C5832342，且 references/C5832342.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "SW12",
+      "lcsc": "C431540",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C431540，且 references/C431540.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R25",
+      "lcsc": "C25803",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25803，且 references/C25803.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R26",
+      "lcsc": "C23239",
+      "policy": "unresolved",
+      "derived_from": "仓库现状：该位号引用 C23239，但 references/C23239.json 当前不可用（文件不存在）。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R27",
+      "lcsc": "C25803",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C25803，且 references/C25803.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U8",
+      "lcsc": "C55266",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C55266，且 references/C55266.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R28",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U4",
+      "lcsc": "C2869734",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C2869734，且 references/C2869734.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U5",
+      "lcsc": "C404027",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C404027，且 references/C404027.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C6",
+      "lcsc": "C96446",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C96446，且 references/C96446.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C7",
+      "lcsc": "C45783",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C45783，且 references/C45783.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C8",
+      "lcsc": "C45783",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C45783，且 references/C45783.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C9",
+      "lcsc": "C1591",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C1591，且 references/C1591.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C10",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C11",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C12",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C13",
+      "lcsc": "C15849",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C15849，且 references/C15849.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U6",
+      "lcsc": "C544515",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C544515，且 references/C544515.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R29",
+      "lcsc": "C23162",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23162，且 references/C23162.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "R30",
+      "lcsc": "C23162",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C23162，且 references/C23162.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C14",
+      "lcsc": "C1591",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C1591，且 references/C1591.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C15",
+      "lcsc": "C1591",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C1591，且 references/C1591.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "U7",
+      "lcsc": "C2682616",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C2682616，且 references/C2682616.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "C16",
+      "lcsc": "C1591",
+      "policy": "require_library",
+      "derived_from": "仓库现状：该位号引用 C1591，且 references/C1591.json 当前可用。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "J3",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP1",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP2",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP3",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP4",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP5",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP6",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP7",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP8",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP9",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP10",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP11",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    },
+    {
+      "refdes": "TP12",
+      "lcsc": "",
+      "policy": "allow_placeholder",
+      "derived_from": "仓库现状：build_design.py 未给该位号指定 LCSC 编码（code=''），几何由脚本本地绘制。",
+      "reason": "",
+      "placeholder_geometry": "",
+      "review_state": "未审查"
+    }
+  ]
+}

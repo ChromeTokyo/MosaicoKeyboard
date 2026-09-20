@@ -1,0 +1,81 @@
+{
+  "source_filename": "ScreenRecording_09-20-2026 13-56-45_1.MP4",
+  "source_provenance": "User supplied, described by user as official unboxing; original publication URL not supplied.",
+  "source_sha256": "444e01c4a8f38e62929fc49c2f781a954009956b7292c9f78840171f77c5e847",
+  "source_bytes": 288694899,
+  "duration_seconds": 153.840318,
+  "resolution": [
+    1320,
+    2868
+  ],
+  "method": "ffmpeg seeks to listed seconds, then crop only, JPEG q=2; no geometry rectification or inferred detail. All review conclusions are visual; audio not transcribed.",
+  "privacy": "Full recording and overview sheets not committed; selected crops exclude phone UI and private notifications.",
+  "frames": [
+    {
+      "file": "032-size.jpg",
+      "time_seconds": 32,
+      "crop_xywh": [
+        0,
+        400,
+        1320,
+        1740
+      ],
+      "sha256": "a8eedb35e4b5e978b3136952e6da4d3fe7c3b220d6ec2d18869292f99682577f"
+    },
+    {
+      "file": "058-back-sheet.jpg",
+      "time_seconds": 58,
+      "crop_xywh": [
+        0,
+        720,
+        1320,
+        1560
+      ],
+      "sha256": "43ef2a6405fc0dfa37fa639bec535db42d417f678e36a96da7570b6dd0f7cbf9"
+    },
+    {
+      "file": "066-baseboard.jpg",
+      "time_seconds": 66,
+      "crop_xywh": [
+        0,
+        800,
+        1320,
+        1540
+      ],
+      "sha256": "5c935459611d008bbe52666ac641fa9e6ce7e12fbc4832b2d4ecf563ed2736ce"
+    },
+    {
+      "file": "068-debug-fixture.jpg",
+      "time_seconds": 68,
+      "crop_xywh": [
+        0,
+        750,
+        1320,
+        1600
+      ],
+      "sha256": "115f4f2b0c76b516d87e4cf8cfdf3fd1e7b26549deac4f2b9b4339b2c039b8a6"
+    },
+    {
+      "file": "078-coreboard.jpg",
+      "time_seconds": 78,
+      "crop_xywh": [
+        0,
+        650,
+        1320,
+        1480
+      ],
+      "sha256": "c9dc583678ce725dc2ffd88b53827246adec9950254b65cb5c770b7d0b532194"
+    },
+    {
+      "file": "080-disassembly.jpg",
+      "time_seconds": 80,
+      "crop_xywh": [
+        0,
+        900,
+        1320,
+        1100
+      ],
+      "sha256": "1ffcd6cda072ca5c3fd3f30397be4ea74f100f6ad4249b945000f5c511f8c0ae"
+    }
+  ]
+}
