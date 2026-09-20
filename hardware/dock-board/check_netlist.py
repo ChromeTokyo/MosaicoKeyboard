@@ -8,7 +8,9 @@ CK-02 J2 的 16 个针与 j2_contract（= ICD-0.2 第 3.2 节 = 模块板 PINMAP
 CK-03 **BOOST_EN、LIM_EN 两网的 pins 中不出现 J2、U_FG** —— 这是 POWER_TOPOLOGY.md 第 3 节 (a)
       声称「可由 netlist.yaml 的 BOOST_EN、LIM_EN 网络 pins 列表机械核对」的那次核对本身。
       本脚本把两网的完整 pins 列表原样打印出来，供人工复读。
-CK-04 J2 的 14 根非电源针所在网，refdes 只允许 {J2, SW_*, U_FG, TP_*}（EL-D-05、EL-D-11）。
+CK-04 J2 的 12 根信号针所在网，refdes 只允许 {J2, SW_*, U_FG, TP_*}（EL-D-05、EL-D-11）。
+      （POWER_TOPOLOGY 第 3 节 (a) 写「除 DOCK_5V/DOCK_GND 外的 14 针」，那是 16 − 2 的算法，
+        把列 1、列 2 的各一根并联冗余针也算进去了；实际信号针是 12 根。见 DESIGN_NOTES.md 第 7 节。）
 CK-05 不存在任何名字含 3V3 的网（EL-D-03）。
 CK-06 KEY_* 的 GPIO / H2 针号与模块板 PINMAP 第 2 节一致，且不落在 H2 pin 10/13/15/18。
 CK-07 DOCK_5V / DOCK_GND 各占 J2 两针，且 DOCK_5V 网上无主机侧器件。
@@ -190,7 +192,7 @@ def main() -> int:
 
     # ---- CK-08 ----
     if os.path.exists(BOM):
-        with open(BOM, encoding="utf-8") as f:
+        with open(BOM, encoding="utf-8-sig") as f:
             rows = list(csv.DictReader(f))
         base = {r["位号"].strip() for r in rows if r.get("角色", "").strip() == "基线" and r["位号"].strip()}
         only_bom = base - set(comps)

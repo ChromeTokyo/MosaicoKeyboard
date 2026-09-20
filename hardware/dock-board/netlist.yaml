@@ -60,7 +60,7 @@ assumptions:
   - AS-31-dock-21  # 默认装 R_TS_FIX、R_TS_NTC DNP → 首版无电池温度保护，仅限台架
   - AS-31-dock-22  # U_UV 型号与 SOT-23-3 引脚顺序待核
   - AS-31-dock-23  # USB-C 焊盘名取自缓存库 JSON，非原厂图纸
-  - AS-31-dock-24  # 轻触开关实物 4 脚，缓存库符号为 2 焊盘
+  - AS-31-dock-24  # 轻触开关选 TS-1088 类 2 端 SMD；手感与是否改 4 脚型号待实物
   - AS-31-dock-25  # 弹簧针型号未选定
   - AS-31-dock-26  # U_FG = MAX17048，7 位地址 0x36 待核，默认 DNP
   - AS-31-dock-27  # 底座不设用户电源开关
@@ -308,12 +308,12 @@ components:
   L1:
     class: inductor
     description: 升压电感。数据手册允许 0.37–2.9 µH；本设计 1.0 µH
-    part: FTC201610S1R0MBCA（候选；LCSC C5832342，2.0×1.6 mm）
+    part: 待选（1.0 µH / Isat ≥4.5 A / DCR ≤30 mΩ，见 BOM.csv；缓存库的 FTC201610S1R0MBCA C5832342 为 2.0×1.6 mm，很可能 Isat 不足）
     pins: 2
-    package: IND-SMD 2.0×1.6 mm（候选；若 Isat 不足改 4×4 mm）
+    package: 约 4×4 mm 屏蔽功率电感（尺寸随所选型号回填）
     value: "1.0 µH"
     requirement: "Isat ≥ 4.5 A（谷值限 3.7 A ＋ 半个纹波，POWER_BUDGET.md 第 3.2 节）、DCR ≤ 30 mΩ"
-    param_note: 候选件 Isat/DCR「待原厂数据手册核对」；ASSUMPTION AS-31-dock-18。2.0×1.6 mm 封装很可能 Isat 不足，见 BOM.csv
+    param_note: Isat/DCR「待原厂数据手册核对」；ASSUMPTION AS-31-dock-18。选型硬门槛见 BOM.csv 的 L1 备选 1 说明
   C_BST_IN:   {class: capacitor, description: 升压输入电容（与 C_OUT 并联在 VSYS）, pins: 2, package: C0805, value: "10 µF X5R 25 V"}
   C_BST_OUT1: {class: capacitor, description: 升压输出电容 1/2；有效电容随直流偏压下降，按 ≥20 µF 有效值选, pins: 2, package: C0805, value: "22 µF X5R 25 V"}
   C_BST_OUT2: {class: capacitor, description: 升压输出电容 2/2, pins: 2, package: C0805, value: "22 µF X5R 25 V"}
