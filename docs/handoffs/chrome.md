@@ -102,3 +102,5 @@
 - 验证：候选与56030b9逐字相同；研究输出两次及优化模式均与Claude对照一致；故障注入只在临时目录；权威design/references未改；关键图经目视检查，原录屏及私人通知不入库，来源和摘图有哈希。
 - 未改：主控STATUS／DECISIONS／claude-to-chrome派发包，Hiro交接，权威生成器与现有设计产物。内部辅助图像检查不冒充Hiro复核。
 - 下一步：候选作者修T18 R01/R02后再复核与采纳；T19尚无实现。Chrome继续F02格式问题与底座自有电源／保护审查；目标端I²C和供电结论先绑定真实版本。收到实物后先外观认版，不能为认版要求用户拆屏。
+
+本轮交付 [PR #12](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/12)，状态OPEN、可合并性检查为MERGEABLE（观测值，不是放行）。截至提交，工作区干净，design/、references/、Hiro交接与main无差异；未执行合并。
