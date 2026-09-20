@@ -5,38 +5,45 @@
  *
  * 所有 API 名称与签名的核对来源（不得引用未核对函数）：
  *   esp-mosaico-bsp @ 392860b1，仓库快照 review/chrome/D1-module-interface/evidence/bsp/
- *     bsp_subboard_init()                 include/bsp/subboard.h L58；实现 onboard/subboard.c L123-152：
+ *     bsp_subboard_init()                 include/bsp/subboard.h L62；实现 onboard/subboard.c L123-152：
  *                                          先 bsp_power_set_vcc_3v3(true)（pin19 VCC_3V3 上电）→ init_i2c_bus()
  *                                          （V1.2：I2C_NUM_1，SDA GPIO0 / SCL GPIO1，enable_internal_pullup）
  *                                          → 左 GPIO14 输出 0、右 GPIO39 输出 1
- *     bsp_subboard_get_i2c_bus()          subboard.h L61；subboard.c L154-157
+ *     bsp_subboard_get_i2c_bus()          subboard.h L65；subboard.c L154-157
  *     BSP_SUBBOARD_EEPROM_ADDR_LEFT 0x50  subboard.h L34
- *     MOSAICO_MODULE_MGR_EEPROM_IMAGE_SIZE 0x86，mosaico_module_mgr.h L25
- *     mosaico_module_mgr_init/_get_info/_request_rescan/_type_to_name/_slot_to_name  mosaico_module_mgr.h
- *     mosaico_module_mgr_info_t 字段 presence/descriptor_state/eeprom  mosaico_module_mgr.h L108-117
- *   ESP-IDF driver/i2c_master.h（https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/i2c.html，2026-09-20 访问；
- *   BSP 自身已使用其中 i2c_master_probe / i2c_master_bus_add_device / i2c_master_bus_rm_device / i2c_master_transmit_receive）
+ *     MOSAICO_MODULE_MGR_EEPROM_MAGIC/_LEN/_IMAGE_SIZE 0x86  mosaico_module_mgr.h L23-25
+ *     mosaico_module_mgr_init L199 / _get_info L261 / _request_rescan L309 / _slot_to_name L317 / _type_to_name L325  mosaico_module_mgr.h
+ *     mosaico_module_mgr_info_t 字段 slot/presence/descriptor_state/last_error/eeprom_addr/eeprom  mosaico_module_mgr.h L108-117
+ *     mosaico_module_mgr_eeprom_v1_t 字段 board_type/board_id/hw_version/sw_version/vendor_id/serial_number/board_name  L86-105
+ *   ESP-IDF driver/i2c_master.h（https://docs.espressif.com/projects/esp-idf/en/latest/esp32s3/api-reference/peripherals/i2c.html，2026-09-20 访问）。
+ *   同 commit 的 BSP 已调用其中全部五个函数：mosaico_module_mgr.c L386 bus_add_device、L402 bus_rm_device、
+ *   L421 transmit_receive、L481 probe；onboard/sensors.c L51、L197 i2c_master_transmit(device, buffer, length + 1, -1)
+ *   （sensors.c 在本地完整克隆 /tmp/mosaico-v12/esp-mosaico-bsp，未收进证据包）。
  *     esp_err_t i2c_master_transmit(i2c_master_dev_handle_t, const uint8_t *write_buffer, size_t write_size, int xfer_timeout_ms)
  *     esp_err_t i2c_master_transmit_receive(i2c_master_dev_handle_t, const uint8_t *wbuf, size_t wsize, uint8_t *rbuf, size_t rsize, int xfer_timeout_ms)
  *     esp_err_t i2c_master_probe(i2c_master_bus_handle_t, uint16_t address, int xfer_timeout_ms)
  *     esp_err_t i2c_master_bus_add_device(i2c_master_bus_handle_t, const i2c_device_config_t *, i2c_master_dev_handle_t *)
  *     esp_err_t i2c_master_bus_rm_device(i2c_master_dev_handle_t)
- *   ASSUMPTION: ESP32-S31 目标上的 IDF 版本提供同名同签名 API（BSP 依赖它们编译，但本文件未在 S31 工具链上实际编译）。
+ *   ASSUMPTION（AS-31-eeprom-6）: ESP32-S31 目标上的 IDF 版本提供同名同签名 API（BSP 依赖它们编译；本文件只在宿主机
+ *   以桩头通过 clang -fsyntax-only 检查，见 README.md，未在 S31 工具链上实际编译）。
  *   验证：在实物到货、BSP 可编译的 IDF 环境中把本文件加入示例工程编译一次。
  *
- * AT24C02 写入时序依据：Atmel/Microchip AT24C01A/02/04/08A/16A 数据手册 0180Z1–SEEPR–5/07
- * （https://ww1.microchip.com/downloads/en/DeviceDoc/doc0180.pdf，2026-09-20 打开）：
- *   2K 器件 32 页 × 8 字节，8 位字地址；页写最多 8 字节，允许部分页写；页内地址低 3 位自增并在页边界回卷；
- *   写周期 tWR 最大 5 ms，期间器件不应答，可用 Acknowledge Polling 探测完成。
- *   该手册把原 AT24C02 标为「不推荐新设计」，所购具体型号（AT24C02C/D 或兼容件）的页大小与 tWR 待原厂数据手册核对。
+ * EEPROM 写入时序依据：模块板分支 netlist 选定 U1 = AT24C02D-SSHM-T（LCSC C34807）。数据手册
+ * Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet_012017
+ * （https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet.pdf，2026-09-21 打开）：
+ *   8 字节页写、允许部分页写、页内地址回卷（§5.2）；tWR 最大 5 ms（Table 8-3），期间器件不 ACK，可用 Acknowledge Polling（§5.3）；
+ *   工作电压 1.7–3.6 V（Table 8-1）；A0/A1/A2/WP 悬空时内部下拉到 GND（引脚表 Note 1）；
+ *   WP = VCC 时全阵列禁写，但器件对地址/数据字节仍正常 ACK，只是不发生写周期（§5.5）——因此本文件靠回读比对发现写保护。
+ *   ASSUMPTION（AS-31-eeprom-8）: BOM 最终器件仍为 AT24C02D（换件须重核页大小与 tWR）。
  *
  * 前置条件（详见 PROGRAMMING.md 第 3 节）：
- *   - 模块板已插入左槽；A1/A2 接 GND；A0 接 H2 pin10（GPIO14）；WP 为低（可写）；EEPROM VCC 来自 pin19。
+ *   - 模块板已插入左槽；A1/A2 接 GND；A0 接 H2 pin10（GPIO14）；JP1 桥 1–2 使 WP = GND（可写）；EEPROM VCC 来自 pin19。
  *   - 本固件里不启动 mosaico_module_mgr（或已 mosaico_module_mgr_deinit()），避免扫描任务在 tWR 期间探测。
- *   - 串口日志应先出现 BSP 的 "Hardware version: v1.2 (variant=v1.2)"（esp_mosaico.c detect_board_variant）。
+ *   - 串口日志应先出现 BSP 的 "Hardware version: v1.2 (variant=v1.2)"（esp_mosaico.c L57-58，detect_board_variant）。
  */
 
 #include <inttypes.h>
+#include <stdbool.h>
 #include <string.h>
 
 #include "bsp/subboard.h"
@@ -51,10 +58,10 @@
 
 static const char *TAG = "eeprom_prog";
 
-#define EEPROM_PAGE_SIZE          8U        /* AT24C02 页大小（doc0180）；所购型号待核对 */
+#define EEPROM_PAGE_SIZE          8U        /* AT24C02D 页大小（8871F Features、§5.2） */
 #define EEPROM_I2C_FREQ_HZ        100000U   /* 与 mosaico_module_mgr.c L27 EEPROM_I2C_FREQ_HZ 一致 */
 #define EEPROM_I2C_TIMEOUT_MS     100       /* 与 mosaico_module_mgr.c L28 EEPROM_I2C_TIMEOUT_MS 一致 */
-#define EEPROM_TWR_POLL_LIMIT_MS  20        /* tWR max 5 ms（doc0180 Table 5）× 4 余量 */
+#define EEPROM_TWR_POLL_LIMIT_MS  20        /* tWR max 5 ms（8871F Table 8-3）× 4 余量 */
 #define EEPROM_IMAGE_SIZE         MOSAICO_MODULE_MGR_EEPROM_IMAGE_SIZE
 
 /* 与 mosaico_module_mgr.c L209-218 crc16() 逐位等价，用于烧写前确认嵌入镜像自身有效。 */
@@ -165,11 +172,17 @@ esp_err_t eeprom_program_left_slot(const uint8_t *img, size_t len)
         ret = eeprom_read_image(dev, readback, sizeof(readback));
     }
     if (ret == ESP_OK && memcmp(readback, img, len) != 0) {
+        bool blank = true;
         for (size_t i = 0; i < len; ++i) {
+            blank = blank && readback[i] == 0xFF;
             if (readback[i] != img[i]) {
                 ESP_LOGE(TAG, "readback mismatch at 0x%02X: wrote 0x%02X read 0x%02X", (unsigned)i, img[i], readback[i]);
                 break;
             }
+        }
+        if (blank) {
+            /* 8871F §5.5：WP = VCC 时器件仍 ACK 但不写；空片回读全 0xFF 是 WP 被置位（JP1 桥在 2–3）最常见的表现。 */
+            ESP_LOGE(TAG, "readback is blank (0xFF): WP is probably high (JP1 bridged 2-3); AT24C02D ACKs but does not write");
         }
         ret = ESP_ERR_INVALID_STATE;
     }
@@ -216,7 +229,8 @@ static esp_err_t confirm_with_module_mgr(void)
 
 void app_main(void)
 {
-    /* 样例镜像的 serial_number 固定为 0x26090001；批量烧写时应按 IDENTITY.md 第 5 节为每台生成不同镜像。 */
+    /* 样例镜像（MOSAICO-DOCK-MODULE-V1.0，keymap_version 1）的 serial_number 固定为 0x26090001；
+     * 批量烧写时应按 IDENTITY.md 第 5 节为每台 build 不同镜像并重新生成 sample_handle_image.h。 */
     ESP_LOGI(TAG, "programming %u-byte EEPROM V1 image into LEFT slot 0x%02X",
              (unsigned)K_SAMPLE_HANDLE_IMAGE_SIZE, BSP_SUBBOARD_EEPROM_ADDR_LEFT);
     esp_err_t ret = eeprom_program_left_slot(k_sample_handle_image, K_SAMPLE_HANDLE_IMAGE_SIZE);
