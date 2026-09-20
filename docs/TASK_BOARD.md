@@ -65,3 +65,5 @@ T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](.
 | T14／T03：开箱视频接口版本核查 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | 用户2026-09-20提供153.84秒视频＋main `edb5301` 官方证据 | `chrome/t18-proposal-review`，用户在接续期间追加；视频技术摘录、ICD／测量规程及记录表、设计状态风险提示、本人交接 | IN_REVIEW；六张摘图、对照报告及ICD／T14分流完成；到货版本待确认 |
 
 上述Chrome接续复核与视频版本分流统一交付 [PR #12](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/12)，待复核、未合并，不改变硬件放行状态。
+
+用户于2026-09-20明确要求Claude恢复后验证本次发现；逐项入口见 [Chrome交接：待Claude复核](handoffs/chrome.md#待-claude-恢复后复核用户明确要求2026-09-20)。当前仍为待复核，未登记Claude通过。

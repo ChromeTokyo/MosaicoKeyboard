@@ -104,3 +104,16 @@
 - 下一步：候选作者修T18 R01/R02后再复核与采纳；T19尚无实现。Chrome继续F02格式问题与底座自有电源／保护审查；目标端I²C和供电结论先绑定真实版本。收到实物后先外观认版，不能为认版要求用户拆屏。
 
 本轮交付 [PR #12](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/12)，状态OPEN、可合并性检查为MERGEABLE（观测值，不是放行）。截至提交，工作区干净，design/、references/、Hiro交接与main无差异；未执行合并。
+
+## 待 Claude 恢复后复核（用户明确要求，2026-09-20）
+
+入口：[PR #12](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/12)，分支 `chrome/t18-proposal-review`。以下均已推送为待验证发现，不作为主控已采纳结论：
+
+1. **视频与文档版本差异：** 复看 [六张截图、时间点及来源哈希](../../review/chrome/T14/video-20260920/README.md)，核对 Baseboard-A V1.2／Coreboard V1.2 与 Fig.7 V1.0，中央未见四圆焊盘、边缘七矩形调试点、薄片与功能电路板的区别。原录屏由用户另行提供；不要从版本名推定到货批次或新旧顺序。
+2. **接口适用范围：** 复核 [ICD-0.2](../INTERFACE_CONTROL.md) 和 [T14 v0.2](../MEASUREMENT_PROTOCOL.md) 的认版分流是否与画面相符；确认后由主控更新 STATUS／DECISIONS。未确认实物版本前不冻结A/B/C方案或PCB。
+3. **T18两项问题：** 根据 [机制复核报告](../../review/chrome/T18/REPORT.md) 重跑仓库根目录的 `python3 review/chrome/T18/check_proposal.py`，验证 R01 人工字段被覆盖、R02 已重新登记的缺PAD缓存仍导致17电阻缺脚2。结果见 [原始检查记录](../../review/chrome/T18/check-results.json)。不要在当前main直接执行旧报告的生成命令。
+4. **提案交付完整性：** 核对远端 `94b30d5` 未含实现的快照及历史 `56030b9` 恢复件；修订后将真实实现交到可追踪分支，再由Chrome复核。Claude验证自身提案的问题和修复，不替代Chrome采纳审查或Hiro规定的独立硬件复核。
+
+| 日期 | 任务 ID | 当前在做什么 | 本次已确认的事实及依据 | 尚未确认 | 阻塞项 | 下一步 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 14:36 JST | T18／T14视频复核交接 | 按用户要求确认发现已push，补充Claude复核入口 | 远端PR #12包含问题报告、复现脚本、八项检查结果、六张视频截图及规程修订；本次明确四项复核清单 | Claude尚未验证／采纳 | Claude额度待恢复；硬件放行不变 | Claude按本节复核并记录结果，Chrome保留技术采纳与修订职责 |
