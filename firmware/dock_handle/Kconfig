@@ -76,12 +76,13 @@ menu "Dock Handle (Design D+G, 10-key dock)"
 
     config DOCK_HANDLE_SW_VERSION_MAJOR
         hex "Expected EEPROM sw_version major byte"
-        depends on DOCK_HANDLE_CHECK_IDENTITY
         range 0x00 0xFF
         default 0x01
         help
             IDENTITY.md 第 4 节：sw_version = 0x0100，高字节 0x01 表示主机侧合同 v1
-            （KEY_* 语义 + param_data v1）。主版本不符时驱动不解释 param_data（第 8 节规则 3）。
+            （KEY_* 语义 + param_data v1）。用于两处：CHECK_IDENTITY 开启时作为身份核对项；
+            无论 CHECK_IDENTITY 是否开启，主版本不符时驱动都不解释 param_data（第 8 节规则 3），
+            所以本项不依赖 CHECK_IDENTITY。
 
     config DOCK_HANDLE_USE_EEPROM_KEYMAP
         bool "Adopt key_gpio[] from EEPROM param_data v1 when KEYMAP_VALID is set"
