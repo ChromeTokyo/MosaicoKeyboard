@@ -1,0 +1,412 @@
+{
+  "root": ".",
+  "schematic_path": "./review/chrome/T02/evidence/schematic-saved-reopened.json",
+  "scope": "static generated-file correspondence only; not EDA/ ERC/DRC/electrical validation",
+  "counts": {
+    "components": 84,
+    "nets": 43,
+    "logical_pins": 242,
+    "schematic_pins": 242,
+    "schematic_wires": 233,
+    "schematic_labels": 233,
+    "schematic_nc_flags": 9,
+    "pcb_pads": 245,
+    "pcb_copper_tracks": 0,
+    "bom_rows": 84,
+    "pin_csv_rows": 242
+  },
+  "correspondence_errors": [
+    "wire-label mismatch U4.3: ['POGO_5V', 'BOOST_SW'] != POGO_5V",
+    "wire-label mismatch L1.2: ['BOOST_SW', 'POGO_5V'] != BOOST_SW"
+  ],
+  "observed_normalizations": [
+    {
+      "ref": "TP1",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP2",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP3",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP4",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP5",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP6",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP7",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP8",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP9",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP10",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP11",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    },
+    {
+      "ref": "TP12",
+      "attribute": "package",
+      "original": "TESTPAD_1.0mm",
+      "editor": "TESTPAD_1.0MM",
+      "kind": "case only"
+    }
+  ],
+  "pin_electrical_type_counts": {
+    "0": 242
+  },
+  "missing_library_caches": [
+    {
+      "ref": "R26",
+      "code": "C23239"
+    }
+  ],
+  "library_package_differences": [
+    {
+      "ref": "C5",
+      "saved": "C0603",
+      "cache": "C0805"
+    },
+    {
+      "ref": "U8",
+      "saved": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8",
+      "cache": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BR"
+    },
+    {
+      "ref": "C7",
+      "saved": "C0603",
+      "cache": "C0805"
+    },
+    {
+      "ref": "C8",
+      "saved": "C0603",
+      "cache": "C0805"
+    }
+  ],
+  "wire_overlaps": [
+    {
+      "wire_indices": [
+        157,
+        164
+      ],
+      "segments": [
+        [
+          [
+            180.0,
+            1890.0
+          ],
+          [
+            145.0,
+            1890.0
+          ]
+        ],
+        [
+          [
+            210.0,
+            1890.0
+          ],
+          [
+            175.0,
+            1890.0
+          ]
+        ]
+      ]
+    }
+  ],
+  "pcb_nested_shape_counts": {
+    "CIRCLE": 29,
+    "PAD": 245,
+    "TRACK": 220,
+    "TEXT": 84,
+    "HOLE": 4
+  },
+  "pcb_format_findings": {
+    "basis": "Current official Standard Format; not proof of which field causes editor import failure",
+    "invalid_footprint_layer_count": 84,
+    "invalid_footprint_layer_examples": [
+      {
+        "ref": "U1",
+        "value": "0"
+      },
+      {
+        "ref": "SW1",
+        "value": "0"
+      },
+      {
+        "ref": "SW2",
+        "value": "0"
+      }
+    ],
+    "nonnumeric_footprint_utime_count": 84,
+    "nonnumeric_footprint_utime_examples": [
+      {
+        "ref": "U1",
+        "value": "gge3decc056784b527daf376fea66d6a96e"
+      },
+      {
+        "ref": "SW1",
+        "value": "gge81c9d9b81fde57e9b98d024d4fa10e00"
+      },
+      {
+        "ref": "SW2",
+        "value": "ggec240e9708b3a562a9e7365138c90c772"
+      }
+    ],
+    "invalid_pad_hole_center_count": 48,
+    "invalid_pad_hole_center_examples": [
+      {
+        "ref": "C1",
+        "pin": "1",
+        "value": "1"
+      },
+      {
+        "ref": "C1",
+        "pin": "2",
+        "value": "1"
+      },
+      {
+        "ref": "R20",
+        "pin": "1",
+        "value": "1"
+      }
+    ],
+    "distant_pad_hole_center_count": 197,
+    "distant_pad_hole_center_examples": [
+      {
+        "ref": "U1",
+        "pin": "6",
+        "pad_xy": [
+          "164.07533",
+          "141.82126"
+        ],
+        "hole_center": [
+          "3996.2205",
+          "3013.3999"
+        ],
+        "hole_size": "0"
+      },
+      {
+        "ref": "U1",
+        "pin": "5",
+        "pad_xy": [
+          "161.51633",
+          "141.82126"
+        ],
+        "hole_center": [
+          "3993.6615",
+          "3013.4"
+        ],
+        "hole_size": "0"
+      },
+      {
+        "ref": "U1",
+        "pin": "4",
+        "pad_xy": [
+          "158.95733",
+          "141.82126"
+        ],
+        "hole_center": [
+          "3991.1025",
+          "3013.4"
+        ],
+        "hole_size": "0"
+      }
+    ],
+    "duplicate_object_ids": {
+      "ggee0560d1f13455ca0b03df33f31a89454": [
+        {
+          "type": "PAD",
+          "nested": true
+        },
+        {
+          "type": "LIB",
+          "nested": false
+        }
+      ],
+      "gge47548c041394500a9b203547dfd6400c": [
+        {
+          "type": "PAD",
+          "nested": true
+        },
+        {
+          "type": "LIB",
+          "nested": false
+        }
+      ],
+      "gge43a18e39b8b75ffaaafe7c2e93b444ce": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gge7cbaf7719f0956aeac805b46f9e28ed4": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gged996fc5142df544cb0699d7ccb089574": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "ggefbaddd24542b52989bb9bdbcd97c58d6": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gged1e9e58e102a57baba46eced25b41c94": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "ggeba8d371fd76a5737b82b896ad842dc71": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "ggeb0fbbab697f155d8ba6bff4970821d66": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gge39ab1111fc3e5dfea07756c7b679fd65": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gge75f08d34ee9458d99c3777df95817413": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "ggec01ae273317359e0a175e198bb15ad39": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "ggef09c784806a8517dbff7828fd0f3cc4c": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ],
+      "gge15534136905e5fa6b859254b90aef34d": [
+        {
+          "type": "LIB",
+          "nested": false
+        },
+        {
+          "type": "PAD",
+          "nested": true
+        }
+      ]
+    },
+    "drc_default_object_present": false
+  }
+}
