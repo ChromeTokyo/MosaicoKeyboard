@@ -111,6 +111,22 @@
 
 **仍未解除**：模块槽连接器机械形态（`E-01`）、`5V_IN` 载流能力（官方无数值）、模块引脚可及性、整机精确尺寸。
 
+## 5.5 D-017 第①步进度（2026-09-21 08:30）
+
+| 子系统 | 分支／位置 | 状态 |
+| --- | --- | --- |
+| ICD-0.2 分册、ASSUMPTIONS（AS-01～30）、G6 测试计划 | `hardware/`，PR #27 | **已合入**（提案） |
+| EEPROM 身份镜像工具与烧录路径 | `hardware/eeprom/`，PR #29 | **已合入**（提案，自测 13 项全过） |
+| 手柄驱动固件 `dock_handle` ＋ keytest | `firmware/dock_handle/`，PR #30 | **已合入**（提案，54 个 API 标识符逐一核实，未编译） |
+| 模块板电气（PINMAP／netlist 已有，补原理图、BOM、说明） | `claude/design-d/module-board` | 进行中 |
+| 底座主板电气（电源拓扑、预算已有，补网表、原理图、BOM、说明） | `claude/design-d/dock-board` | 进行中 |
+| 模块板机械（L 形转向件、薄壳） | `claude/design-d/mech-module` | 进行中（从头） |
+| 底座外壳与键帽（T13／T17） | `claude/design-d/mech-dock` | 进行中（从头） |
+| 四路对抗复核 ＋ 假设汇总进 ASSUMPTIONS.md | — | 待第一波完成后启动 |
+| Hiro H0 专项复核 | `docs/handoffs/claude-to-hiro.md`，PR #26 | **READY，待用户唤醒 Hiro** |
+
+已合入的三项为提案，头部均有「不得据以制造」声明；主控对 EEPROM／固件做了同上下文核验（D-015），**Hiro 独立复核待做**。
+
 ## 6. 主要风险
 
 - **最后一道实测在日本**：需要通电才能发现的问题都在跨国运输之后暴露。补偿手段（测试点、分步上电、限流、可更换、可观测、备板备件一次寄足）已写入 `docs/TEAM_PLAN.md` 并作为 G3 放行前提，必须在设计阶段落实，事后补不了。
