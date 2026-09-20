@@ -7,7 +7,7 @@
 | ID | 负责人 | 任务／交付 | 依赖 | 验收与复核 | 状态 |
 | --- | --- | --- | --- | --- | --- |
 | T01 | Claude | 接管主控，核实运行环境、各角色能力与分支，维护队列与决策记录，安排 Chrome 编写技术接口 | 阅读当前 main | 有版本化队列、文件归属与未知项；不把占位尺寸冻结 | IN_PROGRESS |
-| T02 | Chrome | 验证 A0 在嘉立创 EDA 中导入、编辑、保存、导出与网络对应 | 当前 A0 | 报告实际结果，失败则记录可复现原因和修复方案；Claude 核对证据完整性 | READY |
+| T02 | Chrome | 验证 A0 在嘉立创 EDA 中导入、编辑、保存、导出与网络对应 | 当前 A0 | 报告实际结果，失败则记录可复现原因和修复方案；Claude 核对证据完整性 | IN_REVIEW（Chrome 结论 CHANGES_REQUIRED，PR #4，主控核对证据中） |
 | T03 | Chrome | 验证参数化 CAD 工作流，核实官方模块尺寸，建立模块包络和机械未知项 | 当前需求 | 有可编辑源文件及可重建的导出；未知坐标不得填成已知；为 Hiro 接口审查备料 | READY |
 | T04 | Chrome | 整理并核验 Mosaico 精确尺寸资料、器件原厂资料和嘉立创供应／工艺证据 | 当前候选 BOM | 来源链接、版本／日期、确认与未确认分开；辅助搜索可选，Chrome 对采用的证据负责 | READY |
 | T05 | Chrome | 对 Hiro 原 A0 独立电气审查，重点电源状态和 I²C 电平问题 | 当前 A0 与原厂资料 | 独立计算及逐项问题报告；先完成审查记录再修订；Claude 可补充跨模型质疑 | READY |
@@ -38,8 +38,10 @@ Cursor／Grok 默认没有领取任务，不是 T04 或其他核心工作的必�
 | T01 | Claude 会话（Claude Code） | `claude-opus-5`，高推理档位 | `3d5a112` | `docs/t01-lead-handover` | `docs/OWNERSHIP.md`、`docs/DECISIONS.md`、`docs/handoffs/chrome.md`、`docs/handoffs/claude.md`、本文件 | `docs/handoffs/claude.md` | 2026-09-20 |
 | T06 | 同上 | 同上 | `3d5a112` | 同上 | `docs/T06-DOMESTIC-EXECUTION.md` | `docs/handoffs/claude.md` | 2026-09-20 |
 | T13 | 同上 | 同上 | `3d5a112` | 同上 | `docs/product/T13-PRODUCT-DIRECTION.md` | `docs/handoffs/claude.md` | 2026-09-20 |
-| — | Chrome（GPT-6） | 待 Chrome 自行登记 | 待登记 | 待登记 | 待登记 | `docs/handoffs/chrome.md` | 用户已于 2026-09-20 启动会话，**尚未推送任何领取登记或进展记录** |
+| T02 | Chrome（Codex，系统标识 GPT-6） | 精确模型 ID 与档位未由可核验接口提供，Chrome 声明不猜填 | `3d5a112` | `chrome/t02-a0-eda-validation` | `review/chrome/T02/`、`tools/check_a0_static.py`、`docs/DESIGN_STATUS.md`、`docs/TASK_BOARD.md`、`docs/handoffs/chrome.md` | `docs/handoffs/chrome.md` | 2026-09-20，已交付，PR #4 |
 
 `docs/TEAM_PLAN.md`、`CLAUDE.md`、`README.md` 指定主控使用 Claude Fable 5.1；本轮实际执行模型为 `claude-opus-5`，按 `docs/TEAM_PLAN.md` 第 1 节如实登记，记录见 `docs/DECISIONS.md` D-001，待用户确认是否同步修订文档表述。
 
-T02–T05 的交接包已写入 `docs/handoffs/chrome.md`，状态仍为 READY：交接包存在只表示 Chrome 可以直接领取，不表示已有会话启动或已开始工作。
+T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在只表示 Chrome 可以直接领取，不表示已开始工作。T03–T05 仍为 READY。
+
+**主控裁决 D-006（2026-09-20）：** `docs/handoffs/chrome.md` 曾出现两个互不相同的版本（主控派发包与 Chrome 自写的 T02 交接），属同一源文件双编辑者。裁决为分离职责：`docs/handoffs/chrome.md` 唯一归属 Chrome，登记自己的领取、进展日志与交接，主控不写入；主控派发包改名为 `docs/handoffs/claude-to-chrome.md`，Chrome 只读。Chrome 无需做任何合并。`docs/OWNERSHIP.md` 的 U-34 据此关闭。

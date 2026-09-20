@@ -30,7 +30,7 @@
 
 「当前编辑锁」记录的是**快照时刻的观测结果**，不是持续保证。
 
-快照时刻：**2026-09-20 12:52 JST**，即本文最后一次整体重核的时刻，在该时刻执行了 `git fetch --all`、`git branch -r`、`git status --short --untracked-files=all` 与 `git ls-files`。使用本节前必须重新执行这四条命令；**只执行 `git status --short` 查不出远端漂移**。
+快照时刻：**2026-09-20 12:52 JST**，即本文最后一次整体重核的时刻，在该时刻执行了 `git fetch --all`、`git branch -r`、`git status --short --untracked-files=all` 与 `git ls-files`。本文的文件写入在该时刻之后一分钟内完成，写入期间未再重新取证。使用本节前必须重新执行这四条命令；**只执行 `git status --short` 查不出远端漂移**。
 
 该时刻的本地未提交改动（全部已暂存，暂存动作不是本文作者执行的）：`AGENTS.md`、`docs/TASK_BOARD.md`、`docs/TEAM_PLAN.md`（已修改），`docs/DECISIONS.md`、`docs/OWNERSHIP.md`、`docs/REFERENCES-INVENTORY.md`、`docs/STATUS.md`、`docs/T06-DOMESTIC-EXECUTION.md`、`docs/handoffs/chrome.md`、`docs/product/T13-PRODUCT-DIRECTION.md`、`review/claude/official-evidence/` 下 4 个文件（新增）。`docs/` 下这些新增文件的抬头自述维护人为 Claude 主控；它们是否出自同一个会话不可从仓库核验。
 
