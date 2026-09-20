@@ -1,0 +1,583 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1780 2330" width="1780" height="2330" role="img" aria-label="ESP-Mosaico 左槽模块板原理图">
+<title>ESP-Mosaico 左槽模块板 原理图（提案 · 未冻结 · 不得据以制造）</title>
+<style>
+  :root { --bg:#ffffff; --fg:#111827; --mut:#6b7280; --ln:#374151; --acc:#1d4ed8;
+          --box:#f9fafb; --brd:#d1d5db; --pad:#fde68a; --nc:#9ca3af; --warn:#b91c1c; --dnp:#7c3aed; }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg:#0b0f19; --fg:#e5e7eb; --mut:#9ca3af; --ln:#9ca3af; --acc:#93c5fd;
+            --box:#111827; --brd:#374151; --pad:#78350f; --nc:#6b7280; --warn:#fca5a5; --dnp:#c4b5fd; }
+  }
+  .bg { fill: var(--bg); }
+  text { font-family: "Noto Sans CJK SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif; fill: var(--fg); }
+  .h1 { font-size: 26px; font-weight: 700; }
+  .h2 { font-size: 16px; font-weight: 700; }
+  .sub, .note { font-size: 12.5px; fill: var(--mut); }
+  .warnnote { font-size: 12.5px; fill: var(--warn); }
+  .warn { font-size: 12.5px; fill: var(--warn); font-weight: 600; }
+  .t { font-size: 13px; }
+  .net { font-size: 13px; font-weight: 600; fill: var(--acc); font-family: ui-monospace,"SF Mono",Menlo,Consolas,monospace; }
+  .net_s { font-size: 11px; font-weight: 600; fill: var(--acc); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .net_nc { font-size: 13px; font-weight: 600; fill: var(--nc); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .ref { font-size: 13px; font-weight: 700; }
+  .ref_s { font-size: 11px; font-weight: 700; }
+  .pinno { font-size: 12px; fill: var(--fg); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .pinname { font-size: 12px; font-weight: 600; font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .gpio { font-size: 11.5px; fill: var(--mut); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .gpio_s { font-size: 10.5px; fill: var(--mut); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .val { font-size: 12px; }
+  .dnp { font-size: 11px; font-weight: 700; fill: var(--dnp); }
+  .collab { font-size: 12px; fill: var(--mut); font-weight: 600; }
+  .padlab { font-size: 12px; font-weight: 700; fill: var(--fg); font-family: ui-monospace,Menlo,Consolas,monospace; }
+  .sect { fill: none; stroke: var(--brd); stroke-width: 1.2; rx: 8; }
+  .box, .comp { fill: var(--box); stroke: var(--ln); stroke-width: 1.4; }
+  .comp_dnp { fill: none; stroke: var(--dnp); stroke-width: 1.4; stroke-dasharray: 5 3; }
+  .pin { fill: var(--box); stroke: var(--ln); stroke-width: 1; }
+  .pin_nc { fill: none; stroke: var(--nc); stroke-width: 1; stroke-dasharray: 4 3; }
+  .pad { fill: var(--box); stroke: var(--ln); stroke-width: 1.2; }
+  .tp { fill: var(--box); stroke: var(--ln); stroke-width: 2; }
+  .j2pad { fill: var(--pad); stroke: var(--ln); stroke-width: 1.6; }
+  .w { stroke: var(--ln); stroke-width: 1.4; }
+  .w_nc { stroke: var(--nc); stroke-width: 1.2; stroke-dasharray: 4 3; }
+  .x { stroke: var(--nc); stroke-width: 1.6; }
+  .cap { stroke: var(--ln); stroke-width: 2.4; }
+  .bridge { stroke: var(--ln); stroke-width: 4; stroke-linecap: round; }
+  .dim { stroke: var(--mut); stroke-width: 1; }
+</style>
+<rect x="0" y="0" width="1780" height="2330" class="bg"/>
+<text x="40" y="52" class="h1" text-anchor="start">ESP-Mosaico 左槽模块板 · 原理图（网标签式）</text>
+<text x="40" y="80" class="warn" text-anchor="start">提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造</text>
+<text x="40" y="104" class="sub" text-anchor="start">修订 b-proposal　2026-09-21　器件 41（DNP 17）　网 33　由 netlist.yaml 生成：python3 gen_schematic.py</text>
+<text x="40" y="126" class="sub" text-anchor="start">同名网标签即同网，不拉跨图连线。虚线框 = DNP（默认不装）。坐标与列序见 PINMAP.md 第 4.1 节；逐针分配等同 ICD-0.2-DRAFT 第 2、3.2 节。</text>
+<rect x="40" y="150" width="470" height="880" class="sect"/>
+<text x="54" y="176" class="h2" text-anchor="start">J1 — 2×10P 2.54 mm 右角公头（配合主机左槽 H2）</text>
+<text x="54" y="196" class="sub" text-anchor="start">针号与 H2 同号；配合方向 +X。ASSUMPTION AS-06 / AS-17</text>
+<rect x="112" y="214" width="166" height="808" class="comp"/>
+<text x="195" y="204" class="ref" text-anchor="middle" data-ref="J1">J1</text>
+<rect x="120" y="219" width="150" height="18" class="pin"/>
+<text x="127" y="233" class="pinno" text-anchor="start"> 1</text>
+<text x="154" y="233" class="gpio_s" text-anchor="start">GPIO55</text>
+<line x1="278" y1="228" x2="312" y2="228" class="w"/>
+<text x="318" y="232" class="net" text-anchor="start" data-net="SLOT_KEY_UP">SLOT_KEY_UP</text>
+<rect x="120" y="259" width="150" height="18" class="pin"/>
+<text x="127" y="273" class="pinno" text-anchor="start"> 2</text>
+<text x="154" y="273" class="gpio_s" text-anchor="start">GPIO53</text>
+<line x1="278" y1="268" x2="312" y2="268" class="w"/>
+<text x="318" y="272" class="net" text-anchor="start" data-net="SLOT_KEY_A">SLOT_KEY_A</text>
+<rect x="120" y="299" width="150" height="18" class="pin"/>
+<text x="127" y="313" class="pinno" text-anchor="start"> 3</text>
+<text x="154" y="313" class="gpio_s" text-anchor="start">GPIO19</text>
+<line x1="278" y1="308" x2="312" y2="308" class="w"/>
+<text x="318" y="312" class="net" text-anchor="start" data-net="SLOT_KEY_DOWN">SLOT_KEY_DOWN</text>
+<rect x="120" y="339" width="150" height="18" class="pin"/>
+<text x="127" y="353" class="pinno" text-anchor="start"> 4</text>
+<text x="154" y="353" class="gpio_s" text-anchor="start">GPIO48</text>
+<line x1="278" y1="348" x2="312" y2="348" class="w"/>
+<text x="318" y="352" class="net" text-anchor="start" data-net="SLOT_KEY_B">SLOT_KEY_B</text>
+<rect x="120" y="379" width="150" height="18" class="pin"/>
+<text x="127" y="393" class="pinno" text-anchor="start"> 5</text>
+<text x="154" y="393" class="gpio_s" text-anchor="start">GPIO18</text>
+<line x1="278" y1="388" x2="312" y2="388" class="w"/>
+<text x="318" y="392" class="net" text-anchor="start" data-net="SLOT_KEY_LEFT">SLOT_KEY_LEFT</text>
+<rect x="120" y="419" width="150" height="18" class="pin"/>
+<text x="127" y="433" class="pinno" text-anchor="start"> 6</text>
+<text x="154" y="433" class="gpio_s" text-anchor="start">GPIO13</text>
+<line x1="278" y1="428" x2="312" y2="428" class="w"/>
+<text x="318" y="432" class="net" text-anchor="start" data-net="SLOT_KEY_X">SLOT_KEY_X</text>
+<rect x="120" y="459" width="150" height="18" class="pin"/>
+<text x="127" y="473" class="pinno" text-anchor="start"> 7</text>
+<text x="154" y="473" class="gpio_s" text-anchor="start">GPIO17</text>
+<line x1="278" y1="468" x2="312" y2="468" class="w"/>
+<text x="318" y="472" class="net" text-anchor="start" data-net="SLOT_KEY_RIGHT">SLOT_KEY_RIGHT</text>
+<rect x="120" y="499" width="150" height="18" class="pin"/>
+<text x="127" y="513" class="pinno" text-anchor="start"> 8</text>
+<text x="154" y="513" class="gpio_s" text-anchor="start">GPIO12</text>
+<line x1="278" y1="508" x2="312" y2="508" class="w"/>
+<text x="318" y="512" class="net" text-anchor="start" data-net="SLOT_KEY_Y">SLOT_KEY_Y</text>
+<rect x="120" y="539" width="150" height="18" class="pin"/>
+<text x="127" y="553" class="pinno" text-anchor="start"> 9</text>
+<text x="154" y="553" class="gpio_s" text-anchor="start">GPIO16</text>
+<line x1="278" y1="548" x2="312" y2="548" class="w"/>
+<text x="318" y="552" class="net" text-anchor="start" data-net="SLOT_KEY_L">SLOT_KEY_L</text>
+<rect x="120" y="579" width="150" height="18" class="pin"/>
+<text x="127" y="593" class="pinno" text-anchor="start">10</text>
+<text x="154" y="593" class="gpio_s" text-anchor="start">GPIO14_EEPROM_A0</text>
+<line x1="278" y1="588" x2="312" y2="588" class="w"/>
+<text x="318" y="592" class="net" text-anchor="start" data-net="SLOT_EEPROM_A0">SLOT_EEPROM_A0</text>
+<rect x="120" y="619" width="150" height="18" class="pin"/>
+<text x="127" y="633" class="pinno" text-anchor="start">11</text>
+<text x="154" y="633" class="gpio_s" text-anchor="start">GPIO15</text>
+<line x1="278" y1="628" x2="312" y2="628" class="w"/>
+<text x="318" y="632" class="net" text-anchor="start" data-net="SLOT_KEY_R">SLOT_KEY_R</text>
+<rect x="120" y="659" width="150" height="18" class="pin"/>
+<text x="127" y="673" class="pinno" text-anchor="start">12</text>
+<text x="154" y="673" class="gpio_s" text-anchor="start">GPIO4</text>
+<line x1="278" y1="668" x2="312" y2="668" class="w"/>
+<text x="318" y="672" class="net" text-anchor="start" data-net="SLOT_SPARE_GPIO4">SLOT_SPARE_GPIO4</text>
+<rect x="120" y="699" width="150" height="18" class="pin_nc"/>
+<text x="127" y="713" class="pinno" text-anchor="start">13</text>
+<text x="154" y="713" class="gpio_s" text-anchor="start">GPIO33_USJ_DN</text>
+<line x1="278" y1="708" x2="312" y2="708" class="w_nc"/>
+<text x="318" y="712" class="net_nc" text-anchor="start" data-net="SLOT_USJ_DN">SLOT_USJ_DN</text>
+<line x1="289" y1="701" x2="301" y2="715" class="x"/>
+<line x1="301" y1="701" x2="289" y2="715" class="x"/>
+<rect x="120" y="739" width="150" height="18" class="pin"/>
+<text x="127" y="753" class="pinno" text-anchor="start">14</text>
+<text x="154" y="753" class="gpio_s" text-anchor="start">GPIO1_SCL</text>
+<line x1="278" y1="748" x2="312" y2="748" class="w"/>
+<text x="318" y="752" class="net" text-anchor="start" data-net="SLOT_SCL">SLOT_SCL</text>
+<rect x="120" y="779" width="150" height="18" class="pin_nc"/>
+<text x="127" y="793" class="pinno" text-anchor="start">15</text>
+<text x="154" y="793" class="gpio_s" text-anchor="start">GPIO34_USJ_DP</text>
+<line x1="278" y1="788" x2="312" y2="788" class="w_nc"/>
+<text x="318" y="792" class="net_nc" text-anchor="start" data-net="SLOT_USJ_DP">SLOT_USJ_DP</text>
+<line x1="289" y1="781" x2="301" y2="795" class="x"/>
+<line x1="301" y1="781" x2="289" y2="795" class="x"/>
+<rect x="120" y="819" width="150" height="18" class="pin"/>
+<text x="127" y="833" class="pinno" text-anchor="start">16</text>
+<text x="154" y="833" class="gpio_s" text-anchor="start">GPIO0_SDA</text>
+<line x1="278" y1="828" x2="312" y2="828" class="w"/>
+<text x="318" y="832" class="net" text-anchor="start" data-net="SLOT_SDA">SLOT_SDA</text>
+<rect x="120" y="859" width="150" height="18" class="pin"/>
+<text x="127" y="873" class="pinno" text-anchor="start">17</text>
+<text x="154" y="873" class="gpio_s" text-anchor="start">5V_IN</text>
+<line x1="278" y1="868" x2="312" y2="868" class="w"/>
+<text x="318" y="872" class="net" text-anchor="start" data-net="DOCK_5V">DOCK_5V</text>
+<rect x="120" y="899" width="150" height="18" class="pin_nc"/>
+<text x="127" y="913" class="pinno" text-anchor="start">18</text>
+<text x="154" y="913" class="gpio_s" text-anchor="start">5V_OUT</text>
+<line x1="278" y1="908" x2="312" y2="908" class="w_nc"/>
+<text x="318" y="912" class="net_nc" text-anchor="start" data-net="SLOT_5V_OUT_NC">SLOT_5V_OUT_NC</text>
+<line x1="289" y1="901" x2="301" y2="915" class="x"/>
+<line x1="301" y1="901" x2="289" y2="915" class="x"/>
+<rect x="120" y="939" width="150" height="18" class="pin"/>
+<text x="127" y="953" class="pinno" text-anchor="start">19</text>
+<text x="154" y="953" class="gpio_s" text-anchor="start">VCC_3V3</text>
+<line x1="278" y1="948" x2="312" y2="948" class="w"/>
+<text x="318" y="952" class="net" text-anchor="start" data-net="SLOT_3V3">SLOT_3V3</text>
+<rect x="120" y="979" width="150" height="18" class="pin"/>
+<text x="127" y="993" class="pinno" text-anchor="start">20</text>
+<text x="154" y="993" class="gpio_s" text-anchor="start">GND</text>
+<line x1="278" y1="988" x2="312" y2="988" class="w"/>
+<text x="318" y="992" class="net" text-anchor="start" data-net="DOCK_GND">DOCK_GND</text>
+<text x="52" y="1016" class="note" text-anchor="start">pin 13 / 15 / 18：焊盘存在、不连铜、无测试点（硬约束 2、AS-30）</text>
+<rect x="540" y="150" width="500" height="520" class="sect"/>
+<text x="554" y="176" class="h2" text-anchor="start">U1 — AT24C02D 身份 EEPROM（0x50）</text>
+<text x="554" y="196" class="sub" text-anchor="start">VCC 取自 pin 19 SLOT_3V3（硬约束 3）；引脚以名称索引，序同 Table 1-1</text>
+<rect x="700" y="230" width="150" height="326" class="comp"/>
+<text x="775" y="220" class="ref" text-anchor="middle" data-ref="U1">U1</text>
+<text x="710" y="251" class="pinname" text-anchor="start">A0</text>
+<line x1="700" y1="246" x2="660" y2="246" class="w"/>
+<text x="654" y="250" class="net" text-anchor="end" data-net="SLOT_EEPROM_A0">SLOT_EEPROM_A0</text>
+<text x="710" y="293" class="pinname" text-anchor="start">A1</text>
+<line x1="700" y1="288" x2="660" y2="288" class="w"/>
+<text x="654" y="292" class="net" text-anchor="end" data-net="DOCK_GND">DOCK_GND</text>
+<text x="710" y="335" class="pinname" text-anchor="start">A2</text>
+<line x1="700" y1="330" x2="660" y2="330" class="w"/>
+<text x="654" y="334" class="net" text-anchor="end" data-net="DOCK_GND">DOCK_GND</text>
+<text x="710" y="377" class="pinname" text-anchor="start">GND</text>
+<line x1="700" y1="372" x2="660" y2="372" class="w"/>
+<text x="654" y="376" class="net" text-anchor="end" data-net="DOCK_GND">DOCK_GND</text>
+<text x="840" y="251" class="pinname" text-anchor="end">VCC</text>
+<line x1="850" y1="246" x2="890" y2="246" class="w"/>
+<text x="896" y="250" class="net" text-anchor="start" data-net="SLOT_3V3">SLOT_3V3</text>
+<text x="840" y="293" class="pinname" text-anchor="end">WP</text>
+<line x1="850" y1="288" x2="890" y2="288" class="w"/>
+<text x="896" y="292" class="net" text-anchor="start" data-net="EEPROM_WP">EEPROM_WP</text>
+<text x="840" y="335" class="pinname" text-anchor="end">SCL</text>
+<line x1="850" y1="330" x2="890" y2="330" class="w"/>
+<text x="896" y="334" class="net" text-anchor="start" data-net="SLOT_SCL">SLOT_SCL</text>
+<text x="840" y="377" class="pinname" text-anchor="end">SDA</text>
+<line x1="850" y1="372" x2="890" y2="372" class="w"/>
+<text x="896" y="376" class="net" text-anchor="start" data-net="SLOT_SDA">SLOT_SDA</text>
+<text x="660" y="426" class="ref" text-anchor="start" data-ref="C1">C1</text>
+<text x="706" y="426" class="note" text-anchor="start">100 nF 0603 X7R 50 V（C1591）</text>
+<line x1="670" y1="440" x2="670" y2="474" class="w"/>
+<line x1="654" y1="452" x2="686" y2="452" class="cap"/>
+<line x1="654" y1="460" x2="686" y2="460" class="cap"/>
+<text x="648" y="442" class="net" text-anchor="end" data-net="SLOT_3V3">SLOT_3V3</text>
+<text x="648" y="480" class="net" text-anchor="end" data-net="DOCK_GND">DOCK_GND</text>
+<text x="654" y="500" class="ref" text-anchor="start" data-ref="JP1">JP1</text>
+<text x="690" y="500" class="note" text-anchor="start">三焊盘锡桥：默认桥 1–2（WP→GND，可写）</text>
+<rect x="654" y="516" width="22" height="16" class="pad"/>
+<text x="665" y="528" class="pinno" text-anchor="middle">1</text>
+<line x1="676" y1="524" x2="706" y2="524" class="w"/>
+<text x="712" y="528" class="net_s" text-anchor="start" data-net="DOCK_GND">DOCK_GND</text>
+<rect x="654" y="542" width="22" height="16" class="pad"/>
+<text x="665" y="554" class="pinno" text-anchor="middle">2</text>
+<line x1="676" y1="550" x2="706" y2="550" class="w"/>
+<text x="712" y="554" class="net_s" text-anchor="start" data-net="EEPROM_WP">EEPROM_WP</text>
+<rect x="654" y="568" width="22" height="16" class="pad"/>
+<text x="665" y="580" class="pinno" text-anchor="middle">3</text>
+<line x1="676" y1="576" x2="706" y2="576" class="w"/>
+<text x="712" y="580" class="net_s" text-anchor="start" data-net="SLOT_3V3">SLOT_3V3</text>
+<line x1="648" y1="524" x2="648" y2="550" class="bridge"/>
+<text x="640" y="540" class="note" text-anchor="end">桥</text>
+<text x="654" y="622" class="note" text-anchor="start">两侧不得同时桥接（会把 SLOT_3V3 短到 DOCK_GND）</text>
+<rect x="1070" y="150" width="670" height="440" class="sect"/>
+<text x="1084" y="176" class="h2" text-anchor="start">I²C：DNP 上拉与 DNP 0 Ω 链接位</text>
+<text x="1084" y="196" class="sub" text-anchor="start">SLOT_SDA/SCL 与 DOCK_SDA/SCL 是两个网，默认断开（EL-D-04 / EL-D-10）</text>
+<text x="1234" y="264" class="net" text-anchor="end" data-net="SLOT_3V3">SLOT_3V3</text>
+<line x1="1245" y1="260" x2="1290" y2="260" class="w"/>
+<rect x="1290" y="247" width="84" height="26" class="comp_dnp"/>
+<line x1="1374" y1="260" x2="1420" y2="260" class="w"/>
+<text x="1426" y="264" class="net" text-anchor="start" data-net="SLOT_SDA">SLOT_SDA</text>
+<text x="1332" y="238" class="ref" text-anchor="middle" data-ref="R_PU_SDA">R_PU_SDA</text>
+<text x="1332" y="265" class="dnp" text-anchor="middle">DNP</text>
+<text x="1620" y="265" class="note" text-anchor="start">上拉 → SLOT_3V3</text>
+<text x="1234" y="342" class="net" text-anchor="end" data-net="SLOT_3V3">SLOT_3V3</text>
+<line x1="1245" y1="338" x2="1290" y2="338" class="w"/>
+<rect x="1290" y="325" width="84" height="26" class="comp_dnp"/>
+<line x1="1374" y1="338" x2="1420" y2="338" class="w"/>
+<text x="1426" y="342" class="net" text-anchor="start" data-net="SLOT_SCL">SLOT_SCL</text>
+<text x="1332" y="316" class="ref" text-anchor="middle" data-ref="R_PU_SCL">R_PU_SCL</text>
+<text x="1332" y="343" class="dnp" text-anchor="middle">DNP</text>
+<text x="1620" y="343" class="note" text-anchor="start">上拉 → SLOT_3V3</text>
+<text x="1234" y="420" class="net" text-anchor="end" data-net="SLOT_SDA">SLOT_SDA</text>
+<line x1="1245" y1="416" x2="1290" y2="416" class="w"/>
+<rect x="1290" y="403" width="84" height="26" class="comp_dnp"/>
+<line x1="1374" y1="416" x2="1420" y2="416" class="w"/>
+<text x="1426" y="420" class="net" text-anchor="start" data-net="DOCK_SDA">DOCK_SDA</text>
+<text x="1332" y="394" class="ref" text-anchor="middle" data-ref="R_LINK_SDA">R_LINK_SDA</text>
+<text x="1332" y="421" class="dnp" text-anchor="middle">DNP</text>
+<text x="1620" y="421" class="note" text-anchor="start">0 Ω 链接位</text>
+<text x="1234" y="498" class="net" text-anchor="end" data-net="SLOT_SCL">SLOT_SCL</text>
+<line x1="1245" y1="494" x2="1290" y2="494" class="w"/>
+<rect x="1290" y="481" width="84" height="26" class="comp_dnp"/>
+<line x1="1374" y1="494" x2="1420" y2="494" class="w"/>
+<text x="1426" y="498" class="net" text-anchor="start" data-net="DOCK_SCL">DOCK_SCL</text>
+<text x="1332" y="472" class="ref" text-anchor="middle" data-ref="R_LINK_SCL">R_LINK_SCL</text>
+<text x="1332" y="499" class="dnp" text-anchor="middle">DNP</text>
+<text x="1620" y="499" class="note" text-anchor="start">0 Ω 链接位</text>
+<text x="1084" y="574" class="note" text-anchor="start">R_PU 阻值待 P6/G6-E 决定，≤10 kΩ（AT24C02D 手册）；不得照搬 V1.0 的 4.7 kΩ（硬约束 4）</text>
+<rect x="1070" y="620" width="670" height="410" class="sect"/>
+<text x="1084" y="646" class="h2" text-anchor="start">供电与隔离规则（硬约束 1/2/3）</text>
+<text x="1084" y="666" class="sub" text-anchor="start">本板无 MCU、无 I²C 扩展器、无电源 IC</text>
+<text x="1084" y="696" class="note" text-anchor="start">pin 17 SLOT_5V_IN → DOCK_5V：全程纯铜，中间无任何串联器件，</text>
+<text x="1084" y="726" class="note" text-anchor="start">　　不等 EEPROM 识别、不等主机 GPIO 许可（硬约束 1 / EL-D-01）。</text>
+<text x="1084" y="756" class="note" text-anchor="start">pin 18 SLOT_5V_OUT_NC：单针网，焊盘不连铜、无测试点、丝印 NC。</text>
+<text x="1084" y="786" class="note" text-anchor="start">　　绝不连到底座任何输出（硬约束 2 / EL-D-02）。</text>
+<text x="1084" y="816" class="note" text-anchor="start">pin 19 SLOT_3V3：只供 U1.VCC、C1、DNP 上拉上端、JP1.3。</text>
+<text x="1084" y="846" class="note" text-anchor="start">　　不跨 J3、不到 J2；弹簧针接口无 3V3 针（硬约束 3 / EL-D-03）。</text>
+<text x="1084" y="876" class="note" text-anchor="start">按键为底座侧无源开关接 DOCK_GND，拉高只由主机内部上拉提供；</text>
+<text x="1084" y="906" class="note" text-anchor="start">　　模块板上无 5 V 上拉、无电平转换（硬约束 5 / EL-D-05）。</text>
+<text x="1084" y="936" class="note" text-anchor="start">SLOT_EEPROM_A0（pin 10）只到 U1.A0 与 TP_A0，不接按键、不到 J2/J3。</text>
+<text x="1084" y="966" class="note" text-anchor="start">SLOT_SPARE_GPIO4（pin 12）只到 TP_SPARE，接口 2×8 无余针。</text>
+<text x="1084" y="1014" class="note" text-anchor="start">载流：DOCK_5V / DOCK_GND 各占 J2 两针、J3 两位并联（AS-09 峰值 ≤1 A）</text>
+<rect x="40" y="1060" width="700" height="540" class="sect"/>
+<text x="54" y="1086" class="h2" text-anchor="start">R_S_KEY_* — 按键串阻位（10 只，0603）</text>
+<text x="54" y="1106" class="sub" text-anchor="start">H2 侧 SLOT_KEY_*（pin 1） → 弹簧针侧 KEY_*（pin 2）；提案 1 kΩ，装 0 Ω 时两侧同铜</text>
+<text x="294" y="1156" class="net" text-anchor="end" data-net="SLOT_KEY_UP">SLOT_KEY_UP</text>
+<line x1="305" y1="1152" x2="350" y2="1152" class="w"/>
+<rect x="350" y="1140" width="76" height="24" class="comp"/>
+<text x="388" y="1157" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1134" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_UP">R_S_KEY_UP</text>
+<line x1="426" y1="1152" x2="470" y2="1152" class="w"/>
+<text x="476" y="1156" class="net" text-anchor="start" data-net="KEY_UP">KEY_UP</text>
+<text x="700" y="1157" class="gpio" text-anchor="end">GPIO55</text>
+<text x="294" y="1199" class="net" text-anchor="end" data-net="SLOT_KEY_DOWN">SLOT_KEY_DOWN</text>
+<line x1="305" y1="1195" x2="350" y2="1195" class="w"/>
+<rect x="350" y="1183" width="76" height="24" class="comp"/>
+<text x="388" y="1200" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1177" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_DOWN">R_S_KEY_DOWN</text>
+<line x1="426" y1="1195" x2="470" y2="1195" class="w"/>
+<text x="476" y="1199" class="net" text-anchor="start" data-net="KEY_DOWN">KEY_DOWN</text>
+<text x="700" y="1200" class="gpio" text-anchor="end">GPIO19</text>
+<text x="294" y="1242" class="net" text-anchor="end" data-net="SLOT_KEY_LEFT">SLOT_KEY_LEFT</text>
+<line x1="305" y1="1238" x2="350" y2="1238" class="w"/>
+<rect x="350" y="1226" width="76" height="24" class="comp"/>
+<text x="388" y="1243" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1220" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_LEFT">R_S_KEY_LEFT</text>
+<line x1="426" y1="1238" x2="470" y2="1238" class="w"/>
+<text x="476" y="1242" class="net" text-anchor="start" data-net="KEY_LEFT">KEY_LEFT</text>
+<text x="700" y="1243" class="gpio" text-anchor="end">GPIO18</text>
+<text x="294" y="1285" class="net" text-anchor="end" data-net="SLOT_KEY_RIGHT">SLOT_KEY_RIGHT</text>
+<line x1="305" y1="1281" x2="350" y2="1281" class="w"/>
+<rect x="350" y="1269" width="76" height="24" class="comp"/>
+<text x="388" y="1286" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1263" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_RIGHT">R_S_KEY_RIGHT</text>
+<line x1="426" y1="1281" x2="470" y2="1281" class="w"/>
+<text x="476" y="1285" class="net" text-anchor="start" data-net="KEY_RIGHT">KEY_RIGHT</text>
+<text x="700" y="1286" class="gpio" text-anchor="end">GPIO17</text>
+<text x="294" y="1328" class="net" text-anchor="end" data-net="SLOT_KEY_L">SLOT_KEY_L</text>
+<line x1="305" y1="1324" x2="350" y2="1324" class="w"/>
+<rect x="350" y="1312" width="76" height="24" class="comp"/>
+<text x="388" y="1329" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1306" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_L">R_S_KEY_L</text>
+<line x1="426" y1="1324" x2="470" y2="1324" class="w"/>
+<text x="476" y="1328" class="net" text-anchor="start" data-net="KEY_L">KEY_L</text>
+<text x="700" y="1329" class="gpio" text-anchor="end">GPIO16</text>
+<text x="294" y="1371" class="net" text-anchor="end" data-net="SLOT_KEY_R">SLOT_KEY_R</text>
+<line x1="305" y1="1367" x2="350" y2="1367" class="w"/>
+<rect x="350" y="1355" width="76" height="24" class="comp"/>
+<text x="388" y="1372" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1349" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_R">R_S_KEY_R</text>
+<line x1="426" y1="1367" x2="470" y2="1367" class="w"/>
+<text x="476" y="1371" class="net" text-anchor="start" data-net="KEY_R">KEY_R</text>
+<text x="700" y="1372" class="gpio" text-anchor="end">GPIO15</text>
+<text x="294" y="1414" class="net" text-anchor="end" data-net="SLOT_KEY_A">SLOT_KEY_A</text>
+<line x1="305" y1="1410" x2="350" y2="1410" class="w"/>
+<rect x="350" y="1398" width="76" height="24" class="comp"/>
+<text x="388" y="1415" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1392" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_A">R_S_KEY_A</text>
+<line x1="426" y1="1410" x2="470" y2="1410" class="w"/>
+<text x="476" y="1414" class="net" text-anchor="start" data-net="KEY_A">KEY_A</text>
+<text x="700" y="1415" class="gpio" text-anchor="end">GPIO53</text>
+<text x="294" y="1457" class="net" text-anchor="end" data-net="SLOT_KEY_B">SLOT_KEY_B</text>
+<line x1="305" y1="1453" x2="350" y2="1453" class="w"/>
+<rect x="350" y="1441" width="76" height="24" class="comp"/>
+<text x="388" y="1458" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1435" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_B">R_S_KEY_B</text>
+<line x1="426" y1="1453" x2="470" y2="1453" class="w"/>
+<text x="476" y="1457" class="net" text-anchor="start" data-net="KEY_B">KEY_B</text>
+<text x="700" y="1458" class="gpio" text-anchor="end">GPIO48</text>
+<text x="294" y="1500" class="net" text-anchor="end" data-net="SLOT_KEY_X">SLOT_KEY_X</text>
+<line x1="305" y1="1496" x2="350" y2="1496" class="w"/>
+<rect x="350" y="1484" width="76" height="24" class="comp"/>
+<text x="388" y="1501" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1478" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_X">R_S_KEY_X</text>
+<line x1="426" y1="1496" x2="470" y2="1496" class="w"/>
+<text x="476" y="1500" class="net" text-anchor="start" data-net="KEY_X">KEY_X</text>
+<text x="700" y="1501" class="gpio" text-anchor="end">GPIO13</text>
+<text x="294" y="1543" class="net" text-anchor="end" data-net="SLOT_KEY_Y">SLOT_KEY_Y</text>
+<line x1="305" y1="1539" x2="350" y2="1539" class="w"/>
+<rect x="350" y="1527" width="76" height="24" class="comp"/>
+<text x="388" y="1544" class="val" text-anchor="middle">1 kΩ</text>
+<text x="388" y="1521" class="ref_s" text-anchor="middle" data-ref="R_S_KEY_Y">R_S_KEY_Y</text>
+<line x1="426" y1="1539" x2="470" y2="1539" class="w"/>
+<text x="476" y="1543" class="net" text-anchor="start" data-net="KEY_Y">KEY_Y</text>
+<text x="700" y="1544" class="gpio" text-anchor="end">GPIO12</text>
+<text x="52" y="1584" class="note" text-anchor="start">ASSUMPTION AS-31-mb-4 / AS-31-mb-6：1 kΩ 下按下电平仍 &lt; V_IL，且对 5 V 误接触限流有效（待 P4 / Hiro 复核）</text>
+<rect x="770" y="1060" width="420" height="540" class="sect"/>
+<text x="784" y="1086" class="h2" text-anchor="start">测试点（槽板顶面 SMD 圆焊盘）</text>
+<text x="784" y="1106" class="sub" text-anchor="start">TP_3V3 / TP_GND / TP_SDA / TP_SCL 为 ICD 第 7.1 节烧录夹具四点</text>
+<circle cx="850" cy="1156" r="11" class="tp"/>
+<text x="820" y="1161" class="ref" text-anchor="end" data-ref="TP_5V">TP_5V</text>
+<line x1="861" y1="1156" x2="900" y2="1156" class="w"/>
+<text x="906" y="1160" class="net" text-anchor="start" data-net="DOCK_5V">DOCK_5V</text>
+<circle cx="850" cy="1208" r="11" class="tp"/>
+<text x="820" y="1213" class="ref" text-anchor="end" data-ref="TP_GND">TP_GND</text>
+<line x1="861" y1="1208" x2="900" y2="1208" class="w"/>
+<text x="906" y="1212" class="net" text-anchor="start" data-net="DOCK_GND">DOCK_GND</text>
+<circle cx="850" cy="1260" r="11" class="tp"/>
+<text x="820" y="1265" class="ref" text-anchor="end" data-ref="TP_3V3">TP_3V3</text>
+<line x1="861" y1="1260" x2="900" y2="1260" class="w"/>
+<text x="906" y="1264" class="net" text-anchor="start" data-net="SLOT_3V3">SLOT_3V3</text>
+<circle cx="850" cy="1312" r="11" class="tp"/>
+<text x="820" y="1317" class="ref" text-anchor="end" data-ref="TP_SDA">TP_SDA</text>
+<line x1="861" y1="1312" x2="900" y2="1312" class="w"/>
+<text x="906" y="1316" class="net" text-anchor="start" data-net="SLOT_SDA">SLOT_SDA</text>
+<circle cx="850" cy="1364" r="11" class="tp"/>
+<text x="820" y="1369" class="ref" text-anchor="end" data-ref="TP_SCL">TP_SCL</text>
+<line x1="861" y1="1364" x2="900" y2="1364" class="w"/>
+<text x="906" y="1368" class="net" text-anchor="start" data-net="SLOT_SCL">SLOT_SCL</text>
+<circle cx="850" cy="1416" r="11" class="tp"/>
+<text x="820" y="1421" class="ref" text-anchor="end" data-ref="TP_A0">TP_A0</text>
+<line x1="861" y1="1416" x2="900" y2="1416" class="w"/>
+<text x="906" y="1420" class="net" text-anchor="start" data-net="SLOT_EEPROM_A0">SLOT_EEPROM_A0</text>
+<circle cx="850" cy="1468" r="11" class="tp"/>
+<text x="820" y="1473" class="ref" text-anchor="end" data-ref="TP_SPARE">TP_SPARE</text>
+<line x1="861" y1="1468" x2="900" y2="1468" class="w"/>
+<text x="906" y="1472" class="net" text-anchor="start" data-net="SLOT_SPARE_GPIO4">SLOT_SPARE_GPIO4</text>
+<circle cx="850" cy="1520" r="11" class="tp"/>
+<text x="820" y="1525" class="ref" text-anchor="end" data-ref="TP_WP">TP_WP</text>
+<line x1="861" y1="1520" x2="900" y2="1520" class="w"/>
+<text x="906" y="1524" class="net" text-anchor="start" data-net="EEPROM_WP">EEPROM_WP</text>
+<text x="782" y="1584" class="note" text-anchor="start">pin 18 无测试点：P8 直接探 J1 焊针（ICD EL-D-02）</text>
+<rect x="1220" y="1060" width="520" height="540" class="sect"/>
+<text x="1234" y="1086" class="h2" text-anchor="start">ESD 位（13 只 SOD-523 双向 TVS，全部 DNP）</text>
+<text x="1234" y="1106" class="sub" text-anchor="start">pin 1 = 信号，pin 2 = DOCK_GND；取舍见 DESIGN_NOTES 第 7 节</text>
+<rect x="1244" y="1144" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1161" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1152" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_UP">D_ESD_KEY_UP</text>
+<text x="1280" y="1174" class="net_s" text-anchor="start" data-net="KEY_UP">KEY_UP</text>
+<rect x="1244" y="1202" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1219" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1210" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_DOWN">D_ESD_KEY_DOWN</text>
+<text x="1280" y="1232" class="net_s" text-anchor="start" data-net="KEY_DOWN">KEY_DOWN</text>
+<rect x="1244" y="1260" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1277" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1268" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_LEFT">D_ESD_KEY_LEFT</text>
+<text x="1280" y="1290" class="net_s" text-anchor="start" data-net="KEY_LEFT">KEY_LEFT</text>
+<rect x="1244" y="1318" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1335" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1326" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_RIGHT">D_ESD_KEY_RIGHT</text>
+<text x="1280" y="1348" class="net_s" text-anchor="start" data-net="KEY_RIGHT">KEY_RIGHT</text>
+<rect x="1244" y="1376" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1393" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1384" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_L">D_ESD_KEY_L</text>
+<text x="1280" y="1406" class="net_s" text-anchor="start" data-net="KEY_L">KEY_L</text>
+<rect x="1244" y="1434" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1451" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1442" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_R">D_ESD_KEY_R</text>
+<text x="1280" y="1464" class="net_s" text-anchor="start" data-net="KEY_R">KEY_R</text>
+<rect x="1244" y="1492" width="26" height="24" class="comp_dnp"/>
+<text x="1257" y="1509" class="dnp" text-anchor="middle">▽</text>
+<text x="1278" y="1500" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_A">D_ESD_KEY_A</text>
+<text x="1280" y="1522" class="net_s" text-anchor="start" data-net="KEY_A">KEY_A</text>
+<rect x="1494" y="1144" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1161" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1152" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_B">D_ESD_KEY_B</text>
+<text x="1530" y="1174" class="net_s" text-anchor="start" data-net="KEY_B">KEY_B</text>
+<rect x="1494" y="1202" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1219" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1210" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_X">D_ESD_KEY_X</text>
+<text x="1530" y="1232" class="net_s" text-anchor="start" data-net="KEY_X">KEY_X</text>
+<rect x="1494" y="1260" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1277" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1268" class="ref_s" text-anchor="start" data-ref="D_ESD_KEY_Y">D_ESD_KEY_Y</text>
+<text x="1530" y="1290" class="net_s" text-anchor="start" data-net="KEY_Y">KEY_Y</text>
+<rect x="1494" y="1318" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1335" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1326" class="ref_s" text-anchor="start" data-ref="D_ESD_SDA">D_ESD_SDA</text>
+<text x="1530" y="1348" class="net_s" text-anchor="start" data-net="DOCK_SDA">DOCK_SDA</text>
+<rect x="1494" y="1376" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1393" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1384" class="ref_s" text-anchor="start" data-ref="D_ESD_SCL">D_ESD_SCL</text>
+<text x="1530" y="1406" class="net_s" text-anchor="start" data-net="DOCK_SCL">DOCK_SCL</text>
+<rect x="1494" y="1434" width="26" height="24" class="comp_dnp"/>
+<text x="1507" y="1451" class="dnp" text-anchor="middle">▽</text>
+<text x="1528" y="1442" class="ref_s" text-anchor="start" data-ref="D_ESD_5V">D_ESD_5V</text>
+<text x="1530" y="1464" class="net_s" text-anchor="start" data-net="DOCK_5V">DOCK_5V</text>
+<text x="1232" y="1584" class="note" text-anchor="start">默认 DNP：模块板不在信号链常带 ESD；装配前须核结电容对 I²C 与按键沿的影响</text>
+<rect x="40" y="1630" width="520" height="660" class="sect"/>
+<text x="54" y="1656" class="h2" text-anchor="start">J3 — 槽板↔触点板 90° 半孔焊接接头（16 位）</text>
+<text x="54" y="1676" class="sub" text-anchor="start">位 1 在 −X 端，沿 +X 递增；ASSUMPTION AS-31-mb-5</text>
+<text x="300" y="1704" class="ref" text-anchor="middle" data-ref="J3">J3</text>
+<rect x="150" y="1715" width="34" height="22" class="pad"/>
+<text x="167" y="1731" class="pinno" text-anchor="middle">1</text>
+<line x1="184" y1="1726" x2="224" y2="1726" class="w"/>
+<text x="230" y="1730" class="net" text-anchor="start" data-net="DOCK_5V">DOCK_5V</text>
+<rect x="150" y="1749" width="34" height="22" class="pad"/>
+<text x="167" y="1765" class="pinno" text-anchor="middle">2</text>
+<line x1="184" y1="1760" x2="224" y2="1760" class="w"/>
+<text x="230" y="1764" class="net" text-anchor="start" data-net="DOCK_5V">DOCK_5V</text>
+<rect x="150" y="1783" width="34" height="22" class="pad"/>
+<text x="167" y="1799" class="pinno" text-anchor="middle">3</text>
+<line x1="184" y1="1794" x2="224" y2="1794" class="w"/>
+<text x="230" y="1798" class="net" text-anchor="start" data-net="DOCK_GND">DOCK_GND</text>
+<rect x="150" y="1817" width="34" height="22" class="pad"/>
+<text x="167" y="1833" class="pinno" text-anchor="middle">4</text>
+<line x1="184" y1="1828" x2="224" y2="1828" class="w"/>
+<text x="230" y="1832" class="net" text-anchor="start" data-net="DOCK_GND">DOCK_GND</text>
+<rect x="150" y="1851" width="34" height="22" class="pad"/>
+<text x="167" y="1867" class="pinno" text-anchor="middle">5</text>
+<line x1="184" y1="1862" x2="224" y2="1862" class="w"/>
+<text x="230" y="1866" class="net" text-anchor="start" data-net="KEY_UP">KEY_UP</text>
+<rect x="150" y="1885" width="34" height="22" class="pad"/>
+<text x="167" y="1901" class="pinno" text-anchor="middle">6</text>
+<line x1="184" y1="1896" x2="224" y2="1896" class="w"/>
+<text x="230" y="1900" class="net" text-anchor="start" data-net="KEY_DOWN">KEY_DOWN</text>
+<rect x="150" y="1919" width="34" height="22" class="pad"/>
+<text x="167" y="1935" class="pinno" text-anchor="middle">7</text>
+<line x1="184" y1="1930" x2="224" y2="1930" class="w"/>
+<text x="230" y="1934" class="net" text-anchor="start" data-net="KEY_LEFT">KEY_LEFT</text>
+<rect x="150" y="1953" width="34" height="22" class="pad"/>
+<text x="167" y="1969" class="pinno" text-anchor="middle">8</text>
+<line x1="184" y1="1964" x2="224" y2="1964" class="w"/>
+<text x="230" y="1968" class="net" text-anchor="start" data-net="KEY_RIGHT">KEY_RIGHT</text>
+<rect x="150" y="1987" width="34" height="22" class="pad"/>
+<text x="167" y="2003" class="pinno" text-anchor="middle">9</text>
+<line x1="184" y1="1998" x2="224" y2="1998" class="w"/>
+<text x="230" y="2002" class="net" text-anchor="start" data-net="KEY_L">KEY_L</text>
+<rect x="150" y="2021" width="34" height="22" class="pad"/>
+<text x="167" y="2037" class="pinno" text-anchor="middle">10</text>
+<line x1="184" y1="2032" x2="224" y2="2032" class="w"/>
+<text x="230" y="2036" class="net" text-anchor="start" data-net="KEY_R">KEY_R</text>
+<rect x="150" y="2055" width="34" height="22" class="pad"/>
+<text x="167" y="2071" class="pinno" text-anchor="middle">11</text>
+<line x1="184" y1="2066" x2="224" y2="2066" class="w"/>
+<text x="230" y="2070" class="net" text-anchor="start" data-net="KEY_A">KEY_A</text>
+<rect x="150" y="2089" width="34" height="22" class="pad"/>
+<text x="167" y="2105" class="pinno" text-anchor="middle">12</text>
+<line x1="184" y1="2100" x2="224" y2="2100" class="w"/>
+<text x="230" y="2104" class="net" text-anchor="start" data-net="KEY_B">KEY_B</text>
+<rect x="150" y="2123" width="34" height="22" class="pad"/>
+<text x="167" y="2139" class="pinno" text-anchor="middle">13</text>
+<line x1="184" y1="2134" x2="224" y2="2134" class="w"/>
+<text x="230" y="2138" class="net" text-anchor="start" data-net="KEY_X">KEY_X</text>
+<rect x="150" y="2157" width="34" height="22" class="pad"/>
+<text x="167" y="2173" class="pinno" text-anchor="middle">14</text>
+<line x1="184" y1="2168" x2="224" y2="2168" class="w"/>
+<text x="230" y="2172" class="net" text-anchor="start" data-net="KEY_Y">KEY_Y</text>
+<rect x="150" y="2191" width="34" height="22" class="pad"/>
+<text x="167" y="2207" class="pinno" text-anchor="middle">15</text>
+<line x1="184" y1="2202" x2="224" y2="2202" class="w"/>
+<text x="230" y="2206" class="net" text-anchor="start" data-net="DOCK_SDA">DOCK_SDA</text>
+<rect x="150" y="2225" width="34" height="22" class="pad"/>
+<text x="167" y="2241" class="pinno" text-anchor="middle">16</text>
+<line x1="184" y1="2236" x2="224" y2="2236" class="w"/>
+<text x="230" y="2240" class="net" text-anchor="start" data-net="DOCK_SCL">DOCK_SCL</text>
+<text x="52" y="2274" class="note" text-anchor="start">跨 J3 共 14 网；SLOT_3V3 / SLOT_EEPROM_A0 / SLOT_SPARE_GPIO4 / SLOT_SDA / SLOT_SCL / EEPROM_WP 不跨越</text>
+<rect x="590" y="1630" width="1150" height="660" class="sect"/>
+<text x="604" y="1656" class="h2" text-anchor="start">J2 — 底部弹簧针接触焊盘 2×8 @2.54 mm（触点板底层，−Y 面）</text>
+<text x="604" y="1676" class="sub" text-anchor="start">视图 = EDA 顶视图（自 +Y 看向 −Y，+X 向右）：列 1 在左，行 B（−Z，背侧）在上，行 A（+Z，屏侧）在下</text>
+<text x="640" y="1726" class="ref" text-anchor="start" data-ref="J2">J2</text>
+<text x="700" y="1760" class="collab" text-anchor="middle">列 1</text>
+<circle cx="700" cy="1810" r="26" class="j2pad"/>
+<text x="700" y="1815" class="padlab" text-anchor="middle">B1</text>
+<text x="694" y="1774" class="net_s" text-anchor="middle" data-net="DOCK_5V">DOCK_5V</text>
+<circle cx="700" cy="1930" r="26" class="j2pad"/>
+<text x="700" y="1935" class="padlab" text-anchor="middle">A1</text>
+<text x="694" y="1986" class="net_s" text-anchor="middle" data-net="DOCK_5V">DOCK_5V</text>
+<text x="822" y="1760" class="collab" text-anchor="middle">列 2</text>
+<circle cx="822" cy="1810" r="26" class="j2pad"/>
+<text x="822" y="1815" class="padlab" text-anchor="middle">B2</text>
+<text x="816" y="1774" class="net_s" text-anchor="middle" data-net="DOCK_GND">DOCK_GND</text>
+<circle cx="822" cy="1930" r="26" class="j2pad"/>
+<text x="822" y="1935" class="padlab" text-anchor="middle">A2</text>
+<text x="816" y="1986" class="net_s" text-anchor="middle" data-net="DOCK_GND">DOCK_GND</text>
+<text x="944" y="1760" class="collab" text-anchor="middle">列 3</text>
+<circle cx="944" cy="1810" r="26" class="j2pad"/>
+<text x="944" y="1815" class="padlab" text-anchor="middle">B3</text>
+<text x="938" y="1774" class="net_s" text-anchor="middle" data-net="KEY_DOWN">KEY_DOWN</text>
+<circle cx="944" cy="1930" r="26" class="j2pad"/>
+<text x="944" y="1935" class="padlab" text-anchor="middle">A3</text>
+<text x="938" y="1986" class="net_s" text-anchor="middle" data-net="KEY_UP">KEY_UP</text>
+<text x="1066" y="1760" class="collab" text-anchor="middle">列 4</text>
+<circle cx="1066" cy="1810" r="26" class="j2pad"/>
+<text x="1066" y="1815" class="padlab" text-anchor="middle">B4</text>
+<text x="1060" y="1774" class="net_s" text-anchor="middle" data-net="KEY_RIGHT">KEY_RIGHT</text>
+<circle cx="1066" cy="1930" r="26" class="j2pad"/>
+<text x="1066" y="1935" class="padlab" text-anchor="middle">A4</text>
+<text x="1060" y="1986" class="net_s" text-anchor="middle" data-net="KEY_LEFT">KEY_LEFT</text>
+<text x="1188" y="1760" class="collab" text-anchor="middle">列 5</text>
+<circle cx="1188" cy="1810" r="26" class="j2pad"/>
+<text x="1188" y="1815" class="padlab" text-anchor="middle">B5</text>
+<text x="1182" y="1774" class="net_s" text-anchor="middle" data-net="KEY_R">KEY_R</text>
+<circle cx="1188" cy="1930" r="26" class="j2pad"/>
+<text x="1188" y="1935" class="padlab" text-anchor="middle">A5</text>
+<text x="1182" y="1986" class="net_s" text-anchor="middle" data-net="KEY_L">KEY_L</text>
+<text x="1310" y="1760" class="collab" text-anchor="middle">列 6</text>
+<circle cx="1310" cy="1810" r="26" class="j2pad"/>
+<text x="1310" y="1815" class="padlab" text-anchor="middle">B6</text>
+<text x="1304" y="1774" class="net_s" text-anchor="middle" data-net="KEY_B">KEY_B</text>
+<circle cx="1310" cy="1930" r="26" class="j2pad"/>
+<text x="1310" y="1935" class="padlab" text-anchor="middle">A6</text>
+<text x="1304" y="1986" class="net_s" text-anchor="middle" data-net="KEY_A">KEY_A</text>
+<text x="1432" y="1760" class="collab" text-anchor="middle">列 7</text>
+<circle cx="1432" cy="1810" r="26" class="j2pad"/>
+<text x="1432" y="1815" class="padlab" text-anchor="middle">B7</text>
+<text x="1426" y="1774" class="net_s" text-anchor="middle" data-net="KEY_Y">KEY_Y</text>
+<circle cx="1432" cy="1930" r="26" class="j2pad"/>
+<text x="1432" y="1935" class="padlab" text-anchor="middle">A7</text>
+<text x="1426" y="1986" class="net_s" text-anchor="middle" data-net="KEY_X">KEY_X</text>
+<text x="1554" y="1760" class="collab" text-anchor="middle">列 8</text>
+<circle cx="1554" cy="1810" r="26" class="j2pad"/>
+<text x="1554" y="1815" class="padlab" text-anchor="middle">B8</text>
+<text x="1548" y="1774" class="net_s" text-anchor="middle" data-net="DOCK_SCL">DOCK_SCL</text>
+<circle cx="1554" cy="1930" r="26" class="j2pad"/>
+<text x="1554" y="1935" class="padlab" text-anchor="middle">A8</text>
+<text x="1548" y="1986" class="net_s" text-anchor="middle" data-net="DOCK_SDA">DOCK_SDA</text>
+<text x="636" y="1816" class="collab" text-anchor="end">行 B</text>
+<text x="636" y="1936" class="collab" text-anchor="end">行 A</text>
+<line x1="700" y1="2022" x2="1554" y2="2022" class="dim"/>
+<line x1="700" y1="2016" x2="700" y2="2028" class="dim"/>
+<line x1="1554" y1="2016" x2="1554" y2="2028" class="dim"/>
+<text x="1127.0" y="2044" class="note" text-anchor="middle">7 × 2.54 = 17.78 mm（ASSUMPTION AS-07）</text>
+<text x="640" y="2082" class="note" text-anchor="start">列 1 在 −X 极端（靠左握把外侧）；列 8 靠 Mosaico 中央。</text>
+<text x="640" y="2108" class="note" text-anchor="start">列 1 = DOCK_5V ×2，列 2 = DOCK_GND ×2，列 3–7 = 十键成对同列，列 8 = DOCK_SDA/SCL。</text>
+<text x="640" y="2134" class="note" text-anchor="start">焊盘 Ø1.8 mm（ASSUMPTION AS-31-mb-3），表面处理 ENIG（AS-31-mb-8）。</text>
+<text x="640" y="2160" class="note" text-anchor="start">底座主板顶层弹簧针按相同 (X, Z) 布置，两板之间不做镜像。</text>
+<text x="640" y="2190" class="note" text-anchor="start">错位分析见 ICD 第 3.3 节：X ±1 列、Z 错一行均无损；绕 Y 轴 180° 由一级机械防呆保证触不到针。</text>
+<text x="640" y="2216" class="warnnote" text-anchor="start">装 R_LINK 后 180° 错放变为有损，因此装 R_LINK 的前提是 AS-08 一级防呆已关闭。</text>
+</svg>
