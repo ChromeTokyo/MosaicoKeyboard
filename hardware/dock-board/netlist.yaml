@@ -1,0 +1,797 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+#
+# 底座主板（方案 D＋G：电池管理 ＋ 10 键 ＋ 弹簧针 ＋ USB-C，无 MCU、无 I²C 扩展器）
+# YAML 网表，修订 A0-proposal（2026-09-21）。
+#
+# 约定：
+#   - 引脚标识用**功能针名**（不是封装针号）。已核对针号映射的器件在 `pin_numbers` 字段给出；
+#     未核对的器件写 `pin_numbers: 待原厂数据手册核对`，该器件**布局前必须关闭**（DESIGN_NOTES.md 第 10 节）。
+#   - 每个 net 的 `pins` 列出全部 (refdes, pin)。单针网（NC / 待定）也列出，便于核对每个引脚恰好有一个归属。
+#   - `dnp: true` 的器件默认不装配，只保留封装。
+#   - 标 "ASSUMPTION:" 的字段未经实物或原厂数据手册核对，登记见 DESIGN_NOTES.md 第 11 节。
+#   - LCSC 编码与「嘉立创常备」判断在 BOM.csv；本文件只给型号候选与来源。
+#   - 器件封装引脚名若来自仓库缓存的嘉立创器件库 JSON（`references/Cxxxxxx.json`），注明 `pin_source: cached-lib`；
+#     缓存库不是原厂数据手册，参数仍写「待原厂数据手册核对」。
+# 一致性检查：python3 hardware/dock-board/check_netlist.py
+
+meta:
+  board: dock-board
+  title: ESP-Mosaico 长条手持终端 · 底座主板
+  revision: A0-proposal
+  date: "2026-09-21"
+  status: proposal-not-frozen
+  author: Claude 主控（claude-opus-5）
+  icd: hardware/ICD-0.2-DRAFT.md
+  topology: hardware/dock-board/POWER_TOPOLOGY.md
+  budget: hardware/dock-board/POWER_BUDGET.md
+  notes: hardware/dock-board/DESIGN_NOTES.md
+  module_pinmap: hardware/module-board/PINMAP.md   # origin/claude/design-d/module-board
+  logic_domain_keys: 3.3V（主机域；底座侧只有无源开关接 DOCK_GND）
+  invariants:
+    - 无 MCU、无 I²C 扩展器、无任何固件；VBUS_IN/VBAT → DOCK_5V 全链只由本板电压与机械状态决定（硬约束 1、EL-D-01、任务书 R04）。
+    - 本板不存在任何 3.3 V 网络；弹簧针接口无 3V3 针（硬约束 3、EL-D-03）。检查：网名中不得出现 3V3。
+    - KEY_* 只连轻触开关与 J2；底座侧不放任何上拉、不接任何电源（硬约束 5、EL-D-05）。
+    - DOCK_SDA/DOCK_SCL 上只允许可选电量计 U_FG（默认 DNP），地址必须避开 0x50/0x51（硬约束 6、EL-D-06）。
+    - DOCK_5V 输出经 U_LIM 限流 ＋ U_RB 理想二极管两级防反灌（硬约束 8、EL-D-08）。
+    - BOOST_EN、LIM_EN 两个使能网的 pins 中不得出现 J2 或 U_FG（POWER_TOPOLOGY.md 第 3 节 (a) 的机械核对；由 check_netlist.py 执行）。
+
+# 本网表引用的假设编号（hardware/ASSUMPTIONS.md；AS-31-dock-n 为本分支临时编号，登记在 DESIGN_NOTES.md 第 11 节）
+assumptions:
+  - AS-09    # 整机峰值 ≤1 A、持续 ≤0.6 A @5 V，无官方依据
+  - AS-10    # DOCK_5V 名义 5 V；pin17 输入窗口 unknown
+  - AS-11    # 主机内部 pin17 与原生 VBUS 合并拓扑 V1.2 unknown
+  - AS-12    # 电池 1500 mAh 3.7 V，尺寸/保护板/NTC/插头 unknown
+  - AS-19    # pin17 对热插拔浪涌与等长针同时接触可容忍
+  - AS-26    # 弹簧针单针额定「待原厂数据手册核对」
+  - AS-27    # 嘉立创常备料
+  - AS-31-dock-1   # 升压设定 5.10 V
+  - AS-31-dock-2   # 输出限流 R_ILIM_OUT 19.6 kΩ → IOS 1.3 A
+  - AS-31-dock-4   # R_ISET 1.78 kΩ → 充电 500 mA
+  - AS-31-dock-5   # R_ILIM_CHG 1.1 kΩ → 输入限 1.46 A；适配器 ≥1.5 A
+  - AS-31-dock-6   # 电池包是否自带 PCM unknown；板上默认装 U_PROT+Q_PROT
+  - AS-31-dock-7   # TS 用 10 kΩ NTC 曲线
+  - AS-31-dock-8   # J2 列 2（DOCK_GND）用行程更长针型实现地先接触
+  - AS-31-dock-9   # LED_OUT 静态电流与 JP_LED
+  - AS-31-dock-10  # U_UV 关断点 3.0 V
+  - AS-31-dock-12  # 底座只按 5 V 单一输入设计（CC 双 5.1 kΩ Rd，不做 PD）
+  - AS-31-dock-18  # L1 1.0 µH、Isat ≥4.5 A
+  - AS-31-dock-19  # J3 针序 B+/NTC/B− = 1/2/3
+  - AS-31-dock-20  # U_PROT/Q_PROT 为 DW01A＋FS8205A 类通用接法，引脚号与外围取值待核
+  - AS-31-dock-21  # 默认装 R_TS_FIX、R_TS_NTC DNP → 首版无电池温度保护，仅限台架
+  - AS-31-dock-22  # U_UV 型号与 SOT-23-3 引脚顺序待核
+  - AS-31-dock-23  # USB-C 焊盘名取自缓存库 JSON，非原厂图纸
+  - AS-31-dock-24  # 轻触开关实物 4 脚，缓存库符号为 2 焊盘
+  - AS-31-dock-25  # 弹簧针型号未选定
+  - AS-31-dock-26  # U_FG = MAX17048，7 位地址 0x36 待核，默认 DNP
+  - AS-31-dock-27  # 底座不设用户电源开关
+  - AS-31-dock-28  # 缓存库 JSON 的嘉立创分类与库存为快照
+
+# ---------------------------------------------------------------------------
+# J2 弹簧针接口合同：ICD-0.2-DRAFT 第 3.2 节列序 ＋ 模块板 PINMAP.md 第 4.2 节镜像。
+# 本表是 check_netlist.py 的核对输入，不是设计自由度。
+# 列 c=1…8 沿 X，列 1 在 −X 最外侧；行 A 靠 +Z（屏侧），行 B 靠 −Z（背侧）。
+# 底座弹簧针针尖朝 +Y，与模块板焊盘用**相同 (X, Z)**，两板之间不做镜像（PINMAP.md 第 4.1 节）。
+# ---------------------------------------------------------------------------
+j2_contract:
+  A1: {net: DOCK_5V,   col: 1, row: A, module_pad: A1, h2_pin: 17, gpio: null, note: 两针并联}
+  B1: {net: DOCK_5V,   col: 1, row: B, module_pad: B1, h2_pin: 17, gpio: null, note: 两针并联}
+  A2: {net: DOCK_GND,  col: 2, row: A, module_pad: A2, h2_pin: 20, gpio: null, note: 两针并联；本列用行程更长针型（AS-31-dock-8）}
+  B2: {net: DOCK_GND,  col: 2, row: B, module_pad: B2, h2_pin: 20, gpio: null, note: 同上}
+  A3: {net: KEY_UP,    col: 3, row: A, module_pad: A3, h2_pin: 1,  gpio: 55}
+  B3: {net: KEY_DOWN,  col: 3, row: B, module_pad: B3, h2_pin: 3,  gpio: 19}
+  A4: {net: KEY_LEFT,  col: 4, row: A, module_pad: A4, h2_pin: 5,  gpio: 18}
+  B4: {net: KEY_RIGHT, col: 4, row: B, module_pad: B4, h2_pin: 7,  gpio: 17}
+  A5: {net: KEY_L,     col: 5, row: A, module_pad: A5, h2_pin: 9,  gpio: 16}
+  B5: {net: KEY_R,     col: 5, row: B, module_pad: B5, h2_pin: 11, gpio: 15}
+  A6: {net: KEY_A,     col: 6, row: A, module_pad: A6, h2_pin: 2,  gpio: 53}
+  B6: {net: KEY_B,     col: 6, row: B, module_pad: B6, h2_pin: 4,  gpio: 48}
+  A7: {net: KEY_X,     col: 7, row: A, module_pad: A7, h2_pin: 6,  gpio: 13}
+  B7: {net: KEY_Y,     col: 7, row: B, module_pad: B7, h2_pin: 8,  gpio: 12}
+  A8: {net: DOCK_SDA,  col: 8, row: A, module_pad: A8, h2_pin: 16, gpio: 0,  note: 经模块板 DNP R_LINK_SDA 才到主机；默认断开}
+  B8: {net: DOCK_SCL,  col: 8, row: B, module_pad: B8, h2_pin: 14, gpio: 1,  note: 经模块板 DNP R_LINK_SCL 才到主机；默认断开}
+
+# 十键 ↔ 开关 ↔ J2 焊盘（GPIO 只在模块板 PINMAP.md 定义，本表是其镜像）
+key_map:
+  KEY_UP:    {switch: SW_UP,    j2: A3, h2_pin: 1,  gpio: 55}
+  KEY_DOWN:  {switch: SW_DOWN,  j2: B3, h2_pin: 3,  gpio: 19}
+  KEY_LEFT:  {switch: SW_LEFT,  j2: A4, h2_pin: 5,  gpio: 18}
+  KEY_RIGHT: {switch: SW_RIGHT, j2: B4, h2_pin: 7,  gpio: 17}
+  KEY_L:     {switch: SW_L,     j2: A5, h2_pin: 9,  gpio: 16}
+  KEY_R:     {switch: SW_R,     j2: B5, h2_pin: 11, gpio: 15}
+  KEY_A:     {switch: SW_A,     j2: A6, h2_pin: 2,  gpio: 53}
+  KEY_B:     {switch: SW_B,     j2: B6, h2_pin: 4,  gpio: 48}
+  KEY_X:     {switch: SW_X,     j2: A7, h2_pin: 6,  gpio: 13}
+  KEY_Y:     {switch: SW_Y,     j2: B7, h2_pin: 8,  gpio: 12}
+
+board:
+  layers: 4
+  layers_note: >
+    提案 4 层（顶 / GND / 电源 / 底）。理由：U_BOOST 的 SW 节点需要完整参考地面，U_CHG 与 U_BOOST 需要大面积
+    铺铜散热（POWER_BUDGET.md 第 6 节），且 J2 下方不允许走开关节点。2 层可行但热与 EMI 余量差，
+    由 Chrome 在成本与余量之间取舍（DESIGN_NOTES.md 第 2 节）。
+  thickness_mm: 1.6
+  finish: ENIG
+  copper_oz: 1
+  outline_params: [DOCK_BOARD_L, DOCK_BOARD_W, DOCK_PIN_FIELD_X0, DOCK_PIN_FIELD_Z0, DOCK_PIN_FIELD_Y]
+  outline_note: 外形与弹簧针场坐标由 mech-dock 任务给值（ICD 第 1 节参数表、ME-D-10）；本网表不填数。
+
+# ===========================================================================
+# 器件
+# ===========================================================================
+components:
+
+  # ---- 输入级：USB-C、保险、TVS、CC 下拉 ----------------------------------
+  J1:
+    class: connector
+    description: USB Type-C 16P 母座（只用 VBUS/GND/CC1/CC2；D±、SBU 不连）。受电设备（UFP/Sink），不做 PD
+    part: TYPE-C-31-M-12
+    lcsc: C165948
+    package: USB-C_SMD-TYPE-C-31-M-12
+    pin_source: cached-lib   # references/C165948.json
+    pins: 16
+    pin_names: [A1B12, A4B9, B8, A5, B7, A6, A7, B6, A8, B5, B4A9, B1A12, SH1, SH2, SH3, SH4]
+    pin_numbers: 缓存库以焊盘名标识；SH1–SH4 在缓存库中名为 1/2/3/4（EH 安装脚），本网表改名以免与信号针混淆
+    param_note: 额定电流、插拔寿命、焊盘图「待原厂数据手册核对」（ASSUMPTION AS-31-dock-23）
+
+  F1:
+    class: protection
+    description: 输入保险（PPTC 或一次性），2 A 保持，1206。只在硬故障时切断适配器，不参与正常限流
+    pins: 2
+    package: R1206
+    value: "2 A hold / ≥4 A trip（提案）"
+    param_note: 型号与 I_hold/I_trip/R_max「待原厂数据手册核对」
+
+  D1:
+    class: protection
+    description: VBUS 单向 TVS 到 DOCK_GND（浪涌/ESD）。U_CHG 自带 10.5 V OVP，不另加输入 OVP 器件
+    pins: 2
+    pin_names: [A, K]
+    package: SMA
+    value: "VRWM 5 V 级（SMAJ5.0A 类）"
+    param_note: VBR/VC/IPP「待原厂数据手册核对」
+
+  R_CC1: {class: resistor, description: CC1 下拉 Rd（声明为受电设备）, pins: 2, package: R0603, value: "5.1 kΩ ±1 %"}
+  R_CC2: {class: resistor, description: CC2 下拉 Rd, pins: 2, package: R0603, value: "5.1 kΩ ±1 %"}
+  C_IN:  {class: capacitor, description: U_CHG 输入去耦, pins: 2, package: C0805, value: "10 µF X5R 25 V"}
+
+  # ---- 充电与电源路径 -----------------------------------------------------
+  U_CHG:
+    class: ic-charger
+    description: >
+      独立式（无 I²C、无 MCU）线性充电 ＋ 动态电源路径管理（DPPM）。输入有效时系统负载优先、剩余充电；
+      无电池或电池损坏时 OUT 仍可供系统（支持 G6-A2「只 USB、不接电池」）
+    part: BQ24074RGTR
+    lcsc: C54313
+    package: QFN-16 3×3 mm + EP
+    datasheet: https://www.ti.com/lit/ds/symlink/bq24074.pdf   # SLUS810N，POWER_TOPOLOGY.md 第 0 节已打开核对
+    pin_source: datasheet+cached-lib
+    pins: 17
+    pin_names: [TS, BAT_A, BAT_B, CE, EN2, EN1, PGOOD, VSS, CHG, OUT_A, OUT_B, ILIM, IN, TMR, ITERM, ISET, EP]
+    pin_numbers: {TS: 1, BAT_A: 2, BAT_B: 3, CE: 4, EN2: 5, EN1: 6, PGOOD: 7, VSS: 8, CHG: 9, OUT_A: 10, OUT_B: 11, ILIM: 12, IN: 13, TMR: 14, ITERM: 15, ISET: 16, EP: 17}
+    config:
+      EN2_EN1: "(1, 0) = 由 ILIM 电阻设定输入限（Table 7-2）；EN2→VSYS 而非 VBUS_IN，避免逻辑脚超绝对最大值"
+      CE: "低 = 允许充电（内部 285 kΩ 下拉，不得悬空）"
+      ITERM: "开路 = 默认 10 % ICHG（50 mA）"
+      TMR: "开路 = 默认快充 18000 s；预留 R_TMR（DNP）延长"
+
+  C_OUT: {class: capacitor, description: U_CHG OUT（VSYS）去耦, pins: 2, package: C0805, value: "10 µF X5R 25 V"}
+  C_BAT: {class: capacitor, description: U_CHG BAT（VBAT）去耦, pins: 2, package: C0805, value: "10 µF X5R 25 V"}
+  R_ISET:
+    class: resistor
+    description: 快充电流设定，ICHG = KISET/RISET，KISET 890 AΩ typ（797–973）
+    pins: 2
+    package: R0603
+    value: "1.78 kΩ ±1 % → 500 mA typ（448–547）"
+    source: 数据手册 SLUS810N；ASSUMPTION AS-31-dock-4
+  R_ILIM_CHG:
+    class: resistor
+    description: 输入电流限设定，IINmax = KILIM/RILIM，KILIM 1610 AΩ typ（1500–1720）
+    pins: 2
+    package: R0603
+    value: "1.1 kΩ ±1 % → 1.46 A typ（1.36–1.56）"
+    source: 数据手册 SLUS810N；ASSUMPTION AS-31-dock-5
+  R_TMR:
+    class: resistor
+    description: 安全定时器延长位（DNP）。装后 t ≈ 10 × R(kΩ) × 48 s（POWER_TOPOLOGY.md 第 2.2 节）
+    pins: 2
+    package: R0603
+    value: "71.5 kΩ ±1 %（E96 最近值；POWER_TOPOLOGY 写 72 kΩ）→ ≈9.5 h"
+    dnp: true
+  R_TS_FIX:
+    class: resistor
+    description: >
+      TS 固定电阻（**默认装配**）。使 TS 恒读 ≈25 °C，充电温度保护不起作用 —— 仅限首版台架；
+      面向用户的整机必须改装电池 NTC（拆 R_TS_FIX、装 R_TS_NTC）。ASSUMPTION AS-31-dock-21
+    pins: 2
+    package: R0603
+    value: "10 kΩ ±1 %"
+  R_TS_NTC:
+    class: resistor
+    description: 0 Ω 连接位（DNP）：把电池包 NTC（J3.B_NTC）接到 U_CHG.TS。AS-12 确认电池带 NTC 后装此位并拆 R_TS_FIX
+    pins: 2
+    package: R0603
+    value: 0R
+    dnp: true
+  R_LED_PG:  {class: resistor, description: LED_PG 限流（电流取自适配器，不计入电池预算）, pins: 2, package: R0603, value: "1 kΩ ±1 %"}
+  R_LED_CHG: {class: resistor, description: LED_CHG 限流, pins: 2, package: R0603, value: "1 kΩ ±1 %"}
+  LED_PG:    {class: led, description: 电源良好指示（绿）；U_CHG.PGOOD 开漏有效输入时拉低, pins: 2, pin_names: [A, K], package: LED0805, param_note: Vf 与色温「待原厂数据手册核对」}
+  LED_CHG:   {class: led, description: 充电指示（红）；U_CHG.CHG 开漏充电中拉低、充满高阻, pins: 2, pin_names: [A, K], package: LED0805, param_note: 同上}
+
+  # ---- 电池与保护 ---------------------------------------------------------
+  J3:
+    class: connector
+    description: 电池插座 3 针（B+、NTC、B−）＋2 安装脚。2.0 mm PH 类
+    part: B3B-PH-SM4-TB(LF)(SN)
+    lcsc: C160353
+    package: CONN-SMD_B3B-PH-SM4-TB
+    pin_source: cached-lib   # references/C160353.json：5 焊盘（1,2,3 ＋ 2 安装脚）
+    pins: 5
+    pin_names: [B_POS, B_NTC, B_NEG, MH1, MH2]
+    pin_numbers: {B_POS: 1, B_NTC: 2, B_NEG: 3, MH1: 4, MH2: 5}
+    param_note: >
+      ASSUMPTION AS-31-dock-19：针序 B+/NTC/B− 与所选电池线序一致。**接电池前必须万用表核对极性**
+      （电池断开、不带电测电压；严禁带电测电阻）。型号与电流额定随 AS-12 回填
+
+  U_PROT:
+    class: ic-battery-protection
+    description: >
+      单节锂电保护 IC（DW01A 类：过充 ≈4.25–4.30 V、过放 ≈2.40 V、过流/短路）。默认装配（AS-31-dock-6）。
+      **本器件的封装引脚号、R_PROT/R_CS 取值未经数据手册核对（AS-31-dock-20），布局前必须关闭**
+    pins: 6
+    pin_names: [VCC, VSS, OD, OC, CS, TD]
+    pin_numbers: 待原厂数据手册核对
+    package: SOT-23-6
+    param_note: 全部阈值「待原厂数据手册核对」
+  Q_PROT:
+    class: mosfet
+    description: 双 N-MOS 背靠背（FS8205A 类），串在电池 B− 与 DOCK_GND 之间；两管漏极内部共连
+    pins: 6
+    pin_names: [S1A, S1B, G1, G2, S2A, S2B]
+    pin_numbers: 待原厂数据手册核对
+    package: SOT-23-6
+    param_note: >
+      RDS(on)、ID「待原厂数据手册核对」。放电峰值按 POWER_BUDGET.md 第 3.1 节 1.97 A；
+      **U_PROT 过流检测阈值必须 > 2.0 A 才不会在峰值误切**（选型硬门槛）
+  R_PROT: {class: resistor, description: U_PROT 供电限流（VBAT → PROT_VCC）, pins: 2, package: R0603, value: "330 Ω ±1 %（提案，待数据手册应用电路核对）"}
+  C_PROT: {class: capacitor, description: U_PROT 电源去耦（PROT_VCC → BATT_MINUS）, pins: 2, package: C0603, value: "100 nF X7R 50 V"}
+  R_CS:   {class: resistor, description: U_PROT CS 取样串阻（CS → DOCK_GND = PACK−）, pins: 2, package: R0603, value: "2 kΩ ±1 %（提案，待数据手册应用电路核对）"}
+  R_PROT_BYP:
+    class: resistor
+    description: 0 Ω 旁路（DNP）：AS-12 确认电池包自带 PCM 时，DNP 掉 U_PROT/Q_PROT 并装此位，把 B− 直连 DOCK_GND
+    pins: 2
+    package: R1206
+    value: 0R
+    dnp: true
+
+  # ---- 低压关断使能 -------------------------------------------------------
+  U_UV:
+    class: ic-voltage-detector
+    description: >
+      电压检测器，检测点 3.0 V（释放 ≈3.1–3.15 V），CMOS 推挽输出，SOT-23-3。监测 VSYS，输出经 R_EN 驱动
+      U_BOOST.EN。USB 接入时 VSYS = 4.4 V 恒大于阈值 → 输出恒开，与电池是否耗尽无关（EL-D-01）
+    pins: 3
+    pin_names: [VDD, GND, OUT]
+    pin_numbers: 待原厂数据手册核对   # ASSUMPTION AS-31-dock-22
+    package: SOT-23-3
+    param_note: 阈值精度、迟滞、IQ「待原厂数据手册核对」；候选见 BOM.csv
+  C_UV: {class: capacitor, description: U_UV 去耦, pins: 2, package: C0603, value: "100 nF X7R 50 V"}
+  R_EN: {class: resistor, description: U_UV.OUT → BOOST_EN 串阻；同时把 SW_DOCK 的拉低与 U_UV 推挽输出隔离, pins: 2, package: R0603, value: "100 kΩ ±1 %"}
+  SW_DOCK:
+    class: switch
+    description: >
+      机械到位联锁微动开关（**DNP，默认不装**），常闭触点 COM–NC 接在 BOOST_EN 与 DOCK_GND 之间：
+      未放入 Mosaico 时拉低 EN，放入到位后断开。纯硬件、不依赖主机信号。默认 DNP 是为了满足
+      G6-A2「不接 Mosaico 时 DOCK_5V 即有输出」的分步测试顺序；是否装配由 Chrome 在 G6-G 后决定
+    pins: 3
+    pin_names: [COM, NC, NO]
+    pin_numbers: 待原厂数据手册核对
+    package: 微动开关（型号待定）
+    dnp: true
+
+  # ---- 升压 ---------------------------------------------------------------
+  U_BOOST:
+    class: ic-boost
+    description: >
+      同步升压，VIN 0.5–5.5 V、VOUT 2.2–5.5 V、谷值限流 3.7 A typ（2.7 A min）、1 MHz。
+      关断时输入输出真断开（True disconnection），输出 OVP 5.7 V typ
+    part: TPS61023DRLR
+    lcsc: C919459
+    package: SOT-563
+    datasheet: https://www.ti.com/lit/ds/symlink/tps61023.pdf   # SLVSF14B，POWER_TOPOLOGY.md 第 0 节已打开核对
+    pin_source: datasheet+cached-lib
+    pins: 6
+    pin_names: [FB, EN, VIN, GND, SW, VOUT]
+    pin_numbers: {FB: 1, EN: 2, VIN: 3, GND: 4, SW: 5, VOUT: 6}
+    config:
+      VOUT: "VREF × (1 + R_FB1/R_FB2)，VREF 595 mV typ（580–610）→ 5.10 V 名义（AS-31-dock-1）"
+      operating_point: "VSYS 3.0–4.5 V 恒小于 5.10 V，永不进入直通模式"
+  L1:
+    class: inductor
+    description: 升压电感。数据手册允许 0.37–2.9 µH；本设计 1.0 µH
+    part: FTC201610S1R0MBCA（候选；LCSC C5832342，2.0×1.6 mm）
+    pins: 2
+    package: IND-SMD 2.0×1.6 mm（候选；若 Isat 不足改 4×4 mm）
+    value: "1.0 µH"
+    requirement: "Isat ≥ 4.5 A（谷值限 3.7 A ＋ 半个纹波，POWER_BUDGET.md 第 3.2 节）、DCR ≤ 30 mΩ"
+    param_note: 候选件 Isat/DCR「待原厂数据手册核对」；ASSUMPTION AS-31-dock-18。2.0×1.6 mm 封装很可能 Isat 不足，见 BOM.csv
+  C_BST_IN:   {class: capacitor, description: 升压输入电容（与 C_OUT 并联在 VSYS）, pins: 2, package: C0805, value: "10 µF X5R 25 V"}
+  C_BST_OUT1: {class: capacitor, description: 升压输出电容 1/2；有效电容随直流偏压下降，按 ≥20 µF 有效值选, pins: 2, package: C0805, value: "22 µF X5R 25 V"}
+  C_BST_OUT2: {class: capacitor, description: 升压输出电容 2/2, pins: 2, package: C0805, value: "22 µF X5R 25 V"}
+  R_FB1: {class: resistor, description: 反馈上分压（BOOST_5V → BOOST_FB）, pins: 2, package: R0603, value: "909 kΩ ±1 %"}
+  R_FB2: {class: resistor, description: 反馈下分压（BOOST_FB → DOCK_GND）；R2 < 300 kΩ 满足数据手册 8.2.2.1, pins: 2, package: R0603, value: "120 kΩ ±1 %"}
+  C_FF:
+    class: capacitor
+    description: 反馈前馈电容位（DNP），跨 R_FB1。是否需要待 TPS61023 数据手册 8.2.2 与实测环路决定
+    pins: 2
+    package: C0603
+    value: "10 pF（待定）"
+    dnp: true
+
+  # ---- 限流 ---------------------------------------------------------------
+  U_LIM:
+    class: ic-current-limit
+    description: >
+      恒流型限流开关（非锁死变体）。2.5–6.5 V、连续 1.5 A、rDS(on) 85 mΩ typ、内置软启动 0.7–1.5 ms、
+      短路响应 2 µs、155 °C 过热关断自恢复；**反向电压保护**：VOUT 高于 VIN 135 mV typ 持续 4 ms typ 关断
+    part: TPS2553DBVR
+    lcsc: C55266
+    package: SOT-23-6
+    datasheet: https://www.ti.com/lit/ds/symlink/tps2553.pdf   # SLVS841F，POWER_TOPOLOGY.md 第 0 节已打开核对
+    pin_source: datasheet+cached-lib
+    pins: 6
+    pin_names: [IN, GND, EN, FAULT, ILIM, OUT]
+    pin_numbers: {IN: 1, GND: 2, EN: 3, FAULT: 4, ILIM: 5, OUT: 6}
+    config:
+      variant: "选恒流型（TPS2553），不选锁死型 TPS2553-1；理由见 DESIGN_NOTES.md 第 3 节"
+      EN: "高有效，经 R_EN_LIM 100 kΩ 接 BOOST_5V —— 升压有电即开启，无软件参与"
+  R_EN_LIM:    {class: resistor, description: U_LIM.EN 上拉到 BOOST_5V, pins: 2, package: R0603, value: "100 kΩ ±1 %"}
+  R_ILIM_OUT:
+    class: resistor
+    description: 输出限流设定，IOS_nom(mA) = 23950 / RILIM(kΩ)^0.977
+    pins: 2
+    package: R0603
+    value: "19.6 kΩ ±1 % → IOS min/nom/max = 1215/1308/1415 mA（数据手册 Table 2）"
+    source: ASSUMPTION AS-31-dock-2；TH-03 正式值待 Chrome 定义；1.0 A 档换 26.1 kΩ
+  C_LIM_IN: {class: capacitor, description: U_LIM 输入旁路（靠近 IN）, pins: 2, package: C0603, value: "100 nF X7R 50 V"}
+  R_FLT:    {class: resistor, description: LED_FLT 限流（BOOST_5V → LED_FLT.A）, pins: 2, package: R0603, value: "4.7 kΩ ±1 %"}
+  LED_FLT:  {class: led, description: 过流/反向故障指示（红）；U_LIM.FAULT 开漏, pins: 2, pin_names: [A, K], package: LED0603, param_note: Vf「待原厂数据手册核对」}
+
+  # ---- 防反灌 -------------------------------------------------------------
+  U_RB:
+    class: ic-ideal-diode
+    description: >
+      理想二极管 / 反向电流阻断。1.5–5.5 V、1.5 A 连续、RON 79 mΩ typ（110 mΩ max）、IQ 150 nA。
+      CE 接 VOUT 时为反向电流保护模式：VCE − VIN > 35 mV typ 关断，反向阻断后 OUT→IN 漏电 ≤5.1 µA max
+    part: LM66100DCKR
+    lcsc: C2869734
+    package: SC-70-6
+    datasheet: https://www.ti.com/lit/ds/symlink/lm66100.pdf   # SLVSEZ8A，POWER_TOPOLOGY.md 第 0 节已打开核对
+    pin_source: datasheet+cached-lib
+    pins: 6
+    pin_names: [VIN, GND, CE, NC, ST, VOUT]
+    pin_numbers: {VIN: 1, GND: 2, CE: 3, NC: 4, ST: 5, VOUT: 6}
+    config:
+      CE: "接 VOUT（数据手册 Pin Functions 明示的反向电流保护接法）"
+      NC: "按 POWER_TOPOLOGY.md 第 2.7 节接 DOCK_GND；数据手册标 N/C，接地为保守做法，复核时可改为真 NC"
+  R_BYP:
+    class: resistor
+    description: 0 Ω 旁路（DNP）跨 U_RB 的 VIN–VOUT。若 Chrome 复核判定 U_LIM 单级反向保护足够，可去掉 U_RB 改桥接
+    pins: 2
+    package: R1206
+    value: 0R
+    dnp: true
+
+  # ---- 输出节点与接口 -----------------------------------------------------
+  C_DOCK:
+    class: capacitor
+    description: >
+      DOCK_5V 输出电容，**故意只放 1 µF**：热插拔瞬间向主机输入电容倾泻的电荷来自此电容，
+      大电容留在 BOOST_5V 侧（DESIGN_NOTES.md 第 4 节）
+    pins: 2
+    package: C0603
+    value: "1 µF X7R 50 V"
+  D2:
+    class: protection
+    description: DOCK_5V 对 DOCK_GND 双向 TVS，保护暴露的弹簧针
+    pins: 2
+    package: SOD-323
+    value: "VRWM 5 V 级，双向"
+    param_note: VC/IPP/结电容「待原厂数据手册核对」
+  R_LED_OUT: {class: resistor, description: LED_OUT 限流（DOCK_5V → LED_OUT.A）, pins: 2, package: R0603, value: "4.7 kΩ ±1 %"}
+  LED_OUT:   {class: led, description: DOCK_5V 有输出指示（蓝/白），G6-A2「指示灯真值」用, pins: 2, pin_names: [A, K], package: LED0603, param_note: Vf「待原厂数据手册核对」}
+  JP_LED:
+    class: solder-jumper
+    description: 焊桥（**默认闭合**）串在 LED_OUT 回路里；量产可断开省 ≈0.5 mA（AS-31-dock-9）
+    pins: 2
+    package: SolderJumper-2pad
+    default_bridge: true
+
+  J2:
+    class: connector-pogo
+    description: >
+      弹簧针场 2 行 × 8 列、2.54 mm，针尖朝 +Y，位于模块板正下方、偏置 −X 侧（ICD 第 3.1/3.3 节）。
+      列 1 在 −X 最外侧；行 A 靠 +Z（屏侧）。**每天插拔发生在这里**
+    pins: 16
+    pin_names: [A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8]
+    package: POGO-2x8-P2.54（型号未选定）
+    part: 待选（ASSUMPTION AS-31-dock-25；候选类别见 BOM.csv）
+    param_note: >
+      单针额定电流、工作行程、接触电阻、插拔寿命全部「待原厂数据手册核对」（AS-26）。
+      列 2（DOCK_GND）要求工作高度比其余列多约 0.5 mm 以实现地先接触（AS-31-dock-8）；
+      若所选针型无此规格，退回 ICD 第 3.3 节第二条路线（靠软启动与主机输入容忍，AS-19）
+
+  SW_UP:    {class: switch, description: 轻触开关 KEY_UP（D-pad 上）, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_DOWN:  {class: switch, description: 轻触开关 KEY_DOWN, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_LEFT:  {class: switch, description: 轻触开关 KEY_LEFT, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_RIGHT: {class: switch, description: 轻触开关 KEY_RIGHT, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_L:     {class: switch, description: 轻触开关 KEY_L（左肩键）, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_R:     {class: switch, description: 轻触开关 KEY_R（右肩键）, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_A:     {class: switch, description: 轻触开关 KEY_A, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_B:     {class: switch, description: 轻触开关 KEY_B, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_X:     {class: switch, description: 轻触开关 KEY_X, pins: 2, package: SW-SMD 3.9×3.0 mm}
+  SW_Y:     {class: switch, description: 轻触开关 KEY_Y, pins: 2, package: SW-SMD 3.9×3.0 mm}
+
+  # ---- 可选电量计（默认 DNP，EL-D-06/EL-D-10）------------------------------
+  U_FG:
+    class: ic-fuel-gauge
+    description: >
+      可选单节电池电量计（I²C）。**默认 DNP**：EL-D-10 要求先审核其未上电时 SDA/SCL 的 Ioff / 断电容限，
+      且模块板侧 R_LINK_SDA/SCL 亦默认 DNP。装配前提：AS-08 一级机械防呆已关闭（PINMAP.md 第 4.3 节第 2 条）
+    part: MAX17048G+T10
+    lcsc: C2682616
+    package: TDFN-8 2×2 mm + EP
+    pin_source: cached-lib   # references/C2682616.json
+    pins: 9
+    pin_names: [CTG, CELL, VDD, GND, ALRT, QSTRT, SCL, SDA, EP]
+    pin_numbers: {CTG: 1, CELL: 2, VDD: 3, GND: 4, ALRT: 5, QSTRT: 6, SCL: 7, SDA: 8, EP: 9}
+    address_7bit: "0x36（待原厂数据手册核对；ASSUMPTION AS-31-dock-26）。硬约束 6：必须 ≠ 0x50/0x51"
+    dnp: true
+    param_note: >
+      CTG、QSTRT 的接法本次未核对数据手册，网表中暂列为单针待定网，**装配前必须关闭**。
+      总线上拉只能来自主机内部上拉（经模块板 DNP R_LINK）；底座不得放任何上拉（硬约束 5/6）
+  R_FG: {class: resistor, description: U_FG 供电串阻（VBAT → FG_VDD）, pins: 2, package: R0603, value: "1 kΩ ±1 %（待数据手册应用电路核对）", dnp: true}
+  C_FG: {class: capacitor, description: U_FG 去耦, pins: 2, package: C0603, value: "100 nF X7R 50 V", dnp: true}
+
+  # ---- 测试点（名称见 POWER_TOPOLOGY.md 第 2.8 节；位置与丝印由布局阶段定）----
+  TP_VBUS:   {class: testpoint, description: 测试点 VBUS_IN, pins: 1, pad_mm: 1.5}
+  TP_VSYS:   {class: testpoint, description: 测试点 VSYS, pins: 1, pad_mm: 1.5}
+  TP_VBAT:   {class: testpoint, description: 测试点 VBAT, pins: 1, pad_mm: 1.5}
+  TP_BOOST:  {class: testpoint, description: 测试点 BOOST_5V, pins: 1, pad_mm: 1.5}
+  TP_LIM:    {class: testpoint, description: 测试点 LIM_5V（限流后、防反灌前）, pins: 1, pad_mm: 1.5}
+  TP_DOCK5V: {class: testpoint, description: 测试点 DOCK_5V（G6-A2/A4 主读数点）, pins: 1, pad_mm: 2.0}
+  TP_GND_1:  {class: testpoint, description: 测试点 DOCK_GND（电源区）, pins: 1, pad_mm: 2.0}
+  TP_GND_2:  {class: testpoint, description: 测试点 DOCK_GND（接口区，靠近 J2）, pins: 1, pad_mm: 2.0}
+  TP_EN:     {class: testpoint, description: 测试点 BOOST_EN（验证 EL-D-01 使能来源）, pins: 1, pad_mm: 1.5}
+  TP_FAULT:  {class: testpoint, description: 测试点 LIM_FAULT, pins: 1, pad_mm: 1.5}
+  TP_ST:     {class: testpoint, description: 测试点 U_RB.ST（仅测量）, pins: 1, pad_mm: 1.5}
+
+# ===========================================================================
+# 网表
+# ===========================================================================
+nets:
+
+  # ---- 输入级 -------------------------------------------------------------
+  VBUS_RAW:
+    class: power
+    stage: input
+    note: 保险丝前的 USB-C VBUS。ICD 第 9 节未命名此内部节点，本板自取名
+    pins:
+      - [J1, A4B9]
+      - [J1, B4A9]
+      - [F1, 1]
+
+  VBUS_IN:
+    class: power
+    stage: input
+    note: 保险丝后的输入母线。U_CHG 输入范围 4.35–10.5 V，OVP 10.5 V，IN 耐 26 V 不损坏（数据手册）
+    pins:
+      - [F1, 2]
+      - [D1, K]
+      - [C_IN, 1]
+      - [U_CHG, IN]
+      - [R_LED_PG, 1]
+      - [R_LED_CHG, 1]
+      - [TP_VBUS, 1]
+
+  USB_CC1:
+    class: signal
+    stage: input
+    note: CC1 经 5.1 kΩ Rd 到地，声明为受电设备（UFP/Sink）。不做 PD、不读 Rp 电流广告（DESIGN_NOTES.md 第 3 节）
+    pins: [[J1, A5], [R_CC1, 1]]
+  USB_CC2:
+    class: signal
+    stage: input
+    pins: [[J1, B5], [R_CC2, 1]]
+
+  USB_DP1_NC: {class: no-connect, stage: input, note: 不做 USB 数据，焊盘不连铜, pins: [[J1, A6]]}
+  USB_DN1_NC: {class: no-connect, stage: input, pins: [[J1, A7]]}
+  USB_DP2_NC: {class: no-connect, stage: input, pins: [[J1, B6]]}
+  USB_DN2_NC: {class: no-connect, stage: input, pins: [[J1, B7]]}
+  USB_SBU1_NC: {class: no-connect, stage: input, pins: [[J1, A8]]}
+  USB_SBU2_NC: {class: no-connect, stage: input, pins: [[J1, B8]]}
+
+  # ---- 充电级 -------------------------------------------------------------
+  VSYS:
+    class: power
+    stage: power
+    note: >
+      系统母线 = U_CHG.OUT。有输入时调节到 4.4 V typ（4.3–4.5）；无输入时经内部 FET 接 BAT，
+      VDO(BAT-OUT) 50 mV typ / 100 mV max @1 A。EN2 接此网而非 VBUS_IN，避免逻辑脚超绝对最大值
+    pins:
+      - [U_CHG, OUT_A]
+      - [U_CHG, OUT_B]
+      - [U_CHG, EN2]
+      - [C_OUT, 1]
+      - [C_BST_IN, 1]
+      - [U_BOOST, VIN]
+      - [L1, 1]
+      - [U_UV, VDD]
+      - [C_UV, 1]
+      - [TP_VSYS, 1]
+
+  VBAT:
+    class: power
+    stage: power
+    note: 电池正极。峰值放电按 POWER_BUDGET.md 第 3.1 节 1.97 A（VSYS 2.95 V、I_HOST 1.0 A）
+    pins:
+      - [J3, B_POS]
+      - [C_BAT, 1]
+      - [U_CHG, BAT_A]
+      - [U_CHG, BAT_B]
+      - [R_PROT, 1]
+      - [R_FG, 1]
+      - [U_FG, CELL]
+      - [TP_VBAT, 1]
+
+  BATT_NTC:
+    class: signal
+    stage: power
+    note: 电池包 NTC。默认经 DNP R_TS_NTC 与 U_CHG.TS 断开（AS-31-dock-21）
+    pins: [[J3, B_NTC], [R_TS_NTC, 1]]
+
+  CHG_TS:
+    class: signal
+    stage: power
+    note: >
+      U_CHG 温度检测。默认由 R_TS_FIX 10 kΩ 固定 → 恒读 ≈25 °C、温度保护不起作用（**仅限台架**）。
+      AS-12 确认电池带 NTC 后装 R_TS_NTC、拆 R_TS_FIX
+    pins: [[U_CHG, TS], [R_TS_FIX, 1], [R_TS_NTC, 2]]
+
+  CHG_ILIM:  {class: signal, stage: power, note: 输入电流限设定，AS-31-dock-5, pins: [[U_CHG, ILIM], [R_ILIM_CHG, 1]]}
+  CHG_ISET:  {class: signal, stage: power, note: 快充电流设定，AS-31-dock-4, pins: [[U_CHG, ISET], [R_ISET, 1]]}
+  CHG_TMR:   {class: signal, stage: power, note: 安全定时器；R_TMR DNP 时此网只有 U_CHG.TMR 一端有效，等于开路 = 默认定时, pins: [[U_CHG, TMR], [R_TMR, 1]]}
+  CHG_ITERM_NC: {class: no-connect, stage: power, note: 开路 = 默认终止电流 10 % ICHG（50 mA）（数据手册 Pin Functions）, pins: [[U_CHG, ITERM]]}
+
+  LED_PG_A:   {class: signal, stage: power, pins: [[R_LED_PG, 2], [LED_PG, A]]}
+  CHG_PGOOD:  {class: signal, stage: power, note: 开漏，有效输入时拉低；最大灌电流 15 mA, pins: [[U_CHG, PGOOD], [LED_PG, K]]}
+  LED_CHG_A:  {class: signal, stage: power, pins: [[R_LED_CHG, 2], [LED_CHG, A]]}
+  CHG_STAT:   {class: signal, stage: power, note: 开漏，充电中拉低、充满或禁用时高阻, pins: [[U_CHG, CHG], [LED_CHG, K]]}
+
+  # ---- 电池保护子块（AS-31-dock-20：接法为 DW01A＋FS8205A 类通用应用电路，引脚号待核）----
+  BATT_MINUS:
+    class: power
+    stage: power
+    note: 电池负极（CELL−），**不是地**。经 Q_PROT 背靠背 MOS 到 DOCK_GND（= PACK−）
+    pins:
+      - [J3, B_NEG]
+      - [Q_PROT, S1A]
+      - [Q_PROT, S1B]
+      - [U_PROT, VSS]
+      - [C_PROT, 2]
+      - [R_PROT_BYP, 1]
+  PROT_VCC: {class: power, stage: power, pins: [[U_PROT, VCC], [R_PROT, 2], [C_PROT, 1]]}
+  PROT_OD:  {class: signal, stage: power, note: 过放控制栅, pins: [[U_PROT, OD], [Q_PROT, G1]]}
+  PROT_OC:  {class: signal, stage: power, note: 过充控制栅, pins: [[U_PROT, OC], [Q_PROT, G2]]}
+  PROT_CS:  {class: signal, stage: power, note: 过流/短路检测，经 R_CS 取 PACK− 电位, pins: [[U_PROT, CS], [R_CS, 1]]}
+  PROT_TD_NC: {class: no-connect, stage: power, note: DW01A 类的测试脚，默认不连；接法「待原厂数据手册核对」, pins: [[U_PROT, TD]]}
+
+  # ---- 使能链（**本两网的 pins 中不得出现 J2 或 U_FG**，见 meta.invariants）----
+  UV_OUT:
+    class: signal
+    stage: power
+    note: U_UV 推挽输出。VSYS > 3.0 V 时为高
+    pins: [[U_UV, OUT], [R_EN, 1]]
+
+  BOOST_EN:
+    class: signal
+    stage: power
+    note: >
+      升压使能。来源只有两个：U_UV 对 VSYS 的比较结果（经 R_EN），与可选的机械到位开关 SW_DOCK（DNP）。
+      **不连任何 J2 针、不连 U_FG、不连任何主机信号**（EL-D-01、硬约束 1、任务书 R04）
+    pins: [[R_EN, 2], [U_BOOST, EN], [SW_DOCK, COM], [TP_EN, 1]]
+
+  SW_DOCK_NO_NC: {class: no-connect, stage: power, note: 若选用三端微动开关，常开端不使用, pins: [[SW_DOCK, NO]]}
+
+  # ---- 升压级 -------------------------------------------------------------
+  SW_NODE:
+    class: switching
+    stage: power
+    note: 升压开关节点。布局关键：环路面积最小、不得跨 J2 区域、下方必须是完整参考地
+    pins: [[L1, 2], [U_BOOST, SW]]
+
+  BOOST_FB:
+    class: signal
+    stage: power
+    note: VREF 595 mV typ（580–610）；R_FB1/R_FB2 = 909k/120k → 5.10 V 名义（AS-31-dock-1）
+    pins: [[R_FB1, 2], [R_FB2, 1], [U_BOOST, FB], [C_FF, 2]]
+
+  BOOST_5V:
+    class: power
+    stage: power
+    note: 升压输出 5.10 V 名义（空载 4.93–5.27 V derived）。大电容集中在本节点，不在 DOCK_5V（第 4 节热插拔）
+    pins:
+      - [U_BOOST, VOUT]
+      - [C_BST_OUT1, 1]
+      - [C_BST_OUT2, 1]
+      - [R_FB1, 1]
+      - [C_FF, 1]
+      - [U_LIM, IN]
+      - [C_LIM_IN, 1]
+      - [R_EN_LIM, 1]
+      - [R_FLT, 1]
+      - [R_BYP, 1]
+      - [TP_BOOST, 1]
+
+  # ---- 限流级 -------------------------------------------------------------
+  LIM_EN:
+    class: signal
+    stage: power
+    note: >
+      限流开关使能。唯一来源是 BOOST_5V 经 R_EN_LIM 100 kΩ 上拉。
+      **不连任何 J2 针、不连 U_FG、不连任何主机信号**（EL-D-01、硬约束 1、任务书 R04）
+    pins: [[R_EN_LIM, 2], [U_LIM, EN]]
+
+  LIM_ILIM:  {class: signal, stage: power, note: IOS 设定 19.6 kΩ → 1215/1308/1415 mA（AS-31-dock-2）, pins: [[U_LIM, ILIM], [R_ILIM_OUT, 1]]}
+  LED_FLT_A: {class: signal, stage: power, pins: [[R_FLT, 2], [LED_FLT, A]]}
+  LIM_FAULT:
+    class: signal
+    stage: power
+    note: 开漏故障输出。去抖 7.5 ms（过流）/ 4 ms（反向）。仅驱动 LED 与测试点，不回到任何使能网
+    pins: [[U_LIM, FAULT], [LED_FLT, K], [TP_FAULT, 1]]
+
+  LIM_5V:
+    class: power
+    stage: power
+    note: 限流后、防反灌前的内部节点。本节点只有 0.1 µF 级电容，反向窗口内可被充电的电荷极少（第 3 节 (b)）
+    pins: [[U_LIM, OUT], [U_RB, VIN], [R_BYP, 2], [TP_LIM, 1]]
+
+  RB_ST: {class: signal, stage: power, note: U_RB 状态输出，仅接测试点测量, pins: [[U_RB, ST], [TP_ST, 1]]}
+
+  # ---- 接口级 -------------------------------------------------------------
+  DOCK_5V:
+    class: power
+    stage: interface
+    note: >
+      弹簧针接口 5 V 输出，列 1 两针并联（ICD 第 3.2 节）。U_RB.CE 接本网 = 反向电流保护模式。
+      经模块板纯铜到主机 H2 pin 17（SLOT_5V_IN）。**从 VBUS_IN/VBAT 到此网全程无软件、无主机信号参与**
+    pins:
+      - [U_RB, VOUT]
+      - [U_RB, CE]
+      - [C_DOCK, 1]
+      - [D2, 1]
+      - [R_LED_OUT, 1]
+      - [J2, A1]
+      - [J2, B1]
+      - [TP_DOCK5V, 1]
+
+  LED_OUT_A: {class: signal, stage: interface, pins: [[R_LED_OUT, 2], [LED_OUT, A]]}
+  LED_OUT_K: {class: signal, stage: interface, note: 经 JP_LED 焊桥到地；断开焊桥省 ≈0.5 mA（AS-31-dock-9）, pins: [[LED_OUT, K], [JP_LED, 1]]}
+
+  DOCK_GND:
+    class: power
+    stage: interface
+    note: >
+      全板地 = 电池 PACK−。列 2 两针并联（ICD 第 3.2 节），并要求行程更长的针型实现地先接触（AS-31-dock-8）。
+      J1 外壳脚直接并到地；若 EMC 需要改为 R/C 分离，由布局阶段提案
+    pins:
+      - [J1, A1B12]
+      - [J1, B1A12]
+      - [J1, SH1]
+      - [J1, SH2]
+      - [J1, SH3]
+      - [J1, SH4]
+      - [D1, A]
+      - [C_IN, 2]
+      - [R_CC1, 2]
+      - [R_CC2, 2]
+      - [U_CHG, VSS]
+      - [U_CHG, EP]
+      - [U_CHG, CE]
+      - [U_CHG, EN1]
+      - [R_ILIM_CHG, 2]
+      - [R_ISET, 2]
+      - [R_TMR, 2]
+      - [R_TS_FIX, 2]
+      - [C_OUT, 2]
+      - [C_BAT, 2]
+      - [J3, MH1]
+      - [J3, MH2]
+      - [Q_PROT, S2A]
+      - [Q_PROT, S2B]
+      - [R_CS, 2]
+      - [R_PROT_BYP, 2]
+      - [U_UV, GND]
+      - [C_UV, 2]
+      - [C_BST_IN, 2]
+      - [U_BOOST, GND]
+      - [C_BST_OUT1, 2]
+      - [C_BST_OUT2, 2]
+      - [R_FB2, 2]
+      - [U_LIM, GND]
+      - [C_LIM_IN, 2]
+      - [R_ILIM_OUT, 2]
+      - [U_RB, GND]
+      - [U_RB, NC]
+      - [C_DOCK, 2]
+      - [D2, 2]
+      - [JP_LED, 2]
+      - [SW_DOCK, NC]
+      - [J2, A2]
+      - [J2, B2]
+      - [SW_UP, 2]
+      - [SW_DOWN, 2]
+      - [SW_LEFT, 2]
+      - [SW_RIGHT, 2]
+      - [SW_L, 2]
+      - [SW_R, 2]
+      - [SW_A, 2]
+      - [SW_B, 2]
+      - [SW_X, 2]
+      - [SW_Y, 2]
+      - [U_FG, GND]
+      - [U_FG, EP]
+      - [C_FG, 2]
+      - [TP_GND_1, 1]
+      - [TP_GND_2, 1]
+
+  # ---- 按键级：无源开关接 DOCK_GND，拉高只由主机内部上拉提供（硬约束 5、EL-D-05）----
+  KEY_UP:    {class: signal, stage: keys, gpio: 55, h2_pin: 1,  pins: [[J2, A3], [SW_UP, 1]]}
+  KEY_DOWN:  {class: signal, stage: keys, gpio: 19, h2_pin: 3,  pins: [[J2, B3], [SW_DOWN, 1]]}
+  KEY_LEFT:  {class: signal, stage: keys, gpio: 18, h2_pin: 5,  pins: [[J2, A4], [SW_LEFT, 1]]}
+  KEY_RIGHT: {class: signal, stage: keys, gpio: 17, h2_pin: 7,  pins: [[J2, B4], [SW_RIGHT, 1]]}
+  KEY_L:     {class: signal, stage: keys, gpio: 16, h2_pin: 9,  pins: [[J2, A5], [SW_L, 1]]}
+  KEY_R:     {class: signal, stage: keys, gpio: 15, h2_pin: 11, pins: [[J2, B5], [SW_R, 1]]}
+  KEY_A:     {class: signal, stage: keys, gpio: 53, h2_pin: 2,  pins: [[J2, A6], [SW_A, 1]]}
+  KEY_B:     {class: signal, stage: keys, gpio: 48, h2_pin: 4,  pins: [[J2, B6], [SW_B, 1]]}
+  KEY_X:     {class: signal, stage: keys, gpio: 13, h2_pin: 6,  pins: [[J2, A7], [SW_X, 1]]}
+  KEY_Y:     {class: signal, stage: keys, gpio: 12, h2_pin: 8,  pins: [[J2, B7], [SW_Y, 1]]}
+
+  # ---- 可选 I²C（默认两端都 DNP：底座 U_FG DNP，模块板 R_LINK DNP）----------
+  DOCK_SDA:
+    class: signal-open-drain
+    stage: interface
+    note: 列 8 行 A。底座不放上拉（硬约束 5/6）；装配 U_FG 时上拉只能来自主机内部上拉经模块板 R_LINK
+    pins: [[J2, A8], [U_FG, SDA]]
+  DOCK_SCL:
+    class: signal-open-drain
+    stage: interface
+    note: 列 8 行 B
+    pins: [[J2, B8], [U_FG, SCL]]
+
+  FG_VDD:       {class: power, stage: interface, note: U_FG 供电（DNP 子块）, pins: [[R_FG, 2], [U_FG, VDD], [C_FG, 1]]}
+  FG_CTG_TBD:   {class: no-connect, stage: interface, note: 接法「待原厂数据手册核对」，装配前必须关闭（AS-31-dock-26）, pins: [[U_FG, CTG]]}
+  FG_QSTRT_TBD: {class: no-connect, stage: interface, note: 同上, pins: [[U_FG, QSTRT]]}
+  FG_ALRT_NC:   {class: no-connect, stage: interface, note: 无 MCU，中断输出不使用, pins: [[U_FG, ALRT]]}
+
+# ===========================================================================
+# 网表层面的硬约束核对表（由 check_netlist.py 执行；结果贴在 DESIGN_NOTES.md 第 7 节）
+# ===========================================================================
+checks:
+  - id: CK-01
+    desc: 每个声明的引脚在 nets 中恰好出现一次
+  - id: CK-02
+    desc: J2 的 16 个针与 j2_contract（= ICD 第 3.2 节 = 模块板 PINMAP 第 4.2 节）完全一致
+  - id: CK-03
+    desc: "**BOOST_EN、LIM_EN 两网的 pins 中不出现 J2、U_FG**（POWER_TOPOLOGY.md 第 3 节 (a) 声称的机械核对）"
+  - id: CK-04
+    desc: J2 的 14 根非电源针所在网，refdes 只允许 {J2, SW_*, U_FG, TP_*}
+  - id: CK-05
+    desc: 不存在任何名字含 3V3 的网（EL-D-03）
+  - id: CK-06
+    desc: KEY_* 的 GPIO / H2 针号与模块板 PINMAP 第 2 节一致，且不落在 H2 pin 10/13/15/18
+  - id: CK-07
+    desc: DOCK_5V 与 DOCK_GND 各占 J2 两针；DOCK_5V 网上无任何主机侧器件
+  - id: CK-08
+    desc: BOM.csv 的基线行位号集合 == components 集合
+  - id: CK-09
+    desc: schematic.svg 的 data-net 标签 ⊆ nets，且每个 stage 的主要网在图上出现
