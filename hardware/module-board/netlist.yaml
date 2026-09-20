@@ -105,6 +105,10 @@ components:
     board: fin
     description: AT24C02D-SSHM-T，2 Kbit I²C EEPROM，SOIC-8（Microchip，LCSC C34807，嘉立创扩展库）
     package: SOIC-8
+    pins: 8
+    # 引脚以名称索引，与下方 verified_from_datasheet.pinout（Table 1-1）逐一对齐；
+    # nets 中 U1 一律写名称（U1.VCC 而非 U1.8），避免数字引脚与 datasheet 脱节。
+    pin_names: [A0, A1, A2, GND, SDA, SCL, WP, VCC]
     datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet.pdf   # Atmel-8871F, 01/2017，已打开核对
     verified_from_datasheet:
       pinout: {1: A0, 2: A1, 3: A2, 4: GND, 5: SDA, 6: SCL, 7: WP, 8: VCC}   # Table 1-1
@@ -240,9 +244,9 @@ nets:
       - [J3, 4]
       - [J2, A2]
       - [J2, B2]
-      - [U1, 2]
-      - [U1, 3]
-      - [U1, 4]
+      - [U1, A1]
+      - [U1, A2]
+      - [U1, GND]
       - [C1, 2]
       - [JP1, 1]
       - [TP_GND, 1]
@@ -265,7 +269,7 @@ nets:
     note: 主机 VCC_3V3（GPIO60 控制，AS-13）。只供 U1、C1、DNP 上拉、JP1.3；不跨 J3、不到 J2。负载估算 ≤2.5 mA（U1 ≤1 mA 数据手册最大值 ＋ 若装上拉每只 <1 mA）
     pins:
       - [J1, 19]
-      - [U1, 8]
+      - [U1, VCC]
       - [C1, 1]
       - [R_PU_SDA, 1]
       - [R_PU_SCL, 1]
@@ -278,7 +282,7 @@ nets:
     note: 主机 GPIO0。上拉默认靠主机内部上拉（BSP enable_internal_pullup）；R_PU_SDA DNP 待 P6 决定（AS-14）
     pins:
       - [J1, 16]
-      - [U1, 5]
+      - [U1, SDA]
       - [R_PU_SDA, 2]
       - [R_LINK_SDA, 1]
       - [TP_SDA, 1]
@@ -288,7 +292,7 @@ nets:
     note: 主机 GPIO1
     pins:
       - [J1, 14]
-      - [U1, 6]
+      - [U1, SCL]
       - [R_PU_SCL, 2]
       - [R_LINK_SCL, 1]
       - [TP_SCL, 1]
@@ -316,14 +320,14 @@ nets:
     note: 主机 GPIO14 推挽输出，发现阶段驱动为 0 → U1 地址 0x50。不接按键，不跨 J3、不到 J2
     pins:
       - [J1, 10]
-      - [U1, 1]
+      - [U1, A0]
       - [TP_A0, 1]
 
   EEPROM_WP:
     class: signal
     note: 默认经 JP1 桥 1–2 接 DOCK_GND（可写）；改桥 2–3 写保护。AT24C02D 未驱动时内部下拉（数据手册 Note 1），仍按建议接确定电平
     pins:
-      - [U1, 7]
+      - [U1, WP]
       - [JP1, 2]
       - [TP_WP, 1]
 

@@ -11,8 +11,10 @@
   5. 硬约束 2/3：pin 18 网只有 J1.18；SLOT_3V3、SLOT_EEPROM_A0、SLOT_SPARE_GPIO4 不到 J2/J3。
   6. SLOT_SDA/SCL 与 DOCK_SDA/SCL 为不同网，且只经 dnp 的 R_LINK_* 相连。
   7. 跨 J3 的网集合 == 含 J2 焊盘的网集合，且 J3 位序与 PINMAP.md 第 5.3 节一致。
-  8. 若存在 BOM.csv：refdes 集合与 components 一致。
-  9. 若存在 schematic.svg：其中 data-net 标签 ⊆ nets，且每个 net 至少出现一次。
+  8. U1（AT24C02）以名称引脚索引：pin_names 顺序 == verified_from_datasheet.pinout（Table 1-1）；
+     VCC→SLOT_3V3、A0→SLOT_EEPROM_A0、A1/A2/GND→DOCK_GND、SDA/SCL→SLOT_*（非 DOCK_*）、WP→EEPROM_WP。
+  9. 若存在 BOM.csv：refdes 集合与 components 一致。
+  10. 若存在 schematic.svg：其中 data-net 标签 ⊆ nets，且每个 net 至少出现一次。
 用法：python3 hardware/module-board/check_netlist.py   （退出码 0 = 全部通过）
 """
 import csv
@@ -71,10 +73,16 @@ def main() -> int:
     for ref, c in comps.items():
         if "pin_names" in c:
             names = [str(p) for p in c["pin_names"]]
-            if len(names) != int(c["pins"]):
+            if "pins" in c and len(names) != int(c["pins"]):
                 errors.append(f"{ref}: pin_names 数 {len(names)} != pins {c['pins']}")
-        else:
+        elif "pins" in c:
             names = [str(i) for i in range(1, int(c["pins"]) + 1)]
+        else:
+            # 缺 pins 且缺 pin_names：记为错误并跳过该器件，不让 KeyError 打断整份自检。
+            errors.append(f"{ref}: 缺 pins / pin_names 字段，无法确定引脚全集")
+            names = []
+        if len(set(names)) != len(names):
+            errors.append(f"{ref}: pin_names 存在重名 {sorted({n for n in names if names.count(n) > 1})}")
         declared[ref] = set(names)
 
     # 使用统计
@@ -148,13 +156,24 @@ def main() -> int:
                 errors.append(f"{n} 不得到 {ref}")
     if len(pins_of("SLOT_5V_OUT_NC")) != 1:
         errors.append("SLOT_5V_OUT_NC 只能有 J1.18 一针")
-    if net_of("U1", 8) != "SLOT_3V3":
+    if net_of("U1", "VCC") != "SLOT_3V3":
         errors.append("U1.VCC 必须接 SLOT_3V3（硬约束 3）")
-    if net_of("U1", 1) != "SLOT_EEPROM_A0" or net_of("J1", 10) != "SLOT_EEPROM_A0":
+    if net_of("U1", "A0") != "SLOT_EEPROM_A0" or net_of("J1", 10) != "SLOT_EEPROM_A0":
         errors.append("U1.A0 与 J1.10 必须同为 SLOT_EEPROM_A0")
-    for p in (2, 3):
+    for p in ("A1", "A2", "GND"):
         if net_of("U1", p) != "DOCK_GND":
-            errors.append(f"U1.{p}（A1/A2）必须接地")
+            errors.append(f"U1.{p} 必须接地")
+    # U1 的 pin_names 必须与 verified_from_datasheet.pinout（Table 1-1）逐一对齐
+    pinout = comps["U1"].get("verified_from_datasheet", {}).get("pinout", {})
+    if pinout:
+        want = [pinout[i] for i in sorted(pinout)]
+        got = [str(x) for x in comps["U1"].get("pin_names", [])]
+        if got != want:
+            errors.append(f"U1.pin_names {got} != datasheet pinout 顺序 {want}")
+    if net_of("U1", "SDA") != "SLOT_SDA" or net_of("U1", "SCL") != "SLOT_SCL":
+        errors.append("U1 的 SDA/SCL 必须接主机侧 SLOT_SDA/SLOT_SCL（不得接 DOCK_ 侧）")
+    if net_of("U1", "WP") != "EEPROM_WP":
+        errors.append("U1.WP 必须接 EEPROM_WP")
 
     # R_LINK 分网
     for sig in ("SDA", "SCL"):
