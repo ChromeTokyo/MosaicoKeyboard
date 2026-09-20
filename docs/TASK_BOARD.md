@@ -54,4 +54,4 @@ T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在�
 | T14＋接口草案（非 T08 冻结） | Chrome／Codex | `gpt-6-astra`（界面 GPT-6 Astra），`ultra`；用户于本会话确认，非运行时反查 | `25c4902` | `chrome/interface-control-draft` | `docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`review/chrome/T14/`、本文件 Chrome 行、Chrome 交接 | `docs/handoffs/chrome.md` | 2026-09-20 |
 | T04 子范围 | Chrome／Codex | 同上 | `25c4902` | 同上（串行统一录入接口文件） | `review/chrome/T04/`，限 CoreBoard 官方电气资料核验；不领取全 BOM 审核完成状态 | `docs/handoffs/chrome.md` | 2026-09-20 |
 
-T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](../review/chrome/T14/MEASUREMENT_RECORD.md)、[电气／机械统一接口草案](INTERFACE_CONTROL.md)、[修复顺序](../review/chrome/T14/REPAIR_ORDER.md)。技术内容提交 `5fbf796`；分支已同步 `a9d383c`，无接口冻结。T04 子范围证据见 [CoreBoard 核查](../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)。
+T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](../review/chrome/T14/MEASUREMENT_RECORD.md)、[电气／机械统一接口草案](INTERFACE_CONTROL.md)、[修复顺序](../review/chrome/T14/REPAIR_ORDER.md)。初版技术内容提交 `423a357`；[PR #9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)，分支已同步 `1030776`，无接口冻结。T04 子范围证据见 [CoreBoard 核查](../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)。

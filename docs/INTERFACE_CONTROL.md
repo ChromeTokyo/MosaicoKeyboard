@@ -1,6 +1,6 @@
 # ESP-Mosaico 底座统一接口约束
 
-版本 **ICD-0.1-DRAFT，2026-09-20；未冻结、禁止作为制造尺寸**。维护／技术责任：Chrome；关键接口独立复核：Hiro；冻结提交与放行记录：Claude。文件唯一写入分支 `chrome/interface-control-draft`。本次输入 main `25c4902`，并已纳入 `a9d383c` 的 D-009-R／D-010／D-011；A0 审查对象仍为 `3d5a112`，没有改动设计源。
+版本 **ICD-0.1-DRAFT，2026-09-20；未冻结、禁止作为制造尺寸**。维护／技术责任：Chrome；关键接口独立复核：Hiro；冻结提交与放行记录：Claude。文件唯一写入分支 `chrome/interface-control-draft`。本次输入 main `25c4902`，并已纳入 `a9d383c` 的 D-009-R／D-010／D-011、`1030776` 的 PR #8 来源更正；A0 审查对象仍为 `3d5a112`，没有改动设计源。
 
 `confirmed` 指指定官方文件明确画出／写出，不代表样机实测通过；`derived` 指计算或图面推断；`proposed` 指 Chrome 提出的设计要求或研究值；`unknown` 指仍需证据。**本文没有任何 measured／frozen 尺寸。** 各项变更均须检查末列影响范围；Hiro 复核未完成时不得自批 G1/G2/G3。
 
@@ -15,7 +15,7 @@
 | E5 | [T14 测量规程](MEASUREMENT_PROTOCOL.md)、[原始记录模板](../review/chrome/T14/MEASUREMENT_RECORD.md) | 实物未到；未来实测须绑定样机板号、照片、仪器及误差 |
 | R1 | [TEAM_PLAN §6](TEAM_PLAN.md#6-必须通过的质量节点)；DECISIONS **补记** D-006/D-007/D-008、**更正** D-009-R/D-010/D-011 | D 编号有复用，按节名定位。D-009-R 优先于旧“间距已证伪”条目；最新用户指示优先 |
 
-目前公开指南索引未提供 BaseBoard 详细原理图及整机 STEP/DXF/机械图。不能以 CoreBoard 方框图补造 BaseBoard 走线。对外索取资料另需用户授权，本轮没有联系厂商。3mf 边框可以作为后续研究输入，但内腔尺寸包含未知装配间隙，不能代替设备包络实测。
+目前公开指南索引未提供 BaseBoard 详细原理图及整机 STEP/DXF/机械图。不能以 CoreBoard 方框图补造 BaseBoard 走线。对外索取资料另需用户授权，本轮没有联系厂商。按 [PR #8 来源更正](../review/claude/3mf-analysis.md)，`MOSAICO.3mf` 未核实为官方且可能对应裸板外壳，不能从它的内腔反推整机外形或装配间隙；本轮未复核原网格，只采用其“来源／适用对象未确认”的限制。
 
 ## 2. 坐标、镜像和接点编号（O03）
 

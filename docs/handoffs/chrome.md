@@ -49,6 +49,8 @@
 
 | 2026-09-20 13:20 JST | T14、T04子范围、接口草案 | 本轮交付检查结束 | T04 16项证据哈希一致；新几何脚本与附加审计复跑输出逐字节一致；PR #4原交接前缀原样保留；design/references与主控/Hiro文件未改 | 实物和Hiro复核；BaseBoard路径／额定；余下T04/T05/T03 | 规程交付可审，接口不冻结；PR #4仍有主控文档冲突待同步 | 建立本轮PR供主控集成；用户到货后先按手册外形与照片步骤执行 |
 
+| 2026-09-20 13:22 JST | T14、接口草案 | PR #9已提交，纳入main最新来源更正 | 已同步`1030776`（PR #8），保留改写后的T16；清除3mf官方来源旧说法；任务板冲突仅采用main的T16新版，Hiro交接完整保留 | 实物、Hiro复核及前述电气缺口仍未解决 | 无新增规程编写阻塞；硬件冻结继续等待 | 最终确认PR无冲突后交主控审阅；从F03和T05前置工作继续 |
+
 > 更正记录：本轮早先基于旧 D-009 采纳的 2.70–2.77 mm 及其相对 2.54 mm 的偏移建议全部撤回；不据此改 J3。D-009-R 优先，仍不得冻结。D-011 仅确认 T02 证据完整性，不替代 Hiro 技术复核。PR #4 同步 main 是合入前的必检条件，当前不合入。
 
 
@@ -56,7 +58,7 @@
 
 - 平台／实际模型：Codex，`gpt-6-astra`／`ultra`，依据用户确认“GPT-6 Astra ultra”。本轮内部资料核查与可执行性检查均属于Chrome，不记为Hiro独立复核。
 - 输入：领取基线`25c4902`；同步及更正依据`a9d383c`（含PR #5/#6/#7）；接口版本`ICD-0.1-DRAFT`，未冻结。
-- 输出：分支`chrome/interface-control-draft`；技术内容提交`5fbf796`；状态T14规程IN_REVIEW、实物未执行；T04仅CoreBoard子范围交付，整体仍未完成。PR链接随后登记。
+- 输出：分支`chrome/interface-control-draft`；初版技术内容提交`423a357`（同步main后）；状态T14规程IN_REVIEW、实物未执行；T04仅CoreBoard子范围交付，整体仍未完成。[PR #9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)。
 - 完成文件：[T14手册](../MEASUREMENT_PROTOCOL.md)、[记录表](../../review/chrome/T14/MEASUREMENT_RECORD.md)、[统一接口约束](../INTERFACE_CONTROL.md)、[CoreBoard证据](../../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)、[更正摄影测量](../../review/chrome/T14/geometry/GEOMETRY_RECHECK.md)、[F03→F01→F02修复顺序](../../review/chrome/T14/REPAIR_ORDER.md)。所有新增设计要求是草案，无EDA/CAD权威源或制造文件改动。
 - 验证：[检查记录](../../review/chrome/T14/VALIDATION.json)绑定技术提交；16项源证据哈希核对、新标定与附加审计复跑输出一致、相关引用检查。官方HTML原文空白保持不变，作者文档的空白检查单独通过；未执行通电、实物尺寸、拆装、EDA修复或Hiro审查。
 - 本轮补充事实：主側SDA/SCL各4.7k，Codec支路另有2.2k；D14存在USB到5V_OUT旁路，GPIO60不是无电保证；5V/3V3扩展输出各100mA不套输入、不按双槽翻倍；背部5V_IN架构对应已核，但BaseBoard物理链、保护及触点额定未闭环。
@@ -65,3 +67,5 @@
 - 实物待办：用户先做非接触照片和绝缘外壳卡尺测量。独立外盖、螺丝与电池隔离条件未证实时，不拆BaseBoard、不测通断。Chrome收到本机照片后补配对图；Hiro复核导出接口，主控记录冻结。T14规程交付不等于O01/O03解除。
 - 下一任务：F03基线建设；并行T04原厂资料/T05原A0审查，完成审查记录后才能做T07电路修订；再按F01→F02验证出口推进。新main的T16/T17已保留但未在本轮领取。
 - PR #4：D-011证据完整性已通过，技术结论仍CHANGES_REQUIRED；未合入、未改写其分支。同步main与保留Hiro交接为合入门槛。上方历史交接里的T02相对路径要在PR #4合入后才出现在main，本分支不复制证据；当前可用[绑定提交的原报告](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/3d8ad4cf50afc1ae75c557364c61f1cf4dd545db/review/chrome/T02/REPORT.md)。
+
+本轮最终同步基线为 `1030776`（含 PR #8），本轮 PR 为 [#9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)。同步只针对本轮分支，PR #4未改动。3mf来源与适用对象按主控更正保持unknown，不采纳其整机尺寸推断。
