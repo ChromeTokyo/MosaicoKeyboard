@@ -55,3 +55,9 @@ T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在�
 | T04 子范围 | Chrome／Codex | 同上 | `25c4902` | 同上（串行统一录入接口文件） | `review/chrome/T04/`，限 CoreBoard 官方电气资料核验；不领取全 BOM 审核完成状态 | `docs/handoffs/chrome.md` | 2026-09-20 |
 
 T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](../review/chrome/T14/MEASUREMENT_RECORD.md)、[电气／机械统一接口草案](INTERFACE_CONTROL.md)、[修复顺序](../review/chrome/T14/REPAIR_ORDER.md)。初版技术内容提交 `423a357`；[PR #9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)，分支已同步 `1030776`，无接口冻结。T04 子范围证据见 [CoreBoard 核查](../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)。
+
+### Chrome 接续登记（Claude 限额后）
+
+| ID | 领取人／模型 | 输入 | 分支／文件范围 | 状态与交接 |
+| --- | --- | --- | --- | --- |
+| T02/F03：Claude T18提案复核 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | main `edb5301`；候选实现`56030b9`；未合入领取`94b30d5` | `chrome/t18-proposal-review`；`review/chrome/T18/`、Chrome交接、此登记 | IN_PROGRESS，2026-09-20 14:04 JST；见`docs/handoffs/chrome.md`。不修改生成器权威源，不代表T18/T19已采纳 |

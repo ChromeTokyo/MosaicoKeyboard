@@ -69,3 +69,16 @@
 - PR #4：D-011证据完整性已通过，技术结论仍CHANGES_REQUIRED；未合入、未改写其分支。同步main与保留Hiro交接为合入门槛。上方历史交接里的T02相对路径要在PR #4合入后才出现在main，本分支不复制证据；当前可用[绑定提交的原报告](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/3d8ad4cf50afc1ae75c557364c61f1cf4dd545db/review/chrome/T02/REPORT.md)。
 
 本轮最终同步基线为 `1030776`（含 PR #8），本轮 PR 为 [#9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)。同步只针对本轮分支，PR #4未改动。3mf来源与适用对象按主控更正保持unknown，不采纳其整机尺寸推断。
+
+
+## Claude 限额后的接续：T18/F03 提案复核
+
+- 用户本轮要求检查 Claude 交接及可继续事项。最新 main `edb5301`，PR #9 已于 2026-09-20 合入，T14不重复编写；PR #4仍OPEN。
+- main有`review/claude/T18/REPORT.md`与5份再生成对照；没有独立`docs/handoffs/claude.md`。远端`claude/t18-reproducible-baseline`停于`94b30d5`，只有D-012～D-014与T18/T19领取，**没有报告所说的实现三文件**。
+- 候选实现仍存在于历史`56030b9`（误入PR #10、后由PR #11撤回）。本轮仅从该提交恢复到Chrome审查目录、在隔离副本执行；不修改`design/build_design.py`或Claude文件，不把未合入分工记录当已完成交接。
+- 领取范围：T02/F03的T18提案机制复核；`review/chrome/T18/`、本交接与任务板Chrome记录。分支`chrome/t18-proposal-review`，输入main `edb5301`与候选`56030b9`。
+- 模型：`gpt-6-astra`／`ultra`（本会话此前用户确认）。本轮是Chrome对Claude机制提案的非作者复核，不替代Hiro规定的硬件审查。
+
+| 日期 | 任务 ID | 当前在做什么 | 本次已确认的事实及依据 | 尚未确认 | 阻塞项 | 下一步 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 14:04 JST | T02/F03、T18提案复核 | 领取并恢复审查来源 | main保留报告；远端提案分支仅15行领取记录；实现可从`56030b9`恢复 | 默认硬失败、输入锁及覆盖保护是否达到采纳条件 | 报告复现命令指向现main旧脚本，不能照抄运行；只在隔离副本测试 | 核对候选哈希、故障注入、列技术采纳/修改要求 |
