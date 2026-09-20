@@ -1,0 +1,18 @@
+# Local Python dependencies and caches
+tools/python-packages/
+__pycache__/
+*.py[cod]
+.venv/
+
+# Local editor and operating-system files
+.DS_Store
+Thumbs.db
+*.tmp
+*.bak
+
+# Downloaded documents and rendered research pages remain local.
+# Source links are recorded in references/README.md.
+references/*.pdf
+references/*.png
+references/*.html
+references/*.txt

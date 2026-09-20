@@ -1,0 +1,208 @@
+{
+  "success": true,
+  "code": 0,
+  "result": {
+    "uuid": "7d2c2ac9e0654c698fd0510cee7b2e89",
+    "title": "FTC201610S1R0MBCA",
+    "description": "",
+    "docType": 2,
+    "type": 3,
+    "thumb": "//image.lceda.cn/components/7d2c2ac9e0654c698fd0510cee7b2e89.png",
+    "lcsc": {
+      "id": 6763462,
+      "number": "C5832342"
+    },
+    "szlcsc": {
+      "id": 6763462,
+      "number": "C5832342"
+    },
+    "owner": {
+      "uuid": "0819f05c4eef4c71ace90d822a990e87",
+      "username": "lcsc",
+      "nickname": "LCSC",
+      "avatar": "//image.lceda.cn/avatars/2018/6/kFlrasi7W06gTdBLAqW3fkrqbDhbowynuSzkjqso.png"
+    },
+    "tags": [
+      "Power Inductors"
+    ],
+    "updateTime": 1715944922,
+    "updated_at": "2024-05-17 11:25:20",
+    "dataStr": {
+      "head": {
+        "docType": "2",
+        "editorVersion": "6.5.42",
+        "c_para": {
+          "pre": "L?",
+          "name": "FTC201610S1R0MBCA",
+          "package": "IND-SMD_L2.0-W1.6-B",
+          "Supplier": "LCSC",
+          "Supplier Part": "C5832342",
+          "Manufacturer": "cjiang(长江微电)",
+          "Manufacturer Part": "FTC201610S1R0MBCA",
+          "nameAlias": "Value",
+          "Value": "1uH",
+          "JLCPCB Part Class": "Extended Part",
+          "Contributor": "lcsc"
+        },
+        "x": 400,
+        "y": 300,
+        "puuid": "913925f583aa4faebd72d2dcd4e526c2",
+        "uuid": "7d2c2ac9e0654c698fd0510cee7b2e89",
+        "importFlag": 0,
+        "c_spiceCmd": null,
+        "hasIdFlag": true,
+        "utime": 1715677554
+      },
+      "canvas": "CA~1000~1000~#FFFFFF~yes~#CCCCCC~10~1000~1000~line~5~pixel~1~400~300",
+      "shape": [
+        "P~show~0~2~420~300~0~gge9~0^^420~300^^M 420 300 h -4~#800^^0~412~300~0~2~end~~~#800^^0~421~296~0~2~start~~~#800^^0~419~300^^0~M 416 297 L 413 300 L 416 303",
+        "P~show~0~1~380~300~180~gge10~0^^380~300^^M 380 300 h 4~#800^^0~388~300~0~1~start~~~#800^^0~379~296~0~1~end~~~#800^^0~381~300^^0~M 384 303 L 387 300 L 384 297",
+        "A~M 384 299.98 A 4 4 0 1 1 392 300.02~~#880000~1~0~none~gge12~0",
+        "A~M 392 299.98 A 4 4 0 1 1 400 300.02~~#880000~1~0~none~gge18~0",
+        "A~M 408 299.98 A 4 4 0 1 1 416 300.02~~#880000~1~0~none~gge20~0",
+        "A~M 400 299.98 A 4 4 0 1 1 408 300.02~~#880000~1~0~none~gge21~0"
+      ],
+      "BBox": {
+        "x": 379,
+        "y": 296,
+        "width": 42,
+        "height": 5
+      },
+      "colors": []
+    },
+    "jlcOnSale": 1,
+    "datastrid": "404b5d7862364ae8935114c71c0ec832",
+    "verify": true,
+    "writable": false,
+    "isFavorite": false,
+    "packageDetail": {
+      "uuid": "913925f583aa4faebd72d2dcd4e526c2",
+      "title": "IND-SMD_L2.0-W1.6-B",
+      "docType": 4,
+      "updateTime": 1774661582,
+      "owner": {
+        "uuid": "0819f05c4eef4c71ace90d822a990e87",
+        "username": "lcsc",
+        "nickname": "LCSC",
+        "avatar": "//image.lceda.cn/avatars/2018/6/kFlrasi7W06gTdBLAqW3fkrqbDhbowynuSzkjqso.png"
+      },
+      "datastrid": "961e796251f14fc5aa2a2315a8ef2641",
+      "writable": false,
+      "dataStr": {
+        "head": {
+          "docType": "4",
+          "editorVersion": "6.5.51",
+          "newgId": true,
+          "c_para": {
+            "package": "IND-SMD_L2.0-W1.6-B",
+            "pre": "U?",
+            "Contributor": "LCSC",
+            "link": "https://atta.szlcsc.com/upload/public/pdf/source/20210916/0AAB954FC144BC5BBB2A375AA4447B0B.pdf",
+            "3DModel": "IND-SMD_L2.0-W1.6-B"
+          },
+          "x": 3999.8955,
+          "y": 2999.981,
+          "hasIdFlag": true,
+          "utime": 1774661581,
+          "uuid": "913925f583aa4faebd72d2dcd4e526c2",
+          "importFlag": 0,
+          "transformList": "",
+          "uuid_3d": "298e545630954722821e1c54f478c412"
+        },
+        "canvas": "CA~1000~1000~#000000~yes~#FFFFFF~10~1000~1000~line~0.5~mm~1~45~visible~0.5~3999.8955~2999.981~0~none",
+        "shape": [
+          "SOLIDREGION~100~~M 4001.4703 2996.8314 L 4003.8325 2996.8314 L 4003.8325 3003.1306 L 4001.4703 3003.1306 Z ~solid~gge1455~~~~0",
+          "SOLIDREGION~100~~M 3995.9585 2996.8314 L 3998.3207 2996.8314 L 3998.3207 3003.1306 L 3995.9585 3003.1306 Z ~solid~gge1458~~~~0",
+          "SOLIDREGION~99~~M 3995.9585 3003.131 L 3995.9585 2996.8318 L 4003.8325 2996.8318 L 4003.8325 3003.131 Z ~solid~gge1378~~~~0",
+          "TRACK~1~3~~4004.8955 3004.3902 3994.8955 3004.3902~gge1476~0",
+          "TRACK~1~3~~3994.8955 2995.5718 4004.8955 2995.5718~gge1432~0",
+          "PAD~RECT~4002.6514~2999.981~2.7559~6.6929~1~~2~0~4001.2735 2996.6346 4004.0294 2996.6346 4004.0294 3003.3275 4001.2735 3003.3275~0~gge1355~0~~Y~0~0~0.2000~4002.6506,2999.9812",
+          "PAD~RECT~3997.1396~2999.981~2.7559~6.6929~1~~1~0~3995.7617 2996.6346 3998.5176 2996.6346 3998.5176 3003.3275 3995.7617 3003.3275~0~gge1356~0~~Y~0~0~0.2000~3997.1399,2999.9812",
+          "CIRCLE~3995.9585~2996.8314~0.1181~0.2362~101~gge1480~0~~",
+          "SVGNODE~{\"gId\":\"g1_outline\",\"nodeName\":\"g\",\"nodeType\":1,\"layerid\":\"19\",\"attrs\":{\"c_width\":\"7.874\",\"c_height\":\"6.2992\",\"c_rotation\":\"0,0,0\",\"z\":\"0\",\"c_origin\":\"3999.8955,2999.9813\",\"uuid\":\"83d21de3ccf04028afdbcd29ed0b8b8b\",\"c_etype\":\"outline3D\",\"id\":\"g1_outline\",\"title\":\"IND-SMD_L2.0-W1.6-B\",\"layerid\":\"19\",\"transform\":\"scale(1) translate(0, 0)\"},\"childNodes\":[{\"gId\":\"g1_outline_line0\",\"nodeName\":\"polyline\",\"nodeType\":1,\"attrs\":{\"fill\":\"none\",\"id\":\"g1_outline_line0\",\"c_shapetype\":\"line\",\"points\":\"3995.9585 2996.8317 3995.9585 2996.8711 3995.9585 3003.0915 3995.9585 3003.1309 3995.9979 3003.1309 3997.7695 3003.1309 3998.2813 3003.1309 3998.3207 3003.1309 4001.4703 3003.1309 4001.5097 3003.1309 4002.0215 3003.1309 4003.7931 3003.1309 4003.8325 3003.1309 4003.8325 3003.0915 4003.8325 2999.9813 4003.8325 2996.8711 4003.8325 2996.8317 4003.7931 2996.8317 4002.0215 2996.8317 4001.5097 2996.8317 4001.4703 2996.8317 3998.3207 2996.8317 3998.2813 2996.8317 3997.7695 2996.8317 3995.9979 2996.8317 3995.9585 2996.8317 3995.9585 2996.8317\"}}]}"
+        ],
+        "layers": [
+          "1~TopLayer~#FF0000~true~false~true~",
+          "2~BottomLayer~#0000FF~true~false~true~",
+          "3~TopSilkLayer~#FFCC00~true~false~true~",
+          "4~BottomSilkLayer~#66CC33~true~false~true~",
+          "5~TopPasteMaskLayer~#808080~true~false~true~",
+          "6~BottomPasteMaskLayer~#800000~true~false~true~",
+          "7~TopSolderMaskLayer~#800080~true~false~true~0.3",
+          "8~BottomSolderMaskLayer~#AA00FF~true~false~true~0.3",
+          "9~Ratlines~#6464FF~true~false~true~",
+          "10~BoardOutLine~#FF00FF~true~false~true~",
+          "11~Multi-Layer~#C0C0C0~true~false~true~",
+          "12~Document~#FFFFFF~true~false~true~",
+          "13~TopAssembly~#33CC99~true~false~true~",
+          "14~BottomAssembly~#5555FF~true~false~true~",
+          "15~Mechanical~#F022F0~true~false~true~",
+          "19~3DModel~#66CCFF~true~false~true~",
+          "21~Inner1~#999966~false~false~false~~",
+          "22~Inner2~#008000~false~false~false~~",
+          "23~Inner3~#00FF00~false~false~false~~",
+          "24~Inner4~#BC8E00~false~false~false~~",
+          "25~Inner5~#70DBFA~false~false~false~~",
+          "26~Inner6~#00CC66~false~false~false~~",
+          "27~Inner7~#9966FF~false~false~false~~",
+          "28~Inner8~#800080~false~false~false~~",
+          "29~Inner9~#008080~false~false~false~~",
+          "30~Inner10~#15935F~false~false~false~~",
+          "31~Inner11~#000080~false~false~false~~",
+          "32~Inner12~#00B400~false~false~false~~",
+          "33~Inner13~#2E4756~false~false~false~~",
+          "34~Inner14~#99842F~false~false~false~~",
+          "35~Inner15~#FFFFAA~false~false~false~~",
+          "36~Inner16~#99842F~false~false~false~~",
+          "37~Inner17~#2E4756~false~false~false~~",
+          "38~Inner18~#3535FF~false~false~false~~",
+          "39~Inner19~#8000BC~false~false~false~~",
+          "40~Inner20~#43AE5F~false~false~false~~",
+          "41~Inner21~#C3ECCE~false~false~false~~",
+          "42~Inner22~#728978~false~false~false~~",
+          "43~Inner23~#39503F~false~false~false~~",
+          "44~Inner24~#0C715D~false~false~false~~",
+          "45~Inner25~#5A8A80~false~false~false~~",
+          "46~Inner26~#2B937E~false~false~false~~",
+          "47~Inner27~#23999D~false~false~false~~",
+          "48~Inner28~#45B4E3~false~false~false~~",
+          "49~Inner29~#215DA1~false~false~false~~",
+          "50~Inner30~#4564D7~false~false~false~~",
+          "51~Inner31~#6969E9~false~false~false~~",
+          "52~Inner32~#9069E9~false~false~false~~",
+          "99~ComponentShapeLayer~#00CCCC~true~false~true~0.4",
+          "100~LeadShapeLayer~#CC9999~true~false~true~",
+          "101~ComponentMarkingLayer~#66FFCC~true~true~true~",
+          "Hole~Hole~#222222~false~false~true~",
+          "DRCError~DRCError~#FAD609~false~false~true~"
+        ],
+        "objects": [
+          "All~true~false",
+          "Component~true~true",
+          "Prefix~true~true",
+          "Name~true~false",
+          "Track~true~true",
+          "Pad~true~true",
+          "Via~true~true",
+          "Hole~true~true",
+          "Copper_Area~true~true",
+          "Circle~true~true",
+          "Arc~true~true",
+          "Solid_Region~true~true",
+          "Text~true~true",
+          "Image~true~true",
+          "Rect~true~true",
+          "Dimension~true~true",
+          "Protractor~true~true"
+        ],
+        "BBox": {
+          "x": 3994.9,
+          "y": 2995.6,
+          "width": 10,
+          "height": 8.8
+        },
+        "netColors": []
+      }
+    }
+  }
+}
