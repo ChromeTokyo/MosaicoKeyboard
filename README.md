@@ -15,7 +15,7 @@ GitHub 仓库：[ChromeTokyo/MosaicoKeyboard](https://github.com/ChromeTokyo/Mos
 - 做成长条手持设备：中间横置 Mosaico，左侧 D-pad，右侧 ABXY，两侧有浅握把。
 - Mosaico 保持完整，不改主板、不焊线，能够从底座拆下。
 - 底座采用四个背部触点与 Pogo Pin 连接，承载 I²C、供电和地。
-- 底座不使用第二颗可编程 MCU，通过 I²C IO 扩展器读取按键。
+- **底座允许使用一颗受限职责的可编程 MCU**（2026-09-20 用户修订，原为「不使用第二颗可编程 MCU，通过 I²C IO 扩展器读取按键」）。原约束的前提是背部四触点提供 I²C，而实际出货的 BaseBoard V1.2 已取消该四触点，背面只剩 UART，走 UART 必须有一端能组帧。职责边界与失效安全要求见 `docs/PROJECT_PLAN.md` R04。
 - 使用国内嘉立创／嘉立创 EDA 流程，尽量由工厂完成 PCB 制造和器件焊接。
 - 完成可编辑工程、经过检查的制造文件、BOM、装配说明与硬件验收记录。
 
