@@ -1,0 +1,391 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+  底座主板原理图（分级示意），修订 A0-proposal，2026-09-21。
+  网名与 hardware/dock-board/netlist.yaml 完全一致；每个网名文本带 data-net 属性，
+  由 hardware/dock-board/check_netlist.py 的 CK-09 机械核对。
+  本图是分级结构图，不是布线图：去耦电容、部分设定电阻只以文字标注，完整逐针以 netlist.yaml 为准。
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1520 1390" width="1520" height="1390"
+     font-family="Noto Sans CJK SC, PingFang SC, Microsoft YaHei, Source Han Sans SC, sans-serif">
+  <style><![CDATA[
+    .bg   { fill:#ffffff; }
+    .fr   { fill:none; stroke:#9aa0a6; stroke-width:1.2; stroke-dasharray:6 4; }
+    .box  { fill:#f4f6f8; stroke:#2f3336; stroke-width:1.6; }
+    .boxp { fill:#fdf1f2; stroke:#b00020; stroke-width:3; }
+    .dnp  { fill:#fafafa; stroke:#9aa0a6; stroke-width:1.4; stroke-dasharray:5 3; }
+    .w    { fill:none; stroke:#2f3336; stroke-width:1.7; stroke-linejoin:round; }
+    .wd   { fill:none; stroke:#9aa0a6; stroke-width:1.4; stroke-dasharray:5 3; }
+    .wp   { fill:none; stroke:#b00020; stroke-width:5.5; stroke-linejoin:round; stroke-linecap:round; }
+    .t    { fill:#16191c; font-size:13px; }
+    .ts   { fill:#5f6368; font-size:11.5px; }
+    .tb   { fill:#16191c; font-size:15px; font-weight:600; }
+    .th   { fill:#16191c; font-size:19px; font-weight:700; }
+    .net  { fill:#0b57a4; font-size:12px; font-weight:600; }
+    .netp { fill:#b00020; font-size:12.5px; font-weight:700; }
+    .gnd  { fill:none; stroke:#2f3336; stroke-width:1.7; }
+  ]]></style>
+
+  <rect class="bg" x="0" y="0" width="1520" height="1390"/>
+
+  <!-- ====================== 标题 ====================== -->
+  <text class="th" x="28" y="32">ESP-Mosaico 长条手持终端 · 底座主板原理图（分级示意）</text>
+  <text class="ts" x="28" y="52">提案 · 未冻结 · claude-opus-5 起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造　|　网名与 netlist.yaml 一致　|　ICD-0.2-DRAFT 第 3、4、9 节</text>
+  <line class="wp" x1="1012" y1="26" x2="1050" y2="26"/>
+  <text class="netp" x="1058" y="31">粗红线 ＝ VBUS_IN / VBAT → DOCK_5V 纯硬件路径</text>
+  <text class="ts" x="1058" y="50">不经任何软件、不经任何主机 GPIO / I²C、不等 EEPROM 识别</text>
+
+  <!-- ====================== 一、电源级 ====================== -->
+  <rect class="fr" x="20" y="72" width="1480" height="588"/>
+  <text class="tb" x="36" y="96">一、电源级　USB-C → 充电与电源路径 → 低压关断 → 升压 → 限流 → 防反灌 → DOCK_5V　（硬约束 1、EL-D-01、任务书 R04）</text>
+
+  <!-- 纯硬件路径粗线（先画，作底层） -->
+  <path class="wp" d="M 192 190 H 262"/>
+  <path class="wp" d="M 318 190 H 390"/>
+  <path class="wp" d="M 580 190 H 700"/>
+  <path class="wp" d="M 650 190 V 117 H 660"/>
+  <path class="wp" d="M 820 117 V 155"/>
+  <path class="wp" d="M 860 215 H 930"/>
+  <path class="wp" d="M 1080 215 H 1130"/>
+  <path class="wp" d="M 1280 215 H 1346"/>
+  <path class="wp" d="M 172 425 H 440 V 330"/>
+
+  <!-- J1 USB-C -->
+  <rect class="box" x="42" y="150" width="150" height="120"/>
+  <text class="tb" x="52" y="172">J1　USB-C 16P</text>
+  <text class="ts" x="52" y="192">TYPE-C-31-M-12</text>
+  <text class="ts" x="52" y="210">只用 VBUS/GND/CC1/CC2</text>
+  <text class="ts" x="52" y="228">D±、SBU 焊盘不连铜</text>
+  <text class="ts" x="52" y="246">外壳脚 SH1–SH4 → 地</text>
+  <text class="ts" x="52" y="264">不做 PD，不取 9 V / 12 V</text>
+  <text class="net" x="200" y="182" data-net="VBUS_RAW">VBUS_RAW</text>
+  <text class="net" x="46"  y="292" data-net="USB_CC1">USB_CC1</text>
+  <text class="net" x="122" y="292" data-net="USB_CC2">USB_CC2</text>
+  <text class="ts"  x="46"  y="310">R_CC1 / R_CC2 各 5.1 kΩ → DOCK_GND</text>
+  <text class="ts"  x="46"  y="326">（Rd，声明为受电设备 UFP/Sink）</text>
+
+  <!-- F1 -->
+  <rect class="box" x="262" y="172" width="56" height="36"/>
+  <text class="t" x="270" y="195">F1 2 A</text>
+  <text class="net" x="324" y="182" data-net="VBUS_IN">VBUS_IN</text>
+  <text class="ts"  x="324" y="200">TP_VBUS</text>
+
+  <!-- D1 TVS -->
+  <path class="w" d="M 340 190 V 240"/>
+  <rect class="box" x="314" y="240" width="54" height="30"/>
+  <text class="ts" x="322" y="260">D1 TVS</text>
+  <path class="w" d="M 341 270 V 292"/>
+  <path class="gnd" d="M 326 292 H 356 M 331 298 H 351 M 336 304 H 346"/>
+
+  <!-- U_CHG -->
+  <rect class="boxp" x="390" y="150" width="190" height="180"/>
+  <text class="tb" x="400" y="172">U_CHG　BQ24074</text>
+  <text class="ts" x="400" y="191">线性充电 ＋ 电源路径（DPPM）</text>
+  <text class="ts" x="400" y="209">独立式：无 I²C、无 MCU</text>
+  <text class="ts" x="400" y="227">有输入时系统优先，剩余充电</text>
+  <text class="ts" x="400" y="245">无电池 / 坏电池时 OUT 仍供系统</text>
+  <text class="ts" x="400" y="263">EN2→VSYS、EN1→GND、CE→GND</text>
+  <text class="ts" x="400" y="281">R_ILIM_CHG 1.1 k → 输入限 1.46 A</text>
+  <text class="ts" x="400" y="299">R_ISET 1.78 kΩ → 充电 500 mA</text>
+  <text class="ts" x="400" y="317">ITERM / TMR 开路 ＝ 默认值</text>
+  <text class="ts" x="446" y="348">BAT</text>
+  <text class="ts" x="496" y="348">TS</text>
+
+  <!-- VSYS -->
+  <text class="net" x="586" y="182" data-net="VSYS">VSYS</text>
+  <text class="ts"  x="586" y="200">TP_VSYS</text>
+  <text class="ts"  x="586" y="216">4.4 V typ</text>
+  <text class="ts"  x="672" y="178">VIN</text>
+
+  <!-- L1 + U_BOOST -->
+  <rect class="box" x="660" y="100" width="160" height="34"/>
+  <text class="t" x="672" y="123">L1　1.0 µH　Isat ≥4.5 A</text>
+  <text class="net" x="828" y="112" data-net="SW_NODE">SW_NODE</text>
+
+  <rect class="boxp" x="700" y="155" width="160" height="165"/>
+  <text class="tb" x="710" y="177">U_BOOST</text>
+  <text class="ts" x="710" y="196">TPS61023 同步升压</text>
+  <text class="ts" x="710" y="214">谷值限流 3.7 A typ</text>
+  <text class="ts" x="710" y="232">关断＝真断开，阻断反灌</text>
+  <text class="ts" x="710" y="250">输出 OVP 5.7 V typ</text>
+  <text class="net" x="710" y="270" data-net="BOOST_FB">BOOST_FB</text>
+  <text class="ts" x="710" y="288">R_FB1 909 k / R_FB2 120 k</text>
+  <text class="ts" x="710" y="306">→ 5.10 V（AS-31-dock-1）</text>
+  <text class="ts" x="676" y="288">EN</text>
+
+  <!-- BOOST_5V -->
+  <text class="net" x="868" y="207" data-net="BOOST_5V">BOOST_5V</text>
+  <text class="ts"  x="868" y="225">TP_BOOST</text>
+
+  <!-- U_LIM -->
+  <rect class="boxp" x="930" y="165" width="150" height="145"/>
+  <text class="tb" x="940" y="187">U_LIM</text>
+  <text class="ts" x="940" y="206">TPS2553（恒流型）</text>
+  <text class="ts" x="940" y="224">限流 ＋ 短路 ＋ 过热</text>
+  <text class="ts" x="940" y="242">软启动 0.7–1.5 ms</text>
+  <text class="ts" x="940" y="260">反向 135 mV / 4 ms 关断</text>
+  <text class="ts" x="940" y="278">连续 1.5 A，rDS 85 mΩ</text>
+  <text class="ts" x="940" y="296">155 °C 关断，自恢复</text>
+
+  <!-- LIM_5V -->
+  <text class="net" x="1084" y="207" data-net="LIM_5V">LIM_5V</text>
+  <text class="ts"  x="1084" y="225">TP_LIM</text>
+
+  <!-- U_RB -->
+  <rect class="boxp" x="1130" y="165" width="150" height="145"/>
+  <text class="tb" x="1140" y="187">U_RB</text>
+  <text class="ts" x="1140" y="206">LM66100 理想二极管</text>
+  <text class="ts" x="1140" y="224">CE 接 VOUT ＝ 反向保护</text>
+  <text class="ts" x="1140" y="242">VOUT−VIN &gt;35 mV 关断</text>
+  <text class="ts" x="1140" y="260">关断漏电 ≤ 5.1 µA max</text>
+  <text class="ts" x="1140" y="278">RON 79 mΩ，IQ 150 nA</text>
+  <text class="ts" x="1140" y="296">ST → TP_ST（仅测量）</text>
+  <path class="w" d="M 1280 215 V 246 H 1264 M 1264 246 V 232"/>
+
+  <!-- DOCK_5V 出口 -->
+  <text class="netp" x="1284" y="207" data-net="DOCK_5V">DOCK_5V</text>
+  <rect class="boxp" x="1346" y="165" width="150" height="155"/>
+  <text class="tb" x="1358" y="187">J2　弹簧针 2×8</text>
+  <text class="ts" x="1356" y="207">列1 A1,B1 ＝ DOCK_5V</text>
+  <text class="ts" x="1356" y="225">列2 A2,B2 ＝ DOCK_GND</text>
+  <text class="ts" x="1356" y="243">各两针并联</text>
+  <text class="ts" x="1356" y="261">列 2 用行程更长针型，</text>
+  <text class="ts" x="1356" y="279">实现「地先接触」</text>
+  <text class="ts" x="1356" y="297">C_DOCK 只 1 µF，D2 TVS</text>
+  <text class="ts" x="1356" y="315">→ H2 pin 17（纯铜）</text>
+
+  <!-- == U_LIM 使能与设定 == -->
+  <path class="w" d="M 900 215 V 250"/>
+  <rect class="box" x="872" y="250" width="56" height="26"/>
+  <text class="ts" x="876" y="268">R_EN_LIM</text>
+  <path class="w" d="M 900 276 V 290 H 930"/>
+  <text class="net" x="866" y="296" data-net="LIM_EN">LIM_EN</text>
+  <path class="w" d="M 1010 310 V 330"/>
+  <rect class="box" x="970" y="330" width="84" height="26"/>
+  <text class="ts" x="974" y="348">R_ILIM 19.6 k</text>
+  <path class="w" d="M 1012 356 V 372"/>
+  <path class="gnd" d="M 997 372 H 1027 M 1002 378 H 1022 M 1007 384 H 1017"/>
+  <text class="net" x="1062" y="344" data-net="LIM_ILIM">LIM_ILIM</text>
+  <text class="ts"  x="1062" y="362">→ IOS 1215 / 1308 / 1415 mA（AS-31-dock-2；TH-03 待 Chrome 定义）</text>
+  <path class="w" d="M 1058 310 V 326"/>
+  <text class="net" x="1160" y="330" data-net="LIM_FAULT">LIM_FAULT</text>
+  <text class="ts"  x="1160" y="348">→ LED_FLT、TP_FAULT；开漏，不回到任何使能网</text>
+
+  <!-- == 电池与保护 == -->
+  <rect class="box" x="42" y="400" width="130" height="120"/>
+  <text class="tb" x="52" y="422">J3　电池</text>
+  <text class="ts" x="52" y="441">B+ / NTC / B−</text>
+  <text class="ts" x="52" y="459">1500 mAh 3.7 V</text>
+  <text class="ts" x="52" y="477">ASSUMPTION AS-12</text>
+  <text class="ts" x="52" y="495">针序 AS-31-dock-19</text>
+  <text class="ts" x="52" y="513">接前断电核对极性</text>
+  <text class="netp" x="180" y="418" data-net="VBAT">VBAT</text>
+  <text class="ts"  x="232" y="418">TP_VBAT</text>
+
+  <path class="wd" d="M 172 458 H 210"/>
+  <text class="net" x="178" y="438" data-net="BATT_NTC">BATT_NTC</text>
+  <rect class="dnp" x="210" y="444" width="84" height="28"/>
+  <text class="ts" x="216" y="463">R_TS_NTC(DNP)</text>
+  <path class="wd" d="M 294 458 H 490 V 330"/>
+  <text class="net" x="500" y="450" data-net="CHG_TS">CHG_TS</text>
+  <path class="w" d="M 490 458 H 560"/>
+  <rect class="box" x="560" y="444" width="84" height="28"/>
+  <text class="ts" x="566" y="463">R_TS_FIX 10 k</text>
+  <path class="w" d="M 644 458 H 664 V 486"/>
+  <path class="gnd" d="M 649 486 H 679 M 654 492 H 674 M 659 498 H 669"/>
+
+  <path class="w" d="M 172 492 H 270"/>
+  <text class="net" x="176" y="486" data-net="BATT_MINUS">BATT_MINUS</text>
+  <rect class="box" x="270" y="474" width="190" height="56"/>
+  <text class="t"  x="278" y="494">U_PROT ＋ Q_PROT</text>
+  <text class="ts" x="278" y="511">DW01A 类 ＋ 背靠背 MOS</text>
+  <text class="ts" x="278" y="525">过充 / 过放 / 过流（默认装）</text>
+  <path class="w" d="M 460 502 H 490 V 530"/>
+  <path class="gnd" d="M 475 530 H 505 M 480 536 H 500 M 485 542 H 495"/>
+  <text class="netp" x="514" y="506" data-net="DOCK_GND">DOCK_GND</text>
+
+  <!-- == 低压关断使能链 == -->
+  <path class="w" d="M 680 190 V 430 H 700"/>
+  <rect class="box" x="700" y="390" width="160" height="80"/>
+  <text class="tb" x="710" y="412">U_UV</text>
+  <text class="ts" x="710" y="430">3.0 V 电压检测器</text>
+  <text class="ts" x="710" y="448">监测 VSYS，推挽输出</text>
+  <text class="ts" x="710" y="464">AS-31-dock-10</text>
+  <path class="w" d="M 860 410 H 880"/>
+  <text class="net" x="866" y="390" data-net="UV_OUT">UV_OUT</text>
+  <rect class="box" x="880" y="396" width="64" height="28"/>
+  <text class="ts" x="886" y="415">R_EN 100 k</text>
+  <path class="w" d="M 944 410 V 352 H 690 V 292 H 700"/>
+  <text class="net" x="600" y="288" data-net="BOOST_EN">BOOST_EN</text>
+  <text class="ts"  x="600" y="304">TP_EN</text>
+  <path class="wd" d="M 944 410 H 980"/>
+  <rect class="dnp" x="980" y="396" width="130" height="30"/>
+  <text class="ts" x="986" y="416">SW_DOCK（DNP）</text>
+  <path class="wd" d="M 1110 411 H 1140 V 434"/>
+  <path class="gnd" d="M 1125 434 H 1155 M 1130 440 H 1150 M 1135 446 H 1145"/>
+  <text class="ts" x="980" y="474">到位联锁：常闭触点，未放入 Mosaico 时拉低 EN；</text>
+  <text class="ts" x="980" y="490">纯机械，不依赖主机信号；默认不装，见 DESIGN_NOTES 第 3 节</text>
+
+  <!-- == 电源级底部说明 == -->
+  <text class="ts" x="42" y="566">TS：默认装 R_TS_FIX 10 kΩ ⇒ TS 恒读 ≈25 °C，**充电温度保护不起作用** —— 仅限首版台架；面向用户的整机必须改装电池 NTC（拆 R_TS_FIX、装 R_TS_NTC）。ASSUMPTION AS-31-dock-21</text>
+  <text class="ts" x="42" y="586">BOOST_EN 的来源只有 U_UV（对 VSYS 的比较）与可选机械开关 SW_DOCK；LIM_EN 的来源只有 BOOST_5V 经 R_EN_LIM 上拉。两网都**不连任何 J2 针、不连 U_FG、不连任何主机信号**。</text>
+  <text class="ts" x="42" y="604">两网的完整 pins 列表由 check_netlist.py 的 CK-03 打印，实际输出贴在 DESIGN_NOTES.md 第 7 节 —— 这就是 POWER_TOPOLOGY.md 第 3 节 (a) 所承诺的那次机械核对。</text>
+  <text class="ts" x="42" y="624">未画出：去耦与旁路电容、LED 与限流电阻、测试点物理位置、U_PROT/Q_PROT 内部接法 —— 全部以 netlist.yaml 为准。C_BST_OUT 2×22 µF 集中在 BOOST_5V 侧，DOCK_5V 只放 1 µF（热插拔瞬态，第 4 节）。</text>
+  <text class="ts" x="42" y="644">指示灯：LED_PG / LED_CHG 取电自 VBUS_IN（不计入电池预算）；LED_OUT 经 R_LED_OUT ＋ JP_LED（默认闭合）挂 DOCK_5V，断开 JP_LED 省 ≈0.5 mA（AS-31-dock-9）。</text>
+
+  <!-- ====================== 二、按键级 ====================== -->
+  <rect class="fr" x="20" y="676" width="1480" height="252"/>
+  <text class="tb" x="36" y="700">二、按键级　10 个无源轻触开关，一端接 KEY_*（到 J2），另一端接 DOCK_GND；底座侧无任何上拉、无任何电源（硬约束 5、EL-D-05）</text>
+  <text class="ts" x="36" y="720">拉高只由主机内部上拉提供；全部 3.3 V 域。GPIO 分配的唯一权威是模块板 PINMAP.md 第 2 节，本图只是其镜像。</text>
+
+  <g>
+    <g>
+      <text class="net" x="56"  y="756" data-net="KEY_UP">KEY_UP</text>
+      <text class="ts"  x="56"  y="772">J2.A3 · H2-1 · GPIO55</text>
+      <rect class="box" x="56"  y="780" width="104" height="40"/>
+      <text class="t"   x="66"  y="805">SW_UP</text>
+      <path class="w" d="M 108 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="198" y="756" data-net="KEY_DOWN">KEY_DOWN</text>
+      <text class="ts"  x="198" y="772">J2.B3 · H2-3 · GPIO19</text>
+      <rect class="box" x="198" y="780" width="104" height="40"/>
+      <text class="t"   x="208" y="805">SW_DOWN</text>
+      <path class="w" d="M 250 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="340" y="756" data-net="KEY_LEFT">KEY_LEFT</text>
+      <text class="ts"  x="340" y="772">J2.A4 · H2-5 · GPIO18</text>
+      <rect class="box" x="340" y="780" width="104" height="40"/>
+      <text class="t"   x="350" y="805">SW_LEFT</text>
+      <path class="w" d="M 392 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="482" y="756" data-net="KEY_RIGHT">KEY_RIGHT</text>
+      <text class="ts"  x="482" y="772">J2.B4 · H2-7 · GPIO17</text>
+      <rect class="box" x="482" y="780" width="104" height="40"/>
+      <text class="t"   x="492" y="805">SW_RIGHT</text>
+      <path class="w" d="M 534 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="624" y="756" data-net="KEY_L">KEY_L</text>
+      <text class="ts"  x="624" y="772">J2.A5 · H2-9 · GPIO16</text>
+      <rect class="box" x="624" y="780" width="104" height="40"/>
+      <text class="t"   x="634" y="805">SW_L</text>
+      <path class="w" d="M 676 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="766" y="756" data-net="KEY_R">KEY_R</text>
+      <text class="ts"  x="766" y="772">J2.B5 · H2-11 · GPIO15</text>
+      <rect class="box" x="766" y="780" width="104" height="40"/>
+      <text class="t"   x="776" y="805">SW_R</text>
+      <path class="w" d="M 818 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="908" y="756" data-net="KEY_A">KEY_A</text>
+      <text class="ts"  x="908" y="772">J2.A6 · H2-2 · GPIO53</text>
+      <rect class="box" x="908" y="780" width="104" height="40"/>
+      <text class="t"   x="918" y="805">SW_A</text>
+      <path class="w" d="M 960 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="1050" y="756" data-net="KEY_B">KEY_B</text>
+      <text class="ts"  x="1050" y="772">J2.B6 · H2-4 · GPIO48</text>
+      <rect class="box" x="1050" y="780" width="104" height="40"/>
+      <text class="t"   x="1060" y="805">SW_B</text>
+      <path class="w" d="M 1102 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="1192" y="756" data-net="KEY_X">KEY_X</text>
+      <text class="ts"  x="1192" y="772">J2.A7 · H2-6 · GPIO13</text>
+      <rect class="box" x="1192" y="780" width="104" height="40"/>
+      <text class="t"   x="1202" y="805">SW_X</text>
+      <path class="w" d="M 1244 820 V 874"/>
+    </g>
+    <g>
+      <text class="net" x="1334" y="756" data-net="KEY_Y">KEY_Y</text>
+      <text class="ts"  x="1334" y="772">J2.B7 · H2-8 · GPIO12</text>
+      <rect class="box" x="1334" y="780" width="104" height="40"/>
+      <text class="t"   x="1344" y="805">SW_Y</text>
+      <path class="w" d="M 1386 820 V 874"/>
+    </g>
+    <path class="w" d="M 108 874 H 1386"/>
+    <path class="gnd" d="M 732 874 V 886 M 717 886 H 747 M 722 892 H 742 M 727 898 H 737"/>
+    <text class="ts" x="756" y="894">共地 DOCK_GND（＝ 电池 PACK−）</text>
+    <text class="ts" x="56"  y="910">轮询 20–40 ms ＋ 去抖由主机固件完成（EL-D-07、AS-23）；底座无 MCU、无中断线、无按键上拉。</text>
+  </g>
+
+  <!-- ====================== 三、接口级 ====================== -->
+  <rect class="fr" x="20" y="944" width="1480" height="424"/>
+  <text class="tb" x="36" y="968">三、接口级　J2 弹簧针 2 行 × 8 列 @ 2.54 mm（ICD 第 3.2 节 ＝ 模块板 PINMAP 第 4.2 节，两板同 (X, Z)，不镜像）</text>
+  <text class="ts" x="36" y="988">坐标：列 c 沿 +X，列 1 在 −X 最外侧（靠左握把）；行 A 靠 +Z（屏侧），行 B 靠 −Z（背侧）；弹簧针轴向 +Y。EDA 顶视图中列 1 在左、行 B 在上、行 A 在下。</text>
+
+  <g>
+    <rect class="box" x="40" y="1002" width="86" height="34"/>
+    <text class="t" x="50" y="1024">行 \ 列</text>
+    <rect class="box" x="40" y="1036" width="86" height="42"/>
+    <text class="t" x="50" y="1062">A（+Z）</text>
+    <rect class="box" x="40" y="1078" width="86" height="42"/>
+    <text class="t" x="50" y="1104">B（−Z）</text>
+    <rect class="box" x="40" y="1120" width="86" height="40"/>
+    <text class="ts" x="50" y="1145">模块板侧</text>
+
+    <rect class="boxp" x="126" y="1002" width="166" height="34"/><text class="t" x="136" y="1024">列 1（−X 最外）</text>
+    <rect class="boxp" x="126" y="1036" width="166" height="42"/><text class="netp" x="136" y="1062" data-net="DOCK_5V">DOCK_5V　A1</text>
+    <rect class="boxp" x="126" y="1078" width="166" height="42"/><text class="netp" x="136" y="1104" data-net="DOCK_5V">DOCK_5V　B1</text>
+    <rect class="box"  x="126" y="1120" width="166" height="40"/><text class="ts" x="136" y="1138">SLOT_5V_IN</text><text class="ts" x="136" y="1152">H2 pin 17（纯铜）</text>
+
+    <rect class="box" x="292" y="1002" width="150" height="34"/><text class="t" x="302" y="1024">列 2</text>
+    <rect class="box" x="292" y="1036" width="150" height="42"/><text class="net" x="302" y="1062" data-net="DOCK_GND">DOCK_GND　A2</text>
+    <rect class="box" x="292" y="1078" width="150" height="42"/><text class="net" x="302" y="1104" data-net="DOCK_GND">DOCK_GND　B2</text>
+    <rect class="box" x="292" y="1120" width="150" height="40"/><text class="ts" x="302" y="1138">SLOT_GND</text><text class="ts" x="302" y="1152">H2 pin 20</text>
+
+    <rect class="box" x="442" y="1002" width="150" height="34"/><text class="t" x="452" y="1024">列 3　D-pad</text>
+    <rect class="box" x="442" y="1036" width="150" height="42"/><text class="net" x="452" y="1062" data-net="KEY_UP">KEY_UP　A3</text>
+    <rect class="box" x="442" y="1078" width="150" height="42"/><text class="net" x="452" y="1104" data-net="KEY_DOWN">KEY_DOWN　B3</text>
+    <rect class="box" x="442" y="1120" width="150" height="40"/><text class="ts" x="452" y="1138">H2-1 / GPIO55</text><text class="ts" x="452" y="1152">H2-3 / GPIO19</text>
+
+    <rect class="box" x="592" y="1002" width="150" height="34"/><text class="t" x="602" y="1024">列 4　D-pad</text>
+    <rect class="box" x="592" y="1036" width="150" height="42"/><text class="net" x="602" y="1062" data-net="KEY_LEFT">KEY_LEFT　A4</text>
+    <rect class="box" x="592" y="1078" width="150" height="42"/><text class="net" x="602" y="1104" data-net="KEY_RIGHT">KEY_RIGHT　B4</text>
+    <rect class="box" x="592" y="1120" width="150" height="40"/><text class="ts" x="602" y="1138">H2-5 / GPIO18</text><text class="ts" x="602" y="1152">H2-7 / GPIO17</text>
+
+    <rect class="box" x="742" y="1002" width="150" height="34"/><text class="t" x="752" y="1024">列 5　肩键</text>
+    <rect class="box" x="742" y="1036" width="150" height="42"/><text class="net" x="752" y="1062" data-net="KEY_L">KEY_L　A5</text>
+    <rect class="box" x="742" y="1078" width="150" height="42"/><text class="net" x="752" y="1104" data-net="KEY_R">KEY_R　B5</text>
+    <rect class="box" x="742" y="1120" width="150" height="40"/><text class="ts" x="752" y="1138">H2-9 / GPIO16</text><text class="ts" x="752" y="1152">H2-11 / GPIO15</text>
+
+    <rect class="box" x="892" y="1002" width="150" height="34"/><text class="t" x="902" y="1024">列 6　ABXY</text>
+    <rect class="box" x="892" y="1036" width="150" height="42"/><text class="net" x="902" y="1062" data-net="KEY_A">KEY_A　A6</text>
+    <rect class="box" x="892" y="1078" width="150" height="42"/><text class="net" x="902" y="1104" data-net="KEY_B">KEY_B　B6</text>
+    <rect class="box" x="892" y="1120" width="150" height="40"/><text class="ts" x="902" y="1138">H2-2 / GPIO53</text><text class="ts" x="902" y="1152">H2-4 / GPIO48</text>
+
+    <rect class="box" x="1042" y="1002" width="150" height="34"/><text class="t" x="1052" y="1024">列 7　ABXY</text>
+    <rect class="box" x="1042" y="1036" width="150" height="42"/><text class="net" x="1052" y="1062" data-net="KEY_X">KEY_X　A7</text>
+    <rect class="box" x="1042" y="1078" width="150" height="42"/><text class="net" x="1052" y="1104" data-net="KEY_Y">KEY_Y　B7</text>
+    <rect class="box" x="1042" y="1120" width="150" height="40"/><text class="ts" x="1052" y="1138">H2-6 / GPIO13</text><text class="ts" x="1052" y="1152">H2-8 / GPIO12</text>
+
+    <rect class="dnp" x="1192" y="1002" width="166" height="34"/><text class="t" x="1202" y="1024">列 8（靠中央）</text>
+    <rect class="dnp" x="1192" y="1036" width="166" height="42"/><text class="net" x="1202" y="1062" data-net="DOCK_SDA">DOCK_SDA　A8</text>
+    <rect class="dnp" x="1192" y="1078" width="166" height="42"/><text class="net" x="1202" y="1104" data-net="DOCK_SCL">DOCK_SCL　B8</text>
+    <rect class="dnp" x="1192" y="1120" width="166" height="40"/><text class="ts" x="1202" y="1138">经模块板 DNP R_LINK</text><text class="ts" x="1202" y="1152">默认与主机 I²C1 断开</text>
+  </g>
+
+  <rect class="dnp" x="1378" y="1002" width="104" height="158"/>
+  <text class="tb" x="1386" y="1024">U_FG</text>
+  <text class="ts" x="1386" y="1042">MAX17048</text>
+  <text class="ts" x="1386" y="1058">电量计（DNP）</text>
+  <text class="ts" x="1386" y="1076">地址 0x36 待核</text>
+  <text class="ts" x="1386" y="1092">≠ 0x50 / 0x51</text>
+  <text class="ts" x="1386" y="1110">EL-D-06 / -10</text>
+  <text class="ts" x="1386" y="1128">装配前提：</text>
+  <text class="ts" x="1386" y="1144">AS-08 已关闭</text>
+  <path class="wd" d="M 1358 1058 H 1378 M 1358 1100 H 1378"/>
+
+  <text class="ts" x="40" y="1190">底座侧电气规则：① 每个 KEY_* 针只连一颗轻触开关到 DOCK_GND，无上拉、无电源（EL-D-05、EL-D-11）；② 列 8 不放上拉（EL-D-06）；</text>
+  <text class="ts" x="40" y="1210">③ 接口上没有 3V3 针，底座不存在任何 3.3 V 网络（EL-D-03）；④ DOCK_5V 经 U_LIM 限流 ＋ U_RB 理想二极管两级防反灌（EL-D-08、硬约束 8）。</text>
+  <text class="ts" x="40" y="1236">错位无损分析（X ±1 列、Z 错一行）见 ICD 第 3.3 节二级表；绕 Y 轴 180° 错放**必须**由一级机械防呆阻止，电气不兜底。</text>
+  <text class="ts" x="40" y="1256">载流：DOCK_5V / DOCK_GND 各 2 针并联覆盖 AS-09 峰值 ≤1 A；单针额定与工作行程「待原厂数据手册核对」（AS-26、AS-31-dock-25）。</text>
+  <text class="ts" x="40" y="1282">本图与 netlist.yaml 的一致性由 check_netlist.py 的 CK-09 机械核对；CK-02 核对 J2 逐针与 ICD 一致；CK-03 核对 BOOST_EN / LIM_EN 两网不含 J2、U_FG。</text>
+  <text class="ts" x="40" y="1302">修订 A0-proposal · 2026-09-21 · claude-opus-5 · 与 POWER_TOPOLOGY.md（拓扑）、POWER_BUDGET.md（电流与热）、BOM.csv（选型）、DESIGN_NOTES.md（取舍与验证）配套</text>
+</svg>
