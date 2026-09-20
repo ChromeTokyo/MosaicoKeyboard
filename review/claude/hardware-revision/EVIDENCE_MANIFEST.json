@@ -1,0 +1,53 @@
+{
+  "directory": "review/claude/hardware-revision/",
+  "generated": "2026-09-20",
+  "generated_by": "Claude 主控（实际模型 claude-fable-5-1）",
+  "hash_algorithm": "SHA-256",
+  "hash_command": "shasum -a 256 <file>",
+  "size_command": "stat -f %z <file>",
+  "source": {
+    "origin": "第三方小红书账号「数字之心」开箱内容《esp mosaico 新鲜到货》：实拍图与一段 153 秒开箱拆机录屏",
+    "chain_of_custody": "用户从该内容取得后转交主控入库；主控未接触原始发布页，未做任何裁切、缩放或标注",
+    "url": null,
+    "screen_recording_in_repo": false,
+    "note": "原录屏未入库、无 URL，录屏中的观察（版本丝印、卡尺读数、交互模块细节）目前不可复核。两张 JPG 的 JFIF 注释为 Lavc62.28.100，表明为视频抽帧；两张 PNG 为同一开箱内容的实拍图。四张图均非用户本人实物。"
+  },
+  "files": [
+    {
+      "path": "review/claude/hardware-revision/v12-assembled-back.png",
+      "bytes": 885646,
+      "sha256": "0fa2d4beae3c1428195f1f2b2f4a9b922b6ae34073dba5b41994d800becb8858",
+      "format": "PNG, 1932 x 1560, 8-bit RGB",
+      "content": "整机背面外侧：黑色标签面，印 ESP-MOSAICO 标识与二维码，四角螺丝，底部一排 7 个焊盘（丝印 GND BOOT RST RX TX 5V GND）；右侧为一块白色模块",
+      "evidentiary_role": "证明整机对外暴露的背面焊盘恰为 7 个；证明外侧无四焊盘组的可见开窗",
+      "limits": "这是贴在底板外侧的标签面，不是 PCB 面（画面中无任何通孔，而 BaseBoard 背面必有两组 2×10P 共 40 个通孔）。不能用作「PCB 上无四焊盘」的直接证据。README 第 2 节原「两张独立实拍互证」的表述据此撤回"
+    },
+    {
+      "path": "review/claude/hardware-revision/v12-baseboard-back.png",
+      "bytes": 3800887,
+      "sha256": "37f658d041bca24cd59ad56720ad68549138a1d0a10b5595ef78f270c5431a4f",
+      "format": "PNG, 2265 x 1800, 8-bit RGB",
+      "content": "BaseBoard-A 裸板背面，仍装在白色外壳内：丝印 ESP-Mosaico Baseboard-A、V1.2、日期码 260821；两组 2×10P 通孔阵列带逐脚丝印；右下 7 个焊盘；中央为 Espressif 与 Mosaico logo 及散布过孔；四角外壳凹槽内有银色金属块",
+      "evidentiary_role": "板中央（V1.0 四焊盘位置）清晰无遮挡，可确证该处无焊盘；可读出版本号与日期码；可见 2×10P 通孔呈实心（疑被焊锡填满）",
+      "limits": "板周最外一圈被外壳唇边紧贴、上边缘一小段被画面截断，不能确证整板无焊盘。版本丝印为 BaseBoard 的，与 CoreBoard eFuse variant 的对应关系未证明"
+    },
+    {
+      "path": "review/claude/hardware-revision/v12-caliper-4527.jpg",
+      "bytes": 216455,
+      "sha256": "77a11a17e46e4ef1cb3d22ebf14fefda04da762ab2ce15e20d050ceb5c1a804f",
+      "format": "JPEG (JFIF 1.01, comment Lavc62.28.100), 1980 x 2109",
+      "content": "录屏抽帧：数显卡尺量整机，读数 45.27 mm",
+      "evidentiary_role": "整机外形尺寸的量级线索",
+      "limits": "被测部位、是否含模块、卡尺是否归零均未知；不得作为工程尺寸（README 第 7 节）"
+    },
+    {
+      "path": "review/claude/hardware-revision/v12-module-interaction.jpg",
+      "bytes": 180227,
+      "sha256": "31dfe797bb75f44a267ee43faa4861c26a2298963b9da35aef95894e3cdb50bf",
+      "format": "JPEG (JFIF 1.01, comment Lavc62.28.100), 1980 x 2109",
+      "content": "录屏抽帧：交互模块实物，丝印 ESP-Mosaico Module-Interaction V0.2，两片棋盘状触摸电极、WS2812、红外、PIR、光敏元件",
+      "evidentiary_role": "确认交互模块的实物形态与 BSP 中 MOSAICO_BOARD_TYPE_INTERACT 对应",
+      "limits": "单帧画面，元件辨识为形态判断；不含任何可用尺寸"
+    }
+  ]
+}

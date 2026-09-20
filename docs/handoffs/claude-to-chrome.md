@@ -157,7 +157,7 @@ Chrome 侧涉及的是 `docs/INTERFACE_CONTROL.md`（尚未创建，持有关系
 | 输入提交号 | `3d5a112`（规则依据的提交号见第 0.4 节末段） |
 | 可编辑文件范围 | `design/`（含新建的 EDA 原生工程文件与导出物）；`review/chrome/T02/`（证据目录，含 `review/chrome/T02/evidence/`）；`tools/`（检查脚本）；`docs/handoffs/chrome.md` 的完成登记与进展日志部分；`docs/TASK_BOARD.md` 的状态与领取记录行 |
 | 只读文件 | `README.md`、`AGENTS.md`、`CLAUDE.md`、`docs/PROJECT_PLAN.md`、`docs/TEAM_PLAN.md`、`docs/DESIGN_STATUS.md`、`docs/DECISIONS.md`、`docs/OWNERSHIP.md`、`docs/REFERENCES-INVENTORY.md`、`docs/STATUS.md`、`references/` |
-| 已生效的使用限制 | **`docs/DECISIONS.md` D-006（状态「生效」）规定：在 `design/` 生成产物与 `references/` 的不一致被查明并复核前，`design/` 下五个生成文件不得作为任何下游工作的输入基准。** T02 的导入对象正是这五个文件，因此导入验证只能作为**工具链与格式验证**，其结果不得被引用为「设计输入已确认」。D-006 的解除条件是查明不一致成因（6.5 U-11）并完成复核，解除由 Chrome 决定受控版本、Hiro 复核、主控记录 |
+| 已生效的使用限制 | **`docs/DECISIONS.md` D-006a（状态「生效」）规定：在 `design/` 生成产物与 `references/` 的不一致被查明并复核前，`design/` 下五个生成文件不得作为任何下游工作的输入基准。** T02 的导入对象正是这五个文件，因此导入验证只能作为**工具链与格式验证**，其结果不得被引用为「设计输入已确认」。D-006a 的解除条件是查明不一致成因（6.5 U-11）并完成复核，解除由 Chrome 决定受控版本、Hiro 复核、主控记录 |
 | 编辑锁 | `docs/OWNERSHIP.md` 第 5 节：同一源文件同时只允许一位编辑者；领取先于修改；`design/` 下五个生成产物只能由 `design/build_design.py` 重新生成，不得同时手改生成文件与生成脚本 |
 | 明确不要做的事 | 不在导入未成功时宣称工程可用；不同时手改生成文件与生成脚本（`AGENTS.md`「设计文件与生成文件」一节）；不借本任务顺手修订电路、更换器件或调整任何尺寸；不把“导入没有报错”写成“网络正确”；不输出任何制造文件 |
 
@@ -259,7 +259,7 @@ Chrome 侧涉及的是 `docs/INTERFACE_CONTROL.md`（尚未创建，持有关系
 | 输入提交号 | `3d5a112`；审查对象为该提交的 `design/` A0 草案与 T04 提供的原厂资料 |
 | 可编辑文件范围 | `review/chrome/T05/`（审查记录与 `review/chrome/T05/evidence/`）；`docs/DESIGN_STATUS.md` 的待解决项状态更新；`docs/handoffs/chrome.md`；`docs/TASK_BOARD.md` 的状态行 |
 | 只读文件 | 本任务阶段 `design/build_design.py` 与全部生成产物为只读，审查未出结论前不得修改被审查对象；`references/`；`docs/DECISIONS.md`、`docs/OWNERSHIP.md`、`docs/REFERENCES-INVENTORY.md`、`docs/STATUS.md`、`docs/TEAM_PLAN.md`、`AGENTS.md` |
-| 已生效的使用限制 | **`docs/DECISIONS.md` D-006（状态「生效」）**：在 `design/` 生成产物与 `references/` 的不一致被查明并复核前，五个生成文件不得作为任何下游工作的输入基准。T05 的审查对象正是这五个文件，因此审查结论必须绑定「所审的是哪一版产物」，并声明该版是否为受控版本（当前无受控版本，见 U-12）。解除条件同第 1 节 |
+| 已生效的使用限制 | **`docs/DECISIONS.md` D-006a（状态「生效」）**：在 `design/` 生成产物与 `references/` 的不一致被查明并复核前，五个生成文件不得作为任何下游工作的输入基准。T05 的审查对象正是这五个文件，因此审查结论必须绑定「所审的是哪一版产物」，并声明该版是否为受控版本（当前无受控版本，见 U-12）。解除条件同第 1 节 |
 | 明确不要做的事 | 不在审查记录完成前修改电路（`docs/TASK_BOARD.md` 对 T05 的验收条件即为“先完成审查记录再修订”）；不在证据不全时给出 `PASS`；不用自己的另一会话冒充独立审查（`docs/TEAM_PLAN.md` 第 2 节）；不自批硬件通过；不把 ERC 结果当作电源设计验证（`docs/TEAM_PLAN.md` 第 6 节明确禁止） |
 
 **验收条件（对应 G2「电气冻结」的准备环节）**　G2 的放行证据是“电源全部状态、关键参数计算、引脚／封装、总线电平、ERC、问题关闭记录”，由 Chrome 准备、Hiro 批次复核、Claude 补充跨模型审查。T05 是这条链的第一步，本任务本身**不放行 G2**。T05 通过的条件是：
@@ -267,7 +267,7 @@ Chrome 侧涉及的是 `docs/INTERFACE_CONTROL.md`（尚未创建，持有关系
 1. 逐项审查记录先于任何修订产生，且覆盖 O04、O05、O06、O09 四项及审查中新发现的问题。
 2. 每一项给出独立计算或独立核对过程，不以原作者结论为前提。
 3. 输出结论为 `PASS`、`CHANGES_REQUIRED` 或 `BLOCKED` 三者之一。**证据不全时不得使用 `PASS`**（`docs/TEAM_PLAN.md` 第 4 节对审查输出的统一要求，此处同样适用）。
-4. 结论绑定具体提交号，并声明所审产物版本与 D-006 的关系；`docs/TEAM_PLAN.md` 第 5 节规定修改关键网络、器件、板框、孔位或尺寸后旧报告对受影响范围失效。
+4. 结论绑定具体提交号，并声明所审产物版本与 D-006a 的关系；`docs/TEAM_PLAN.md` 第 5 节规定修改关键网络、器件、板框、孔位或尺寸后旧报告对受影响范围失效。
 
 **本任务需要关闭的盘点条目**　C-02（审查所依据的产物版本须明确）、C-04；对应未知项 U-04、U-05、U-06、U-09、U-11、U-13。
 
@@ -415,7 +415,7 @@ Chrome 侧涉及的是 `docs/INTERFACE_CONTROL.md`（尚未创建，持有关系
 
 记录允许很短，但必须是事实陈述，不写“进展顺利”这类无信息内容。**进展记录不等于交接，也不等于验收**：交接仍按 `docs/handoffs/TEMPLATE.md` 提交，技术结论仍需对应的检查与非作者复核。主控据此更新 `docs/STATUS.md`；某端超过一个工作日没有进展记录，主控向用户提示需要催办。
 
-依据状态：该规则出自 `AGENTS.md`「进展同步（强制）」与 `docs/TEAM_PLAN.md` 第 5 节，**两处均为本轮主控新增的未提交改动，在基线 `3d5a112` 中尚未包含**（实测 `git show 3d5a112:AGENTS.md | grep 进展同步` 无输出）。决策记录见 `docs/DECISIONS.md` D-008（该文件同样未提交）。
+依据状态：该规则出自 `AGENTS.md`「进展同步（强制）」与 `docs/TEAM_PLAN.md` 第 5 节，**两处均为本轮主控新增的未提交改动，在基线 `3d5a112` 中尚未包含**（实测 `git show 3d5a112:AGENTS.md | grep 进展同步` 无输出）。决策记录见 `docs/DECISIONS.md` D-008a（该文件同样未提交）。
 
 ### 7.3 进展日志
 
