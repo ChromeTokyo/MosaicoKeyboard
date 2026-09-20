@@ -1,0 +1,5 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+# 校验：cd hardware/eeprom && grep -v "^#" SHA256SUMS | shasum -a 256 -c
+# 重生成：python3 mosaico_eeprom_v1.py sample -o sample_handle.bin && python3 mosaico_eeprom_v1.py c-array sample_handle.bin -o sample_handle_image.h
+119e991a6a87b5b1afa18feefdbcb1fdb86cadc564c7ce7375133da0a9810832  sample_handle.bin
+7f4b41e26bfeff5bef94386987f2a4d8821863fd6dd5cae15761d49f5d610f3f  sample_handle_image.h

@@ -1,0 +1,4 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+# 手持底座模块板 EEPROM 序列号登记表。每烧写一台追加一行；serial_hex 在 board_id 内唯一。编码规则见 IDENTITY.md 第 5 节；image_sha256 为烧入的 134 字节镜像 SHA-256（build 命令会打印）。
+serial_hex,board_id_hex,hw_version_hex,manufacture_date,batch,factory_id,programmed_by,method,image_sha256,notes
+0x26090001,0x0101,0x0100,20260920,1,0,claude-fable-5-1,none,119e991a6a87b5b1afa18feefdbcb1fdb86cadc564c7ce7375133da0a9810832,样例镜像 sample_handle.bin（board_name MOSAICO-DOCK-MODULE-V1.0，keymap_version 1）；不是实物，任何实物不得复用此序列号
