@@ -1,0 +1,108 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+
+menu "Dock Handle (Design D+G, 10-key dock)"
+
+    config DOCK_HANDLE_POLL_PERIOD_MS
+        int "Key poll period (ms)"
+        range 20 40
+        default 20
+        help
+            按键轮询周期。BSP 对模块槽 GPIO 没有中断通路（LEFT_SLOT.md），
+            ICD EL-D-07 要求 20-40 ms 轮询加去抖。20 ms 配合 3 次去抖的最坏识别延迟约 60 ms。
+            EEPROM param_data v1 里的 poll_period_ms 只作提示打印，不覆盖本值。
+
+    config DOCK_HANDLE_DEBOUNCE_COUNT
+        int "Debounce: consecutive identical samples"
+        range 2 10
+        default 3
+        help
+            连续多少次采样与当前稳定状态相反才切换状态。
+            ASSUMPTION: 3 次是轻触开关的常用经验值；到货后用示波器看开关抖动时长，
+            若抖动超过 (DEBOUNCE_COUNT-1) x POLL_PERIOD 则加大（README 假设 AS-31-firmware-4）。
+            EEPROM 样例镜像建议 2 次（IDENTITY.md 第 8 节 A-ID-04），本驱动取更保守的 3 次。
+
+    config DOCK_HANDLE_EVENT_QUEUE_LEN
+        int "Event queue depth"
+        range 4 128
+        default 32
+        help
+            dock_handle_event_t 队列深度。队列满时丢弃新事件并计数
+            （dock_handle_get_dropped_events()）。
+
+    config DOCK_HANDLE_CLAIM_TIMEOUT_MS
+        int "Initial claim wait in dock_handle_init (ms)"
+        range 0 60000
+        default 3000
+        help
+            dock_handle_init() 阻塞等待首次认领的最长时间。与 handheld_dock_skeleton.c 的
+            3000 ms 一致，覆盖管理器默认 250 ms 扫描周期 x 3 次去抖再加一次 EEPROM 读取。
+            0 表示不等待。
+
+    config DOCK_HANDLE_AUTO_REATTACH
+        bool "Keep waiting and re-claim after unplug"
+        default y
+        help
+            模块拔出后驱动保持运行，收到管理器 PRESENT+VALID 事件后自动重新认领并投递
+            DOCK_HANDLE_EVENT_ATTACHED。关闭时拔出即停止，需 deinit/init 重启。
+
+    config DOCK_HANDLE_CHECK_IDENTITY
+        bool "Verify EEPROM vendor_id/board_id/sw_version after claiming"
+        default y
+        help
+            管理器的 claim 只比较 board_type（BSP_AND_EEPROM.md 第 4 节），官方 joystick 模块
+            同为 HANDLE(0x04)。hardware/eeprom/IDENTITY.md 第 2.4 节要求本项目驱动在 claim 成功后
+            立即 get_info 核对 vendor_id、board_id 与 sw_version 高字节，不符则 release。
+            开启后不符的 HANDLE 板不会被当作手柄使用。
+            关闭仅用于到货初期 EEPROM 尚未烧入正式身份时的排障。
+
+    config DOCK_HANDLE_VENDOR_ID
+        hex "Expected EEPROM vendor_id"
+        depends on DOCK_HANDLE_CHECK_IDENTITY
+        range 0x0000 0xFFFF
+        default 0x4354
+        help
+            默认值来自分支 claude/design-d/eeprom 的 hardware/eeprom/IDENTITY.md 第 3 节：
+            0x4354 = ASCII "CT"（ChromeTokyo）。该文件同为提案，非官方分配（其假设 A-ID-02）；
+            IDENTITY.md 改值时同步本默认值。
+
+    config DOCK_HANDLE_BOARD_ID
+        hex "Expected EEPROM board_id"
+        depends on DOCK_HANDLE_CHECK_IDENTITY
+        range 0x0000 0xFFFF
+        default 0x0101
+        help
+            默认值来自 IDENTITY.md 第 3 节：高字节 0x01 产品线（手持底座 方案 D+G），
+            低字节 0x01 板卡（模块板）。
+
+    config DOCK_HANDLE_SW_VERSION_MAJOR
+        hex "Expected EEPROM sw_version major byte"
+        range 0x00 0xFF
+        default 0x01
+        help
+            IDENTITY.md 第 4 节：sw_version = 0x0100，高字节 0x01 表示主机侧合同 v1
+            （KEY_* 语义 + param_data v1）。用于两处：CHECK_IDENTITY 开启时作为身份核对项；
+            无论 CHECK_IDENTITY 是否开启，主版本不符时驱动都不解释 param_data（第 8 节规则 3），
+            所以本项不依赖 CHECK_IDENTITY。
+
+    config DOCK_HANDLE_USE_EEPROM_KEYMAP
+        bool "Adopt key_gpio[] from EEPROM param_data v1 when KEYMAP_VALID is set"
+        default y
+        help
+            IDENTITY.md 第 8 节主机侧使用规则：KEYMAP_VALID=0 用编译进固件的 PINMAP 静态表；
+            =1 时先校验 10 个值都在左槽 11 根可用 GPIO 内且互异，再采用；任何失败回退静态表并记日志。
+            无论来源，驱动只会把这些脚配成输入+内部上拉，绝不按 EEPROM 内容配置输出或复用外设。
+            关闭后总是使用 dock_handle_pinmap.h。
+
+    config DOCK_HANDLE_TASK_STACK_SIZE
+        int "Poll task stack size (bytes)"
+        range 2048 8192
+        default 3072
+
+    config DOCK_HANDLE_TASK_PRIORITY
+        int "Poll task priority"
+        range 1 20
+        default 5
+        help
+            略高于典型应用任务，保证 20 ms 采样节拍；不需要高于管理器扫描任务。
+
+endmenu
