@@ -1,0 +1,2334 @@
+[
+  {
+    "ref": "U1",
+    "code": "C130204",
+    "value": "TCA9535PWR",
+    "nets": {
+      "4": "KEY_UP",
+      "5": "KEY_DOWN",
+      "6": "KEY_LEFT",
+      "7": "KEY_RIGHT",
+      "8": "KEY_A",
+      "9": "KEY_B",
+      "10": "KEY_X",
+      "11": "KEY_Y",
+      "13": "KEY_L",
+      "14": "KEY_R",
+      "15": "KEY_MODE",
+      "16": "GAUGE_ALERT_N",
+      "17": "POWER_FAULT_N",
+      "18": "SPARE_13",
+      "19": "SPARE_14",
+      "20": "SPARE_15",
+      "1": "IO_INT_N",
+      "2": "GND",
+      "3": "GND",
+      "12": "GND",
+      "21": "GND",
+      "22": "DOCK_SCL",
+      "23": "DOCK_SDA",
+      "24": "DOCK_3V3"
+    },
+    "pins": {
+      "1": "INT#",
+      "2": "A1",
+      "3": "A2",
+      "4": "P00",
+      "5": "P01",
+      "6": "P02",
+      "7": "P03",
+      "8": "P04",
+      "9": "P05",
+      "10": "P06",
+      "11": "P07",
+      "12": "GND",
+      "13": "P10",
+      "14": "P11",
+      "15": "P12",
+      "16": "P13",
+      "17": "P14",
+      "18": "P15",
+      "19": "P16",
+      "20": "P17",
+      "21": "A0",
+      "22": "SCL",
+      "23": "SDA",
+      "24": "VCC"
+    },
+    "group": "input",
+    "xy": [
+      42,
+      33
+    ],
+    "kind": "ic",
+    "note": "7-bit address 0x20; 16 external pull-ups; interrupt test point only",
+    "package": "TSSOP-24_L7.8-W4.4-P0.65-LS6.4-BL",
+    "schxy": [
+      300,
+      390
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW1",
+    "code": "C720477",
+    "value": "UP",
+    "nets": {
+      "1": "KEY_UP",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      25,
+      23
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      250,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW2",
+    "code": "C720477",
+    "value": "DOWN",
+    "nets": {
+      "1": "KEY_DOWN",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      25,
+      41
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      550,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW3",
+    "code": "C720477",
+    "value": "LEFT",
+    "nets": {
+      "1": "KEY_LEFT",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      16,
+      32
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      850,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW4",
+    "code": "C720477",
+    "value": "RIGHT",
+    "nets": {
+      "1": "KEY_RIGHT",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      34,
+      32
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      1150,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW5",
+    "code": "C720477",
+    "value": "A",
+    "nets": {
+      "1": "KEY_A",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      138,
+      32
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      1450,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW6",
+    "code": "C720477",
+    "value": "B",
+    "nets": {
+      "1": "KEY_B",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      129,
+      41
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      250,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW7",
+    "code": "C720477",
+    "value": "X",
+    "nets": {
+      "1": "KEY_X",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      120,
+      32
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      550,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW8",
+    "code": "C720477",
+    "value": "Y",
+    "nets": {
+      "1": "KEY_Y",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      129,
+      23
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      850,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW9",
+    "code": "C720477",
+    "value": "L",
+    "nets": {
+      "1": "KEY_L",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      25,
+      6
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      1150,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW10",
+    "code": "C720477",
+    "value": "R",
+    "nets": {
+      "1": "KEY_R",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      129,
+      6
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      1450,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW11",
+    "code": "C720477",
+    "value": "MODE",
+    "nets": {
+      "1": "KEY_MODE",
+      "2": "GND"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "input",
+    "xy": [
+      40,
+      48
+    ],
+    "kind": "switch",
+    "note": "",
+    "package": "SW-SMD_L3.9-W3.0-P4.45",
+    "schxy": [
+      250,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R1",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_UP"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      38.0,
+      19.0
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      550,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R2",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_DOWN"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      40.8,
+      19.0
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      850,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R3",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_LEFT"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      43.6,
+      19.0
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1150,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R4",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_RIGHT"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      46.4,
+      19.0
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1450,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R5",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_A"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      38.0,
+      21.6
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      250,
+      920
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R6",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_B"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      40.8,
+      21.6
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      550,
+      920
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R7",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_X"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      43.6,
+      21.6
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      850,
+      920
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R8",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_Y"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      46.4,
+      21.6
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1150,
+      920
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R9",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_L"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      38.0,
+      24.2
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1450,
+      920
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R10",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_R"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      40.8,
+      24.2
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      250,
+      1010
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R11",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "KEY_MODE"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      43.6,
+      24.2
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      550,
+      1010
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R12",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GAUGE_ALERT_N"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      46.4,
+      24.2
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      850,
+      1010
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R13",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "POWER_FAULT_N"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      38.0,
+      26.8
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1150,
+      1010
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R14",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "SPARE_13"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      40.8,
+      26.8
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1450,
+      1010
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R15",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "SPARE_14"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      43.6,
+      26.8
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      250,
+      1100
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R16",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "SPARE_15"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      46.4,
+      26.8
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      550,
+      1100
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R17",
+    "code": "C25804",
+    "value": "10k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "IO_INT_N"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      46,
+      35
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      850,
+      1100
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C1",
+    "code": "C1591",
+    "value": "100nF 50V X7R",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      45,
+      30
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      1150,
+      1100
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C2",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "input",
+    "xy": [
+      45,
+      33
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      1450,
+      1100
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "J1",
+    "code": "C165948",
+    "value": "USB-C CHARGE 5V",
+    "nets": {
+      "A1B12": "GND",
+      "B1A12": "GND",
+      "A4B9": "USB_5V",
+      "B4A9": "USB_5V",
+      "A5": "CC1",
+      "B5": "CC2",
+      "A6": null,
+      "B6": null,
+      "A7": null,
+      "B7": null,
+      "A8": null,
+      "B8": null,
+      "1": "GND",
+      "2": "GND",
+      "3": "GND",
+      "4": "GND"
+    },
+    "pins": {
+      "A1B12": "GND",
+      "A4B9": "VBUS",
+      "B8": "SBU2",
+      "A5": "CC1",
+      "B7": "DN2",
+      "A6": "DP1",
+      "A7": "DN1",
+      "B6": "DP2",
+      "A8": "SBU1",
+      "B5": "CC2",
+      "B4A9": "VBUS",
+      "B1A12": "GND",
+      "4": "EH",
+      "3": "EH",
+      "2": "EH",
+      "1": "EH"
+    },
+    "group": "charge",
+    "xy": [
+      18,
+      59
+    ],
+    "kind": "ic",
+    "note": "Data pins intentionally NC; verify exact PCB-edge datum and shell solder process",
+    "package": "USB-C_SMD-TYPE-C-31-M-12_1",
+    "schxy": [
+      1940,
+      390
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R18",
+    "code": "C23186",
+    "value": "5.1k 1%",
+    "nets": {
+      "1": "CC1",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      25,
+      55
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1890,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R19",
+    "code": "C23186",
+    "value": "5.1k 1%",
+    "nets": {
+      "1": "CC2",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      28,
+      55
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      2190,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U2",
+    "code": "C54313",
+    "value": "BQ24074RGTR",
+    "nets": {
+      "1": "BAT_NTC",
+      "2": "PACK_P",
+      "3": "PACK_P",
+      "4": "GND",
+      "5": "GND",
+      "6": "SYS_RAW",
+      "7": "CHG_PGOOD_N",
+      "8": "GND",
+      "9": "CHG_ACTIVE_N",
+      "10": "SYS_RAW",
+      "11": "SYS_RAW",
+      "12": "CHG_ILIM",
+      "13": "USB_5V",
+      "14": "CHG_TMR",
+      "15": null,
+      "16": "CHG_ISET",
+      "17": "GND"
+    },
+    "pins": {
+      "1": "TS",
+      "2": "BAT",
+      "3": "BAT",
+      "4": "CE#",
+      "5": "EN2",
+      "6": "EN1",
+      "7": "PGOOD#",
+      "8": "VSS",
+      "9": "CHG#",
+      "10": "OUT",
+      "11": "OUT",
+      "12": "ILIM",
+      "13": "IN",
+      "14": "TMR",
+      "15": "ITERM",
+      "16": "ISET",
+      "17": "EP"
+    },
+    "group": "charge",
+    "xy": [
+      34,
+      55
+    ],
+    "kind": "ic",
+    "note": "EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent",
+    "package": "QFN-16_L3.0-W3.0-P0.50-TL-EP1.7",
+    "schxy": [
+      2430,
+      390
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "J2",
+    "code": "C160353",
+    "value": "PROTECTED 1S PACK + NTC",
+    "nets": {
+      "1": "PACK_P",
+      "2": "BAT_NTC",
+      "3": "GND",
+      "4": "GND",
+      "5": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2",
+      "3": "3",
+      "4": "4",
+      "5": "5"
+    },
+    "group": "charge",
+    "xy": [
+      8,
+      47
+    ],
+    "kind": "ic",
+    "note": "Pin order is OUR specification, not a universal battery standard; pack/cable must match",
+    "package": "CONN-SMD_B3B-PH-SM4-TB-LF-SN",
+    "schxy": [
+      2920,
+      390
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R20",
+    "code": "C4177",
+    "value": "1.8k 1%",
+    "nets": {
+      "1": "CHG_ISET",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      34,
+      51
+    ],
+    "kind": "res",
+    "note": "890/1800 = 0.494 A nominal; verify selected pack permits this current",
+    "package": "R0603",
+    "schxy": [
+      2490,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R21",
+    "code": "C22978",
+    "value": "3.3k 1%",
+    "nets": {
+      "1": "CHG_ILIM",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      37,
+      52
+    ],
+    "kind": "res",
+    "note": "ILIM must be populated even in fixed USB input-current mode",
+    "package": "R0603",
+    "schxy": [
+      2790,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R22",
+    "code": "C25819",
+    "value": "47k 1%",
+    "nets": {
+      "1": "CHG_TMR",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      37,
+      55
+    ],
+    "kind": "res",
+    "note": "Fast-charge safety timer approx. 6.27h before DPPM timer extensions",
+    "package": "R0603",
+    "schxy": [
+      3090,
+      650
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R23",
+    "code": "C23162",
+    "value": "4.7k 1%",
+    "nets": {
+      "1": "USB_5V",
+      "2": "LED_CHG_A"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      29,
+      60
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1890,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R24",
+    "code": "C23162",
+    "value": "4.7k 1%",
+    "nets": {
+      "1": "USB_5V",
+      "2": "LED_PG_A"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      34,
+      60
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      2190,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "D1",
+    "code": "C2296",
+    "value": "CHARGE",
+    "nets": {
+      "1": "CHG_ACTIVE_N",
+      "2": "LED_CHG_A"
+    },
+    "pins": {
+      "2": "-",
+      "1": "+"
+    },
+    "group": "charge",
+    "xy": [
+      30,
+      62
+    ],
+    "kind": "led",
+    "note": "",
+    "package": "LED0805-R-RD",
+    "schxy": [
+      2490,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "D2",
+    "code": "C2296",
+    "value": "USB VALID",
+    "nets": {
+      "1": "CHG_PGOOD_N",
+      "2": "LED_PG_A"
+    },
+    "pins": {
+      "2": "-",
+      "1": "+"
+    },
+    "group": "charge",
+    "xy": [
+      35,
+      62
+    ],
+    "kind": "led",
+    "note": "",
+    "package": "LED0805-R-RD",
+    "schxy": [
+      2790,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C3",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "USB_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      31,
+      55
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      3090,
+      740
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C4",
+    "code": "C96446",
+    "value": "10uF 25V X5R",
+    "nets": {
+      "1": "PACK_P",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      10,
+      54
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      1890,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C5",
+    "code": "C45783",
+    "value": "22uF 25V X5R",
+    "nets": {
+      "1": "SYS_RAW",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "charge",
+    "xy": [
+      39,
+      58
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0805",
+    "schxy": [
+      2190,
+      830
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U3",
+    "code": "C919459",
+    "value": "TPS61023DRLR",
+    "nets": {
+      "1": "BOOST_FB",
+      "2": "DOCK_EN",
+      "3": "SYS_RAW",
+      "4": "GND",
+      "5": "BOOST_SW",
+      "6": "BOOST_5V"
+    },
+    "pins": {
+      "1": "FB",
+      "2": "EN",
+      "3": "VIN",
+      "4": "GND",
+      "5": "SW",
+      "6": "VOUT"
+    },
+    "group": "power",
+    "xy": [
+      112,
+      48
+    ],
+    "kind": "ic",
+    "note": "Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation",
+    "package": "SOT-563_L1.6-W1.2-P0.50-LS1.6-BR",
+    "schxy": [
+      300,
+      1550
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "L1",
+    "code": "C5832342",
+    "value": "1uH 4.6A Isat",
+    "nets": {
+      "1": "SYS_RAW",
+      "2": "BOOST_SW"
+    },
+    "pins": {
+      "2": "2",
+      "1": "1"
+    },
+    "group": "power",
+    "xy": [
+      109,
+      48
+    ],
+    "kind": "inductor",
+    "note": "",
+    "package": "IND-SMD_L2.0-W1.6-B",
+    "schxy": [
+      250,
+      1890
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "SW12",
+    "code": "C431540",
+    "value": "DOCK POWER",
+    "nets": {
+      "1": "SYS_RAW",
+      "2": "DOCK_EN",
+      "3": "GND",
+      "4": "GND"
+    },
+    "pins": {
+      "4": "4",
+      "3": "3",
+      "2": "2",
+      "1": "1"
+    },
+    "group": "power",
+    "xy": [
+      143,
+      58
+    ],
+    "kind": "slide",
+    "note": "Mechanical slide pin map must be checked against exact part drawing",
+    "package": "SW-TH_MSK12C02",
+    "schxy": [
+      790,
+      1550
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R25",
+    "code": "C25803",
+    "value": "100k 1%",
+    "nets": {
+      "1": "DOCK_EN",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      139,
+      55
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      550,
+      1890
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R26",
+    "code": "C23239",
+    "value": "732k 1%",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "BOOST_FB"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      112,
+      52
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      850,
+      1890
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "R27",
+    "code": "C25803",
+    "value": "100k 1%",
+    "nets": {
+      "1": "BOOST_FB",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      115,
+      52
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1150,
+      1890
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U8",
+    "code": "C55266",
+    "value": "TPS2553DBVR",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND",
+      "3": "BOOST_5V",
+      "4": "POWER_FAULT_N",
+      "5": "OUT_ILIM",
+      "6": "LIMITED_5V"
+    },
+    "pins": {
+      "1": "IN",
+      "2": "GND",
+      "3": "EN",
+      "4": "FAULT_N",
+      "5": "ILIM",
+      "6": "OUT"
+    },
+    "group": "power",
+    "xy": [
+      119,
+      48
+    ],
+    "kind": "ic",
+    "note": "26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1",
+    "package": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8",
+    "schxy": [
+      1280,
+      1550
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R28",
+    "code": "",
+    "value": "26.1k 1%",
+    "nets": {
+      "1": "OUT_ILIM",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      119,
+      52
+    ],
+    "kind": "res",
+    "note": "Exact LCSC procurement code pending",
+    "package": "R0603",
+    "schxy": [
+      1450,
+      1890
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "U4",
+    "code": "C2869734",
+    "value": "LM66100DCKR",
+    "nets": {
+      "1": "LIMITED_5V",
+      "2": "GND",
+      "3": "POGO_5V",
+      "4": null,
+      "5": "GND",
+      "6": "POGO_5V"
+    },
+    "pins": {
+      "1": "VIN",
+      "2": "GND",
+      "3": "CE#",
+      "4": "NC",
+      "5": "ST",
+      "6": "VOUT"
+    },
+    "group": "power",
+    "xy": [
+      124,
+      48
+    ],
+    "kind": "ic",
+    "note": "CE tied to VOUT is required for reverse-current blocking",
+    "package": "SC-70-6_L2.0-W1.3-P0.65-LS2.1-BL",
+    "schxy": [
+      300,
+      1870
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U5",
+    "code": "C404027",
+    "value": "TLV75533PDBVR",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND",
+      "3": "BOOST_5V",
+      "4": null,
+      "5": "DOCK_3V3"
+    },
+    "pins": {
+      "1": "IN",
+      "2": "GND",
+      "3": "EN",
+      "4": "NC",
+      "5": "OUT"
+    },
+    "group": "power",
+    "xy": [
+      134,
+      49
+    ],
+    "kind": "ic",
+    "note": "Dock logic supply; does not use Pogo positive as a 3.3V rail",
+    "package": "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BR",
+    "schxy": [
+      790,
+      1870
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C6",
+    "code": "C96446",
+    "value": "10uF 25V X5R",
+    "nets": {
+      "1": "SYS_RAW",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      108,
+      51
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      250,
+      1980
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C7",
+    "code": "C45783",
+    "value": "22uF 25V X5R",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      113,
+      45
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0805",
+    "schxy": [
+      550,
+      1980
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C8",
+    "code": "C45783",
+    "value": "22uF 25V X5R",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      116,
+      45
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0805",
+    "schxy": [
+      850,
+      1980
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C9",
+    "code": "C1591",
+    "value": "100nF 50V X7R",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      118,
+      45
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      1150,
+      1980
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C10",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "LIMITED_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      123,
+      45
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      1450,
+      1980
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C11",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "POGO_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      127,
+      48
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      250,
+      2070
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C12",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "BOOST_5V",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      132,
+      46
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      550,
+      2070
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C13",
+    "code": "C15849",
+    "value": "1uF 50V X5R",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "power",
+    "xy": [
+      137,
+      49
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      850,
+      2070
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U6",
+    "code": "C544515",
+    "value": "TCA9517DGKR",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "HOST_SCL",
+      "3": "HOST_SDA",
+      "4": "GND",
+      "5": "DOCK_3V3",
+      "6": "DOCK_SDA",
+      "7": "DOCK_SCL",
+      "8": "DOCK_3V3"
+    },
+    "pins": {
+      "1": "VCCA",
+      "2": "SCLA",
+      "3": "SDAA",
+      "4": "GND",
+      "5": "EN",
+      "6": "SDAB",
+      "7": "SCLB",
+      "8": "VCCB"
+    },
+    "group": "bus",
+    "xy": [
+      110,
+      35
+    ],
+    "kind": "ic",
+    "note": "A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.",
+    "package": "VSSOP-8_L3.0-W3.0-P0.65-LS5.0-BL",
+    "schxy": [
+      1940,
+      1550
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R29",
+    "code": "C23162",
+    "value": "4.7k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "DOCK_SDA"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "bus",
+    "xy": [
+      113,
+      31
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      1890,
+      1810
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "R30",
+    "code": "C23162",
+    "value": "4.7k 1%",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "DOCK_SCL"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "bus",
+    "xy": [
+      113,
+      33
+    ],
+    "kind": "res",
+    "note": "",
+    "package": "R0603",
+    "schxy": [
+      2190,
+      1810
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C14",
+    "code": "C1591",
+    "value": "100nF 50V X7R",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "bus",
+    "xy": [
+      107,
+      33
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      2490,
+      1810
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C15",
+    "code": "C1591",
+    "value": "100nF 50V X7R",
+    "nets": {
+      "1": "DOCK_3V3",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "bus",
+    "xy": [
+      113,
+      37
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      2790,
+      1810
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "U7",
+    "code": "C2682616",
+    "value": "MAX17048G+T10",
+    "nets": {
+      "1": "GND",
+      "2": "PACK_P",
+      "3": "PACK_P",
+      "4": "GND",
+      "5": "GAUGE_ALERT_N",
+      "6": "GND",
+      "7": "DOCK_SCL",
+      "8": "DOCK_SDA",
+      "9": "GND"
+    },
+    "pins": {
+      "1": "CTG",
+      "2": "CELL",
+      "3": "VDD",
+      "4": "GND",
+      "5": "ALRT#",
+      "6": "QSTRT",
+      "7": "SCL",
+      "8": "SDA",
+      "9": "EP"
+    },
+    "group": "bus",
+    "xy": [
+      9,
+      38
+    ],
+    "kind": "ic",
+    "note": "7-bit address 0x36; measures dock battery, not Mosaico internal battery",
+    "package": "TDFN-8_L2.0-W2.0-P0.50-BL-EP1.2",
+    "schxy": [
+      2430,
+      1550
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "C16",
+    "code": "C1591",
+    "value": "100nF 50V X7R",
+    "nets": {
+      "1": "PACK_P",
+      "2": "GND"
+    },
+    "pins": {
+      "1": "1",
+      "2": "2"
+    },
+    "group": "bus",
+    "xy": [
+      9,
+      35
+    ],
+    "kind": "cap",
+    "note": "",
+    "package": "C0603",
+    "schxy": [
+      3090,
+      1810
+    ],
+    "footprint_status": "Supplier library geometry; final manufacturer audit pending"
+  },
+  {
+    "ref": "J3",
+    "code": "",
+    "value": "POGO INTERFACE - GEOMETRY TBD",
+    "nets": {
+      "1": "HOST_SCL",
+      "2": "GND",
+      "3": "POGO_5V",
+      "4": "HOST_SDA"
+    },
+    "pins": {
+      "1": "SCL",
+      "2": "GND",
+      "3": "+5V",
+      "4": "SDA"
+    },
+    "group": "bus",
+    "xy": [
+      77,
+      35
+    ],
+    "kind": "ic",
+    "note": "2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing.",
+    "package": "POGO_GEOMETRY_UNVERIFIED",
+    "schxy": [
+      2920,
+      1550
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP1",
+    "code": "",
+    "value": "GND",
+    "nets": {
+      "1": "GND"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      10.0,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      230,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP2",
+    "code": "",
+    "value": "USB_5V",
+    "nets": {
+      "1": "USB_5V"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      13.4,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      750,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP3",
+    "code": "",
+    "value": "PACK_P",
+    "nets": {
+      "1": "PACK_P"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      16.8,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      1270,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP4",
+    "code": "",
+    "value": "SYS_RAW",
+    "nets": {
+      "1": "SYS_RAW"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      20.2,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      1790,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP5",
+    "code": "",
+    "value": "BOOST_5V",
+    "nets": {
+      "1": "BOOST_5V"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      23.6,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      2310,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP6",
+    "code": "",
+    "value": "POGO_5V",
+    "nets": {
+      "1": "POGO_5V"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      27.0,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      2830,
+      2380
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP7",
+    "code": "",
+    "value": "DOCK_3V3",
+    "nets": {
+      "1": "DOCK_3V3"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      30.4,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      230,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP8",
+    "code": "",
+    "value": "HOST_SDA",
+    "nets": {
+      "1": "HOST_SDA"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      33.8,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      750,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP9",
+    "code": "",
+    "value": "HOST_SCL",
+    "nets": {
+      "1": "HOST_SCL"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      37.2,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      1270,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP10",
+    "code": "",
+    "value": "DOCK_SDA",
+    "nets": {
+      "1": "DOCK_SDA"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      40.599999999999994,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      1790,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP11",
+    "code": "",
+    "value": "DOCK_SCL",
+    "nets": {
+      "1": "DOCK_SCL"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      44.0,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      2310,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  },
+  {
+    "ref": "TP12",
+    "code": "",
+    "value": "IO_INT_N",
+    "nets": {
+      "1": "IO_INT_N"
+    },
+    "pins": {
+      "1": "TP"
+    },
+    "group": "test",
+    "xy": [
+      47.4,
+      13
+    ],
+    "kind": "test",
+    "note": "",
+    "package": "TESTPAD_1.0mm",
+    "schxy": [
+      2830,
+      2530
+    ],
+    "footprint_status": "Locally drawn placeholder; library/land-pattern verification required"
+  }
+]

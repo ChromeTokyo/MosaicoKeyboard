@@ -1,0 +1,585 @@
+{
+  "schema": "mosaico-references-lock/1",
+  "status": "提案，待 Chrome 采纳、Hiro 复核",
+  "notice": [
+    "本文件登记生成器实际引用的每一份库缓存的路径、SHA-256 与文件内读到的器件标识。",
+    "生成器启动时逐条校验；state / sha256 / 字节数任一不符即硬失败并列出差异。",
+    "重新登记：python3 design/build_design.py --write-lock。",
+    "state=MISSING 表示该编码当前没有缓存文件；这本身不是裁决，冻结在哪个状态由 Chrome 决定。",
+    "未被任何位号引用的缓存文件不在本文件登记范围内。"
+  ],
+  "generator": {
+    "path": "design/build_design.py",
+    "sha256": "418d7fe1ba99e744fa2bc73d63dbe141d03ef4bca8d75748dec4efa2fd4a3ea6",
+    "python": "3.9.6"
+  },
+  "policy": {
+    "path": "design/library-policy.json",
+    "sha256": "b9f4ec8d258b6d1c70cbe2a1da8f3a297c37c56611f7423b7e2a26da1376e4b4"
+  },
+  "entries": [
+    {
+      "lcsc": "C130204",
+      "path": "references/C130204.json",
+      "state": "OK",
+      "sha256": "a1bba04ed3422d7b3cb3d9ae861206132ade5ac4e0466173378ba4e8aa063e62",
+      "bytes": 47523,
+      "detail": null,
+      "result_uuid": "1a59b421f0ff40b6a5abaad32515773b",
+      "result_title": "TCA9535PWR_C130204",
+      "result_update_time": 1672607703,
+      "package_uuid": "b23a3cd50ffb4bd580712ba1d52d77dd",
+      "package_title": "TSSOP-24_L7.8-W4.4-P0.65-LS6.4-BL",
+      "package_update_time": 1729741100,
+      "refdes": [
+        "U1"
+      ]
+    },
+    {
+      "lcsc": "C15849",
+      "path": "references/C15849.json",
+      "state": "OK",
+      "sha256": "7411e667608e0f913442a306569b6f802f2a204569d7a740322ddfc974501450",
+      "bytes": 10896,
+      "detail": null,
+      "result_uuid": "637415f70eb949abfaeba2abe658ee9b",
+      "result_title": "CL10A105KB8NNNC",
+      "result_update_time": 1732101053,
+      "package_uuid": "f8151fdc728a41ebbc304e11d39e5437",
+      "package_title": "C0603",
+      "package_update_time": 1734501471,
+      "refdes": [
+        "C2",
+        "C3",
+        "C10",
+        "C11",
+        "C12",
+        "C13"
+      ]
+    },
+    {
+      "lcsc": "C1591",
+      "path": "references/C1591.json",
+      "state": "OK",
+      "sha256": "f5d956540e5666cb0843191c24252b2adc756d4b4190343f86938bed32eca4e5",
+      "bytes": 10844,
+      "detail": null,
+      "result_uuid": "96a6ec2e551e7bd0760067eb1fbc790e",
+      "result_title": "CL10B104KB8NNNC",
+      "result_update_time": 1701239972,
+      "package_uuid": "f8151fdc728a41ebbc304e11d39e5437",
+      "package_title": "C0603",
+      "package_update_time": 1734501471,
+      "refdes": [
+        "C1",
+        "C9",
+        "C14",
+        "C15",
+        "C16"
+      ]
+    },
+    {
+      "lcsc": "C160353",
+      "path": "references/C160353.json",
+      "state": "OK",
+      "sha256": "2487b8dfcbc524c50a1043d5861bb2a9a95c24981fa42478ddc2989f470aa438",
+      "bytes": 13808,
+      "detail": null,
+      "result_uuid": "634f433c17024b5b95ac05a9acb833cf",
+      "result_title": "B3B-PH-SM4-TB (LF)(SN)",
+      "result_update_time": 1719339203,
+      "package_uuid": "14e939fc581346fa9849bbd6075bd349",
+      "package_title": "CONN-SMD_B3B-PH-SM4-TB-LF-SN",
+      "package_update_time": 1635894898,
+      "refdes": [
+        "J2"
+      ]
+    },
+    {
+      "lcsc": "C165948",
+      "path": "references/C165948.json",
+      "state": "OK",
+      "sha256": "f2c61f19207903c427b7fe8429a2e8e7d885068db0eaeff9d49c2ba1e405ca72",
+      "bytes": 38422,
+      "detail": null,
+      "result_uuid": "df8405e2fa0e40a984c435ad4c8d5cf3",
+      "result_title": "TYPE-C-31-M-12",
+      "result_update_time": 1757297676,
+      "package_uuid": "d556fcebb18d4647a249a7d49ea0c41d",
+      "package_title": "USB-C_SMD-TYPE-C-31-M-12_1",
+      "package_update_time": 1785894168,
+      "refdes": [
+        "J1"
+      ]
+    },
+    {
+      "lcsc": "C2296",
+      "path": "references/C2296.json",
+      "state": "OK",
+      "sha256": "c81a9a724f22b074c176f9a30aada4a842360709bb4cbb6dcc96ec8834c3226e",
+      "bytes": 10371,
+      "detail": null,
+      "result_uuid": "c8c2c558fac9410d08cd9c984c6e32bd",
+      "result_title": "17-21SUYC/TR8",
+      "result_update_time": 1700205052,
+      "package_uuid": "82605a93a0be4c79a27d82f67f2aca29",
+      "package_title": "LED0805-R-RD",
+      "package_update_time": 1715310908,
+      "refdes": [
+        "D1",
+        "D2"
+      ]
+    },
+    {
+      "lcsc": "C22978",
+      "path": "references/C22978.json",
+      "state": "OK",
+      "sha256": "4b5224e641648553f79d0905a03c3c08d1d089c7b0aabc89e8412b1bd6092c0f",
+      "bytes": 18417,
+      "detail": null,
+      "result_uuid": "cb327be7d573ef8872e8ba2e1b8e66fb",
+      "result_title": "0603WAF3301T5E",
+      "result_update_time": 1700720133,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R21"
+      ]
+    },
+    {
+      "lcsc": "C23162",
+      "path": "references/C23162.json",
+      "state": "OK",
+      "sha256": "9f3c5ff804fbeea35592dd65f10930b1c087f21de94f7e06b05fcd9053676af8",
+      "bytes": 18492,
+      "detail": null,
+      "result_uuid": "0e9af40e10eb0954509ee99672d67d03",
+      "result_title": "0603WAF4701T5E",
+      "result_update_time": 1742060978,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R23",
+        "R24",
+        "R29",
+        "R30"
+      ]
+    },
+    {
+      "lcsc": "C23186",
+      "path": "references/C23186.json",
+      "state": "OK",
+      "sha256": "03dbee8cf133156168bbd1e7ceaabf36a5d5a9a2cba79453619cac186f307794",
+      "bytes": 18433,
+      "detail": null,
+      "result_uuid": "faac4ade3bc4e3dd5ad2239bdc7375c1",
+      "result_title": "0603WAF5101T5E",
+      "result_update_time": 1762842932,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R18",
+        "R19"
+      ]
+    },
+    {
+      "lcsc": "C23239",
+      "path": "references/C23239.json",
+      "state": "MISSING",
+      "sha256": null,
+      "bytes": null,
+      "detail": "文件不存在",
+      "result_uuid": null,
+      "result_title": null,
+      "result_update_time": null,
+      "package_uuid": null,
+      "package_title": null,
+      "package_update_time": null,
+      "refdes": [
+        "R26"
+      ]
+    },
+    {
+      "lcsc": "C25803",
+      "path": "references/C25803.json",
+      "state": "OK",
+      "sha256": "ecb29581d07a18399472963c319e5dd4b1b028e9b6042c1df9e8df4c310085b6",
+      "bytes": 18485,
+      "detail": null,
+      "result_uuid": "5ff01e5b28266f76e3c6ac889a7fdd07",
+      "result_title": "0603WAF1003T5E",
+      "result_update_time": 1713800144,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R25",
+        "R27"
+      ]
+    },
+    {
+      "lcsc": "C25804",
+      "path": "references/C25804.json",
+      "state": "OK",
+      "sha256": "32a5d7c594b21c953ab2a4679927703ea358b65beb36f5c9231acc9f8ac1459d",
+      "bytes": 18443,
+      "detail": null,
+      "result_uuid": "b210af5a1436310a86e8b108e2e5a90b",
+      "result_title": "0603WAF1002T5E",
+      "result_update_time": 1704977706,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R1",
+        "R2",
+        "R3",
+        "R4",
+        "R5",
+        "R6",
+        "R7",
+        "R8",
+        "R9",
+        "R10",
+        "R11",
+        "R12",
+        "R13",
+        "R14",
+        "R15",
+        "R16",
+        "R17"
+      ]
+    },
+    {
+      "lcsc": "C25819",
+      "path": "references/C25819.json",
+      "state": "OK",
+      "sha256": "33cde9e9b40d2a3f4c45a7ec43c5c2e63be1a4843cfb1dd3b0910288c1308c44",
+      "bytes": 18467,
+      "detail": null,
+      "result_uuid": "11edeb1c5e2a4db53071549cb265b72b",
+      "result_title": "0603WAF4702T5E",
+      "result_update_time": 1700721337,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R22"
+      ]
+    },
+    {
+      "lcsc": "C2682616",
+      "path": "references/C2682616.json",
+      "state": "OK",
+      "sha256": "47b0688d5880040eb03b9762a48bd91ab515c3d351ad6ebf34f41bce9ab70093",
+      "bytes": 14083,
+      "detail": null,
+      "result_uuid": "444eb523f1484933b5b11c95fe142b6a",
+      "result_title": "MAX17048G+T10",
+      "result_update_time": 1747902695,
+      "package_uuid": "52f05b8f05964e8097be77bff85821ed",
+      "package_title": "TDFN-8_L2.0-W2.0-P0.50-BL-EP1.2",
+      "package_update_time": 1685500381,
+      "refdes": [
+        "U7"
+      ]
+    },
+    {
+      "lcsc": "C2869734",
+      "path": "references/C2869734.json",
+      "state": "OK",
+      "sha256": "20922783524ffe58d8afefdb3949e5fe57dd6e9b8a147dd36423916632a39289",
+      "bytes": 15905,
+      "detail": null,
+      "result_uuid": "75cf85f0ec554442a152fb1ea2dc2eaa",
+      "result_title": "LM66100DCKR",
+      "result_update_time": 1740563703,
+      "package_uuid": "fbe0b5c9c8ff444e91ef56c37001f183",
+      "package_title": "SC-70-6_L2.0-W1.3-P0.65-LS2.1-BL",
+      "package_update_time": 1650337514,
+      "refdes": [
+        "U4"
+      ]
+    },
+    {
+      "lcsc": "C404027",
+      "path": "references/C404027.json",
+      "state": "OK",
+      "sha256": "85312bec7b2ae3411757360a6fa58a839e5421f8a707b095a88bcc8f416d19ec",
+      "bytes": 21950,
+      "detail": null,
+      "result_uuid": "2af213e7e1284ec7a4888f6664ddb86f",
+      "result_title": "TLV75533PDBVR",
+      "result_update_time": 1724122526,
+      "package_uuid": "e7f085e4f71344109c090040716070ab",
+      "package_title": "SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BR",
+      "package_update_time": 1734599759,
+      "refdes": [
+        "U5"
+      ]
+    },
+    {
+      "lcsc": "C4177",
+      "path": "references/C4177.json",
+      "state": "OK",
+      "sha256": "52fdf57bc5fbd2d99d3d5b5ee61ebc37768c0d113f22148bdea5ef4e6c57ae23",
+      "bytes": 18454,
+      "detail": null,
+      "result_uuid": "48b415e9bcfe1ccc6e0592491d7bb6b2",
+      "result_title": "0603WAF1801T5E",
+      "result_update_time": 1700721329,
+      "package_uuid": "398691f1f785460098bbe5ee6590333c",
+      "package_title": "R0603",
+      "package_update_time": 1766479705,
+      "refdes": [
+        "R20"
+      ]
+    },
+    {
+      "lcsc": "C431540",
+      "path": "references/C431540.json",
+      "state": "OK",
+      "sha256": "52b8a7ae3adcad47c8c64359557e42b421c64f1442c8fd4cf2941aa7b77cefc9",
+      "bytes": 15239,
+      "detail": null,
+      "result_uuid": "20682c339523482a9e7bc335454b199a",
+      "result_title": "MSK12C02",
+      "result_update_time": 1704424217,
+      "package_uuid": "f66711cfd33f4c908e1bafbce46c9bda",
+      "package_title": "SW-TH_MSK12C02",
+      "package_update_time": 1664009253,
+      "refdes": [
+        "SW12"
+      ]
+    },
+    {
+      "lcsc": "C45783",
+      "path": "references/C45783.json",
+      "state": "OK",
+      "sha256": "1f4b959a2687a175e977cfb583eca05957a7ea93d2b5ec3d54c2afa0b9e0b266",
+      "bytes": 11766,
+      "detail": null,
+      "result_uuid": "3eed98608c2542ad840aa25932b95975",
+      "result_title": "CL21A226MAQNNNE",
+      "result_update_time": 1729506308,
+      "package_uuid": "2ee8eb13a0124a108e622ce40c0c25a8",
+      "package_title": "C0805",
+      "package_update_time": 1720420805,
+      "refdes": [
+        "C5",
+        "C7",
+        "C8"
+      ]
+    },
+    {
+      "lcsc": "C54313",
+      "path": "references/C54313.json",
+      "state": "OK",
+      "sha256": "3bb1f6a03905630becdb2d3b19db9e391fcdbc249233ebe74e2f07a756018851",
+      "bytes": 54020,
+      "detail": null,
+      "result_uuid": "46a447ef12c94516fb8f06cc747e0133",
+      "result_title": "BQ24074RGTR",
+      "result_update_time": 1732276285,
+      "package_uuid": "17c514692c5549c7b235395c89b1446f",
+      "package_title": "QFN-16_L3.0-W3.0-P0.50-TL-EP1.7",
+      "package_update_time": 1775637844,
+      "refdes": [
+        "U2"
+      ]
+    },
+    {
+      "lcsc": "C544515",
+      "path": "references/C544515.json",
+      "state": "OK",
+      "sha256": "5036d1bfc47b98b40c60131722e310caa85aa3ef4d2ccb2beef1290da6a1d0f8",
+      "bytes": 23792,
+      "detail": null,
+      "result_uuid": "df03d8da8015420fb383a60cd43dc900",
+      "result_title": "TCA9517DGKR",
+      "result_update_time": 1729240849,
+      "package_uuid": "cb6c4d740e9e471a912a270678aa1e92",
+      "package_title": "VSSOP-8_L3.0-W3.0-P0.65-LS5.0-BL",
+      "package_update_time": 1652421098,
+      "refdes": [
+        "U6"
+      ]
+    },
+    {
+      "lcsc": "C55266",
+      "path": "references/C55266.json",
+      "state": "OK",
+      "sha256": "c8c60d858163a349b393cbee78cad388b06faa8f59022db2e1864bb906223622",
+      "bytes": 22145,
+      "detail": null,
+      "result_uuid": "ce848679d54c4a15b413f13990040106",
+      "result_title": "TPS2553DBVR",
+      "result_update_time": 1743097626,
+      "package_uuid": "f3d2a2ecf658447dac746eb15158a989",
+      "package_title": "SOT-23-6_L2.9-W1.6-P0.95-LS2.8-BR",
+      "package_update_time": 1690330044,
+      "refdes": [
+        "U8"
+      ]
+    },
+    {
+      "lcsc": "C5832342",
+      "path": "references/C5832342.json",
+      "state": "OK",
+      "sha256": "9dae0206545b999241e7d862b05e05862baa9f873954ce5ebd1999beddd62fa4",
+      "bytes": 9615,
+      "detail": null,
+      "result_uuid": "7d2c2ac9e0654c698fd0510cee7b2e89",
+      "result_title": "FTC201610S1R0MBCA",
+      "result_update_time": 1715944922,
+      "package_uuid": "913925f583aa4faebd72d2dcd4e526c2",
+      "package_title": "IND-SMD_L2.0-W1.6-B",
+      "package_update_time": 1774661582,
+      "refdes": [
+        "L1"
+      ]
+    },
+    {
+      "lcsc": "C720477",
+      "path": "references/C720477.json",
+      "state": "OK",
+      "sha256": "11ce24d4f46db575874221134edd64ee32b1dc0776fbe5b3355e39943096cac9",
+      "bytes": 11255,
+      "detail": null,
+      "result_uuid": "2cbbccf860a84ef9a9976b6bb9db0243",
+      "result_title": "TS-1088-AR02016",
+      "result_update_time": 1747675889,
+      "package_uuid": "6200581e048848138c6a279857b8523f",
+      "package_title": "SW-SMD_L3.9-W3.0-P4.45",
+      "package_update_time": 1766729599,
+      "refdes": [
+        "SW1",
+        "SW2",
+        "SW3",
+        "SW4",
+        "SW5",
+        "SW6",
+        "SW7",
+        "SW8",
+        "SW9",
+        "SW10",
+        "SW11"
+      ]
+    },
+    {
+      "lcsc": "C919459",
+      "path": "references/C919459.json",
+      "state": "OK",
+      "sha256": "a66f8fc72b7a7ce594959a4cd4a1d87657535d8fd2b746d5b5e45ce54cc83d36",
+      "bytes": 11834,
+      "detail": null,
+      "result_uuid": "18ca651bb59148e5ba9f416596dc3e39",
+      "result_title": "TPS61023DRLR",
+      "result_update_time": 1744220071,
+      "package_uuid": "12ec04a02cb54b98af05fc74f16c8bc5",
+      "package_title": "SOT-563_L1.6-W1.2-P0.50-LS1.6-BR",
+      "package_update_time": 1683257536,
+      "refdes": [
+        "U3"
+      ]
+    },
+    {
+      "lcsc": "C96446",
+      "path": "references/C96446.json",
+      "state": "OK",
+      "sha256": "72356229fd6a43e66ad4fb11f9f44d0ee58a7a6ea13273cbecd7e4be84a22481",
+      "bytes": 10866,
+      "detail": null,
+      "result_uuid": "5563491116b5449a9a46d9ad40c4d199",
+      "result_title": "CL10A106MA8NRNC",
+      "result_update_time": 1701239891,
+      "package_uuid": "f8151fdc728a41ebbc304e11d39e5437",
+      "package_title": "C0603",
+      "package_update_time": 1734501471,
+      "refdes": [
+        "C4",
+        "C6"
+      ]
+    }
+  ],
+  "placeholders": [
+    {
+      "refdes": "R26",
+      "lcsc": "C23239",
+      "policy": "unresolved"
+    },
+    {
+      "refdes": "R28",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "J3",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP1",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP2",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP3",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP4",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP5",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP6",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP7",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP8",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP9",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP10",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP11",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    },
+    {
+      "refdes": "TP12",
+      "lcsc": "",
+      "policy": "allow_placeholder"
+    }
+  ]
+}
