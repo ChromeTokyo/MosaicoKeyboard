@@ -8,6 +8,8 @@ GitHub 仓库：[ChromeTokyo/MosaicoKeyboard](https://github.com/ChromeTokyo/Mos
 
 **当前阶段：需求基线与 A0 硬件草案。现有设计文件不能用于生产。固件和电脑端功能最后处理。**
 
+分工：Claude Fable 负责主控、产品视觉与后期交互；Chrome GPT-6 负责电路、PCB 和外壳结构；Hiro GPT-6 分批独立复核。Cursor／Grok 仅作可选辅助。按质量节点推进，允许延长工期。
+
 ## 目标
 
 - 做成长条手持设备：中间横置 Mosaico，左侧 D-pad，右侧 ABXY，两侧有浅握把。
