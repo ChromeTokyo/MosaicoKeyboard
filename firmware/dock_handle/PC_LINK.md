@@ -2,6 +2,8 @@
 
 # PC_LINK —— 手持终端与电脑的软件通路（第一版建议，不做实现）
 
+本文件是 `firmware/dock_handle` 的配套建议书，不含代码；引用的 BSP / esp-mosaico-claw 符号已按 §3 的方式 grep 核实，未核实的配置项名一律标「待核」。
+
 ## 1. 结论
 
 第一版通道：**Mosaico 原生 USB-C（ESP32-S31 USB 2.0 High-Speed OTG）上的 USB CDC-ACM 虚拟串口**，在 TinyUSB 上开两个 CDC 接口，接口 0 保留日志 / 下载，接口 1 承载手柄协议（§5）。理由：
@@ -18,7 +20,7 @@
 | --- | --- | --- | --- |
 | 原生 USB-C | 主机机身，ESP32-S31 USB 2.0 HS OTG，供电＋调试／下载＋应用通信；芯片原生只支持下载模式，无自带日志；出厂固件集成 CDC 虚拟串口并支持自动下载 | 可用 | 官方 V1.0 用户指南 `user_guide_v10.rst:249`、`:332` |
 | USB Serial/JTAG | GPIO33（D−）/ GPIO34（D+）= 左槽 H2 pin13 / pin15 | **不可用**（被模块板连接器占用，模块板留空） | `LEFT_SLOT.md` pin13/15；用户指南 `:249`「left slot provides USB Serial/JTAG」 |
-| UART0 | TX0 GPIO58 / RX0 GPIO59 = 右槽 H1 | 可用但需转接板；右槽若被其他模块占用则不可用。**ASSUMPTION: V1.2 与 V1.0 指南一致，待核** | 用户指南右槽表 |
+| UART0 | TX0 GPIO58 / RX0 GPIO59 = 右槽 H1 | 可用但需转接板；右槽若被其他模块占用则不可用。**ASSUMPTION: AS-31-firmware-11** V1.2 与 V1.0 指南一致，待核 | 用户指南右槽表 |
 | Wi-Fi / BLE | 片上 | 可用 | 后续阶段，不在第一版 |
 | 底座 USB-C | 底座主板，`VBUS_IN` → 电池管理 → `BOOST_5V` → pin17 | 无数据路径 | 方案 D＋G 前提；pin17 只有电源 |
 
@@ -74,20 +76,20 @@
 
 位图位序 = `dock_handle_key_t`（UP=0 … R=9）。键名与统一网络名一致（`KEY_UP` … `KEY_R`），电脑端不必知道 GPIO。
 
-与本组件 API 的对应：`KEY` ← `DOCK_HANDLE_EVENT_KEY`；`LINK` ← `ATTACHED / DETACHED` 与 `dock_handle_get_link()`；`STATE` ← `dock_handle_get_state()`；`INFO` ← `mosaico_module_mgr_get_info()`。
+与本组件 API 的对应：`KEY` ← `DOCK_HANDLE_EVENT_KEY`；`LINK` ← `ATTACHED / DETACHED` 与 `dock_handle_get_link()`；`STATE` ← `dock_handle_get_state()`；`INFO` ← `mosaico_module_mgr_get_info()`；建议再加一行 `INFO keymap <static|eeprom>` ← `dock_handle_get_keymap_source()`。
 
 二进制升级路径（v1，需要时再做）：COBS 分帧，帧内 1 字节类型 + 载荷 + CRC-16/MODBUS（初值 0xFFFF、多项式 0xA001 反射，与 EEPROM V1 描述符相同，可复用实现）。
 
 ## 6. 宿主端建议
 
 - Python 3 + `pyserial`；macOS 设备名 `/dev/cu.usbmodem*`，Linux `/dev/ttyACM*`，Windows `COMx`。若采用方案 B，需按接口序号或 USB 接口描述字符串识别「协议口」而非「日志口」。
-- 若沿用 `esp-mosaico-claw` 的 USJ VID/PID 模拟（`TINYUSB_ESPRESSIF_VID` / `0x1001`）与 DTR/RTS 复位，`idf.py` 的自动下载可用，但宿主应用打开端口时须避免产生 `RTS=1, DTR=0` 序列（该实现把它解释为复位）。**ASSUMPTION: 常见串口库默认的 DTR/RTS 行为不会触发该序列，待实测**；保险做法是协议口不挂复位回调，只在接口 0 上保留。
+- 若沿用 `esp-mosaico-claw` 的 USJ VID/PID 模拟（`TINYUSB_ESPRESSIF_VID` / `0x1001`）与 DTR/RTS 复位，`idf.py` 的自动下载可用，但宿主应用打开端口时须避免产生 `RTS=1, DTR=0` 序列（该实现把它解释为复位）。**ASSUMPTION: AS-31-firmware-13** 常见串口库默认的 DTR/RTS 行为不会触发该序列，待实测；保险做法是协议口不挂复位回调，只在接口 0 上保留。
 - 时间基准：设备时间戳自启动起；宿主端在 `HELLO` / 首个 `PONG` 时对齐一次即可。
 
 ## 7. 与供电共存的注意事项
 
 - 电脑经原生 USB-C 连接时 VBUS 5 V 进入主机；底座同时经 pin17 供 5 V。两路 5 V 并存的防反灌是硬约束 8，由底座硬件负责，固件不参与也不能参与。
-- 主机 Type-C 由 HUSB320 处理 CC 检测与供电方向（用户指南 `:113-114`）。**ASSUMPTION: 主机口作 sink 接电脑、同时 pin17 有底座 5 V 时，HUSB320 与主机电源路径的行为未知**，到货后先不装底座电池、只接电脑；再接底座供电观察 USB 枚举是否掉线。
+- 主机 Type-C 由 HUSB320 处理 CC 检测与供电方向（用户指南 `:113-114`）。**ASSUMPTION: AS-31-firmware-14** 主机口作 sink 接电脑、同时 pin17 有底座 5 V 时，HUSB320 与主机电源路径的行为未知，到货后先不装底座电池、只接电脑；再接底座供电观察 USB 枚举是否掉线。
 - USB 数据链路与 pin17 无电气关系，供电路径不影响协议通道本身。
 
 ## 8. 第一版实现清单（后续任务输入，本目录不实现）
@@ -98,12 +100,12 @@
 4. 宿主端 `tools/dock_link.py`：打开端口、打印事件、`PING` 探活；作为日本端验收工具的一部分。
 5. VID/PID：产品化前决定是继续模拟 USJ PID、使用 Espressif 分配的测试 PID，还是申请自有 PID；不得在文档中假定已获分配。
 
-## 9. 假设清单
+## 9. 假设清单（本分支临时编号，汇总阶段并入 `hardware/ASSUMPTIONS.md`；README §11 引用）
 
 | 编号 | ASSUMPTION | 验证 |
 | --- | --- | --- |
-| P-01 | 到货 V1.2 的 USJ 仍在左槽 pin13/15、UART0 仍在右槽 GPIO58/59 | 官方 V1.2 资料或实测 |
-| P-02 | `esp_tinyusb` 当前版本支持 2 个 CDC-ACM 接口且配置项存在 | 查该组件 Kconfig |
-| P-03 | 宿主串口库默认 DTR/RTS 行为不会触发 USJ 兼容复位序列 | 实测 macOS / Linux / Windows 三平台 |
-| P-04 | 电脑 USB 与底座 pin17 同时供电时 USB 枚举稳定 | 到货分步实测（§7） |
-| P-05 | Espressif 后续 BSP 会内置 USB console（指南已提前写出配置名） | 跟踪 BSP 仓库；出现后切换 |
+| AS-31-firmware-11 | 到货 V1.2 的 USJ 仍在左槽 pin13/15、UART0 仍在右槽 GPIO58/59 | 官方 V1.2 资料或实测 |
+| AS-31-firmware-12 | `esp_tinyusb` 当前版本支持 2 个 CDC-ACM 接口且配置项存在 | 查该组件 Kconfig |
+| AS-31-firmware-13 | 宿主串口库默认 DTR/RTS 行为不会触发 USJ 兼容复位序列 | 实测 macOS / Linux / Windows 三平台 |
+| AS-31-firmware-14 | 电脑 USB 与底座 pin17 同时供电时 USB 枚举稳定 | 到货分步实测（§7） |
+| AS-31-firmware-15 | Espressif 后续 BSP 会内置 USB console（指南已提前写出配置名） | 跟踪 BSP 仓库；出现后切换 |
