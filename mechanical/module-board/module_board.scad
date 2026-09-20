@@ -111,12 +111,16 @@ DOCK_ROWS  = 2;
 // ASSUMPTION: AS-31-mb-3 J2 焊盘圆形 Ø1.8 mm（由 module-board 分支提出）。
 //   本文第 8 节 echo 给出与定位公差的复算，并建议改 Ø2.0（见 MATING.md 第 6 节）。
 DOCK_PAD_D = 1.8;
-// ASSUMPTION: AS-31-mm-5 弹簧针针头直径 Ø0.9 mm、工作行程 0.8 mm、全行程 1.5 mm、
-//   工作行程下单针压力 0.6 N。**全部「待原厂数据手册核对」**，选型归 dock-board 任务。
+// ASSUMPTION: AS-31-mm-5 弹簧针针头直径 Ø0.9 mm、名义工作压缩 1.2 mm、全行程 ≥ 2.5 mm、
+//   工作压缩下单针压力 0.6 N。**全部「待原厂数据手册核对」**，选型归 dock-board 任务。
+//   行程取值理由见 MATING.md 第 5 节：Y 向公差链最坏 ±0.5 mm，名义 1.2 → 实际 0.7～1.7 mm，
+//   要求全行程 ≥ 2.5 mm 才能同时满足「最小工作行程 ≥ 1/3 全行程」与「不打底」。
+//   常见 2.54 mm 间距弹簧针的全行程多为 1.0～2.0 mm，**本条很可能选不到常备料**，
+//   届时的替代路线见 MATING.md 第 5.4 节（收紧公差链或改双行程针型）。
 //   验证：dock-board 选定型号后打开原厂数据手册记录 URL 与额定；G6-G2 每 10 次插拔复测压降。
 DOCK_PIN_TIP_D     = 0.9;
-DOCK_PIN_TRAVEL    = 0.8;
-DOCK_PIN_STROKE    = 1.5;
+DOCK_PIN_TRAVEL    = 1.2;
+DOCK_PIN_STROKE    = 2.5;
 DOCK_PIN_FORCE_N   = 0.6;
 // ASSUMPTION: AS-31-mm-6 托架对配合的定位公差目标 ±0.45 mm（X、Z 同值），由壳体滑配与导向筋实现。
 //   远小于 1 列间距之半 1.27 mm，满足 AS-08「沿 X 错位不可能达到 2 列」。
@@ -403,6 +407,10 @@ echo(str("[检查 8] 绕 Y 轴 180° 错放时触点场映射到 X [",
          -(j2_x(DOCK_COLS)), " , ", -(j2_x(1)), "]，位于 +X 握把侧，底座该处无针（ICD 第 3.3 节）"));
 echo(str("[检查 9] 16 针总压力 = ", F_PIN_TOTAL, " N；Mosaico 自重 = ", W_MOSAICO_N,
          " N。重力远不足以压紧，必须由卡扣提供保持力，见 MATING.md 第 4 节"));
+echo(str("[检查 9b] Y 向配合链：触点面 Y = ", MODULE_PAD_FACE_Y,
+         "；弹簧针自由针尖应位于 Y = ", MODULE_PAD_FACE_Y + DOCK_PIN_TRAVEL,
+         "；名义压缩 ", DOCK_PIN_TRAVEL, " mm，占全行程 ",
+         DOCK_PIN_TRAVEL / DOCK_PIN_STROKE * 100, " %（详见 MATING.md 第 5 节）"));
 echo(str("[检查 10] 定位孔 A 到最近板边距离 = ",
          min(MOUNT_A_X - FIN_X_MIN, FIN_X_MAX - MOUNT_A_X, MOUNT_A_Y - FIN_Y_MIN, FIN_Y_MAX - MOUNT_A_Y),
          " mm；孔 B = ",
