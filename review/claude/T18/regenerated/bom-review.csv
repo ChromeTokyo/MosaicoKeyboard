@@ -1,0 +1,85 @@
+﻿Designator,Value,LCSC,Footprint,Geometry status,Notes
+U1,TCA9535PWR,C130204,TSSOP-24_L7.8-W4.4-P0.65-LS6.4-BL,Supplier library geometry; final manufacturer audit pending,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+SW1,UP,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW2,DOWN,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW3,LEFT,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW4,RIGHT,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW5,A,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW6,B,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW7,X,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW8,Y,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW9,L,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW10,R,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+SW11,MODE,C720477,SW-SMD_L3.9-W3.0-P4.45,Supplier library geometry; final manufacturer audit pending,
+R1,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R2,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R3,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R4,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R5,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R6,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R7,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R8,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R9,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R10,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R11,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R12,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R13,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R14,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R15,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R16,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+R17,10k 1%,C25804,R0603,Supplier library geometry; final manufacturer audit pending,
+C1,100nF 50V X7R,C1591,C0603,Supplier library geometry; final manufacturer audit pending,
+C2,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+J1,USB-C CHARGE 5V,C165948,USB-C_SMD-TYPE-C-31-M-12_1,Supplier library geometry; final manufacturer audit pending,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+R18,5.1k 1%,C23186,R0603,Supplier library geometry; final manufacturer audit pending,
+R19,5.1k 1%,C23186,R0603,Supplier library geometry; final manufacturer audit pending,
+U2,BQ24074RGTR,C54313,QFN-16_L3.0-W3.0-P0.50-TL-EP1.7,Supplier library geometry; final manufacturer audit pending,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+J2,PROTECTED 1S PACK + NTC,C160353,CONN-SMD_B3B-PH-SM4-TB-LF-SN,Supplier library geometry; final manufacturer audit pending,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+R20,1.8k 1%,C4177,R0603,Supplier library geometry; final manufacturer audit pending,890/1800 = 0.494 A nominal; verify selected pack permits this current
+R21,3.3k 1%,C22978,R0603,Supplier library geometry; final manufacturer audit pending,ILIM must be populated even in fixed USB input-current mode
+R22,47k 1%,C25819,R0603,Supplier library geometry; final manufacturer audit pending,Fast-charge safety timer approx. 6.27h before DPPM timer extensions
+R23,4.7k 1%,C23162,R0603,Supplier library geometry; final manufacturer audit pending,
+R24,4.7k 1%,C23162,R0603,Supplier library geometry; final manufacturer audit pending,
+D1,CHARGE,C2296,LED0805-R-RD,Supplier library geometry; final manufacturer audit pending,
+D2,USB VALID,C2296,LED0805-R-RD,Supplier library geometry; final manufacturer audit pending,
+C3,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+C4,10uF 25V X5R,C96446,C0603,Supplier library geometry; final manufacturer audit pending,
+C5,22uF 25V X5R,C45783,C0805,Supplier library geometry; final manufacturer audit pending,
+U3,TPS61023DRLR,C919459,SOT-563_L1.6-W1.2-P0.50-LS1.6-BR,Supplier library geometry; final manufacturer audit pending,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+L1,1uH 4.6A Isat,C5832342,IND-SMD_L2.0-W1.6-B,Supplier library geometry; final manufacturer audit pending,
+SW12,DOCK POWER,C431540,SW-TH_MSK12C02,Supplier library geometry; final manufacturer audit pending,Mechanical slide pin map must be checked against exact part drawing
+R25,100k 1%,C25803,R0603,Supplier library geometry; final manufacturer audit pending,
+R26,732k 1%,C23239,R0603,Locally drawn placeholder; library/land-pattern verification required [UNRESOLVED via --allow-missing],
+R27,100k 1%,C25803,R0603,Supplier library geometry; final manufacturer audit pending,
+U8,TPS2553DBVR,C55266,SOT-23-6_L2.9-W1.6-P0.95-LS2.8,Supplier library geometry; final manufacturer audit pending,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+R28,26.1k 1%,,R0603,Locally drawn placeholder; library/land-pattern verification required,Exact LCSC procurement code pending
+U4,LM66100DCKR,C2869734,SC-70-6_L2.0-W1.3-P0.65-LS2.1-BL,Supplier library geometry; final manufacturer audit pending,CE tied to VOUT is required for reverse-current blocking
+U5,TLV75533PDBVR,C404027,SOT-23-5_L3.0-W1.7-P0.95-LS2.8-BR,Supplier library geometry; final manufacturer audit pending,Dock logic supply; does not use Pogo positive as a 3.3V rail
+C6,10uF 25V X5R,C96446,C0603,Supplier library geometry; final manufacturer audit pending,
+C7,22uF 25V X5R,C45783,C0805,Supplier library geometry; final manufacturer audit pending,
+C8,22uF 25V X5R,C45783,C0805,Supplier library geometry; final manufacturer audit pending,
+C9,100nF 50V X7R,C1591,C0603,Supplier library geometry; final manufacturer audit pending,
+C10,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+C11,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+C12,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+C13,1uF 50V X5R,C15849,C0603,Supplier library geometry; final manufacturer audit pending,
+U6,TCA9517DGKR,C544515,VSSOP-8_L3.0-W3.0-P0.65-LS5.0-BL,Supplier library geometry; final manufacturer audit pending,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+R29,4.7k 1%,C23162,R0603,Supplier library geometry; final manufacturer audit pending,
+R30,4.7k 1%,C23162,R0603,Supplier library geometry; final manufacturer audit pending,
+C14,100nF 50V X7R,C1591,C0603,Supplier library geometry; final manufacturer audit pending,
+C15,100nF 50V X7R,C1591,C0603,Supplier library geometry; final manufacturer audit pending,
+U7,MAX17048G+T10,C2682616,TDFN-8_L2.0-W2.0-P0.50-BL-EP1.2,Supplier library geometry; final manufacturer audit pending,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+C16,100nF 50V X7R,C1591,C0603,Supplier library geometry; final manufacturer audit pending,
+J3,POGO INTERFACE - GEOMETRY TBD,,POGO_GEOMETRY_UNVERIFIED,Locally drawn placeholder; library/land-pattern verification required,"2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing."
+TP1,GND,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP2,USB_5V,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP3,PACK_P,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP4,SYS_RAW,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP5,BOOST_5V,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP6,POGO_5V,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP7,DOCK_3V3,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP8,HOST_SDA,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP9,HOST_SCL,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP10,DOCK_SDA,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP11,DOCK_SCL,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
+TP12,IO_INT_N,,TESTPAD_1.0mm,Locally drawn placeholder; library/land-pattern verification required,
