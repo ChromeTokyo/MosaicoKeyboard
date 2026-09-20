@@ -1,0 +1,116 @@
+{
+  "recorded_at_utc": "2026-09-20T04:10:59.473926+00:00",
+  "access_date_jst": "2026-09-20",
+  "role": "Chrome internal source check; not Hiro independent review",
+  "sources": [
+    {
+      "url": "https://docs.espressif.com/projects/esp-dev-kits/en/latest/esp32s31/esp-mosaico/user_guide.html",
+      "saved_as": "evidence/user-guide-2026-09-20.html",
+      "role": "Official Related Documents link verified; HTML snapshot excludes linked assets"
+    },
+    {
+      "url": "https://dl.espressif.com/AE/SCH_SCH_ESP-Mosaico_CoreBoard_V1_0_2026-08-18.pdf",
+      "saved_as": "evidence/coreboard-v1.0-2026-08-18.pdf",
+      "role": "Original official PDF; 5 pages; drawing update 2026-08-18"
+    },
+    {
+      "url": "https://mosaico.espressif.com/guide/",
+      "saved_as": "evidence/mosaico-product-guide-2026-09-20.html",
+      "role": "Official Expansion I/O table: 5 V output up to100mA; 3.3 V output up to100mA; no explicit per-slot aggregation allowance"
+    }
+  ],
+  "render_working_directory": "review/chrome/T04",
+  "render_commands": [
+    "pdftotext -layout evidence/coreboard-v1.0-2026-08-18.pdf evidence/coreboard-v1.0-text.txt",
+    "pdftoppm -scale-to 2800 -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/coreboard-page",
+    "pdftoppm -f 2 -l 2 -r 400 -x 1340 -y 175 -W 840 -H 880 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p02-i2c-pullups",
+    "pdftoppm -f 3 -l 3 -r 400 -x 725 -y 2880 -W 780 -H 1450 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p03-btb-pins",
+    "pdftoppm -f 4 -l 4 -r 400 -x 4970 -y 280 -W 1250 -H 1120 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p04-codec-i2c",
+    "pdftoppm -f 5 -l 5 -r 400 -x 0 -y 0 -W 1900 -H 1150 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p05-input-paths",
+    "pdftoppm -f 5 -l 5 -r 400 -x 0 -y 940 -W 1930 -H 560 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p05-usb-output-path",
+    "pdftoppm -f 5 -l 5 -r 300 -x 100 -y 1100 -W 3200 -H 850 -singlefile -png evidence/coreboard-v1.0-2026-08-18.pdf evidence/p05-power-control"
+  ],
+  "visual_check": "All five full pages and all six final crops inspected. Net tracing uses graphical connections; extracted text is search aid only.",
+  "files": [
+    {
+      "path": "COREBOARD_INTERFACE_EVIDENCE.md",
+      "bytes": 10972,
+      "sha256": "6ecb29a0d6cccf39d70b417701d85857829d28652cf4047846fc1c40ffee86ed"
+    },
+    {
+      "path": "evidence/coreboard-page-1.png",
+      "bytes": 226952,
+      "sha256": "c030b3e09eac7bb1d90839141316cfc59847b83b58f075d427110183cb5f9ead"
+    },
+    {
+      "path": "evidence/coreboard-page-2.png",
+      "bytes": 575189,
+      "sha256": "b3d8f5ab2eaa921b64e6acaab416e928799b5125b52900b7190eb4e631089fb0"
+    },
+    {
+      "path": "evidence/coreboard-page-3.png",
+      "bytes": 399892,
+      "sha256": "9d9000c8f56b605fadbd251883ccd194619801bab122efe550e37be89d533043"
+    },
+    {
+      "path": "evidence/coreboard-page-4.png",
+      "bytes": 276657,
+      "sha256": "8fcc95cffcbd4b5654db004b0774db9fa665aa38858221deac4849f6a99c7b28"
+    },
+    {
+      "path": "evidence/coreboard-page-5.png",
+      "bytes": 360305,
+      "sha256": "b9e8f1b34bcc0e54150488f4c1e7a7b01a06eeebacef6866987ee2d33fa806e4"
+    },
+    {
+      "path": "evidence/coreboard-v1.0-2026-08-18.pdf",
+      "bytes": 1082349,
+      "sha256": "587853ee8493be2fc52b2cba347386febefe33fac51bb6b5a9a47f0067d6e213"
+    },
+    {
+      "path": "evidence/coreboard-v1.0-text.txt",
+      "bytes": 191440,
+      "sha256": "ff585e3ccf8cf17abd2ce48b8200cca760a7fcc3b519896e5d1ad0238105d313"
+    },
+    {
+      "path": "evidence/mosaico-product-guide-2026-09-20.html",
+      "bytes": 18453,
+      "sha256": "937e635db6ac4db704cfb5601f172034c30182d61a2753ddf72a5e335107f1e6"
+    },
+    {
+      "path": "evidence/p02-i2c-pullups.png",
+      "bytes": 84480,
+      "sha256": "600eb5cede235d1716b4d912186428cd48b807eae9b6c8ebc79c4d8e0dc6bf24"
+    },
+    {
+      "path": "evidence/p03-btb-pins.png",
+      "bytes": 235598,
+      "sha256": "2891baedbd2f008f37e81b0a8f3dee0ccc2596eb2993bd0eebf42d16b27d3165"
+    },
+    {
+      "path": "evidence/p04-codec-i2c.png",
+      "bytes": 56063,
+      "sha256": "80efb127023949b5ad5a6e41f4f4d18ab3931cca4e5a6b48d703288baa41cf60"
+    },
+    {
+      "path": "evidence/p05-input-paths.png",
+      "bytes": 103559,
+      "sha256": "15c579b38346c742669de9a44c7cf1561267f93618b5833dde6af55d23574fbe"
+    },
+    {
+      "path": "evidence/p05-power-control.png",
+      "bytes": 125062,
+      "sha256": "1bfba19d82c51430c0048f7bbdccfcb537516dd159952d5b28dc5feb5b6248bf"
+    },
+    {
+      "path": "evidence/p05-usb-output-path.png",
+      "bytes": 54752,
+      "sha256": "d1665b3ec24fd1c2cd177ae100d3684bebcc22213a03f2f1bca87bef53091149"
+    },
+    {
+      "path": "evidence/user-guide-2026-09-20.html",
+      "bytes": 62949,
+      "sha256": "e5771a699191f5ccb1c6b88ba5b9dd1b6b931237ab9c05dafda254742de31c67"
+    }
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "utc": "2026-09-20T04:10:16.155013+00:00",
+  "upstream_commit": "a9d383c8d3e6c5f2ef02822d641c31905f5016c0",
+  "upstream_script_path": "review/claude/official-evidence/tools/measure_pads.py",
+  "working_directory": "/Users/chrome/.codex/.chatgpt-projects/g-p-6aaf4598a14881919a5fd600e0224344/MosaicoKeyboard-chrome-t14",
+  "command": "/Users/chrome/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3 review/chrome/T14/geometry/official-input-a9d383c-measure_pads.py review/claude/official-evidence/fig7-baseboard-back-native.png",
+  "python": "3.12.14 (main, Aug 25 2026, 13:50:33) [Clang 22.1.3 ]",
+  "python_executable": "/Users/chrome/.cache/codex-runtimes/codex-primary-runtime/dependencies/python/bin/python3",
+  "platform": "macOS-26.6.2-arm64-arm-64bit",
+  "numpy": "2.3.5",
+  "pillow": "12.3.0",
+  "inputs": {
+    "review/chrome/T14/geometry/official-input-a9d383c-measure_pads.py": {
+      "sha256": "db87f944dd2e47949ba30cb146656f118d029a48fd79af3e58dcb29d86411512",
+      "bytes": 5330
+    },
+    "review/claude/official-evidence/fig7-baseboard-back-native.png": {
+      "sha256": "785872a80ca5de08ee98d413b110a0b36722c61d888e534970b8d4d09c10f641",
+      "bytes": 1828184
+    }
+  },
+  "returncode": 0,
+  "note": "D-009-R corrected directional script copied verbatim from recorded commit; working-tree Claude source not modified; image bytes equal upstream."
+}
