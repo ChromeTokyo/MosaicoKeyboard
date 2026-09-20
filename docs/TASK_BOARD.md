@@ -24,6 +24,9 @@
 | T16 | 用户执行，Chrome 判定，Claude 记录 | **已改写（2026-09-20）**：`MOSAICO.3mf` 来源未核实且很可能是裸板外壳而非整机壳，原「相减得装配间隙」前提不成立（见 `review/claude/3mf-analysis.md`）。改为：打印该件并与实物比对，判定它对应裸板还是整机，据此决定其参考价值；整机尺寸以卡尺直接实测为准 | 用户 3D 打印机（已具备）；实物到货 | 比对结论有照片与实测数据支撑；不得由该件推出任何整机配合尺寸 | READY（打印可先做，比对待实物） |
 | T17 | Claude 提案，用户打印试握 | 产品体量模型：按 T13 的形态方向出可打印的握持体量件，验证长条形、握把深度、按键落点与拇指可达范围 | T13 视觉与交互方向 | 只验证人机与手感，不含任何硬件配合尺寸；结论回写 T13 | READY |
 
+| H0 | Hiro | 设计前提变更专项复核：(a) 结论 1 降 derived 是否恰当 (b) REVERSAL 是否成立 (c) Chrome D1 左槽合同独立复核 | 审查包 `docs/handoffs/claude-to-hiro.md`、资料索引 `review/hiro/H0/MATERIALS.md`（PR #26） | 输出 PASS／CHANGES_REQUIRED／BLOCKED，证据不全不得 PASS；报告 `review/hiro/H0/REPORT.md` | READY（待用户唤醒 Hiro 领取） |
+| T20 | Claude（提案），Hiro 复核 | 方案 D＋G 全套设计提案：ICD-0.2 分册、ASSUMPTIONS 总表、G6 测试计划（已合入 PR #27）；模块板／底座主板电气、EEPROM 镜像、手柄驱动固件、参数化机械（进行中，各在 `claude/design-d/*` 分支） | D-017 主循环第①步 | 全部标 ASSUMPTION；不生成嘉立创 EDA JSON；每文件头有提案声明；四路对抗复核后合入 | IN_PROGRESS |
+
 `READY`：可领取；`IN_PROGRESS`：有明确会话／分支正在执行；`BLOCKED`：前置条件未满足；`IN_REVIEW`：有交付待审；`DONE`：验收通过。领取时增加分支、输入提交号与交接路径，完成时补充 PR／证据链接。
 
 T03 的工具验证和空间研究可先开展；精确机械数据缺失时只能保留草案。Chrome 可以在独立任务中交替研究 T10 与 T11，但同一源文件只允许一个编辑会话，最终装配和制造输出仍受冻结版本约束。应用 UI／固件完整设计与实现待硬件稳定后另建任务。
