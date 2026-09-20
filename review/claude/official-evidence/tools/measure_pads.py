@@ -4,6 +4,12 @@
 用途：为 O01／O02／O03 提供有方法、可复现的证据输入。
 限制：这是对文档照片的摄影测量，不是实物测量，结果为 derived，不可用于冻结。
 
+重要：官方文档图存在约 6% 的水平拉伸（各向异性）。四个背部焊盘是水平排列，
+因此必须用**水平方向**的标定基准。初版脚本用最近邻距离标定（实际测到的是垂直
+行间距），导致间距被系统性高估约 6%，得出「2.54 mm 被证伪」的错误结论。
+本版改为：从右侧 2x10P 严格提取两列各 10 孔，列间距作水平标定、行长基线作垂直
+标定，并输出圆形焊盘的长宽比作为各向同性自检。
+
 复现：
   pdfimages -f 32 -l 32 -png esp-dev-kits-en-master-esp32s31.pdf fig7
   python3 measure_pads.py fig7-000.png
@@ -45,6 +51,18 @@ def components(gold, min_px=40):
     return np.array(out)
 
 
+def grid_pitch(points, x_lo, x_hi, x_split):
+    """从 2x10P 严格提取两列，返回 (水平列距, 垂直行距均值)。"""
+    p = points[(points[:, 0] > x_lo) & (points[:, 0] < x_hi)]
+    c1, c2 = p[p[:, 0] < x_split], p[p[:, 0] >= x_split]
+    if len(c1) < 3 or len(c2) < 3:
+        return None, None
+    horiz = c2[:, 0].mean() - c1[:, 0].mean()
+    vert = np.mean([(np.sort(c[:, 1])[-1] - np.sort(c[:, 1])[0]) / (len(c) - 1)
+                    for c in (c1, c2)])
+    return horiz, vert
+
+
 def nn_pitch(points, lo=65, hi=90):
     ds = []
     for i in range(len(points)):
@@ -79,29 +97,28 @@ def main(path):
     pad_sp = np.diff(pads[:, 2])
     pad_d = ((pads[:, 3] + pads[:, 4]) / 2).mean()
 
-    # 标定：排针孔（环形、近圆）最近邻距 = 2.54 mm
-    holes = comp[(circ < 0.25) & (dia > 35) & (dia < 95)][:, [2, 1]]
-    regions = {
-        "左区 x<500": holes[:, 0] < 500,
-        "右区 x>900": holes[:, 0] > 900,
-        "上半 y<900": holes[:, 1] < 900,
-        "下半 y>900": holes[:, 1] > 900,
-    }
-    scales = []
-    print("标定（检查透视/畸变一致性）：")
-    for label, m in regions.items():
-        p, sd, k = nn_pitch(holes[m])
-        if p:
-            scales.append(p / HEADER_PITCH_MM)
-            print("  %-12s pitch=%6.2f px (σ=%.2f, n=%d) → %.3f px/mm" % (label, p, sd, k, p / HEADER_PITCH_MM))
+    # 各向同性自检：圆焊盘若被水平拉伸，w/h > 1
+    aspect = (pads[:, 4] / pads[:, 3]).mean()
+    print("各向同性自检：四焊盘 w/h = %.4f（真圆为 1.00）" % aspect)
+    if abs(aspect - 1) > 0.02:
+        print("  → 图像存在约 %.1f%% 的水平拉伸，标定方向必须与被测方向一致。" % ((aspect - 1) * 100))
 
-    lo, hi = min(scales), max(scales)
+    # 标定：右侧 2x10P 严格提取，列间距=水平 2.54mm，行长基线=垂直 2.54mm
+    holes = comp[(circ < 0.3) & (dia > 35) & (dia < 95)][:, [2, 1]]
+    horiz, vert = grid_pitch(holes, 1040, 1170, 1105)
+    if horiz is None:
+        print("未能严格提取 2x10P 排针块，无法标定")
+        return
+    px_h, px_v = horiz / HEADER_PITCH_MM, vert / HEADER_PITCH_MM
+    print("\n标定：水平 %.2f px/2.54mm → %.3f px/mm" % (horiz, px_h))
+    print("      垂直 %.2f px/2.54mm → %.3f px/mm" % (vert, px_v))
+    print("      各向异性 水平/垂直 = %.4f" % (horiz / vert))
+
     print("\n四焊盘（像素）：间距 %s 均值 %.2f；直径 %.2f" % (np.round(pad_sp, 2), pad_sp.mean(), pad_d))
-    print("标定范围 %.3f–%.3f px/mm" % (lo, hi))
-    print("→ 焊盘间距 %.2f–%.2f mm" % (pad_sp.mean() / hi, pad_sp.mean() / lo))
-    print("→ 焊盘直径 %.2f–%.2f mm" % (pad_d / hi, pad_d / lo))
-    print("→ 四盘中心跨距 %.2f–%.2f mm" % (3 * pad_sp.mean() / hi, 3 * pad_sp.mean() / lo))
-    print("\n若间距确为 2.54 mm，应测得 %.1f–%.1f px；实测 %.1f px" % (lo * 2.54, hi * 2.54, pad_sp.mean()))
+    print("→ 焊盘间距 %.3f mm（2.54 标称偏差 %+.1f%%）" % (pad_sp.mean() / px_h, (pad_sp.mean() / horiz - 1) * 100))
+    print("→ 焊盘直径 %.3f mm" % (pad_d / px_h))
+    print("→ 四盘中心跨距 %.3f mm（3×2.54 = 7.62）" % (3 * pad_sp.mean() / px_h))
+    print("\n结论：设计值极可能为 2.54 mm 标称。derived，实物卡尺复测前不得冻结。")
 
 
 if __name__ == "__main__":
