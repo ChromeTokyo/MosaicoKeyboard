@@ -1,266 +1,373 @@
 # 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
 #
-# 模块板（方案 D＋G 左槽转接板）YAML 网表。
+# 模块板（方案 D＋G 左槽转接件）YAML 网表，修订 b（2026-09-21）。
 # 约定：
 #   - J1 针号 == 主机左槽 H2 针号（配合后 J1.n 与 H2.n 导通）。
 #   - 每个 net 的 pins 列出全部 (refdes, pin)。单针网络（NC）也列出，便于检查 J1 全部 20 针都有归属。
-#   - aliases 是跨子系统统一命名中与本网同铜的别名（模块板是纯转接，SLOT_* 与 DOCK_* 在本板上是同一网络）。
+#   - 一份网表覆盖两块刚性板（槽板 fin、触点板 pad_board），J3 是两板之间的 90° 半孔焊接接头；
+#     component.board 标明器件所在板。见 PINMAP.md 第 5 节、DESIGN_NOTES.md 第 3 节。
 #   - dnp: true 的器件默认不装配，只保留封装。
-#   - 标 "ASSUMPTION:" 的字段未经实物核对，验证方法见 PINMAP.md §6 与 DESIGN_NOTES.md §9。
+#   - 标 "ASSUMPTION:" 的字段未经实物核对，验证方法见 PINMAP.md 第 7 节与 DESIGN_NOTES.md 第 11 节。
+#   - 器件 LCSC 编码与「常备」判断在 BOM.csv；此处只给型号候选与已核对的来源。
 # 一致性检查：python3 hardware/module-board/check_netlist.py
 
 meta:
   board: module-board
-  title: ESP-Mosaico 左槽模块板（转接板）
-  revision: A0-proposal
-  date: "2026-09-20"
+  title: ESP-Mosaico 左槽模块板（转接件：槽板 ＋ 触点板）
+  revision: b-proposal
+  date: "2026-09-21"
   status: proposal-not-frozen
   author: Claude 主控（claude-fable-5-1）
+  icd: hardware/ICD-0.2-DRAFT.md
   pin_contract: review/chrome/D1-module-interface/LEFT_SLOT.md
   pinmap: hardware/module-board/PINMAP.md
   logic_domain: 3.3V
   notes:
-    - 模块板无 MCU、无 I²C 扩展器、无电源 IC；pin17 到 J2 之间只有铜。
-    - pin18 5V_OUT 绝不连接底座输出；本板仅给测试点。
-    - SLOT_3V3 只供 U1 与 DNP 上拉，不到 J2；底座不得反送 3.3 V。
+    - 模块板无 MCU、无 I²C 扩展器、无电源 IC；pin 17 到 J2 之间只有铜（含 J3 两个半孔焊点）。
+    - pin 18 5V_OUT 焊盘不连铜、无测试点（硬约束 2，ICD EL-D-02）。
+    - SLOT_3V3 只供 U1、C1、DNP 上拉与 JP1.3，不跨越 J3、不到 J2（硬约束 3，ICD EL-D-03）。
+    - DOCK_SDA/SCL 与 SLOT_SDA/SCL 是两个网，只经 DNP 0 Ω R_LINK_* 相连（ICD 第 2 节、EL-D-06、EL-D-10）。
+    - KEY_* 只在 PINMAP.md 定义 GPIO；本网表的 gpio 字段是其镜像，以 PINMAP.md 为准。
+
+# H2 针 → 主机 GPIO/网络（LEFT_SLOT.md，BSP 392860b1）。供 check_netlist.py 核对，不是设计输入。
+h2_contract:
+  1: GPIO55
+  2: GPIO53
+  3: GPIO19
+  4: GPIO48
+  5: GPIO18
+  6: GPIO13
+  7: GPIO17
+  8: GPIO12
+  9: GPIO16
+  10: GPIO14_EEPROM_A0
+  11: GPIO15
+  12: GPIO4
+  13: GPIO33_USJ_DN
+  14: GPIO1_SCL
+  15: GPIO34_USJ_DP
+  16: GPIO0_SDA
+  17: 5V_IN
+  18: 5V_OUT
+  19: VCC_3V3
+  20: GND
+
+# 本网表引用的假设编号（hardware/ASSUMPTIONS.md；AS-31-mb-n 为本分支临时编号，见 DESIGN_NOTES.md 第 11 节）
+assumptions:
+  - AS-06   # 配对公头待原厂规格核对
+  - AS-07   # 弹簧针 2.54 mm 2×8
+  - AS-09   # 峰值 ≤1 A、持续 ≤0.6 A
+  - AS-13   # pin 19 供电能力
+  - AS-14   # I²C1 外部上拉存在与阻值 unknown
+  - AS-15   # 11 根 GPIO 无 strapping 副作用
+  - AS-17   # H2 针号与物理位置
+  - AS-27   # 嘉立创常备料
+  - AS-30   # pin 13/15 NC 不影响主机 USB
+  - AS-31-mb-1   # 板形：槽板（XY 面）＋触点板（XZ 面），J3 半孔 T 形焊接
+  - AS-31-mb-2   # 右角公头两排配合针高度 ≈2.54/5.08 mm
+  - AS-31-mb-3   # J2 焊盘 Ø1.8 mm
+  - AS-31-mb-4   # 主机内部上拉量级使 R_S_KEY 1 kΩ 下按下电平 < V_IL
+  - AS-31-mb-5   # J3 半孔 1.5 mm 间距 Ø0.7、单点 ≥0.5 A
+  - AS-31-mb-6   # 1 kΩ 串阻对 5 V 误接触的限流有效（GPIO 注入电流限值待核）
+  - AS-31-mb-7   # DOCK_5V 走线 ≥1.0 mm 宽满足 1 A
+  - AS-31-mb-8   # ENIG 焊盘可承受首版插拔次数（硬金待工艺确认）
+
+boards:
+  fin:
+    description: 槽板。XY 面（与屏面平行），位于 Mosaico −X 侧，向 −X、−Y 延伸；承载 J1 与全部器件；底边（−Y 边）为 J3 半孔
+    layers: 2
+    thickness_mm: 1.6
+    outline_params: [FIN_L, FIN_H, FIN_Z]   # 由 mech-module 给值
+    finish: ENIG
+  pad_board:
+    description: 触点板。XZ 面（水平），位于槽板底边之下；底面（−Y）为 J2 焊盘，顶面（+Y）为 J3 的 SMD 焊盘
+    layers: 2
+    thickness_mm: 1.6
+    outline_params: [PAD_BOARD_L, PAD_BOARD_W, MODULE_PAD_FACE_Y]
+    finish: ENIG   # ASSUMPTION AS-31-mb-8；硬金待嘉立创工艺确认
 
 components:
   J1:
-    description: 2×10P 2.54 mm 公头，插入主机左槽母座（V1.0 原理图标注 B-2200R20P-B120，Ckmtw，LCSC C124406，右角排母）
+    board: fin
+    description: 2×10P 2.54 mm 右角公头，配合针指向 +X 插入主机左槽母座（V1.0 原理图标注 B-2200R20P-B120，Ckmtw，LCSC C124406：右角排母、3 A、绝缘体高 5 mm；V1.2 是否沿用 unknown）
     pins: 20
-    numbering: 与 H2 同号；奇数排 1,3,…,19，偶数排 2,4,…,20
+    numbering: 与 H2 同号；奇数排 1,3,…,19，偶数排 2,4,…,20；1 与 2 相对
     candidates:
-      - part: "B-2100R20P-B110（Ckmtw 210 系列 2×10P 右角公头，型号按命名规律推定，LCSC 编码未查）"
-        note: 基线（模块板水平、针水平插入槽位）。ASSUMPTION：右角公头两排针距 PCB 表面的高度未从图纸读出，待样品实测
-      - part: "B-2100S20P-B110（Ckmtw，LCSC C124359，直插 2×10P，针 SQ0.64±0.02，配合段 6.0 mm）"
-        note: 备选（模块板竖直时使用）
-    mating_note: 配对母座图纸（LCSC C124406，Ckmtw-220-00013 Rev A）未标配对针规格与插拔寿命；0.64 mm 方针配对为按同厂公头图纸推断，待原厂规格核对。V1.2 是否沿用该母座 unknown
+      - part: "BOOMELE 2.54-2*10P（LCSC C9144，右角、公、2×10、3 A、黄铜；镀层与针截面待原厂图纸核对）"
+        role: 基线（槽板在 XY 面）
+      - part: "Ckmtw B-2100R20P-B110（型号按 B-2100R10P/R12P 命名规律推定；LCSC 未检索到 20P 编码）"
+        role: 备选，编码待查
+      - part: "Ckmtw B-2100S20P-B110（LCSC C124359，直插、公、配合段 6 mm、镀金）"
+        role: 备选（若改为槽板在 YZ 面 ＋ 其他转向实现）
+    mating_note: ASSUMPTION AS-06：配对母座 C124406 图纸未能在线打开（2026-09-21），配合针规格、插拔寿命待原厂规格核对；0.64 mm 方针配合为同类 2.54 mm 排针的通行做法，非该母座规格书结论
 
   U1:
-    description: AT24C02D-SSHM-T，2 Kbit I²C EEPROM，SOIC-8
-    package: SOIC-8_L5.0-W4.0-P1.27-LS6.0
-    lcsc: C34807
-    datasheet: https://www.lcsc.com/datasheet/C34807.pdf  # Atmel-8871B-SEEPROM-AT24C01D-02D-D
-    pinout:  # 数据手册 Table 1-1
-      1: A0
-      2: A1
-      3: A2
-      4: GND
-      5: SDA
-      6: SCL
-      7: WP
-      8: VCC
+    board: fin
+    description: AT24C02D-SSHM-T，2 Kbit I²C EEPROM，SOIC-8（Microchip，LCSC C34807，嘉立创扩展库）
+    package: SOIC-8
+    datasheet: https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet.pdf   # Atmel-8871F, 01/2017，已打开核对
+    verified_from_datasheet:
+      pinout: {1: A0, 2: A1, 3: A2, 4: GND, 5: SDA, 6: SCL, 7: WP, 8: VCC}   # Table 1-1
+      vcc_range_v: [1.7, 3.6]
+      active_current_max_ma: 1.0
+      standby_current_max_ua: 0.8
+      page_bytes: 8
+      twr_max_ms: 5
+      sda_pullup_max_kohm: 10        # Table 1-1 SDA："not to exceed 10 KΩ"
+      undriven_pins_pulled_down: [A0, A1, A2, WP]   # Table 1-1 Note 1：未驱动时内部下拉，建议接到确定电平
+      wp_high_protects: full-array   # Table 5-1
     address_7bit: "0x50（A2=A1=0，A0 由主机 GPIO14 驱动为 0）"
 
   C1:
-    description: 100 nF 0603 X7R ≥16 V，U1 去耦
+    board: fin
+    description: 100 nF 0603 X7R 50 V，U1 去耦（Samsung CL10B104KB8NNNC，LCSC C1591）
     package: C0603
     pins: 2
 
-  R1:
-    description: 4.7 kΩ 0603，SLOT_SDA 上拉至 SLOT_3V3
+  R_PU_SDA:
+    board: fin
+    description: SLOT_SDA 上拉至 SLOT_3V3，0603，DNP
     package: R0603
     pins: 2
     dnp: true
-    note: 默认不装。装配与阻值由到货后 P6 测量决定；不得照搬 V1.0 的 4.7 kΩ 结论
+    value: "待 P6/G6-E 决定；≤10 kΩ（数据手册）；不得照搬 V1.0 的 4.7 kΩ 结论"
+  R_PU_SCL:
+    board: fin
+    description: SLOT_SCL 上拉至 SLOT_3V3，0603，DNP
+    package: R0603
+    pins: 2
+    dnp: true
+    value: 同 R_PU_SDA
 
-  R2:
-    description: 4.7 kΩ 0603，SLOT_SCL 上拉至 SLOT_3V3
+  R_LINK_SDA:
+    board: fin
+    description: 0 Ω 0603，SLOT_SDA ↔ DOCK_SDA 连接位，DNP（仅当底座装可选电量计且 ICD EL-D-10 审核通过、AS-08 关闭后装配）
     package: R0603
     pins: 2
     dnp: true
-    note: 同 R1
+    value: 0R
+  R_LINK_SCL:
+    board: fin
+    description: 0 Ω 0603，SLOT_SCL ↔ DOCK_SCL 连接位，DNP
+    package: R0603
+    pins: 2
+    dnp: true
+    value: 0R
+
+  # 按键串阻位（ICD 第 2 节允许预留 R_S_KEY_*；数值由本任务提案、Hiro 复核）。pin 1 在 H2 侧，pin 2 在弹簧针侧。
+  R_S_KEY_UP:    {board: fin, description: 串阻 KEY_UP,    package: R0603, pins: 2, value: "1 kΩ（提案；备选 0 Ω）"}
+  R_S_KEY_DOWN:  {board: fin, description: 串阻 KEY_DOWN,  package: R0603, pins: 2, value: 同上}
+  R_S_KEY_LEFT:  {board: fin, description: 串阻 KEY_LEFT,  package: R0603, pins: 2, value: 同上}
+  R_S_KEY_RIGHT: {board: fin, description: 串阻 KEY_RIGHT, package: R0603, pins: 2, value: 同上}
+  R_S_KEY_L:     {board: fin, description: 串阻 KEY_L,     package: R0603, pins: 2, value: 同上}
+  R_S_KEY_R:     {board: fin, description: 串阻 KEY_R,     package: R0603, pins: 2, value: 同上}
+  R_S_KEY_A:     {board: fin, description: 串阻 KEY_A,     package: R0603, pins: 2, value: 同上}
+  R_S_KEY_B:     {board: fin, description: 串阻 KEY_B,     package: R0603, pins: 2, value: 同上}
+  R_S_KEY_X:     {board: fin, description: 串阻 KEY_X,     package: R0603, pins: 2, value: 同上}
+  R_S_KEY_Y:     {board: fin, description: 串阻 KEY_Y,     package: R0603, pins: 2, value: 同上}
 
   JP1:
-    description: 三焊盘锡桥跳线，中心焊盘接 U1.WP；默认桥接 1–2（WP→GND，可写）；改桥 2–3 后 WP→3V3（全片写保护）
+    board: fin
+    description: 三焊盘锡桥跳线：1 = DOCK_GND，2 = U1.WP（中心），3 = SLOT_3V3。默认桥 1–2（WP→GND，可写，eeprom 分支 PROGRAMMING.md P-01）；改桥 2–3 为全片写保护。两边不得同时桥接（会把 3V3 短到 GND）
     package: SolderJumper-3pad
     pins: 3
     default_bridge: [1, 2]
 
+  J3:
+    board: both
+    description: 槽板↔触点板 90° 焊接接头。槽板底边 16 位半孔（castellation）落在触点板顶面 16 个 SMD 焊盘上，T 形焊接。位 1 在 −X 端，沿 +X 递增
+    package: CASTELLATION-1x16-P1.50-D0.70   # ASSUMPTION AS-31-mb-5
+    pins: 16
+    crossing_nets: 14
+
   J2:
-    description: 底部弹簧针接触焊盘 2×8，2.54 mm 间距，底层，硬金；坐标与方向见 PINMAP.md §4
-    package: PAD-ARRAY-2x8-P2.54-D1.8  # ASSUMPTION：焊盘 Ø1.8 mm，待弹簧针选型后复算
+    board: pad_board
+    description: 底部弹簧针接触焊盘 2×8，2.54 mm，触点板底层（−Y 面）；坐标与方向见 PINMAP.md 第 4.1 节（列沿 X，列 1 在 −X；行 A 在 +Z）
+    package: PAD-ARRAY-2x8-P2.54-D1.8   # ASSUMPTION AS-31-mb-3
     pins: 16
     pin_names: [A1, A2, A3, A4, A5, A6, A7, A8, B1, B2, B3, B4, B5, B6, B7, B8]
 
-  TP1: {description: 测试点 SLOT_5V_IN, pins: 1}
-  TP2: {description: 测试点 SLOT_GND, pins: 1}
-  TP3: {description: 测试点 SLOT_3V3, pins: 1}
-  TP4: {description: 测试点 SLOT_SDA, pins: 1}
-  TP5: {description: 测试点 SLOT_SCL, pins: 1}
-  TP6: {description: 测试点 SLOT_EEPROM_A0, pins: 1}
-  TP7: {description: 测试点 SPARE_GPIO4（H2 pin12）, pins: 1}
-  TP8: {description: 测试点 HOST_5V_OUT_NC（H2 pin18），丝印「仅测量 禁止接底座」, pins: 1}
+  # 测试点（槽板顶面 SMD 圆焊盘）。TP_3V3/TP_GND/TP_SDA/TP_SCL 为 ICD 第 7.1 节烧录夹具四点，
+  # 建议按 1×4 2.54 mm 直线排列，便于临时焊排针接编程器。
+  TP_5V:    {board: fin, description: 测试点 DOCK_5V（H2 焊盘标签 SLOT_5V_IN）, pins: 1, pad_mm: 2.0}
+  TP_GND:   {board: fin, description: 测试点 DOCK_GND（夹具点）, pins: 1, pad_mm: 2.0}
+  TP_3V3:   {board: fin, description: 测试点 SLOT_3V3（夹具点）, pins: 1, pad_mm: 1.5}
+  TP_SDA:   {board: fin, description: 测试点 SLOT_SDA（夹具点）, pins: 1, pad_mm: 1.5}
+  TP_SCL:   {board: fin, description: 测试点 SLOT_SCL（夹具点）, pins: 1, pad_mm: 1.5}
+  TP_A0:    {board: fin, description: 测试点 SLOT_EEPROM_A0, pins: 1, pad_mm: 1.5}
+  TP_SPARE: {board: fin, description: 测试点 SLOT_SPARE_GPIO4（H2 pin 12）, pins: 1, pad_mm: 1.5}
+  TP_WP:    {board: fin, description: 测试点 EEPROM_WP, pins: 1, pad_mm: 1.5}
 
-  # 可选 ESD：双向 TVS，每条经 J2 暴露的信号线各一只，默认 DNP。取舍见 DESIGN_NOTES.md §7。
-  # 候选 SOCAY ESD05V88D-LC（LCSC C303803，DFN-2L/SOD-882，VRWM 5 V，CJ 0.3 pF typ，双向；数据手册 Rev 2016-03-03）。
-  D1:  {description: ESD KEY_UP,    package: SOD-882, pins: 2, dnp: true}
-  D2:  {description: ESD KEY_DOWN,  package: SOD-882, pins: 2, dnp: true}
-  D3:  {description: ESD KEY_LEFT,  package: SOD-882, pins: 2, dnp: true}
-  D4:  {description: ESD KEY_RIGHT, package: SOD-882, pins: 2, dnp: true}
-  D5:  {description: ESD KEY_L,     package: SOD-882, pins: 2, dnp: true}
-  D6:  {description: ESD KEY_R,     package: SOD-882, pins: 2, dnp: true}
-  D7:  {description: ESD KEY_A,     package: SOD-882, pins: 2, dnp: true}
-  D8:  {description: ESD KEY_B,     package: SOD-882, pins: 2, dnp: true}
-  D9:  {description: ESD KEY_X,     package: SOD-882, pins: 2, dnp: true}
-  D10: {description: ESD KEY_Y,     package: SOD-882, pins: 2, dnp: true}
-  D11: {description: ESD DOCK_SDA,  package: SOD-882, pins: 2, dnp: true}
-  D12: {description: ESD DOCK_SCL,  package: SOD-882, pins: 2, dnp: true}
-  D13: {description: ESD DOCK_5V,   package: SOD-882, pins: 2, dnp: true}
+  # 可选 ESD：双向 TVS，每条经 J2 暴露的信号线与 DOCK_5V 各一只，默认 DNP。取舍见 DESIGN_NOTES.md 第 7 节。
+  # 候选 Semitel SES5VD523-2B（SOD-523，VRWM 5 V，双向，VC 18.6 V；嘉立创 C2900832 扩展库；结电容与库存待核）。
+  # 原候选 SOCAY ESD05V88D-LC（LCSC C303803）2026-09-21 查为缺货。pin 1 = 信号，pin 2 = DOCK_GND。
+  D_ESD_KEY_UP:    {board: fin, description: ESD KEY_UP,    package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_DOWN:  {board: fin, description: ESD KEY_DOWN,  package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_LEFT:  {board: fin, description: ESD KEY_LEFT,  package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_RIGHT: {board: fin, description: ESD KEY_RIGHT, package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_L:     {board: fin, description: ESD KEY_L,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_R:     {board: fin, description: ESD KEY_R,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_A:     {board: fin, description: ESD KEY_A,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_B:     {board: fin, description: ESD KEY_B,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_X:     {board: fin, description: ESD KEY_X,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_KEY_Y:     {board: fin, description: ESD KEY_Y,     package: SOD-523, pins: 2, dnp: true}
+  D_ESD_SDA:       {board: fin, description: ESD DOCK_SDA,  package: SOD-523, pins: 2, dnp: true}
+  D_ESD_SCL:       {board: fin, description: ESD DOCK_SCL,  package: SOD-523, pins: 2, dnp: true}
+  D_ESD_5V:        {board: fin, description: ESD DOCK_5V,   package: SOD-523, pins: 2, dnp: true}
 
 nets:
-  # ---- 电源 / 地 ----
-  SLOT_5V_IN:
-    aliases: [DOCK_5V]
+  # ---- 电源 / 地（ICD 第 9 节：网名用 DOCK_*，SLOT_* 为 H2 焊盘标签）----
+  DOCK_5V:
+    h2_label: SLOT_5V_IN
     class: power
-    note: 底座→主机 5 V 供电与充电。本板纯铜；ASSUMPTION：按峰值 ≤1 A 布线，走线宽度 ≥1.0 mm（IPC-2221 外层 1 oz 10 °C 温升估算 1 A 需约 0.3 mm，取 3 倍余量）；pin17 输入额定 unknown
+    note: 底座→主机 5 V 供电与充电。本板纯铜。ASSUMPTION AS-09 峰值 ≤1 A；AS-31-mb-7 走线 ≥1.0 mm（IPC-2221 外层 1 oz 10 °C 温升 1 A 约需 0.3 mm，取 3 倍余量）；pin 17 输入额定 unknown
     pins:
       - [J1, 17]
+      - [J3, 1]
+      - [J3, 2]
       - [J2, A1]
-      - [J2, B8]
-      - [TP1, 1]
-      - [D13, 1]
+      - [J2, B1]
+      - [TP_5V, 1]
+      - [D_ESD_5V, 1]
 
-  SLOT_GND:
-    aliases: [DOCK_GND, GND]
+  DOCK_GND:
+    h2_label: SLOT_GND
     class: power
-    note: 单根 H2 pin20 承担全部回流；单接点载流与接触次序待核（LEFT_SLOT.md）
+    note: 单根 H2 pin 20 承担全部回流；单接点载流与接触次序待核（AS-18，LEFT_SLOT.md）
     pins:
       - [J1, 20]
+      - [J3, 3]
+      - [J3, 4]
       - [J2, A2]
-      - [J2, B7]
-      - [U1, 4]
+      - [J2, B2]
       - [U1, 2]
       - [U1, 3]
+      - [U1, 4]
       - [C1, 2]
       - [JP1, 1]
-      - [TP2, 1]
-      - [D1, 2]
-      - [D2, 2]
-      - [D3, 2]
-      - [D4, 2]
-      - [D5, 2]
-      - [D6, 2]
-      - [D7, 2]
-      - [D8, 2]
-      - [D9, 2]
-      - [D10, 2]
-      - [D11, 2]
-      - [D12, 2]
-      - [D13, 2]
+      - [TP_GND, 1]
+      - [D_ESD_KEY_UP, 2]
+      - [D_ESD_KEY_DOWN, 2]
+      - [D_ESD_KEY_LEFT, 2]
+      - [D_ESD_KEY_RIGHT, 2]
+      - [D_ESD_KEY_L, 2]
+      - [D_ESD_KEY_R, 2]
+      - [D_ESD_KEY_A, 2]
+      - [D_ESD_KEY_B, 2]
+      - [D_ESD_KEY_X, 2]
+      - [D_ESD_KEY_Y, 2]
+      - [D_ESD_SDA, 2]
+      - [D_ESD_SCL, 2]
+      - [D_ESD_5V, 2]
 
   SLOT_3V3:
     class: power
-    note: 主机 VCC_3V3（GPIO60 控制）。只供 U1 与 DNP 上拉；不到 J2。负载估算 ≤2.5 mA（U1 ≤1 mA 数据手册最大值 ＋ R1/R2 各 0.7 mA）
+    note: 主机 VCC_3V3（GPIO60 控制，AS-13）。只供 U1、C1、DNP 上拉、JP1.3；不跨 J3、不到 J2。负载估算 ≤2.5 mA（U1 ≤1 mA 数据手册最大值 ＋ 若装上拉每只 <1 mA）
     pins:
       - [J1, 19]
       - [U1, 8]
       - [C1, 1]
-      - [R1, 1]
-      - [R2, 1]
+      - [R_PU_SDA, 1]
+      - [R_PU_SCL, 1]
       - [JP1, 3]
-      - [TP3, 1]
+      - [TP_3V3, 1]
 
-  # ---- I²C1（V1.2 模块专用总线，GPIO0/GPIO1）----
+  # ---- I²C1（V1.2 模块专用总线 GPIO0/GPIO1）：主机侧 SLOT_*，接口侧 DOCK_*，中间 DNP 0 Ω ----
   SLOT_SDA:
-    aliases: [DOCK_SDA]
     class: signal-open-drain
-    note: 主机 GPIO0。上拉默认靠主机内部上拉（BSP enable_internal_pullup），R1 DNP 待 P6 测量决定
+    note: 主机 GPIO0。上拉默认靠主机内部上拉（BSP enable_internal_pullup）；R_PU_SDA DNP 待 P6 决定（AS-14）
     pins:
       - [J1, 16]
       - [U1, 5]
-      - [R1, 2]
-      - [J2, B1]
-      - [TP4, 1]
-      - [D11, 1]
+      - [R_PU_SDA, 2]
+      - [R_LINK_SDA, 1]
+      - [TP_SDA, 1]
 
   SLOT_SCL:
-    aliases: [DOCK_SCL]
     class: signal-open-drain
     note: 主机 GPIO1
     pins:
       - [J1, 14]
       - [U1, 6]
-      - [R2, 2]
+      - [R_PU_SCL, 2]
+      - [R_LINK_SCL, 1]
+      - [TP_SCL, 1]
+
+  DOCK_SDA:
+    class: signal-open-drain
+    note: 弹簧针侧 I²C 预留（ICD 第 3.2 节列 8 行 A）。默认 R_LINK_SDA DNP，与主机断开
+    pins:
+      - [R_LINK_SDA, 2]
+      - [J3, 15]
       - [J2, A8]
-      - [TP5, 1]
-      - [D12, 1]
+      - [D_ESD_SDA, 1]
+
+  DOCK_SCL:
+    class: signal-open-drain
+    note: 弹簧针侧 I²C 预留（列 8 行 B）。默认 R_LINK_SCL DNP
+    pins:
+      - [R_LINK_SCL, 2]
+      - [J3, 16]
+      - [J2, B8]
+      - [D_ESD_SCL, 1]
 
   SLOT_EEPROM_A0:
     class: signal
-    note: 主机 GPIO14 推挽输出，发现阶段驱动为 0 → U1 地址 0x50。不接按键，不到 J2
+    note: 主机 GPIO14 推挽输出，发现阶段驱动为 0 → U1 地址 0x50。不接按键，不跨 J3、不到 J2
     pins:
       - [J1, 10]
       - [U1, 1]
-      - [TP6, 1]
+      - [TP_A0, 1]
 
   EEPROM_WP:
     class: signal
-    note: 默认经 JP1 桥 1–2 接 SLOT_GND（可写，便于主机经 I²C1 烧写身份镜像）；量产前可改桥 2–3 写保护
+    note: 默认经 JP1 桥 1–2 接 DOCK_GND（可写）；改桥 2–3 写保护。AT24C02D 未驱动时内部下拉（数据手册 Note 1），仍按建议接确定电平
     pins:
       - [U1, 7]
       - [JP1, 2]
+      - [TP_WP, 1]
 
-  # ---- 按键（无源开关对地，拉高由主机内部上拉提供）----
-  KEY_UP:
-    class: signal
-    gpio: 55
-    pins: [[J1, 1], [J2, A3], [D1, 1]]
-  KEY_DOWN:
-    class: signal
-    gpio: 19
-    pins: [[J1, 3], [J2, A4], [D2, 1]]
-  KEY_LEFT:
-    class: signal
-    gpio: 18
-    pins: [[J1, 5], [J2, A5], [D3, 1]]
-  KEY_RIGHT:
-    class: signal
-    gpio: 17
-    pins: [[J1, 7], [J2, A6], [D4, 1]]
-  KEY_L:
-    class: signal
-    gpio: 16
-    pins: [[J1, 9], [J2, A7], [D5, 1]]
-  KEY_R:
-    class: signal
-    gpio: 15
-    pins: [[J1, 11], [J2, B2], [D6, 1]]
-  KEY_A:
-    class: signal
-    gpio: 53
-    pins: [[J1, 2], [J2, B3], [D7, 1]]
-  KEY_B:
-    class: signal
-    gpio: 48
-    pins: [[J1, 4], [J2, B4], [D8, 1]]
-  KEY_X:
-    class: signal
-    gpio: 13
-    pins: [[J1, 6], [J2, B5], [D9, 1]]
-  KEY_Y:
-    class: signal
-    gpio: 12
-    pins: [[J1, 8], [J2, B6], [D10, 1]]
+  # ---- 按键：H2 侧 SLOT_KEY_*（J1 → R_S pin 1），弹簧针侧 KEY_*（R_S pin 2 → J3 → J2）。
+  #      无源开关在底座接 DOCK_GND；拉高由主机内部上拉提供。GPIO 字段镜像 PINMAP.md 第 2 节。----
+  SLOT_KEY_UP:    {class: signal, gpio: 55, pins: [[J1, 1],  [R_S_KEY_UP, 1]]}
+  KEY_UP:         {class: signal, gpio: 55, pins: [[R_S_KEY_UP, 2],    [J3, 5],  [J2, A3], [D_ESD_KEY_UP, 1]]}
+  SLOT_KEY_DOWN:  {class: signal, gpio: 19, pins: [[J1, 3],  [R_S_KEY_DOWN, 1]]}
+  KEY_DOWN:       {class: signal, gpio: 19, pins: [[R_S_KEY_DOWN, 2],  [J3, 6],  [J2, B3], [D_ESD_KEY_DOWN, 1]]}
+  SLOT_KEY_LEFT:  {class: signal, gpio: 18, pins: [[J1, 5],  [R_S_KEY_LEFT, 1]]}
+  KEY_LEFT:       {class: signal, gpio: 18, pins: [[R_S_KEY_LEFT, 2],  [J3, 7],  [J2, A4], [D_ESD_KEY_LEFT, 1]]}
+  SLOT_KEY_RIGHT: {class: signal, gpio: 17, pins: [[J1, 7],  [R_S_KEY_RIGHT, 1]]}
+  KEY_RIGHT:      {class: signal, gpio: 17, pins: [[R_S_KEY_RIGHT, 2], [J3, 8],  [J2, B4], [D_ESD_KEY_RIGHT, 1]]}
+  SLOT_KEY_L:     {class: signal, gpio: 16, pins: [[J1, 9],  [R_S_KEY_L, 1]]}
+  KEY_L:          {class: signal, gpio: 16, pins: [[R_S_KEY_L, 2],     [J3, 9],  [J2, A5], [D_ESD_KEY_L, 1]]}
+  SLOT_KEY_R:     {class: signal, gpio: 15, pins: [[J1, 11], [R_S_KEY_R, 1]]}
+  KEY_R:          {class: signal, gpio: 15, pins: [[R_S_KEY_R, 2],     [J3, 10], [J2, B5], [D_ESD_KEY_R, 1]]}
+  SLOT_KEY_A:     {class: signal, gpio: 53, pins: [[J1, 2],  [R_S_KEY_A, 1]]}
+  KEY_A:          {class: signal, gpio: 53, pins: [[R_S_KEY_A, 2],     [J3, 11], [J2, A6], [D_ESD_KEY_A, 1]]}
+  SLOT_KEY_B:     {class: signal, gpio: 48, pins: [[J1, 4],  [R_S_KEY_B, 1]]}
+  KEY_B:          {class: signal, gpio: 48, pins: [[R_S_KEY_B, 2],     [J3, 12], [J2, B6], [D_ESD_KEY_B, 1]]}
+  SLOT_KEY_X:     {class: signal, gpio: 13, pins: [[J1, 6],  [R_S_KEY_X, 1]]}
+  KEY_X:          {class: signal, gpio: 13, pins: [[R_S_KEY_X, 2],     [J3, 13], [J2, A7], [D_ESD_KEY_X, 1]]}
+  SLOT_KEY_Y:     {class: signal, gpio: 12, pins: [[J1, 8],  [R_S_KEY_Y, 1]]}
+  KEY_Y:          {class: signal, gpio: 12, pins: [[R_S_KEY_Y, 2],     [J3, 14], [J2, B7], [D_ESD_KEY_Y, 1]]}
 
   # ---- 备用与不连接 ----
-  SPARE_GPIO4:
+  SLOT_SPARE_GPIO4:
     class: signal
     gpio: 4
-    note: 第 11 根可用 GPIO，备用；仅到测试点，供迭代换针
-    pins: [[J1, 12], [TP7, 1]]
+    note: 第 11 根可用 GPIO，备用；仅到测试点，不跨 J3、不到 J2，供迭代换针
+    pins: [[J1, 12], [TP_SPARE, 1]]
 
-  HOST_5V_OUT_NC:
-    class: no-connect-measure-only
-    note: 主机 5V_OUT（GPIO60 控制）。禁止连接底座输出（硬约束 2）。仅测试点，用于 P8 记录
-    pins: [[J1, 18], [TP8, 1]]
-
-  USJ_DN_NC:
+  SLOT_5V_OUT_NC:
     class: no-connect
-    note: GPIO33 USB Serial/JTAG D−，保留；焊盘存在、不走线、无测试点
+    note: 主机 5V_OUT（GPIO60 控制）。绝不连接任何网络（硬约束 2）；焊盘不连铜、无测试点，丝印「NC」。P8 直接探 J1 焊针
+    pins: [[J1, 18]]
+
+  SLOT_USJ_DN:
+    class: no-connect
+    note: GPIO33 USB Serial/JTAG D−，保留；焊盘存在、不连铜、无测试点（AS-30）
     pins: [[J1, 13]]
 
-  USJ_DP_NC:
+  SLOT_USJ_DP:
     class: no-connect
     note: GPIO34 USB Serial/JTAG D+，保留；同上
     pins: [[J1, 15]]
