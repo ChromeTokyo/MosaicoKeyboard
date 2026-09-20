@@ -1,0 +1,1172 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+<head>
+  <meta charset="utf-8" />
+        <!-- Global site tag (gtag.js) - Google Analytics -->
+        <script async src="https://www.googletagmanager.com/gtag/js?id=G-6GCDQQ87G0"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+
+            gtag('config', 'G-6GCDQQ87G0');
+        </script><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ESP-Mosaico V1.0 - ESP32-S31 -  &mdash; esp-dev-kits latest documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=a60756f2" />
+      <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=949a1ff5" />
+      <link rel="stylesheet" type="text/css" href="../_static/theme_overrides.css?v=851bd809" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/wide-table-scroll.css?v=f22b5091" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/jquery.js?v=5d32c60e"></script>
+        <script src="../_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js?v=becddca3"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=4825356b"></script>
+        <script src="../_static/clipboard.min.js?v=a7894cd8"></script>
+        <script src="../_static/copybutton.js?v=ff8fa330"></script>
+        <script src="https://wavedrom.com/skins/default.js"></script>
+        <script src="https://wavedrom.com/wavedrom.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+
+    
+        
+
+    <script type="text/javascript">
+        DOCUMENTATION_OPTIONS.PAGENAME = 'esp-mosaico/user_guide';
+        DOCUMENTATION_OPTIONS.PROJECT_SLUG = 'esp-dev-kits';
+        DOCUMENTATION_OPTIONS.LATEST_BRANCH_NAME = 'master';
+        DOCUMENTATION_OPTIONS.VERSIONS_URL = '.././_static/js/docs_version.js';
+        DOCUMENTATION_OPTIONS.LANGUAGES = ["en", "zh_CN"];
+        DOCUMENTATION_OPTIONS.IDF_TARGET = 'esp32s31';
+        DOCUMENTATION_OPTIONS.HAS_IDF_TARGETS = ["esp32", "esp32s2", "esp32s3", "esp32c3", "esp32c6", "esp32h2", "esp32c2", "esp32p4", "esp32c5", "esp32c61", "esp32s31", "other"]
+        DOCUMENTATION_OPTIONS.RELEASE = 'latest';
+        DOCUMENTATION_OPTIONS.LANGUAGE_URL = 'en';
+
+    </script>
+
+    <script type="text/javascript" src=".././_static/js/docs_version.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Related Documentation and Resources" href="../resources.html" />
+    <link rel="prev" title="ESP-Mosaico" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html" class="icon icon-home">
+            esp-dev-kits
+              <img src="../_static/espressif-logo.svg" class="logo" alt="Logo"/>
+          </a>
+
+          
+            <div class="selectors">
+              <select id="target-select" style="width: 150px;" hidden>
+                <option value="" disabled selected>Choose target...</option>
+              </select>
+            </div>
+          
+
+          <div class="selectors">
+            <select id="version-select" style="width: 150px;" hidden>
+              <option value="" disabled selected>Choose version...</option>
+            </select>
+          </div>
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <p class="caption" role="heading"><span class="caption-text">ESP32-S31 Boards</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../esp32-s31-function-coreboard-1/index.html">ESP32-S31-Function-CoreBoard-1</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../esp32-s31-korvo-1/index.html">ESP32-S31-Korvo-1</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">ESP-Mosaico</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">User Guide</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#getting-started">Getting Started</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#description-of-components">Description of Components</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#start-application-development">Start Application Development</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hardware-reference">Hardware Reference</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#block-diagram">Block Diagram</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#power-supply-options">Power Supply Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#type-c-interface">Type-C Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#dcdc-3-3-v-circuit">DCDC 3.3 V Circuit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#boost-circuit">BOOST Circuit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#power-on-off-circuit">Power On/Off Circuit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mcu-and-pin-assignment">MCU and Pin Assignment</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#i2c-device-addresses">I2C Device Addresses</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#lcd-interface">LCD Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#vibration-motor-interface">Vibration Motor Interface</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#module-interface">Module Interface</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#hardware-revision-details">Hardware Revision Details</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#related-documents">Related Documents</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disclaimer-and-copyright-notice">Disclaimer and Copyright Notice</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Resources and Legal Notices</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../resources.html">Related Documentation and Resources</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../disclaimer-and-copyright.html">Disclaimer and Copyright Notice</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">esp-dev-kits</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">ESP-Mosaico</a></li>
+      <li class="breadcrumb-item active">ESP-Mosaico V1.0</li>
+    <style>
+        .download-pdf {
+            float: right;
+            margin-right: 20px;
+        }
+    </style>
+    <a href="../esp-dev-kits-en-master-esp32s31.pdf" class="download-pdf fa fa-file-pdf-o"> Download PDF</a>
+
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="esp-mosaico-v1-0">
+<h1>ESP-Mosaico V1.0<a class="headerlink" href="#esp-mosaico-v1-0" title="Permalink to this heading"></a></h1>
+<p><a class="reference external" href="../../../../zh_CN/latest/esp32s31/esp-mosaico/user_guide.html">[中文]</a></p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This document covers CoreBoard <strong>V1.0</strong> hardware. Please check the silkscreen version on the mainboard to confirm your board revision.</p>
+</div>
+<p>This guide helps you get started with ESP-Mosaico and provides detailed information about the board.</p>
+<p>ESP-Mosaico is an expandable smart interaction development kit based on ESP32-S31. It targets magnetic expansion toys, motion sensing, square touch display HMI, and edge voice/multimedia applications. The device integrates a 480 × 480 QSPI square touch display, ES8311 audio codec, NS4150B amplifier, BMI270 6-axis IMU, dual BMM150 magnetometers, SPI NAND flash, and left/right 2 × 10P, 2.54 mm pitch module headers.</p>
+<p>The main controller is Espressif ESP32-S31, supporting 2.4 GHz Wi-Fi 6 (IEEE 802.11b/g/n/ax), Bluetooth® 5.4 (LE + BR/EDR), and IEEE 802.15.4 (Thread / Zigbee). For storage, the board provides 16 MB in-package PSRAM, onboard 16 MB SPI NOR flash, and onboard 1 Gbit SPI NAND flash for graphics, multimedia, and asset caching. The display uses a CO5300-driven 480 × 480 QSPI square touch display with a CST9220-series touch controller.</p>
+<p>For audio, ESP-Mosaico integrates ES8311 and NS4150B Class-D PA. The power system supports USB Type-C 5 V and a 3.7 V / 65 mAh Li-ion battery, with TP4057 charging, BQ27220 fuel gauge, and SAM8108 power-switch control. Both the Type-C port and the left/right module interfaces support power input and output. A USB 2.0 High-Speed OTG port supports power, debug, and communication, and the board also reserves UART expansion capability and left/right module interfaces.</p>
+<figure class="align-center align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-isometric.png"><img alt="ESP-Mosaico Appearance (Click to enlarge)" src="../_images/esp-mosaico-isometric.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico Appearance (Click to enlarge)</span><a class="headerlink" href="#id1" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The document consists of the following major sections:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#getting-started">Getting Started</a>: Overview of the board and hardware/software setup instructions.</p></li>
+<li><p><a class="reference internal" href="#hardware-reference">Hardware Reference</a>: More detailed information about the board hardware.</p></li>
+<li><p><a class="reference internal" href="#hardware-revision-details">Hardware Revision Details</a>: Hardware revision history and known issues (if any).</p></li>
+<li><p><a class="reference internal" href="#related-documents">Related Documents</a>: Links to related documentation.</p></li>
+<li><p><a class="reference internal" href="#disclaimer-and-copyright-notice">Disclaimer and Copyright Notice</a>: Link to the disclaimer and copyright notice.</p></li>
+</ul>
+<section id="getting-started">
+<span id="getting-started-esp-mosaico-en"></span><h2>Getting Started<a class="headerlink" href="#getting-started" title="Permalink to this heading"></a></h2>
+<p>This section briefly introduces ESP-Mosaico and describes how to flash firmware and prepare the board.</p>
+<section id="description-of-components">
+<h3>Description of Components<a class="headerlink" href="#description-of-components" title="Permalink to this heading"></a></h3>
+<p>ESP-Mosaico consists of a CoreBoard and a BaseBoard. The front views and their main components are shown first, followed by the back views and their main components.</p>
+<section id="front">
+<h4>Front<a class="headerlink" href="#front" title="Permalink to this heading"></a></h4>
+<figure class="align-center align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-front.png"><img alt="ESP-Mosaico Front (Click to enlarge)" src="../_images/esp-mosaico-front.png" style="width: 60%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico Front (Click to enlarge)</span><a class="headerlink" href="#id2" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-coreboard-front.png"><img alt="ESP-Mosaico CoreBoard Front (Click to enlarge)" src="../_images/esp-mosaico-coreboard-front.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico CoreBoard Front (Click to enlarge)</span><a class="headerlink" href="#id3" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-baseboard-front.png"><img alt="ESP-Mosaico BaseBoard Front (Click to enlarge)" src="../_images/esp-mosaico-baseboard-front.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico BaseBoard Front (Click to enlarge)</span><a class="headerlink" href="#id4" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The following describes the main components on the front PCB in clockwise order.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 28.0%" />
+<col style="width: 64.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>No.</p></th>
+<th class="head"><p>Key Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p><strong>CoreBoard</strong></p></td>
+<td><p>Core board integrating the SoC, RF antenna, power management, display connector, audio codec, and sensors.</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>ESP32-S31NRV16</p></td>
+<td><p>ESP32-S31 SoC, RISC-V 32-bit dual-core up to 320 MHz with 16 MB in-package PSRAM; supports 2.4 GHz Wi-Fi 6, Bluetooth 5.4 (LE + BR/EDR), and IEEE 802.15.4.</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>KH-3216-A35 Ceramic Antenna</p></td>
+<td><p>2.4 GHz chip ceramic antenna for Wi-Fi and Bluetooth RF.</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>Orange LED</p></td>
+<td><p>Programmable mono status LED on GPIO3, active-low.</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>TLV62569</p></td>
+<td><p>Buck (DCDC) converter that converts the input supply to the system 3.3 V rail.</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>BMM150</p></td>
+<td><p>3-axis magnetometer (BMM150 #2), I2C address 0x11.</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>SY7088</p></td>
+<td><p>Boost (BOOST) converter for rails higher than the battery voltage.</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Display Connector</p></td>
+<td><p>Connects the 480 × 480, 2.16-inch QSPI touch display (CO5300 driver + CST9220 touch).</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>TP4057</p></td>
+<td><p>Li-ion battery charger for the onboard battery.</p></td>
+</tr>
+<tr class="row-odd"><td><p>9</p></td>
+<td><p>BQ27220</p></td>
+<td><p>Fuel gauge at I2C address 0x55 for voltage, current, state of charge (SOC), and related status.</p></td>
+</tr>
+<tr class="row-even"><td><p>10</p></td>
+<td><p>3V3 Power LED</p></td>
+<td><p>Lights when the 3.3 V rail is present after power-on; turns off when the device is powered off.</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>HUSB320</p></td>
+<td><p>USB Type-C interface controller that handles CC detection and controls the USB power direction.</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>Charge LED</p></td>
+<td><p>Charge status indicator: red while charging, green when fully charged.</p></td>
+</tr>
+<tr class="row-odd"><td><p>13</p></td>
+<td><p>SAM8108</p></td>
+<td><p>Power on/off controller used with the POWER button.</p></td>
+</tr>
+<tr class="row-even"><td><p>14</p></td>
+<td><p>HE9073A33</p></td>
+<td><p>LDO providing a dedicated supply to the audio codec to reduce noise.</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>NS4150B</p></td>
+<td><p>Low-EMI, filterless 3 W mono Class-D amplifier for the speaker.</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>ES8311</p></td>
+<td><p>Low-power mono audio codec, I2C address 0x19, connected to the SoC over I2S.</p></td>
+</tr>
+<tr class="row-odd"><td><p>17</p></td>
+<td><p>BMM150</p></td>
+<td><p>3-axis magnetometer (BMM150 #3), I2C address 0x12.</p></td>
+</tr>
+<tr class="row-even"><td><p>18</p></td>
+<td><p>BMI270</p></td>
+<td><p>6-axis IMU (accelerometer + gyroscope), I2C address 0x69.</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>GD25Q128EWIGR</p></td>
+<td><p>16 MB (128 Mbit) SPI NOR flash for program and data storage.</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>GD5F1GM7UEYIGR</p></td>
+<td><p>1 Gbit (128 MB) SPI NAND flash for large-capacity asset storage.</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p><strong>BaseBoard</strong></p></td>
+<td><p>Base board integrating the speaker, battery, and left/right 2 × 10P module headers, mated to the CoreBoard through a board-to-board connector.</p></td>
+</tr>
+<tr class="row-even"><td><p>21</p></td>
+<td><p>Speaker</p></td>
+<td><p>Onboard speaker driven by the NS4150B amplifier.</p></td>
+</tr>
+<tr class="row-odd"><td><p>22</p></td>
+<td><p>BTB Connector</p></td>
+<td><p>60-pin 0.5 mm board-to-board connector linking the CoreBoard and BaseBoard.</p></td>
+</tr>
+<tr class="row-even"><td><p>23</p></td>
+<td><p>Expansion Header 1</p></td>
+<td><p>2 × 10P dual-row, 2.54 mm pitch header exposing GPIOs and power for expansion.</p></td>
+</tr>
+<tr class="row-odd"><td><p>24</p></td>
+<td><p>Battery</p></td>
+<td><p>3.7 V / 65 mAh Li-ion battery for portable power.</p></td>
+</tr>
+<tr class="row-even"><td><p>25</p></td>
+<td><p>Expansion Header 2</p></td>
+<td><p>Additional header exposing the remaining GPIOs and power.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="back">
+<h4>Back<a class="headerlink" href="#back" title="Permalink to this heading"></a></h4>
+<figure class="align-center align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-back.png"><img alt="ESP-Mosaico Back (Click to enlarge)" src="../_images/esp-mosaico-back.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico Back (Click to enlarge)</span><a class="headerlink" href="#id5" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-coreboard-back.png"><img alt="ESP-Mosaico CoreBoard Back (Click to enlarge)" src="../_images/esp-mosaico-coreboard-back.png" style="width: 80%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico CoreBoard Back (Click to enlarge)</span><a class="headerlink" href="#id6" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<figure class="align-center align-default" id="id7">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-baseboard-back.png"><img alt="ESP-Mosaico BaseBoard Back (Click to enlarge)" src="../_images/esp-mosaico-baseboard-back.png" style="width: 55%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico BaseBoard Back (Click to enlarge)</span><a class="headerlink" href="#id7" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The following describes the main components on the back PCB in clockwise order.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 8.0%" />
+<col style="width: 28.0%" />
+<col style="width: 64.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>No.</p></th>
+<th class="head"><p>Key Component</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td></td>
+<td><p><strong>CoreBoard</strong></p></td>
+<td><p>Core board back side, exposing the buttons, Type-C connector, microphone, and vibration motor.</p></td>
+</tr>
+<tr class="row-odd"><td><p>1</p></td>
+<td><p>BTB Connector</p></td>
+<td><p>Board-to-board connector mating with the BaseBoard (back side).</p></td>
+</tr>
+<tr class="row-even"><td><p>2</p></td>
+<td><p>Vibration Motor</p></td>
+<td><p>Vibration motor controlled by GPIO8 (active-high) for haptic feedback.</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>BOOT Button</p></td>
+<td><p>Hold during power-up to enter firmware download mode.</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>LMA2718B331-OE1</p></td>
+<td><p>Onboard microphone connected to the ES8311 for voice capture.</p></td>
+</tr>
+<tr class="row-odd"><td><p>5</p></td>
+<td><p>Type-C Connector</p></td>
+<td><p>USB 2.0 High-Speed interface for power, debug/download, and USB communication, with Li-ion charging support.</p></td>
+</tr>
+<tr class="row-even"><td><p>6</p></td>
+<td><p>POWER Button</p></td>
+<td><p>Single press toggles the device power on/off.</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>Function Button</p></td>
+<td><p>Application button (AI button) on GPIO7, active-low.</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p><strong>BaseBoard</strong></p></td>
+<td><p>Base board back side, providing debug pads and back expansion power pads.</p></td>
+</tr>
+<tr class="row-odd"><td><p>8</p></td>
+<td><p>Debug Pads</p></td>
+<td><p>Test points exposing GND / TX / RX / BOOT / EN / 3V3 debug signals.</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>Back Expansion Pads</p></td>
+<td><p>Back-side expansion pads exposing I2C and power interfaces for supplying the device.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="start-application-development">
+<h3>Start Application Development<a class="headerlink" href="#start-application-development" title="Permalink to this heading"></a></h3>
+<p>Before powering up, make sure ESP-Mosaico is in good condition.</p>
+<section id="required-hardware">
+<h4>Required Hardware<a class="headerlink" href="#required-hardware" title="Permalink to this heading"></a></h4>
+<ul class="simple">
+<li><p>ESP-Mosaico</p></li>
+<li><p>USB cable (data-capable)</p></li>
+<li><p>Computer (Windows, Linux, or macOS)</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Be sure to use a proper USB data cable. Some cables are charge-only and cannot be used for data transfer or programming.</p>
+</div>
+</section>
+<section id="hardware-notes">
+<h4>Hardware Notes<a class="headerlink" href="#hardware-notes" title="Permalink to this heading"></a></h4>
+<ol class="arabic">
+<li><p>Flashing</p>
+<p>Connect ESP-Mosaico to the computer with a USB cable through the onboard Type-C port. This port is USB 2.0 High-Speed and supports both power delivery and USB data communication. The native ESP32-S31 chip only supports firmware download through this port in download mode, and does not provide auto-download or log output by itself. The factory firmware integrates a CDC virtual serial port and supports auto-download and serial log output. If flashing fails, try holding the BOOT button while the device is powered off, then power it on to enter download mode. In addition, the left and right module interfaces provide USB Serial/JTAG (left) and a TX/RX UART (right), both of which can be used for debugging and firmware download.</p>
+</li>
+<li><p>Power</p>
+<p>The Type-C port can power the device. The onboard battery is charged at a rated current of 65 mA. When a USB sink device is attached, the Type-C port automatically switches to source mode, with a maximum output of 5 V / 500 mA. If the load exceeds 1 A, the port shuts off automatically and recovers after a period of time.
+The left and right module interfaces also provide outward 3.3 V and 5 V rails (<code class="docutils literal notranslate"><span class="pre">3V</span></code> / <code class="docutils literal notranslate"><span class="pre">5V</span></code>). These rails are output only when GPIO60 is driven low. <code class="docutils literal notranslate"><span class="pre">VIN</span></code> is an input supply pin that can also charge the onboard battery.</p>
+</li>
+</ol>
+</section>
+<section id="software-setup">
+<h4>Software Setup<a class="headerlink" href="#software-setup" title="Permalink to this heading"></a></h4>
+<p>Follow the <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32s31/get-started/index.html">ESP-IDF Get Started</a> guide to set up the development environment. The target chip for this board is <code class="docutils literal notranslate"><span class="pre">esp32s31</span></code>.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The board communicates with the PC over USB. Most operating systems (Windows, Linux, macOS) already include the required drivers. If the device is not recognized or the serial connection fails, see <a class="reference external" href="https://docs.espressif.com/projects/esp-idf/en/latest/esp32s31/get-started/establish-serial-connection.html">Establish Serial Connection with ESP32-S31</a> for driver installation details.</p>
+</div>
+</section>
+<section id="bsp-and-examples">
+<h4>BSP and Examples<a class="headerlink" href="#bsp-and-examples" title="Permalink to this heading"></a></h4>
+<p>Espressif provides a board support package (BSP) for ESP-Mosaico to simplify initialization of the LCD, touch, audio, sensors, battery, NAND flash, module resources, and USB console.</p>
+<ul class="simple">
+<li><p>BSP and examples: <code class="docutils literal notranslate"><span class="pre">esp-mosaico</span></code></p></li>
+<li><p>Recommended application framework: <a class="reference external" href="https://esp-claw.com/en/">ESP-Claw</a>.</p></li>
+<li><p>After the first successful flash, use the BSP USB CDC console and auto-download support. Typical commands:</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>idf.py<span class="w"> </span>set-target<span class="w"> </span>esp32s31
+idf.py<span class="w"> </span>-p<span class="w"> </span>/dev/ttyACM0<span class="w"> </span>flash<span class="w"> </span>monitor
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<ul class="simple">
+<li><p>The first flash may require manually entering ROM download mode.</p></li>
+<li><p>The USB device briefly disconnects while the chip resets; IDF Monitor usually reconnects automatically.</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">monitor</span> <span class="pre">--no-reset</span></code> when attaching without restarting the application.</p></li>
+<li><p>Related options: <code class="docutils literal notranslate"><span class="pre">CONFIG_BSP_USB_CONSOLE</span></code>, <code class="docutils literal notranslate"><span class="pre">CONFIG_BSP_USB_CONSOLE_AUTO_INIT</span></code>, <code class="docutils literal notranslate"><span class="pre">CONFIG_BSP_USB_AUTO_DOWNLOAD</span></code>.</p></li>
+</ul>
+</div>
+</section>
+</section>
+</section>
+<section id="hardware-reference">
+<span id="hardware-reference-esp-mosaico-en"></span><h2>Hardware Reference<a class="headerlink" href="#hardware-reference" title="Permalink to this heading"></a></h2>
+<section id="block-diagram">
+<h3>Block Diagram<a class="headerlink" href="#block-diagram" title="Permalink to this heading"></a></h3>
+<p>The main components and connections of ESP-Mosaico are shown below.</p>
+<figure class="align-center align-default" id="id8">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-sch-function-block_v0.3.png"><img alt="ESP-Mosaico Block Diagram (Click to enlarge)" src="../_images/esp-mosaico-sch-function-block_v0.3.png" style="width: 90%;" /></a>
+<figcaption>
+<p><span class="caption-text">ESP-Mosaico Block Diagram (Click to enlarge)</span><a class="headerlink" href="#id8" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+</section>
+<section id="power-supply-options">
+<h3>Power Supply Options<a class="headerlink" href="#power-supply-options" title="Permalink to this heading"></a></h3>
+<p>You can power the board in the following ways:</p>
+<ol class="arabic">
+<li><p>Through the <code class="docutils literal notranslate"><span class="pre">Type-C</span> <span class="pre">(USB-C)</span></code> port</p>
+<p>Connect a USB Type-C cable to the Type-C port.</p>
+</li>
+<li><p>Through the <code class="docutils literal notranslate"><span class="pre">back</span> <span class="pre">expansion</span> <span class="pre">pads</span></code></p>
+<p>Supply external power through the back expansion pads on the BaseBoard.</p>
+</li>
+<li><p>Through the <code class="docutils literal notranslate"><span class="pre">battery</span></code></p>
+<p>The board supports a 3.7 V / 65 mAh Li-ion battery.</p>
+</li>
+</ol>
+<p>Regardless of the power source, use the POWER button to turn the device on or off. External power sources above can also charge the onboard battery.</p>
+</section>
+<section id="type-c-interface">
+<h3>Type-C Interface<a class="headerlink" href="#type-c-interface" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id9">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-type-c.png"><img alt="Type-C Interface Schematic (Click to enlarge)" src="../_images/esp-mosaico-type-c.png" style="width: 551.25px; height: 379.35px;" /></a>
+<figcaption>
+<p><span class="caption-text">Type-C Interface Schematic (Click to enlarge)</span><a class="headerlink" href="#id9" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The Type-C port connects to ESP32-S31 USB 2.0 High-Speed OTG for power, debug, and application communication. Onboard USB Serial/JTAG signals are used for download and debugging. The BSP USB CDC console and auto-download feature are the recommended download and log path.</p>
+</section>
+<section id="dcdc-3-3-v-circuit">
+<h3>DCDC 3.3 V Circuit<a class="headerlink" href="#dcdc-3-3-v-circuit" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id10">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-DCDC-3V3.png"><img alt="DCDC 3.3 V Schematic (Click to enlarge)" src="../_images/esp-mosaico-DCDC-3V3.png" style="width: 764.5500000000001px; height: 306.0px;" /></a>
+<figcaption>
+<p><span class="caption-text">DCDC 3.3 V Schematic (Click to enlarge)</span><a class="headerlink" href="#id10" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>TLV62569 steps <code class="docutils literal notranslate"><span class="pre">VDD</span></code> down to <code class="docutils literal notranslate"><span class="pre">MCU_3V3</span></code>, which is then switched to <code class="docutils literal notranslate"><span class="pre">VCC_3V3</span></code> by the <code class="docutils literal notranslate"><span class="pre">VCC_PW</span></code> load switch. <code class="docutils literal notranslate"><span class="pre">U7</span></code> is the 3.3 V power LED.</p>
+<p>Power-control GPIOs defined by the BSP:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 30.0%" />
+<col style="width: 20.0%" />
+<col style="width: 50.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Signal</p></th>
+<th class="head"><p>GPIO</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>VCC_3V3 / VCC_PW</p></td>
+<td><p>GPIO60</p></td>
+<td><p>System 3.3 V rail control, <strong>active-low</strong>; BSP applies a soft-start ramp when enabling.</p></td>
+</tr>
+<tr class="row-odd"><td><p>CODEC_3V3</p></td>
+<td><p>GPIO56</p></td>
+<td><p>Codec power control, <strong>active-high</strong>.</p></td>
+</tr>
+<tr class="row-even"><td><p>POWER_SWITCH</p></td>
+<td><p>GPIO57</p></td>
+<td><p>Whole-device power-off request; kept high-Z during normal BSP operation, driven open-drain low to request shutdown.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="boost-circuit">
+<h3>BOOST Circuit<a class="headerlink" href="#boost-circuit" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id11">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-boost.png"><img alt="BOOST Schematic (Click to enlarge)" src="../_images/esp-mosaico-boost.png" style="width: 583.2px; height: 307.8px;" /></a>
+<figcaption>
+<p><span class="caption-text">BOOST Schematic (Click to enlarge)</span><a class="headerlink" href="#id11" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The onboard SY7088 boost converter is enabled by <code class="docutils literal notranslate"><span class="pre">VCC_3V3</span></code> and outputs <code class="docutils literal notranslate"><span class="pre">VOUT_BOOST</span></code> for rails higher than the battery voltage.</p>
+</section>
+<section id="power-on-off-circuit">
+<h3>Power On/Off Circuit<a class="headerlink" href="#power-on-off-circuit" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id12">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-powerswitch.png"><img alt="Power On/Off Schematic (Click to enlarge)" src="../_images/esp-mosaico-powerswitch.png" style="width: 469.35px; height: 329.85px;" /></a>
+<figcaption>
+<p><span class="caption-text">Power On/Off Schematic (Click to enlarge)</span><a class="headerlink" href="#id12" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>SAM8108 works with the POWER button for whole-device power control. The <code class="docutils literal notranslate"><span class="pre">POWER_SWITCH</span></code> signal can also be monitored or driven by software to request shutdown.</p>
+</section>
+<section id="mcu-and-pin-assignment">
+<h3>MCU and Pin Assignment<a class="headerlink" href="#mcu-and-pin-assignment" title="Permalink to this heading"></a></h3>
+<p>The following table lists the main pin assignments used by the ESP-Mosaico BSP, grouped by function.</p>
+<div class="wide-table-scroll docutils container">
+<table class="docutils align-default" id="id13">
+<caption><span class="caption-text">ESP-Mosaico Main Pin Assignment</span><a class="headerlink" href="#id13" title="Permalink to this table"></a></caption>
+<colgroup>
+<col style="width: 14.0%" />
+<col style="width: 18.0%" />
+<col style="width: 12.0%" />
+<col style="width: 56.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Category</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>GPIO</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>I2C / Sensors</p></td>
+<td><p>I2C0_SDA</p></td>
+<td><p>GPIO0</p></td>
+<td><p>Shared I2C for touch, ES8311, BMI270, BMM150, BQ27220, and module EEPROM</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>I2C0_SCL</p></td>
+<td><p>GPIO1</p></td>
+<td><p>Shared I2C clock</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>SENSOR_INT</p></td>
+<td><p>GPIO2</p></td>
+<td><p>IMU / magnetometer interrupt or signal</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>TOUCH_INT</p></td>
+<td><p>GPIO6</p></td>
+<td><p>Touch interrupt</p></td>
+</tr>
+<tr class="row-even"><td><p>HMI</p></td>
+<td><p>STATUS_LED</p></td>
+<td><p>GPIO3</p></td>
+<td><p>Orange status LED, software-controlled, active-low</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>AI_BUTTON</p></td>
+<td><p>GPIO7</p></td>
+<td><p>Application button, active-low</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>MOTOR</p></td>
+<td><p>GPIO8</p></td>
+<td><p>Vibration motor, active-high</p></td>
+</tr>
+<tr class="row-odd"><td><p>LCD</p></td>
+<td><p>LCD_DATA3</p></td>
+<td><p>GPIO9</p></td>
+<td><p>CO5300 QSPI DATA3</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>LCD_DATA2</p></td>
+<td><p>GPIO35</p></td>
+<td><p>CO5300 QSPI DATA2</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>LCD_DATA0</p></td>
+<td><p>GPIO36</p></td>
+<td><p>CO5300 QSPI DATA0</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>LCD_RST</p></td>
+<td><p>GPIO42</p></td>
+<td><p>LCD reset</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>LCD_TE</p></td>
+<td><p>GPIO43</p></td>
+<td><p>LCD_TE anti-tearing sync</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>LCD_SCL</p></td>
+<td><p>GPIO44</p></td>
+<td><p>QSPI clock</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>LCD_CS</p></td>
+<td><p>GPIO50</p></td>
+<td><p>LCD chip select</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>LCD_DATA1</p></td>
+<td><p>GPIO51</p></td>
+<td><p>CO5300 QSPI DATA1</p></td>
+</tr>
+<tr class="row-odd"><td><p>Audio</p></td>
+<td><p>I2S_BCK</p></td>
+<td><p>GPIO37</p></td>
+<td><p>Audio bit clock</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>I2S_DOUT</p></td>
+<td><p>GPIO40</p></td>
+<td><p>Audio data out (DAC)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>PA_CTRL</p></td>
+<td><p>GPIO45</p></td>
+<td><p>Amplifier enable</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>I2S_WS</p></td>
+<td><p>GPIO49</p></td>
+<td><p>Audio word select</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>I2S_DIN</p></td>
+<td><p>GPIO52</p></td>
+<td><p>Audio data in (ADC)</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>I2S_MCLK</p></td>
+<td><p>GPIO54</p></td>
+<td><p>Audio master clock</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>CODEC_PW</p></td>
+<td><p>GPIO56</p></td>
+<td><p>Codec 3.3 V power control</p></td>
+</tr>
+<tr class="row-even"><td><p>Power</p></td>
+<td><p>POWER_SWITCH</p></td>
+<td><p>GPIO57</p></td>
+<td><p>Power on/off request</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>VCC_3V3_CTRL</p></td>
+<td><p>GPIO60</p></td>
+<td><p>System 3.3 V power control</p></td>
+</tr>
+<tr class="row-even"><td><p>NAND Flash</p></td>
+<td><p>NAND_CLK</p></td>
+<td><p>GPIO20</p></td>
+<td><p>SPI NAND (SD_D0)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>NAND_D</p></td>
+<td><p>GPIO21</p></td>
+<td><p>SPI NAND (SD_D1 / SIO0)</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>NAND_Q</p></td>
+<td><p>GPIO22</p></td>
+<td><p>SPI NAND (SD_D2 / SIO1)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>NAND_CS</p></td>
+<td><p>GPIO23</p></td>
+<td><p>SPI NAND (SD_D3)</p></td>
+</tr>
+<tr class="row-even"><td></td>
+<td><p>NAND_HOLD</p></td>
+<td><p>GPIO24</p></td>
+<td><p>SPI NAND (SD_CLK / SIO3)</p></td>
+</tr>
+<tr class="row-odd"><td></td>
+<td><p>NAND_WP</p></td>
+<td><p>GPIO25</p></td>
+<td><p>SPI NAND (SD_CMD / SIO2)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="i2c-device-addresses">
+<h3>I2C Device Addresses<a class="headerlink" href="#i2c-device-addresses" title="Permalink to this heading"></a></h3>
+<p>The 7-bit addresses on the shared I2C bus (<code class="docutils literal notranslate"><span class="pre">I2C0_SDA</span></code> / <code class="docutils literal notranslate"><span class="pre">I2C0_SCL</span></code>) are listed below. Onboard devices are on the CoreBoard / BaseBoard. <strong>Module EEPROMs are on the attached modules, not on the mainboard</strong>, and appear only when a module with EEPROM is plugged into the corresponding slot.</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 40.0%" />
+<col style="width: 40.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>I2C Address</p></th>
+<th class="head"><p>Device</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>0x11</p></td>
+<td><p>BMM150 #2</p></td>
+<td><p>Onboard 3-axis magnetometer</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x12</p></td>
+<td><p>BMM150 #3</p></td>
+<td><p>Onboard 3-axis magnetometer</p></td>
+</tr>
+<tr class="row-even"><td><p>0x19</p></td>
+<td><p>ES8311</p></td>
+<td><p>Onboard audio codec</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x50</p></td>
+<td><p>Module EEPROM (Left)</p></td>
+<td><p>On the left module, not the mainboard; selected when GPIO14 is driven low</p></td>
+</tr>
+<tr class="row-even"><td><p>0x51</p></td>
+<td><p>Module EEPROM (Right)</p></td>
+<td><p>On the right module, not the mainboard; selected when GPIO39 is driven high</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x55</p></td>
+<td><p>BQ27220</p></td>
+<td><p>Onboard fuel gauge</p></td>
+</tr>
+<tr class="row-even"><td><p>0x5A</p></td>
+<td><p>CST9220</p></td>
+<td><p>Onboard touch controller</p></td>
+</tr>
+<tr class="row-odd"><td><p>0x69</p></td>
+<td><p>BMI270</p></td>
+<td><p>Onboard 6-axis IMU</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="lcd-interface">
+<h3>LCD Interface<a class="headerlink" href="#lcd-interface" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id14">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-lcd.png"><img alt="LCD Interface Schematic (Click to enlarge)" src="../_images/esp-mosaico-lcd.png" style="width: 580.5px; height: 346.5px;" /></a>
+<figcaption>
+<p><span class="caption-text">LCD Interface Schematic (Click to enlarge)</span><a class="headerlink" href="#id14" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<ul class="simple">
+<li><p>LCD driver: CO5300, QSPI interface, 480 × 480 resolution.</p></li>
+<li><p>Touch controller: CST9220 series, I2C interface (<code class="docutils literal notranslate"><span class="pre">TP_SCL</span></code> / <code class="docutils literal notranslate"><span class="pre">TP_SDA</span></code> / <code class="docutils literal notranslate"><span class="pre">TP_RST</span></code> / <code class="docutils literal notranslate"><span class="pre">TP_INT</span></code>).</p></li>
+</ul>
+</section>
+<section id="vibration-motor-interface">
+<h3>Vibration Motor Interface<a class="headerlink" href="#vibration-motor-interface" title="Permalink to this heading"></a></h3>
+<figure class="align-center align-default" id="id15">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-motor.png"><img alt="Vibration Motor Schematic (Click to enlarge)" src="../_images/esp-mosaico-motor.png" style="width: 432.45px; height: 315.90000000000003px;" /></a>
+<figcaption>
+<p><span class="caption-text">Vibration Motor Schematic (Click to enlarge)</span><a class="headerlink" href="#id15" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>The vibration motor is driven by <code class="docutils literal notranslate"><span class="pre">MOTOR</span></code> (GPIO8) through a low-side MOSFET, active-high.</p>
+</section>
+<section id="module-interface">
+<h3>Module Interface<a class="headerlink" href="#module-interface" title="Permalink to this heading"></a></h3>
+<p>The BaseBoard provides two <code class="docutils literal notranslate"><span class="pre">2</span> <span class="pre">×</span> <span class="pre">10P</span></code>, 2.54 mm pitch expansion headers (<code class="docutils literal notranslate"><span class="pre">H2</span></code> left and <code class="docutils literal notranslate"><span class="pre">H1</span></code> right) that expose GPIOs, UART, USB Serial/JTAG, power, and ground for secondary development. Except for power and ground, <strong>all expansion signal pins support GPIO and can be flexibly remapped through the GPIO matrix</strong>. Labels such as ADC / TOUCH / COMP / DAC in the tables below mark the pin’s analog capabilities and do not prevent using it as a general-purpose GPIO.</p>
+<p>ESP-Mosaico provides left and right module slots. The BSP discovers them through EEPROM address selection:</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 20.0%" />
+<col style="width: 20.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Slot</p></th>
+<th class="head"><p>EEPROM Address</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Left (<code class="docutils literal notranslate"><span class="pre">H2</span></code>)</p></td>
+<td><p>0x50</p></td>
+<td><p>Address-select GPIO14, driven low</p></td>
+</tr>
+<tr class="row-odd"><td><p>Right (<code class="docutils literal notranslate"><span class="pre">H1</span></code>)</p></td>
+<td><p>0x51</p></td>
+<td><p>Address-select GPIO39, driven high; mounted 180° relative to the left slot</p></td>
+</tr>
+</tbody>
+</table>
+<section id="left-module-slot-h2-pins">
+<h4>Left Module Slot (<code class="docutils literal notranslate"><span class="pre">H2</span></code>) Pins<a class="headerlink" href="#left-module-slot-h2-pins" title="Permalink to this heading"></a></h4>
+<figure class="align-center align-default" id="id16">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-expansion-interface-left.png"><img alt="Left Module Interface Schematic (Click to enlarge)" src="../_images/esp-mosaico-expansion-interface-left.png" style="width: 601.65px; height: 330.75px;" /></a>
+<figcaption>
+<p><span class="caption-text">Left Module Interface Schematic (Click to enlarge)</span><a class="headerlink" href="#id16" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Pins are listed clockwise around the connector, starting from Pin1 (odd-numbered row first, then even-numbered row back).</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12.0%" />
+<col style="width: 28.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>GPIO55</p></td>
+<td><p>ADC</p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>GPIO19</p></td>
+<td><p>ADC</p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>GPIO18</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>GPIO17</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>GPIO16</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>GPIO15</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>USJ_DN (GPIO33)</p></td>
+<td><p>USB Serial/JTAG D-</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>USJ_DP (GPIO34)</p></td>
+<td><p>USB Serial/JTAG D+</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>5V_IN</p></td>
+<td><p>External 5 V input (can power and charge the device)</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>VCC_3V3</p></td>
+<td><p>3.3 V output (controlled by GPIO60)</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>GND</p></td>
+<td><p>Ground</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>5V_OUT</p></td>
+<td><p>5 V output (controlled by GPIO60)</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>GPIO0</p></td>
+<td><p>SDA (shared onboard I2C)</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>GPIO1</p></td>
+<td><p>SCL (shared onboard I2C)</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>GPIO4</p></td>
+<td><p>DAC</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>GPIO14</p></td>
+<td><p>TOUCH; EEPROM address select</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>GPIO12</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>GPIO13</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>GPIO48</p></td>
+<td><p>ADC</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>GPIO53</p></td>
+<td><p>ADC</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="right-module-slot-h1-pins">
+<h4>Right Module Slot (<code class="docutils literal notranslate"><span class="pre">H1</span></code>) Pins<a class="headerlink" href="#right-module-slot-h1-pins" title="Permalink to this heading"></a></h4>
+<figure class="align-center align-default" id="id17">
+<a class="reference internal image-reference" href="../_images/esp-mosaico-expansion-interface-right.png"><img alt="Right Module Interface Schematic (Click to enlarge)" src="../_images/esp-mosaico-expansion-interface-right.png" style="width: 657.0px; height: 330.3px;" /></a>
+<figcaption>
+<p><span class="caption-text">Right Module Interface Schematic (Click to enlarge)</span><a class="headerlink" href="#id17" title="Permalink to this image"></a></p>
+</figcaption>
+</figure>
+<p>Pins are listed clockwise around the connector, starting from Pin1 (odd-numbered row first, then even-numbered row back).</p>
+<table class="docutils align-default">
+<colgroup>
+<col style="width: 12.0%" />
+<col style="width: 28.0%" />
+<col style="width: 60.0%" />
+</colgroup>
+<thead>
+<tr class="row-odd"><th class="head"><p>Pin</p></th>
+<th class="head"><p>Signal</p></th>
+<th class="head"><p>Description</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>GPIO49 *</p></td>
+<td><p>ADC; multiplexed with codec <code class="docutils literal notranslate"><span class="pre">I2S_WS</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>3</p></td>
+<td><p>GPIO52 *</p></td>
+<td><p>ADC; multiplexed with codec <code class="docutils literal notranslate"><span class="pre">I2S_DIN</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>5</p></td>
+<td><p>GPIO54 *</p></td>
+<td><p>ADC; multiplexed with codec <code class="docutils literal notranslate"><span class="pre">I2S_MCLK</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>7</p></td>
+<td><p>GPIO37 *</p></td>
+<td><p>COMP; multiplexed with codec <code class="docutils literal notranslate"><span class="pre">I2S_BCK</span></code></p></td>
+</tr>
+<tr class="row-even"><td><p>9</p></td>
+<td><p>GPIO40 *</p></td>
+<td><p>COMP; multiplexed with codec <code class="docutils literal notranslate"><span class="pre">I2S_DOUT</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>11</p></td>
+<td><p>GPIO38</p></td>
+<td><p>COMP</p></td>
+</tr>
+<tr class="row-even"><td><p>13</p></td>
+<td><p>RX0 (GPIO59)</p></td>
+<td><p>UART RX</p></td>
+</tr>
+<tr class="row-odd"><td><p>15</p></td>
+<td><p>TX0 (GPIO58)</p></td>
+<td><p>UART TX</p></td>
+</tr>
+<tr class="row-even"><td><p>17</p></td>
+<td><p>5V_IN</p></td>
+<td><p>External 5 V input (can power and charge the device)</p></td>
+</tr>
+<tr class="row-odd"><td><p>19</p></td>
+<td><p>VCC_3V3</p></td>
+<td><p>3.3 V output (controlled by GPIO60)</p></td>
+</tr>
+<tr class="row-even"><td><p>20</p></td>
+<td><p>GND</p></td>
+<td><p>Ground</p></td>
+</tr>
+<tr class="row-odd"><td><p>18</p></td>
+<td><p>5V_OUT</p></td>
+<td><p>5 V output (controlled by GPIO60)</p></td>
+</tr>
+<tr class="row-even"><td><p>16</p></td>
+<td><p>GPIO0</p></td>
+<td><p>SDA (shared onboard I2C)</p></td>
+</tr>
+<tr class="row-odd"><td><p>14</p></td>
+<td><p>GPIO1</p></td>
+<td><p>SCL (shared onboard I2C)</p></td>
+</tr>
+<tr class="row-even"><td><p>12</p></td>
+<td><p>GPIO5</p></td>
+<td><p>DAC</p></td>
+</tr>
+<tr class="row-odd"><td><p>10</p></td>
+<td><p>GPIO39</p></td>
+<td><p>TOUCH; EEPROM address select</p></td>
+</tr>
+<tr class="row-even"><td><p>8</p></td>
+<td><p>GPIO10</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-odd"><td><p>6</p></td>
+<td><p>GPIO11</p></td>
+<td><p>TOUCH</p></td>
+</tr>
+<tr class="row-even"><td><p>4</p></td>
+<td><p>GPIO47</p></td>
+<td><p>ADC</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>GPIO46</p></td>
+<td><p>ADC</p></td>
+</tr>
+</tbody>
+</table>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Pins marked with <code class="docutils literal notranslate"><span class="pre">*</span></code> (<strong>5</strong> in total) are multiplexed with the onboard audio codec I2S bus: <code class="docutils literal notranslate"><span class="pre">GPIO49</span></code> (<code class="docutils literal notranslate"><span class="pre">I2S_WS</span></code>), <code class="docutils literal notranslate"><span class="pre">GPIO52</span></code> (<code class="docutils literal notranslate"><span class="pre">I2S_DIN</span></code>), <code class="docutils literal notranslate"><span class="pre">GPIO54</span></code> (<code class="docutils literal notranslate"><span class="pre">I2S_MCLK</span></code>), <code class="docutils literal notranslate"><span class="pre">GPIO37</span></code> (<code class="docutils literal notranslate"><span class="pre">I2S_BCK</span></code>), and <code class="docutils literal notranslate"><span class="pre">GPIO40</span></code> (<code class="docutils literal notranslate"><span class="pre">I2S_DOUT</span></code>). These pins can be used for module expansion <strong>only when codec audio is not required</strong>. Do not use them for expansion if the application still needs the onboard ES8311 / speaker / microphone path.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When the left camera module claims DVP pins, GPIO14 (EEPROM address-select) is reused as DVP D4 and EEPROM access to that slot is suspended until the camera resource is released.</p>
+</div>
+</section>
+</section>
+</section>
+<section id="hardware-revision-details">
+<h2>Hardware Revision Details<a class="headerlink" href="#hardware-revision-details" title="Permalink to this heading"></a></h2>
+<p>No previous versions.</p>
+</section>
+<section id="related-documents">
+<span id="related-documents-esp-mosaico-en"></span><h2>Related Documents<a class="headerlink" href="#related-documents" title="Permalink to this heading"></a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://dl.espressif.com/AE/SCH_SCH_ESP-Mosaico_CoreBoard_V1_0_2026-08-18.pdf">ESP-Mosaico CoreBoard V1.0 Schematic</a> (PDF)</p></li>
+<li><p><a class="reference external" href="https://dl.espressif.com/AE/H0216F002AMT004-1%20V1%E8%A7%84%E6%A0%BC%E4%B9%A62.16%E5%AF%B8%20480X480%20QSPI%20MIPI%20%20AMOLED.pdf">2.16-inch 480 × 480 QSPI AMOLED Display Datasheet</a> (PDF)</p></li>
+<li><p><a class="reference external" href="https://documentation.espressif.com/esp32-s31_datasheet_en.html">ESP32-S31 Series Datasheet</a> (HTML)</p></li>
+<li><p>ESP-Mosaico BSP and examples: <code class="docutils literal notranslate"><span class="pre">esp-mosaico</span></code> repository</p></li>
+<li><p><a class="reference external" href="https://esp-claw.com/en/">ESP-Claw</a> (HTML)</p></li>
+</ul>
+</section>
+<section id="disclaimer-and-copyright-notice">
+<h2>Disclaimer and Copyright Notice<a class="headerlink" href="#disclaimer-and-copyright-notice" title="Permalink to this heading"></a></h2>
+<p>Please refer to the <a class="reference internal" href="../disclaimer-and-copyright.html"><span class="doc">Disclaimer and Copyright Notice</span></a>.</p>
+</section>
+</section>
+
+    <script type="text/javascript">
+        function init() {
+            WaveDrom.ProcessAll();
+        }
+        window.onload = init;
+    </script>
+
+           </div>
+             <div class="articleComments">
+<p data-class="single"></p>
+
+             </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../resources.html" class="btn btn-neutral float-right" title="Related Documentation and Resources" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="ESP-Mosaico" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr />
+  <div style="display: flex; justify-content: space-between;">
+  <div class="f5 contribution" style="height:100px;width:200px;float:left;"><b>Suggestion on this document?</b><br><br><font size=2>
+    <a id="feedback" class="btn btn-neutral" href="https://www.espressif.com/en/company/documents/documentation_feedback?docId=11109&sections=ESP-Mosaico V1.0 (esp-mosaico/user_guide)&version=latest (master)">
+      <svg aria-hidden="true" role="img" class="octicon mr-1" viewBox="2 2 16 16" width="12" height="12" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible">
+        <path fill-rule="evenodd" d="M17.218,2.268L2.477,8.388C2.13,8.535,2.164,9.05,2.542,9.134L9.33,10.67l1.535,6.787c0.083,0.377,0.602,0.415,0.745,0.065l6.123-14.74C17.866,2.46,17.539,2.134,17.218,2.268 M3.92,8.641l11.772-4.89L9.535,9.909L3.92,8.641z M11.358,16.078l-1.268-5.613l6.157-6.157L11.358,16.078z"></path>
+      </svg>&nbsp;Provide feedback
+    </a>
+  </font></div>
+
+  <div style="height:100px;width:200px;margin:0 auto;"><b>Help improve this document?</b><br><br><font size=2>
+    <a id="edit-on-github" class="btn btn-neutral" href="https://github.com/espressif/esp-dev-kits/blob/3c0f632/docs/en/esp-mosaico/user_guide.rst">
+      <svg aria-hidden="true" role="img" class="octicon mr-1" viewBox="2 2 16 16" width="12" height="12" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible">
+        <path fill-rule="evenodd" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.01.08-2.1 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.52-1.04 2.2-.82 2.2-.82.44 1.09.16 1.9.08 2.1.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path>
+      </svg>&nbsp;Edit on GitHub
+    </a>
+  </font></div>
+
+  <div style="height:100px;width:180px;float:right;"><b>Need more information?</b>
+    <div><font size = 2><br><a id="ESP forum" href="https://www.esp32.com/viewforum.php?f=23"><svg aria-hidden="true" role="img" class="octicon mr-1" viewBox="2 0 16 16" width="12" height="12" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M17.659,3.681H8.468c-0.211,0-0.383,0.172-0.383,0.383v2.681H2.341c-0.21,0-0.383,0.172-0.383,0.383v6.126c0,0.211,0.172,0.383,0.383,0.383h1.532v2.298c0,0.566,0.554,0.368,0.653,0.27l2.569-2.567h4.437c0.21,0,0.383-0.172,0.383-0.383v-2.681h1.013l2.546,2.567c0.242,0.249,0.652,0.065,0.652-0.27v-2.298h1.533c0.211,0,0.383-0.172,0.383-0.382V4.063C18.042,3.853,17.87,3.681,17.659,3.681 M11.148,12.87H6.937c-0.102,0-0.199,0.04-0.27,0.113l-2.028,2.025v-1.756c0-0.211-0.172-0.383-0.383-0.383H2.724V7.51h5.361v2.68c0,0.21,0.172,0.382,0.383,0.382h2.68V12.87z M17.276,9.807h-1.533c-0.211,0-0.383,0.172-0.383,0.383v1.755L13.356,9.92c-0.07-0.073-0.169-0.113-0.27-0.113H8.851v-5.36h8.425V9.807z"></path></svg>&nbsp;Check ESP forum</a></font>
+    </div>
+     <div><font size = 2><a id="sales-questions" href="https://www.espressif.com/en/contact-us/sales-questions"><svg aria-hidden="true" role="img" class="octicon mr-1" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M15.573,11.624c0.568-0.478,0.947-1.219,0.947-2.019c0-1.37-1.108-2.569-2.371-2.569s-2.371,1.2-2.371,2.569c0,0.8,0.379,1.542,0.946,2.019c-0.253,0.089-0.496,0.2-0.728,0.332c-0.743-0.898-1.745-1.573-2.891-1.911c0.877-0.61,1.486-1.666,1.486-2.812c0-1.79-1.479-3.359-3.162-3.359S4.269,5.443,4.269,7.233c0,1.146,0.608,2.202,1.486,2.812c-2.454,0.725-4.252,2.998-4.252,5.685c0,0.218,0.178,0.396,0.395,0.396h16.203c0.218,0,0.396-0.178,0.396-0.396C18.497,13.831,17.273,12.216,15.573,11.624 M12.568,9.605c0-0.822,0.689-1.779,1.581-1.779s1.58,0.957,1.58,1.779s-0.688,1.779-1.58,1.779S12.568,10.427,12.568,9.605 M5.06,7.233c0-1.213,1.014-2.569,2.371-2.569c1.358,0,2.371,1.355,2.371,2.569S8.789,9.802,7.431,9.802C6.073,9.802,5.06,8.447,5.06,7.233 M2.309,15.335c0.202-2.649,2.423-4.742,5.122-4.742s4.921,2.093,5.122,4.742H2.309z M13.346,15.335c-0.067-0.997-0.382-1.928-0.882-2.732c0.502-0.271,1.075-0.429,1.686-0.429c1.828,0,3.338,1.385,3.535,3.161H13.346z"></path></svg>&nbsp;Sales Questions</a>
+      </font></div>
+     <div><font size = 2><a id="technical-inquiries" href="https://www.espressif.com/en/contact-us/technical-inquiries"><svg aria-hidden="true" role="img" class="octicon mr-1" viewBox="0 0 16 16" width="12" height="12" fill="currentColor" style="display:inline-block;user-select:none;vertical-align:text-bottom;overflow:visible"><path fill-rule="evenodd" d="M15.573,11.624c0.568-0.478,0.947-1.219,0.947-2.019c0-1.37-1.108-2.569-2.371-2.569s-2.371,1.2-2.371,2.569c0,0.8,0.379,1.542,0.946,2.019c-0.253,0.089-0.496,0.2-0.728,0.332c-0.743-0.898-1.745-1.573-2.891-1.911c0.877-0.61,1.486-1.666,1.486-2.812c0-1.79-1.479-3.359-3.162-3.359S4.269,5.443,4.269,7.233c0,1.146,0.608,2.202,1.486,2.812c-2.454,0.725-4.252,2.998-4.252,5.685c0,0.218,0.178,0.396,0.395,0.396h16.203c0.218,0,0.396-0.178,0.396-0.396C18.497,13.831,17.273,12.216,15.573,11.624 M12.568,9.605c0-0.822,0.689-1.779,1.581-1.779s1.58,0.957,1.58,1.779s-0.688,1.779-1.58,1.779S12.568,10.427,12.568,9.605 M5.06,7.233c0-1.213,1.014-2.569,2.371-2.569c1.358,0,2.371,1.355,2.371,2.569S8.789,9.802,7.431,9.802C6.073,9.802,5.06,8.447,5.06,7.233 M2.309,15.335c0.202-2.649,2.423-4.742,5.122-4.742s4.921,2.093,5.122,4.742H2.309z M13.346,15.335c-0.067-0.997-0.382-1.928-0.882-2.732c0.502-0.271,1.075-0.429,1.686-0.429c1.828,0,3.338,1.385,3.535,3.161H13.346z"></path></svg>&nbsp;Technical Inquiries </a>
+      </font></div>
+  </div>
+</div>
+  <div role="contentinfo">
+  </div>
+  <ul class="footer">
+    <li>
+      <br> <!-- Separate Feedback/Information part with Copyright/Sphinx -->
+        
+        &copy; Copyright 2016 - 2026, Espressif Systems (Shanghai) CO., LTD
+    <p>
+      
+      
+      Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/espressif/sphinx_idf_theme">theme</a>  based on <a href="https://github.com/readthedocs/sphinx_rtd_theme">Read the Docs Sphinx Theme</a>.
+    </li></p> 
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
