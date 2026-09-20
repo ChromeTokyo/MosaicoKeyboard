@@ -17,6 +17,8 @@ review/chrome/D1-module-interface/evidence/bsp/，SHA256 见其 SOURCE_INDEX.jso
       L209-218 crc16：初值 0xFFFF，逐字节异或，右移，最低位为 1 时异或 0xA001，无末尾异或
       L221-260 parse_descriptor：magic → 三段 CRC → param_length ≤ 64 → 逐字段解码
       L277-312 mosaico_module_mgr_type_to_name 字符串表
+      L439-442 log_scan_change 识别日志 "Module identified: slot=%s type=%s(0x%02X) id=0x%04X name=%.32s"
+               （只打印 board_type / board_id / board_name，不打印 hw_version，因此 board_name 内含版本）
 
 三段 CRC 覆盖范围（与 parse_descriptor 一致）：
   descriptor    0x00–0x33 → CRC 存 0x34–0x35
@@ -28,7 +30,8 @@ review/chrome/D1-module-interface/evidence/bsp/，SHA256 见其 SOURCE_INDEX.jso
   python3 mosaico_eeprom_v1.py selftest
   python3 mosaico_eeprom_v1.py sample  -o sample_handle.bin
   python3 mosaico_eeprom_v1.py build   --serial 0x26090002 --date 20261001 --batch 1 --factory 0 -o unit2.bin
-  python3 mosaico_eeprom_v1.py build   ... --keymap KEY_UP=55,KEY_DOWN=53,...   # 待 hardware/module-board/PINMAP.md 定稿后使用
+  python3 mosaico_eeprom_v1.py build   ... --keymap-version 1               # PINMAP.md 的 KEY_* 映射版本号（ICD 7.2）
+  python3 mosaico_eeprom_v1.py build   ... --keymap KEY_UP=55,KEY_DOWN=53,...   # 可选镜像表；来源只能是 hardware/module-board/PINMAP.md
   python3 mosaico_eeprom_v1.py verify  sample_handle.bin --expect-handle
   python3 mosaico_eeprom_v1.py dump    sample_handle.bin
   python3 mosaico_eeprom_v1.py c-array sample_handle.bin -o sample_handle_image.h
@@ -128,10 +131,18 @@ def crc16_modbus(data: bytes) -> int:
 # ---------------------------------------------------------------------------
 PARAM_V1_VERSION = 0x0001
 PARAM_V1_LEN = 24
-PARAM_V1_FMT = "<BBBB10BBBHHB3x"   # 见 IDENTITY.md 第 6 节
+PARAM_V1_FMT = "<BBBB10BBBHHB3x"   # 见 IDENTITY.md 第 8 节：key_count, key_flags, poll, debounce, key_gpio[10],
+                                   # spare_gpio, keymap_version, battery_mah, dock_features, fuel_gauge_addr, 3 保留
 
 PARAM_KEYFLAG_ACTIVE_LOW = 0x01     # 按键接地，按下读 0
 PARAM_KEYFLAG_KEYMAP_VALID = 0x02   # key_gpio[] 已填写；清零表示主机应使用 PINMAP.md 的静态表
+
+# KEY_* → GPIO 映射版本号（ICD-0.2-DRAFT 第 7.2 节：param_data 写入映射版本号供固件核对）。
+# 分配本身只在 hardware/module-board/PINMAP.md 定义；本工具只登记版本号。
+# ASSUMPTION（AS-31-eeprom-3）：PINMAP.md 尚无显式版本字段，约定其 2026-09-20 首版 = 1；
+#   验证：PINMAP.md 合入 main 时在其头部登记 KEYMAP_VERSION=1，固件编译进的静态表声明同一值。
+KEYMAP_VERSION_UNDECLARED = 0       # 主机不核对
+PINMAP_KEYMAP_VERSION = 1
 
 DOCK_FEAT_BATTERY = 0x0001
 DOCK_FEAT_USBC_CHARGE = 0x0002
@@ -147,7 +158,8 @@ class ParamV1:
     debounce_samples: int = 2         # ASSUMPTION: 连续 2 次采样一致（20 ms × 2 = 40 ms）
     key_gpio: Tuple[int, ...] = (KEY_GPIO_UNASSIGNED,) * 10   # KEY_ORDER 顺序；0xFF = 未分配
     spare_gpio: int = KEY_GPIO_UNASSIGNED
-    battery_mah: int = 1500           # ASSUMPTION: 参数化默认电芯 1500 mAh，仅供 UI 显示
+    keymap_version: int = PINMAP_KEYMAP_VERSION   # PINMAP.md 映射版本；0 = 未声明
+    battery_mah: int = 1500           # ASSUMPTION（AS-12）: 参数化默认电芯 1500 mAh，仅供 UI 显示
     dock_features: int = DOCK_FEAT_BATTERY | DOCK_FEAT_USBC_CHARGE | DOCK_FEAT_SUPPLIES_5V_IN
     fuel_gauge_addr: int = 0x00       # 0 = 总线上无电量计；若加装，不得为 0x50/0x51
 
@@ -171,6 +183,8 @@ class ParamV1:
                 raise ValueError("已填写 key_gpio 但未置 KEYMAP_VALID 标志")
         elif self.key_flags & PARAM_KEYFLAG_KEYMAP_VALID:
             raise ValueError("置了 KEYMAP_VALID 标志但 key_gpio 全为 0xFF")
+        if (self.key_flags & PARAM_KEYFLAG_KEYMAP_VALID) and self.keymap_version == KEYMAP_VERSION_UNDECLARED:
+            raise ValueError("已填写 key_gpio 镜像表但 keymap_version 为 0（须写明其来源 PINMAP.md 版本）")
         if self.spare_gpio != KEY_GPIO_UNASSIGNED and (
                 self.spare_gpio not in LEFT_SLOT_KEY_GPIOS or self.spare_gpio in assigned):
             raise ValueError("spare_gpio 必须是未被按键占用的左槽可用 GPIO 或 0xFF")
@@ -178,7 +192,7 @@ class ParamV1:
             raise ValueError("电量计地址不得为 0x50/0x51（V1.2 模块 I2C1 EEPROM 地址）")
         if self.fuel_gauge_addr and not (0x08 <= self.fuel_gauge_addr <= 0x77):
             raise ValueError("电量计 7 位地址应在 0x08..0x77")
-        for name in ("poll_period_ms", "debounce_samples", "key_flags", "fuel_gauge_addr"):
+        for name in ("poll_period_ms", "debounce_samples", "key_flags", "fuel_gauge_addr", "keymap_version"):
             v = getattr(self, name)
             if not 0 <= v <= 0xFF:
                 raise ValueError("%s 超出 8 位" % name)
@@ -193,7 +207,7 @@ class ParamV1:
             PARAM_V1_FMT,
             self.key_count, self.key_flags, self.poll_period_ms, self.debounce_samples,
             *self.key_gpio,
-            self.spare_gpio, 0,
+            self.spare_gpio, self.keymap_version,
             self.battery_mah, self.dock_features,
             self.fuel_gauge_addr,
         )
@@ -207,7 +221,7 @@ class ParamV1:
         f = struct.unpack(PARAM_V1_FMT, data[:PARAM_V1_LEN])
         return cls(
             key_count=f[0], key_flags=f[1], poll_period_ms=f[2], debounce_samples=f[3],
-            key_gpio=tuple(f[4:14]), spare_gpio=f[14],
+            key_gpio=tuple(f[4:14]), spare_gpio=f[14], keymap_version=f[15],
             battery_mah=f[16], dock_features=f[17], fuel_gauge_addr=f[18],
         )
 
@@ -222,6 +236,9 @@ class ParamV1:
         for name, g in zip(KEY_ORDER, self.key_gpio):
             lines.append("  %-9s -> %s" % (name, "GPIO%d" % g if g != KEY_GPIO_UNASSIGNED else "unassigned"))
         lines.append("  spare_gpio=%s" % ("GPIO%d" % self.spare_gpio if self.spare_gpio != KEY_GPIO_UNASSIGNED else "unassigned"))
+        lines.append("  keymap_version=%d (%s)" % (
+            self.keymap_version,
+            "undeclared" if self.keymap_version == KEYMAP_VERSION_UNDECLARED else "hardware/module-board/PINMAP.md KEYMAP_VERSION"))
         lines.append("  battery_mah=%d  dock_features=0x%04X  fuel_gauge_addr=0x%02X" % (
             self.battery_mah, self.dock_features, self.fuel_gauge_addr))
         return lines
@@ -378,15 +395,25 @@ HANDLE_VENDOR_ID = 0x4354                      # ASCII "CT"（ChromeTokyo）；�
 HANDLE_HW_VERSION = 0x0100                     # 高字节打板轮次 1，低字节同轮修订 0
 HANDLE_SW_VERSION = 0x0100                     # 主机侧合同版本 1.0（KEY_* 语义 + param v1）
 HANDLE_BOARD_FLAGS = 0x00000000                # BSP 未定义位含义，保持 0；本项目标志放在 param_data
-HANDLE_BOARD_NAME = b"MK-HANDHELD-DOCK-MODULE"  # 23 字节 ASCII，NUL 填充；主机日志按 %.32s 打印
+# board_name：ICD-0.2-DRAFT 第 7.2 节建议「含 MOSAICO-DOCK-MODULE 与版本」。主机识别日志（mosaico_module_mgr.c L439-442）
+# 只打印 type/id/name，不打印 hw_version，所以把 hw_version 以 -Vmajor.minor 缀在名字里，串口一眼可辨。
+HANDLE_BOARD_NAME_PREFIX = b"MOSAICO-DOCK-MODULE"   # 19 字节；加 "-V255.255" 最长 28 字节 < 32
+
+
+def handle_board_name(hw_version: int) -> bytes:
+    """按 hw_version 派生 board_name，例如 0x0100 -> b'MOSAICO-DOCK-MODULE-V1.0'（24 字节，ASCII，NUL 填充）。"""
+    return HANDLE_BOARD_NAME_PREFIX + b"-V%d.%d" % (hw_version >> 8, hw_version & 0xFF)
+
+
+HANDLE_BOARD_NAME = handle_board_name(HANDLE_HW_VERSION)   # 默认 hw_version 对应的名字（样例用）
 
 SAMPLE_SERIAL = 0x26090001                     # BCD YYMM(2609) << 16 | 序号 0x0001；样例，不是实物编号
-SAMPLE_DATE = 0x20260920                       # BCD YYYYMMDD；样例生成日
+SAMPLE_DATE = 0x20260920                       # BCD YYYYMMDD；首版样例日期，重生成时保持不变（SERIALS.csv 已登记）
 SAMPLE_BATCH = 0x0001                          # 第 1 轮打板
 SAMPLE_FACTORY = 0x0000                        # 0x0000 = 自行烧写（非工厂预烧）
 
 # 样例镜像 SHA-256（selftest 用于检测非预期改动；改动任何默认值后须同步更新并在 SHA256SUMS 登记）
-SAMPLE_SHA256 = "1157e7e50b3378b3f4b27cbcc4d65d237d37c55dac00fb679457b6523683f57b"
+SAMPLE_SHA256 = "119e991a6a87b5b1afa18feefdbcb1fdb86cadc564c7ce7375133da0a9810832"
 
 
 def handle_descriptor(serial_number: int = SAMPLE_SERIAL,
@@ -395,13 +422,15 @@ def handle_descriptor(serial_number: int = SAMPLE_SERIAL,
                       factory_id: int = SAMPLE_FACTORY,
                       hw_version: int = HANDLE_HW_VERSION,
                       sw_version: int = HANDLE_SW_VERSION,
-                      param: Optional[ParamV1] = None) -> Descriptor:
+                      param: Optional[ParamV1] = None,
+                      board_name: Optional[bytes] = None) -> Descriptor:
     param = param if param is not None else ParamV1()
+    name = board_name if board_name is not None else handle_board_name(hw_version)
     return Descriptor(
         board_type=HANDLE_BOARD_TYPE, board_id=HANDLE_BOARD_ID,
         hw_version=hw_version, sw_version=sw_version,
         vendor_id=HANDLE_VENDOR_ID, board_flags=HANDLE_BOARD_FLAGS,
-        serial_number=serial_number, board_name=HANDLE_BOARD_NAME,
+        serial_number=serial_number, board_name=name,
         manufacture_date=manufacture_date, batch_number=batch_number, factory_id=factory_id,
         param_version=PARAM_V1_VERSION, param_data=param.pack(),
     )
@@ -433,6 +462,11 @@ def expect_handle(img: bytes) -> List[str]:
             problems.append("param_data v1 非法：%s" % exc)
     if d.serial_number in (0x00000000, 0xFFFFFFFF):
         problems.append("serial_number 为保留值 0x%08X" % d.serial_number)
+    if not d.board_name.startswith(HANDLE_BOARD_NAME_PREFIX):
+        problems.append("board_name %r 不以 %r 开头（ICD-0.2-DRAFT 7.2 建议）" % (d.board_name, HANDLE_BOARD_NAME_PREFIX))
+    if d.board_name != handle_board_name(d.hw_version):
+        problems.append("board_name %r 与 hw_version 0x%04X 派生名 %r 不一致" % (
+            d.board_name, d.hw_version, handle_board_name(d.hw_version)))
     return problems
 
 
@@ -576,8 +610,12 @@ def selftest(verbose: bool = True) -> int:
     assert img[0:3] == b"ESP" and img[3] == 0x04
     assert struct.unpack_from("<H", img, 0x04)[0] == 0x0101
     assert struct.unpack_from("<H", img, 0x0A)[0] == 0x4354
+    assert HANDLE_BOARD_NAME == b"MOSAICO-DOCK-MODULE-V1.0" and len(HANDLE_BOARD_NAME) == 24
     assert img[0x14:0x14 + len(HANDLE_BOARD_NAME)] == HANDLE_BOARD_NAME and img[0x14 + len(HANDLE_BOARD_NAME)] == 0
-    log("sample: 134 B, ESP_OK, board_type 0x04, expect_handle 通过")
+    assert len(handle_board_name(0xFFFF)) == 28 <= BOARD_NAME_LEN - 1     # 最长派生名仍留 NUL
+    assert img[0x44 + 0x0F] == PINMAP_KEYMAP_VERSION == 1                # keymap_version 位于 param 区 0x0F
+    log("sample: 134 B, ESP_OK, board_type 0x04, name %s, keymap_version %d, expect_handle 通过" % (
+        HANDLE_BOARD_NAME.decode(), PINMAP_KEYMAP_VERSION))
 
     # 3. 段 CRC 存放位置与覆盖范围（与 C 常量一致）
     assert struct.unpack_from("<H", img, 0x34)[0] == crc16_modbus(img[0x00:0x34])
@@ -635,12 +673,23 @@ def selftest(verbose: bool = True) -> int:
         pass
     log("board_name 32 字节（无 NUL）合法，33 字节拒绝")
 
-    # 10. ParamV1 往返与约束
+    # 9b. board_name 派生与 expect_handle 的名字核对
+    assert handle_board_name(0x0203) == b"MOSAICO-DOCK-MODULE-V2.3"
+    i_hw = replace(handle_descriptor(hw_version=0x0203), board_name=b"MOSAICO-DOCK-MODULE-V2.3").to_image()
+    assert expect_handle(i_hw) == [], expect_handle(i_hw)
+    assert any("不一致" in s for s in expect_handle(replace(handle_descriptor(), hw_version=0x0101).to_image()))
+    assert any("不以" in s for s in expect_handle(replace(handle_descriptor(), board_name=b"MK-X").to_image()))
+    log("board_name 由 hw_version 派生；名字/版本不一致、前缀错误均被 expect_handle 报出")
+
+    # 10. ParamV1 往返与约束（下方 key_gpio 元组只是测试数据，不是 KEY_*→GPIO 分配；分配只在 PINMAP.md）
     p = ParamV1()
     assert ParamV1.unpack(p.pack()) == p and len(p.pack()) == PARAM_V1_LEN
+    assert p.keymap_version == PINMAP_KEYMAP_VERSION
     full = ParamV1(key_flags=PARAM_KEYFLAG_ACTIVE_LOW | PARAM_KEYFLAG_KEYMAP_VALID,
                    key_gpio=(55, 53, 19, 48, 18, 13, 17, 12, 16, 15), spare_gpio=4)
     assert ParamV1.unpack(full.pack()) == full
+    assert ParamV1.unpack(replace(p, keymap_version=0).pack()).keymap_version == 0
+    assert ParamV1.unpack(replace(p, keymap_version=255).pack()).keymap_version == 255
     for bad_p in (
             replace(full, key_gpio=(14, 53, 19, 48, 18, 13, 17, 12, 16, 15)),          # GPIO14 A0 专用
             replace(full, key_gpio=(55, 55, 19, 48, 18, 13, 17, 12, 16, 15)),          # 重复
@@ -649,6 +698,8 @@ def selftest(verbose: bool = True) -> int:
             replace(p, key_flags=PARAM_KEYFLAG_ACTIVE_LOW | PARAM_KEYFLAG_KEYMAP_VALID),  # 置标志未填表
             replace(p, fuel_gauge_addr=0x50), replace(p, fuel_gauge_addr=0x51),        # 保留地址
             replace(full, spare_gpio=55),                                               # spare 与按键冲突
+            replace(full, keymap_version=0),                                            # 填了镜像表却不声明版本
+            replace(p, keymap_version=256),                                             # 超 8 位
     ):
         try:
             bad_p.pack()
@@ -656,7 +707,7 @@ def selftest(verbose: bool = True) -> int:
         except ValueError:
             pass
     assert parse_keymap("KEY_UP=55,KEY_DOWN=53,KEY_LEFT=19,KEY_RIGHT=48,KEY_A=18,KEY_B=13,KEY_X=17,KEY_Y=12,KEY_L=16,KEY_R=15") == full.key_gpio
-    log("ParamV1 往返一致；GPIO14/重复/I2S/标志不一致/0x50-0x51 均被拒绝")
+    log("ParamV1 往返一致；GPIO14/重复/I2S/标志不一致/0x50-0x51/keymap_version 非法 均被拒绝")
 
     # 11. 确定性与登记的 SHA-256
     assert sample_image() == img
@@ -716,7 +767,10 @@ def main(argv: Optional[List[str]] = None) -> int:
     b.add_argument("--factory", type=_int, default=SAMPLE_FACTORY, help="factory_id，0=自行烧写")
     b.add_argument("--hw", type=_int, default=HANDLE_HW_VERSION, help="hw_version，默认 0x%04X" % HANDLE_HW_VERSION)
     b.add_argument("--sw", type=_int, default=HANDLE_SW_VERSION, help="sw_version，默认 0x%04X" % HANDLE_SW_VERSION)
-    b.add_argument("--keymap", help="KEY_UP=55,KEY_DOWN=53,...（全部 10 键）；来源必须是 hardware/module-board/PINMAP.md")
+    b.add_argument("--keymap-version", type=_int, default=PINMAP_KEYMAP_VERSION,
+                   help="KEY_*→GPIO 映射版本号 = hardware/module-board/PINMAP.md 的 KEYMAP_VERSION；0=未声明；默认 %d" % PINMAP_KEYMAP_VERSION)
+    b.add_argument("--keymap", help="可选镜像表 KEY_UP=55,KEY_DOWN=53,...（全部 10 键）；来源必须是 hardware/module-board/PINMAP.md")
+    b.add_argument("--name", help="覆盖 board_name（ASCII ≤ 31 字节）；默认按 hw_version 派生 MOSAICO-DOCK-MODULE-Vx.y")
     b.add_argument("--battery-mah", type=_int, default=ParamV1.battery_mah)
     b.add_argument("--poll-ms", type=_int, default=ParamV1.poll_period_ms)
     b.add_argument("--debounce", type=_int, default=ParamV1.debounce_samples)
@@ -754,12 +808,15 @@ def main(argv: Optional[List[str]] = None) -> int:
         if a.keymap:
             key_gpio = parse_keymap(a.keymap)
             flags |= PARAM_KEYFLAG_KEYMAP_VALID
-        param = ParamV1(key_flags=flags, key_gpio=key_gpio, battery_mah=a.battery_mah,
+        param = ParamV1(key_flags=flags, key_gpio=key_gpio, keymap_version=a.keymap_version,
+                        battery_mah=a.battery_mah,
                         poll_period_ms=a.poll_ms, debounce_samples=a.debounce,
                         fuel_gauge_addr=a.fuel_gauge_addr,
                         dock_features=ParamV1.dock_features | (DOCK_FEAT_FUEL_GAUGE_ON_BUS if a.fuel_gauge_addr else 0))
+        name = a.name.encode("ascii") if a.name else None
         img = handle_descriptor(serial_number=a.serial, manufacture_date=a.date, batch_number=a.batch,
-                                factory_id=a.factory, hw_version=a.hw, sw_version=a.sw, param=param).to_image()
+                                factory_id=a.factory, hw_version=a.hw, sw_version=a.sw, param=param,
+                                board_name=name).to_image()
         problems = expect_handle(img)
         if problems:
             print("生成的镜像未通过 expect_handle：\n  " + "\n  ".join(problems), file=sys.stderr)
