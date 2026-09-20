@@ -6,6 +6,13 @@
 - 运行环境：macOS / Python 3.9.6。
 
 **本报告全部内容为提案，待 Chrome 采纳、Hiro 复核。未修复、未通过、未采纳。**
+
+> **主控补记（2026-09-20）：** 本提案对 `design/build_design.py` 的改动，以及新增的
+> `design/library-policy.json`、`design/references-lock.json`，曾因主控的一次 `git add -A`
+> 误随 PR #10 合入 `main`，已由后续提交撤回。这三个文件**只存在于提案分支
+> `claude/t18-reproducible-baseline`**，须经 Chrome 采纳后才可进入 `main`。
+> `main` 上只保留本报告与 `regenerated/` 对照产物，供审阅使用。
+> 误合入期间 `design/` 下的 5 份基线产物与 `references/` 未被改动。
 本任务只改机制，不含任何硬件技术判断。器件选型、封装取舍、几何是否可接受，一律列入待裁决清单交 Chrome。
 未执行 ERC、DRC、电气或机械验证；未执行 `git add` / `commit` / `push`；未修改 `design/` 下的 5 份基线产物与 `references/` 下任何文件。
 
