@@ -1,0 +1,68 @@
+{
+  "repo": "esp-mosaico/esp-mosaico-bsp",
+  "commit": "392860b1d1a123c3377947074b2af1f600e86c5d",
+  "latest_at_access": "392860b1d1a123c3377947074b2af1f600e86c5d",
+  "accessed_utc": "2026-09-20T08:53:16.650639+00:00",
+  "files": [
+    {
+      "path": "components/esp-mosaico-bsp/CMakeLists.txt",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/esp-mosaico-bsp/CMakeLists.txt",
+      "sha256": "748363f7d08372734eebce265a259afdd478b864b50e121315055a4def2c0b5b",
+      "bytes": 549
+    },
+    {
+      "path": "components/esp-mosaico-bsp/idf_component.yml",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/esp-mosaico-bsp/idf_component.yml",
+      "sha256": "68fb34ceeb948692800d644fefc41c0ce860503338788f9ddbdb6e3a4939428d",
+      "bytes": 851
+    },
+    {
+      "path": "components/esp-mosaico-bsp/include/bsp/esp_mosaico.h",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/esp-mosaico-bsp/include/bsp/esp_mosaico.h",
+      "sha256": "d2de42b8813381858ad1b991c36d8f8346c9819893459c52d926458ced3c0a45",
+      "bytes": 5954
+    },
+    {
+      "path": "components/esp-mosaico-bsp/include/bsp/subboard.h",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/esp-mosaico-bsp/include/bsp/subboard.h",
+      "sha256": "131acd0711766f2330edda548fdca131b13f2f966b7be1438a870eb8821ed57e",
+      "bytes": 3118
+    },
+    {
+      "path": "components/esp-mosaico-bsp/onboard/subboard.c",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/esp-mosaico-bsp/onboard/subboard.c",
+      "sha256": "f1d80ae6e4a1a7091a778c1044a7cabd2a8bcea12cfedf32b1d9b524d39af5d7",
+      "bytes": 8275
+    },
+    {
+      "path": "components/mosaico_module_mgr/CMakeLists.txt",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/mosaico_module_mgr/CMakeLists.txt",
+      "sha256": "b1e5658e27bbe1a40ab171989ecb8f2f42d15aac8ed4f184a8f8eef37de7c47a",
+      "bytes": 113
+    },
+    {
+      "path": "components/mosaico_module_mgr/README.md",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/mosaico_module_mgr/README.md",
+      "sha256": "bf3306fd4f0a7fc6182947f958142c0c2dd033968b08a65167b0ae3120c7ccad",
+      "bytes": 3770
+    },
+    {
+      "path": "components/mosaico_module_mgr/idf_component.yml",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/mosaico_module_mgr/idf_component.yml",
+      "sha256": "1bce508918a5693ec880f6917bb1bc85aa3eae9743b1275b15128e0ae46b2e7b",
+      "bytes": 243
+    },
+    {
+      "path": "components/mosaico_module_mgr/include/mosaico_module_mgr.h",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/mosaico_module_mgr/include/mosaico_module_mgr.h",
+      "sha256": "09de0e68b3e41fa8bb30db71620a2d6581128571725b15e28c4ce459cd68051f",
+      "bytes": 14845
+    },
+    {
+      "path": "components/mosaico_module_mgr/mosaico_module_mgr.c",
+      "url": "https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c3377947074b2af1f600e86c5d/components/mosaico_module_mgr/mosaico_module_mgr.c",
+      "sha256": "3278642055523d1c191b2d0dcfca76ea60a745cd801f6ca3e9cbc59aeb5812bb",
+      "bytes": 50513
+    }
+  ]
+}
