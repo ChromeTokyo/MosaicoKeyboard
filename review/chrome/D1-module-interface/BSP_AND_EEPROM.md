@@ -1,6 +1,6 @@
 # D1：左模块槽 BSP 实现核查（只读）
 
-访问日期：2026-09-20。唯一源码基线：`esp-mosaico/esp-mosaico-bsp` commit `392860b1d1a123c3377947074b2af1f600e86c5d`；抓取时 master 仍为此 SHA。原始文件及 URL/SHA256 见 `SOURCE_INDEX.json`。以下是该版本公开实现，不等于用户实物/出厂固件已验证。未改工作仓库、未研究 H/UART。
+访问日期：2026-09-20。唯一源码基线：`esp-mosaico/esp-mosaico-bsp` commit `392860b1d1a123c3377947074b2af1f600e86c5d`；抓取时 master 仍为此 SHA。原始文件及 URL/SHA256 见 `evidence/bsp/SOURCE_INDEX.json`。以下是该版本公开实现，不等于用户实物/出厂固件已验证。内部核查由Chrome统一复核入库；不构成Hiro独立复核。
 
 ## 1. 左槽 GPIO 与方向边界
 
@@ -79,4 +79,11 @@ CRC 算法 L209–218：初值 0xFFFF，逐字节异或，每位右移并在最�
 
 ## 6. 检索边界
 
-已读 subboard.c、subboard.h、esp_mosaico.h、module_mgr .c/.h、README、组件依赖。mgr README 引用的 `docs/mosaico_module_mgr_workflow.md` 在固定commit树中不存在，直接raw URL于访问时404；未用该链接补猜 EEPROM 格式。驱动实际调用例证由并行子核查补充。
+已读 subboard.c、subboard.h、esp_mosaico.h、module_mgr .c/.h、README、组件依赖。mgr README 引用的 `docs/mosaico_module_mgr_workflow.md` 在固定commit树中不存在，直接raw URL于访问时404；未用该链接补猜 EEPROM 格式。驱动实际调用例证已补充如下。
+
+
+## 7. 具体驱动接入例证
+
+`components/mosaico_module_interact/mosaico_module_interact.c:785–866`：应用/上层调用 `mosaico_interact_open()` 后，驱动主动初始化 manager（L803–804）；L820–825 以 `MOSAICO_BOARD_TYPE_INTERACT` 请求槽位；成功后依次初始化 PIR、按钮、ADC、LED（L830–866）。同文件 L137–153 将 LDR、IR、按钮、PIR、WS2812 的 GPIO 以静态硬件表给出，再经过左右槽映射。该驱动没有根据 EEPROM 的 vendor_id/board_id 自动查找或下载驱动。源码已作为完整原文件保存，并以 Git blob SHA 对固定 commit tree 验证。
+
+并行交叉核对但未重复收进此证据包：`mosaico_module_joystick/mosaico_joystick.c:534–584` 主动 claim HANDLE 后 get_hardware_config/configure_hardware；`mosaico_module_camera/mosaico_camera.c:742–777` 主动 claim 左槽 CAMERA 后初始化视频设备。三个客户端均无 vendor_id/board_id 引用。此结论不排除上层应用另外实现类型事件→调用驱动的自动化逻辑；但该逻辑仍必须已包含/适配新模块所需驱动。
