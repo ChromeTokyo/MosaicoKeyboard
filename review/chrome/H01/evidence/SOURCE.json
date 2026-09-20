@@ -1,0 +1,85 @@
+{
+  "access_date": "2026-09-20",
+  "files": [
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/esp_system/Kconfig",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/esp_system/Kconfig",
+      "local": "idf-components__esp_system__Kconfig",
+      "sha256": "27a7ee1f77cc05ceac667efa4dc7c43c6d62f08b9e9f3794c79ec781d35f67ea"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/soc/esp32s31/register/soc/io_mux_reg.h",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/soc/esp32s31/register/soc/io_mux_reg.h",
+      "local": "idf-components__soc__esp32s31__register__soc__io_mux_reg.h",
+      "sha256": "e0d2aae6a9d56a701cc29b6ce5a0b6eb872b52636843fe14e3b81736e0ea237a"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/soc/esp32s31/include/soc/uart_pins.h",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/soc/esp32s31/include/soc/uart_pins.h",
+      "local": "idf-components__soc__esp32s31__include__soc__uart_pins.h",
+      "sha256": "dc2a47d79de2dc5d359fc56d4244242ec6a5ca60eb23f8c9ff01e31eb895334e"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/bootloader/Kconfig.projbuild",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/bootloader/Kconfig.projbuild",
+      "local": "idf-components__bootloader__Kconfig.projbuild",
+      "sha256": "867aa5bd776a4a4c76d457752d157a325829b97a7c8f2c2a26782c96a41a9017"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/console/Kconfig",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/console/Kconfig",
+      "local": "idf-components__console__Kconfig",
+      "sha256": "ac2287df79f75715525146a243f97ce4249ee3bab86a6f877b7725ecde12b4f7"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/bootloader/Kconfig.log",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/bootloader/Kconfig.log",
+      "local": "idf-components__bootloader__Kconfig.log",
+      "sha256": "53424b89eab2a4c28f883ff57871e4d8d2794c7c57fd9d4d687d95ab74b7423f"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/bootloader/Kconfig.log.settings",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/bootloader/Kconfig.log.settings",
+      "local": "idf-components__bootloader__Kconfig.log.settings",
+      "sha256": "37dba06ef739e3a98aa91118a018827f69f932d3ba6314cd9af35addaa1ebddb"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/bootloader_support/src/bootloader_console.c",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/bootloader_support/src/bootloader_console.c",
+      "local": "idf-components__bootloader_support__src__bootloader_console.c",
+      "sha256": "48e41bde6b681db9afd764be656544b8079081c6a40fe8a953f320d4b13ea105"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/esp_stdio/Kconfig",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/esp_stdio/Kconfig",
+      "local": "idf-components__esp_stdio__Kconfig",
+      "sha256": "3b3d1a4f2395c0f5116789df339de96e068c0d0a82e59734bd6eb8470aca8c17"
+    },
+    {
+      "project": "espressif/esp-idf",
+      "commit": "e4df0c12f70daf0a7958e586e223c519fa9a1576",
+      "path": "components/esp_system/sdkconfig.rename",
+      "url": "https://raw.githubusercontent.com/espressif/esp-idf/e4df0c12f70daf0a7958e586e223c519fa9a1576/components/esp_system/sdkconfig.rename",
+      "local": "idf-components__esp_system__sdkconfig.rename",
+      "sha256": "fa37112fc9953ee71347bf3c24d78924bc865969bb324bfcb8d2315386f9c7c6"
+    }
+  ]
+}

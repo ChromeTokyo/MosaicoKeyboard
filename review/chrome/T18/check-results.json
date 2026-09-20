@@ -1,0 +1,411 @@
+{
+  "input_commit": "edb530106911997c894e3a2b7011a42153b0efef",
+  "candidate_commit": "56030b99d3cc347e9f4b9d1ca2dd39f19c608198",
+  "python": "3.9.6",
+  "checks": [
+    {
+      "name": "default_baseline_write_rejected",
+      "run": {
+        "args": [],
+        "optimized": false,
+        "exit_code": 2,
+        "stdout": "",
+        "stderr": "拒绝写入 /private<TEMP>/baseline_guard/design：该目录保存已审查基线。\n请用 --out-dir 指定对照目录，或在确实要覆盖基线时显式给出 --allow-overwrite-baseline。\n"
+      },
+      "inputs_unchanged": true
+    },
+    {
+      "name": "unresolved_R26_blocks_normal_generation",
+      "run": {
+        "args": [
+          "--out-dir",
+          "out"
+        ],
+        "optimized": false,
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "\n阻断：下列问题必须解决后才能生成产物\n------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n共 1 项阻断，未写出任何产物。\n"
+      },
+      "no_outputs": true
+    },
+    {
+      "name": "research_outputs_reproducible",
+      "runs": [
+        {
+          "args": [
+            "--out-dir",
+            "out1",
+            "--allow-missing"
+          ],
+          "optimized": false,
+          "exit_code": 0,
+          "stdout": "{\"components\": 84, \"nets\": 43, \"native_schematic\": \"/private<TEMP>/research/out1/mosaico-dock-schematic.json\", \"status\": \"DRAFT - NOT ROUTED - NOT FOR FABRICATION\", \"out_dir\": \"/private<TEMP>/research/out1\", \"libraries_referenced\": 26, \"libraries_available\": 25, \"libraries_unavailable\": [\"C23239\"], \"placeholder_refdes\": [\"R26\", \"R28\", \"J3\", \"TP1\", \"TP2\", \"TP3\", \"TP4\", \"TP5\", \"TP6\", \"TP7\", \"TP8\", \"TP9\", \"TP10\", \"TP11\", \"TP12\"], \"allow_missing\": true, \"allow_missing_released\": [\"R26\"], \"unreferenced_cache_files\": [\"C16043\", \"C165960\", \"C22827\", \"C2290\", \"C23138\", \"C28323\"], \"lock\": \"design/references-lock.json\", \"policy\": \"design/library-policy.json\"}\n",
+          "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n*** --allow-missing 已启用：R26 由放行而非解决得到，本次产物不得作为基线候选。***\n提示：references/ 下有 6 份缓存未被任何位号引用：C16043, C165960, C22827, C2290, C23138, C28323（保留与否属 Chrome）\n"
+        },
+        {
+          "args": [
+            "--out-dir",
+            "out2",
+            "--allow-missing"
+          ],
+          "optimized": false,
+          "exit_code": 0,
+          "stdout": "{\"components\": 84, \"nets\": 43, \"native_schematic\": \"/private<TEMP>/research/out2/mosaico-dock-schematic.json\", \"status\": \"DRAFT - NOT ROUTED - NOT FOR FABRICATION\", \"out_dir\": \"/private<TEMP>/research/out2\", \"libraries_referenced\": 26, \"libraries_available\": 25, \"libraries_unavailable\": [\"C23239\"], \"placeholder_refdes\": [\"R26\", \"R28\", \"J3\", \"TP1\", \"TP2\", \"TP3\", \"TP4\", \"TP5\", \"TP6\", \"TP7\", \"TP8\", \"TP9\", \"TP10\", \"TP11\", \"TP12\"], \"allow_missing\": true, \"allow_missing_released\": [\"R26\"], \"unreferenced_cache_files\": [\"C16043\", \"C165960\", \"C22827\", \"C2290\", \"C23138\", \"C28323\"], \"lock\": \"design/references-lock.json\", \"policy\": \"design/library-policy.json\"}\n",
+          "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n*** --allow-missing 已启用：R26 由放行而非解决得到，本次产物不得作为基线候选。***\n提示：references/ 下有 6 份缓存未被任何位号引用：C16043, C165960, C22827, C2290, C23138, C28323（保留与否属 Chrome）\n"
+        },
+        {
+          "args": [
+            "--out-dir",
+            "optimized",
+            "--allow-missing"
+          ],
+          "optimized": true,
+          "exit_code": 0,
+          "stdout": "{\"components\": 84, \"nets\": 43, \"native_schematic\": \"/private<TEMP>/research/optimized/mosaico-dock-schematic.json\", \"status\": \"DRAFT - NOT ROUTED - NOT FOR FABRICATION\", \"out_dir\": \"/private<TEMP>/research/optimized\", \"libraries_referenced\": 26, \"libraries_available\": 25, \"libraries_unavailable\": [\"C23239\"], \"placeholder_refdes\": [\"R26\", \"R28\", \"J3\", \"TP1\", \"TP2\", \"TP3\", \"TP4\", \"TP5\", \"TP6\", \"TP7\", \"TP8\", \"TP9\", \"TP10\", \"TP11\", \"TP12\"], \"allow_missing\": true, \"allow_missing_released\": [\"R26\"], \"unreferenced_cache_files\": [\"C16043\", \"C165960\", \"C22827\", \"C2290\", \"C23138\", \"C28323\"], \"lock\": \"design/references-lock.json\", \"policy\": \"design/library-policy.json\"}\n",
+          "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n*** --allow-missing 已启用：R26 由放行而非解决得到，本次产物不得作为基线候选。***\n提示：references/ 下有 6 份缓存未被任何位号引用：C16043, C165960, C22827, C2290, C23138, C28323（保留与否属 Chrome）\n"
+        }
+      ],
+      "sha256": {
+        "mosaico-dock-schematic.json": "a67f47767c846ff327c8e6b1b82a697ea7107f7952231674d8d6b3b1dbd2268c",
+        "mosaico-dock-placement.json": "b70341a10ea0c75d36d21c56045f41f4572389275cee8e08401a4843830df43b",
+        "design-netlist.json": "cc32562a27494d3679f43085d534d10135fad49084525e9bf1b4a04bdc9301b4",
+        "bom-review.csv": "8f5bbfc537c45c452b4905e1f2f229af77b718b64cd482985b93bb18ae5369d1",
+        "pin-net-review.csv": "bd5befdb62bff4d3d0f18951f2cd53e181838896cb4a42c444eef89a90370155"
+      },
+      "matches_claude_checked_in_comparison": true,
+      "also_matches_python_optimized": true
+    },
+    {
+      "name": "cache_removal_blocked_even_with_allow_missing",
+      "run": {
+        "args": [
+          "--out-dir",
+          "out",
+          "--allow-missing"
+        ],
+        "optimized": false,
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nC5       C45783     references/C45783.json             LIB_MISSING            文件不存在\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\nC7       C45783     references/C45783.json             LIB_MISSING            文件不存在\nC8       C45783     references/C45783.json             LIB_MISSING            文件不存在\n\n阻断：下列问题必须解决后才能生成产物\n------------------\n位号       LCSC       文件                                 类别                     细节\n-        C45783     references/C45783.json             LOCK_STATE_CHANGED     锁文件登记 state=OK，实际 state=MISSING（文件不存在）\n\n共 1 项阻断，未写出任何产物。\n"
+      },
+      "no_outputs": true
+    },
+    {
+      "name": "cache_hash_change_blocked",
+      "run": {
+        "args": [
+          "--out-dir",
+          "out",
+          "--allow-missing"
+        ],
+        "optimized": false,
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n阻断：下列问题必须解决后才能生成产物\n------------------\n位号       LCSC       文件                                 类别                     细节\n-        C25804     references/C25804.json             LOCK_HASH_MISMATCH     锁文件登记 32a5d7c594b21c953ab2a4679927703ea358b65beb36f5c9231acc9f8ac1459d，实际 3adaaec4df68563be8c83330c1394c820f51322a4ba5bc1bf7123ebcd5a54bf1\n\n共 1 项阻断，未写出任何产物。\n"
+      },
+      "no_outputs": true
+    },
+    {
+      "name": "missing_ref_policy_blocked",
+      "run": {
+        "args": [
+          "--out-dir",
+          "out",
+          "--allow-missing"
+        ],
+        "optimized": false,
+        "exit_code": 1,
+        "stdout": "",
+        "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n阻断：下列问题必须解决后才能生成产物\n------------------\n位号       LCSC       文件                                 类别                     细节\nU3       C919459    design/library-policy.json         POLICY_MISSING         位号未在占位声明清单中登记\n\n共 1 项阻断，未写出任何产物。\n"
+      },
+      "no_outputs": true
+    },
+    {
+      "name": "R01_manual_policy_fields_erased",
+      "run": {
+        "args": [
+          "--write-policy"
+        ],
+        "optimized": false,
+        "exit_code": 0,
+        "stdout": "{\"wrote\": \"design/library-policy.json\", \"entries\": 84, \"status\": \"清单骨架已写出；内容待 Chrome 填写与裁决\"}\n",
+        "stderr": ""
+      },
+      "refdes": "R28",
+      "before": {
+        "reason": "REVIEW_SENTINEL_REASON",
+        "placeholder_geometry": "REVIEW_SENTINEL_GEOMETRY",
+        "review_state": "REVIEW_SENTINEL_STATUS"
+      },
+      "after": {
+        "reason": "",
+        "placeholder_geometry": "",
+        "review_state": "未审查"
+      },
+      "issue_reproduced": true
+    },
+    {
+      "name": "R02_missing_pad_accepted_after_truthful_lock_refresh",
+      "registration": {
+        "args": [
+          "--write-lock"
+        ],
+        "optimized": false,
+        "exit_code": 0,
+        "stdout": "{\"wrote\": \"design/references-lock.json\", \"entries\": 26, \"unresolved\": 1, \"status\": \"锁文件已写出；冻结点待 Chrome 裁决\"}\n",
+        "stderr": "\n登记模式：下列问题已如实登记，仍待 Chrome 裁决\n---------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n"
+      },
+      "run": {
+        "args": [
+          "--out-dir",
+          "out",
+          "--allow-missing"
+        ],
+        "optimized": false,
+        "exit_code": 0,
+        "stdout": "{\"components\": 84, \"nets\": 43, \"native_schematic\": \"/private<TEMP>/missing_pad/out/mosaico-dock-schematic.json\", \"status\": \"DRAFT - NOT ROUTED - NOT FOR FABRICATION\", \"out_dir\": \"/private<TEMP>/missing_pad/out\", \"libraries_referenced\": 26, \"libraries_available\": 25, \"libraries_unavailable\": [\"C23239\"], \"placeholder_refdes\": [\"R26\", \"R28\", \"J3\", \"TP1\", \"TP2\", \"TP3\", \"TP4\", \"TP5\", \"TP6\", \"TP7\", \"TP8\", \"TP9\", \"TP10\", \"TP11\", \"TP12\"], \"allow_missing\": true, \"allow_missing_released\": [\"R26\"], \"unreferenced_cache_files\": [\"C16043\", \"C165960\", \"C22827\", \"C2290\", \"C23138\", \"C28323\"], \"lock\": \"design/references-lock.json\", \"policy\": \"design/library-policy.json\"}\n",
+        "stderr": "\n警告：--allow-missing 已放行下列问题，产物不得作为基线候选\n-------------------------------------\n位号       LCSC       文件                                 类别                     细节\nR26      C23239     references/C23239.json             POLICY_UNRESOLVED      清单标记为 unresolved（待 Chrome 裁决）；当前缓存状态：MISSING\n\n*** --allow-missing 已启用：R26 由放行而非解决得到，本次产物不得作为基线候选。***\n提示：references/ 下有 6 份缓存未被任何位号引用：C16043, C165960, C22827, C2290, C23138, C28323（保留与否属 Chrome）\n"
+      },
+      "cache": "C25804",
+      "removed_pad_count": 1,
+      "affected": [
+        {
+          "refdes": "R1",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R2",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R3",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R4",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R5",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R6",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R7",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R8",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R9",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R10",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R11",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R12",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R13",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R14",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R15",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R16",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        },
+        {
+          "refdes": "R17",
+          "expected_pads": [
+            "1",
+            "2"
+          ],
+          "actual_pads": [
+            "1"
+          ],
+          "status": "Supplier library geometry; final manufacturer audit pending"
+        }
+      ],
+      "allow_missing_released": [
+        "R26"
+      ],
+      "issue_reproduced": true
+    }
+  ],
+  "candidate_source_bytes_match": true,
+  "isolated_input_sha256": {
+    "design/bom-review.csv": "edc39f64108ed5210b5fb91b2dade5c0f6d77b1eb1dd047993ffbe01da68a79f",
+    "design/build_design.py": "418d7fe1ba99e744fa2bc73d63dbe141d03ef4bca8d75748dec4efa2fd4a3ea6",
+    "design/design-netlist.json": "9c608b08f3a22c1a978832f74b43d19be4a66b64d4d94657a888bfe9df9a57a5",
+    "design/library-policy.json": "b9f4ec8d258b6d1c70cbe2a1da8f3a297c37c56611f7423b7e2a26da1376e4b4",
+    "design/mosaico-dock-placement.json": "babe206c63c06c9a6448d3276f611697649145be219de4cc840c6636d33c3c34",
+    "design/mosaico-dock-schematic.json": "4fb504f9a64ed3395eab75b35bfa626af4c694a5b0ea3208f118cb760f662fa9",
+    "design/pin-net-review.csv": "bd5befdb62bff4d3d0f18951f2cd53e181838896cb4a42c444eef89a90370155",
+    "design/references-lock.json": "520e8e48e39b469992c400a6c83e97a4492d3d7cfebfb649234faf3a240a218d",
+    "references/C130204.json": "a1bba04ed3422d7b3cb3d9ae861206132ade5ac4e0466173378ba4e8aa063e62",
+    "references/C15849.json": "7411e667608e0f913442a306569b6f802f2a204569d7a740322ddfc974501450",
+    "references/C1591.json": "f5d956540e5666cb0843191c24252b2adc756d4b4190343f86938bed32eca4e5",
+    "references/C160353.json": "2487b8dfcbc524c50a1043d5861bb2a9a95c24981fa42478ddc2989f470aa438",
+    "references/C16043.json": "7d901125e9246f81b31f2dd87a562b13c5090e611f1317e25b6ff1bb561491a9",
+    "references/C165948.json": "f2c61f19207903c427b7fe8429a2e8e7d885068db0eaeff9d49c2ba1e405ca72",
+    "references/C165960.json": "468c88f7b17c565bc083a94f01084cec7544eaa7155ca530c6040baa4c196d82",
+    "references/C22827.json": "2a9e8f0ebf36047d15fa8ee9924ff73e0e92d894cf02aff493ae59866d890954",
+    "references/C2290.json": "c05008564dcc552639f0c7b2e0931a5324166a1ec1a1c6266a4bbf26ffca65f4",
+    "references/C2296.json": "c81a9a724f22b074c176f9a30aada4a842360709bb4cbb6dcc96ec8834c3226e",
+    "references/C22978.json": "4b5224e641648553f79d0905a03c3c08d1d089c7b0aabc89e8412b1bd6092c0f",
+    "references/C23138.json": "5f73205a20203091bc21e259c3ab64e78aeec082b19efc96db45665a2193e6be",
+    "references/C23162.json": "9f3c5ff804fbeea35592dd65f10930b1c087f21de94f7e06b05fcd9053676af8",
+    "references/C23186.json": "03dbee8cf133156168bbd1e7ceaabf36a5d5a9a2cba79453619cac186f307794",
+    "references/C25803.json": "ecb29581d07a18399472963c319e5dd4b1b028e9b6042c1df9e8df4c310085b6",
+    "references/C25804.json": "32a5d7c594b21c953ab2a4679927703ea358b65beb36f5c9231acc9f8ac1459d",
+    "references/C25819.json": "33cde9e9b40d2a3f4c45a7ec43c5c2e63be1a4843cfb1dd3b0910288c1308c44",
+    "references/C2682616.json": "47b0688d5880040eb03b9762a48bd91ab515c3d351ad6ebf34f41bce9ab70093",
+    "references/C28323.json": "a35ba59f44de57934229e9c3a15ade5452dc5abda487e9ed9818fed2b1c8d8d9",
+    "references/C2869734.json": "20922783524ffe58d8afefdb3949e5fe57dd6e9b8a147dd36423916632a39289",
+    "references/C404027.json": "85312bec7b2ae3411757360a6fa58a839e5421f8a707b095a88bcc8f416d19ec",
+    "references/C4177.json": "52fdf57bc5fbd2d99d3d5b5ee61ebc37768c0d113f22148bdea5ef4e6c57ae23",
+    "references/C431540.json": "52b8a7ae3adcad47c8c64359557e42b421c64f1442c8fd4cf2941aa7b77cefc9",
+    "references/C45783.json": "1f4b959a2687a175e977cfb583eca05957a7ea93d2b5ec3d54c2afa0b9e0b266",
+    "references/C54313.json": "3bb1f6a03905630becdb2d3b19db9e391fcdbc249233ebe74e2f07a756018851",
+    "references/C544515.json": "5036d1bfc47b98b40c60131722e310caa85aa3ef4d2ccb2beef1290da6a1d0f8",
+    "references/C55266.json": "c8c60d858163a349b393cbee78cad388b06faa8f59022db2e1864bb906223622",
+    "references/C5832342.json": "9dae0206545b999241e7d862b05e05862baa9f873954ce5ebd1999beddd62fa4",
+    "references/C720477.json": "11ce24d4f46db575874221134edd64ee32b1dc0776fbe5b3355e39943096cac9",
+    "references/C919459.json": "a66f8fc72b7a7ce594959a4cd4a1d87657535d8fd2b746d5b5e45ce54cc83d36",
+    "references/C96446.json": "72356229fd6a43e66ad4fb11f9f44d0ee58a7a6ea13273cbecd7e4be84a22481",
+    "references/README.md": "0616c02e692a063382e7f932333cf71fcbdd977b77ab4dec6f683a22ba90627b"
+  },
+  "authority_files_unchanged": true,
+  "review_conclusion": "CHANGES_REQUIRED; proposal mechanics only, no hardware approval"
+}

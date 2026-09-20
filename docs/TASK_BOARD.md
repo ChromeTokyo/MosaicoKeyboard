@@ -55,3 +55,35 @@ T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在�
 | T04 子范围 | Chrome／Codex | 同上 | `25c4902` | 同上（串行统一录入接口文件） | `review/chrome/T04/`，限 CoreBoard 官方电气资料核验；不领取全 BOM 审核完成状态 | `docs/handoffs/chrome.md` | 2026-09-20 |
 
 T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](../review/chrome/T14/MEASUREMENT_RECORD.md)、[电气／机械统一接口草案](INTERFACE_CONTROL.md)、[修复顺序](../review/chrome/T14/REPAIR_ORDER.md)。初版技术内容提交 `423a357`；[PR #9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)，分支已同步 `1030776`，无接口冻结。T04 子范围证据见 [CoreBoard 核查](../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)。
+
+### Chrome 接续登记（Claude 限额后）
+
+| ID | 领取人／模型 | 输入 | 分支／文件范围 | 状态与交接 |
+| --- | --- | --- | --- | --- |
+| T02/F03：Claude T18提案复核 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | main `edb5301`；候选实现`56030b9`；未合入领取`94b30d5` | `chrome/t18-proposal-review`；`review/chrome/T18/`、Chrome交接、此登记 | IN_REVIEW；八项隔离观测完成，CHANGES_REQUIRED，见`review/chrome/T18/REPORT.md`；不代表T18/T19已采纳 |
+
+| T14／T03：开箱视频接口版本核查 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | 用户2026-09-20提供153.84秒视频＋main `edb5301` 官方证据 | `chrome/t18-proposal-review`，用户在接续期间追加；视频技术摘录、ICD／测量规程及记录表、设计状态风险提示、本人交接 | IN_REVIEW；六张摘图、对照报告及ICD／T14分流完成；到货版本待确认 |
+
+上述Chrome接续复核与视频版本分流统一交付 [PR #12](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/12)，待复核、未合并，不改变硬件放行状态。
+
+用户于2026-09-20明确要求Claude恢复后验证本次发现；逐项入口见 [Chrome交接：待Claude复核](handoffs/chrome.md#待-claude-恢复后复核用户明确要求2026-09-20)。当前仍为待复核，未登记Claude通过。
+
+### Chrome 第二批低额度领取（2026-09-20）
+
+| 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| C1 → C2 → C3 → C4 → C5（严格串行） | Codex／`gpt-6-astra`／`ultra`（用户此前确认） | `37ccf53` | `chrome/h-low-quota-batch` | `review/chrome/H01/`、`H02/`、`H03-mcu/`、`H04-power/`；`docs/INTERFACE_CONTROL.md`；本人任务登记及`docs/handoffs/chrome.md` | C1 STOPPED（用户取消，部分证据保留）；C2 CANCELLED（未开始）；C3–C5 被 D1–D3 新派发替代；不修F01/F02、不改生成器、不做CAD/PCB |
+
+### Chrome 改派：左槽方案 D（2026-09-20）
+
+| 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| D1 → D2 → D3（顺序交付） | Codex／`gpt-6-astra`／`ultra`（用户确认） | `ff24626`（PR #21） | `chrome/h-low-quota-batch`（沿用分支，范围已改为D） | `review/chrome/D1-module-interface/`、`D2-eeprom/`、`D3-power/`；`docs/INTERFACE_CONTROL.md`适用范围；本人任务登记、Chrome交接及新问题状态 | D1 IN_REVIEW（[交付](../review/chrome/D1-module-interface/README.md)）；D2 IN_PROGRESS；D3 QUEUED。C1/C2已取消，H仅备份；不修F01/F02、不改生成器、不做CAD/PCB、不冻结接口 |
+
+### 主控代为集成 Chrome 遗留工作（2026-09-20）
+
+Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。其 D1 已交付（[D1 接口合同](../review/chrome/D1-module-interface/README.md)，IN_REVIEW，待 Hiro 复核）；D2／D3 未完成，上表「D2 IN_PROGRESS；D3 QUEUED」是 Chrome 下线前的自述状态，现已停止推进。PR #12（T18 提案复核 CHANGES_REQUIRED、开箱视频版本核查）与 `chrome/h-low-quota-batch`（D1、H-01 中间资料、进展日志）由主控代为集成到 `integrate/chrome-leftovers`；集成只做合并与冲突解决，不改变 Chrome 的技术结论、T18 状态与任何硬件放行状态。
+
+| ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
