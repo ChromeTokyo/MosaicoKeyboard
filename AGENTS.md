@@ -2,9 +2,15 @@
 
 ## 项目与优先级
 
-先阅读 `README.md`、`docs/PROJECT_PLAN.md` 和 `docs/DESIGN_STATUS.md`。目标是完整 ESP-Mosaico 的可拆式输入／电池底座，国内嘉立创生产，应用固件最后处理。用户新的明确要求优先于本文件。
+先阅读 `README.md`、`docs/PROJECT_PLAN.md`、`docs/DESIGN_STATUS.md`、`docs/TEAM_PLAN.md` 和 `docs/TASK_BOARD.md`。目标是完整 ESP-Mosaico 的可拆式输入／电池底座，国内嘉立创生产，应用固件最后处理。用户新的明确要求优先于本文件。
 
 当前为 A0 草案，禁止把文件存在、脚本运行成功或库下载成功描述为电气正确、工厂可生产或样机已验证。
+
+## 已指定的负责人
+
+Claude Fable 5.1 主控与总集成；Chrome GPT-6 负责电路／PCB；Cursor 负责机械 CAD；Hiro GPT-6 负责批次独立审查；Grok Bot 负责资料与供应链证据核查。完整职责、模型确认与离线交接规则见 `docs/TEAM_PLAN.md`，以该文件替代早期通用分工。
+
+Hiro 间歇上线，不将其本机或会话作为常驻主控和唯一状态来源。原 A0 由 Hiro 产生，首次独立电气复核交给 Claude。日常工作可以在 Hiro 离线时继续，关键放行仍需实际完成非作者复核。领取任务与执行结果必须落到仓库。
 
 ## 并行与文件所有权
 
