@@ -1,0 +1,18 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+
+menu "Dock Handle keytest"
+
+    config KEYTEST_USE_DISPLAY
+        bool "Show key state on the onboard LCD"
+        depends on BSP_DISPLAY_ENABLE
+        default y
+        help
+            使用 bsp_display_start() 与 LVGL 在 480x480 屏上显示连接状态与按键位图。
+            关闭后只输出到控制台。
+
+    config KEYTEST_HEARTBEAT_S
+        int "Heartbeat log interval (s)"
+        range 1 60
+        default 5
+
+endmenu

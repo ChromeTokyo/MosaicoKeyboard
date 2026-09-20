@@ -1,0 +1,8 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+#
+# dock_handle 组件由工程根 CMakeLists.txt 通过 EXTRA_COMPONENT_DIRS 引入；
+# BSP 与模块管理器由 dock_handle/idf_component.yml 的 git 依赖解析，
+# 或由环境变量 MOSAICO_BSP_COMPONENTS 指向的本地副本提供。
+
+dependencies:
+  idf: ">=6.2"
