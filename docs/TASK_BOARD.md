@@ -79,3 +79,11 @@ T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](.
 | 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
 | D1 → D2 → D3（顺序交付） | Codex／`gpt-6-astra`／`ultra`（用户确认） | `ff24626`（PR #21） | `chrome/h-low-quota-batch`（沿用分支，范围已改为D） | `review/chrome/D1-module-interface/`、`D2-eeprom/`、`D3-power/`；`docs/INTERFACE_CONTROL.md`适用范围；本人任务登记、Chrome交接及新问题状态 | D1 IN_REVIEW（[交付](../review/chrome/D1-module-interface/README.md)）；D2 IN_PROGRESS；D3 QUEUED。C1/C2已取消，H仅备份；不修F01/F02、不改生成器、不做CAD/PCB、不冻结接口 |
+
+### 主控代为集成 Chrome 遗留工作（2026-09-20）
+
+Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。其 D1 已交付（[D1 接口合同](../review/chrome/D1-module-interface/README.md)，IN_REVIEW，待 Hiro 复核）；D2／D3 未完成，上表「D2 IN_PROGRESS；D3 QUEUED」是 Chrome 下线前的自述状态，现已停止推进。PR #12（T18 提案复核 CHANGES_REQUIRED、开箱视频版本核查）与 `chrome/h-low-quota-batch`（D1、H-01 中间资料、进展日志）由主控代为集成到 `integrate/chrome-leftovers`；集成只做合并与冲突解决，不改变 Chrome 的技术结论、T18 状态与任何硬件放行状态。
+
+| ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
