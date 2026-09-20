@@ -1,0 +1,111 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 860" font-family="-apple-system,'PingFang SC','Helvetica Neue',sans-serif">
+<rect width="1200" height="860" fill="#14161a"/>
+<text x="40" y="50" fill="#f0f2f5" font-size="26" font-weight="600">模块板作为转向件：侧插 → 下引 → 底部撞针</text>
+<text x="40" y="78" fill="#8b93a1" font-size="14.5">示意图。形状、厚度、触点数量与位置均为示意，全部未冻结。</text>
+
+<defs>
+<marker id="ar" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#d2a24c"/></marker>
+<marker id="ag" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto"><path d="M0 0 L9 4.5 L0 9 z" fill="#49b07c"/></marker>
+</defs>
+
+<!-- ===== 左：分离状态 ===== -->
+<text x="60" y="128" fill="#5db0ff" font-size="17" font-weight="600">① 分离状态</text>
+
+<!-- Mosaico -->
+<rect x="150" y="170" width="200" height="200" rx="16" fill="#232830" stroke="#e8503a" stroke-width="2.5"/>
+<rect x="166" y="186" width="168" height="168" rx="8" fill="#05070a" stroke="#242a33"/>
+<text x="196" y="278" fill="#4a5260" font-size="13">ESP-Mosaico</text>
+<!-- 左槽 -->
+<rect x="140" y="196" width="12" height="148" rx="3" fill="#3a4250" stroke="#5b6675" stroke-width="1.4"/>
+<text x="66" y="188" fill="#8b93a1" font-size="12.5">左模块槽</text>
+<path d="M112 192 L142 202" stroke="#8b93a1" stroke-width="1.2" fill="none"/>
+<!-- USB-C 朝下 -->
+<rect x="222" y="364" width="56" height="11" rx="5" fill="#4b5563" stroke="#697384"/>
+
+<!-- 模块板 L 形 -->
+<path d="M96 196 h44 v148 h-44 v86 h150 v-34 h-116 v-52 h-34 z" fill="#1e3329" stroke="#49b07c" stroke-width="2.2"/>
+<text x="16" y="284" fill="#49b07c" font-size="12.5" transform="rotate(-90 26 284)">模块板</text>
+<!-- 插针 -->
+<g fill="#8fe0b4">
+<rect x="128" y="204" width="12" height="4" rx="2"/><rect x="128" y="216" width="12" height="4" rx="2"/>
+<rect x="128" y="228" width="12" height="4" rx="2"/><rect x="128" y="240" width="12" height="4" rx="2"/>
+<rect x="128" y="252" width="12" height="4" rx="2"/><rect x="128" y="264" width="12" height="4" rx="2"/>
+<rect x="128" y="276" width="12" height="4" rx="2"/><rect x="128" y="288" width="12" height="4" rx="2"/>
+<rect x="128" y="300" width="12" height="4" rx="2"/><rect x="128" y="312" width="12" height="4" rx="2"/>
+</g>
+<text x="60" y="404" fill="#8fe0b4" font-size="12.5">2×10P 插针</text>
+<!-- 底部触点面 -->
+<g fill="#d2a24c">
+<circle cx="120" cy="424" r="5"/><circle cx="148" cy="424" r="5"/><circle cx="176" cy="424" r="5"/>
+<circle cx="204" cy="424" r="5"/><circle cx="232" cy="424" r="5"/>
+</g>
+<text x="96" y="452" fill="#d2a24c" font-size="12.5">底部触点面（朝下）</text>
+
+<!-- 底座 -->
+<path d="M60 560 h330 v120 q0 18 -18 18 h-294 q-18 0 -18 -18 z" fill="#232830" stroke="#5db0ff" stroke-width="2.2"/>
+<rect x="88" y="530" width="196" height="32" rx="6" fill="#1a1d23" stroke="#3d4553" stroke-width="1.5"/>
+<text x="112" y="552" fill="#6b7482" font-size="12.5">Mosaico 落入槽</text>
+<!-- 撞针 -->
+<g stroke="#d2a24c" stroke-width="2.6" stroke-linecap="round">
+<path d="M120 530 v-16"/><path d="M148 530 v-16"/><path d="M176 530 v-16"/><path d="M204 530 v-16"/><path d="M232 530 v-16"/>
+</g>
+<text x="252" y="518" fill="#d2a24c" font-size="12.5">弹簧针（朝上）</text>
+<text x="118" y="624" fill="#9ed0ff" font-size="14" font-weight="600">底座主体</text>
+<text x="118" y="648" fill="#8b93a1" font-size="12.5">电池 · 充电 · 升压</text>
+<text x="118" y="670" fill="#8b93a1" font-size="12.5">按键 · 外壳 · USB-C</text>
+
+<!-- 落入箭头 -->
+<path d="M205 468 v46" stroke="#d2a24c" stroke-width="3" fill="none" marker-end="url(#ar)"/>
+<text x="224" y="496" fill="#d2a24c" font-size="13.5" font-weight="600">垂直落入</text>
+
+<!-- ===== 右：合体状态 ===== -->
+<text x="640" y="128" fill="#5db0ff" font-size="17" font-weight="600">② 合体状态</text>
+
+<path d="M600 300 h390 v300 q0 20 -20 20 h-350 q-20 0 -20 -20 z" fill="#232830" stroke="#5db0ff" stroke-width="2.2"/>
+<!-- Mosaico 落在里面 -->
+<rect x="700" y="196" width="200" height="200" rx="16" fill="#232830" stroke="#e8503a" stroke-width="2.5"/>
+<rect x="716" y="212" width="168" height="168" rx="8" fill="#05070a" stroke="#242a33"/>
+<text x="746" y="304" fill="#4a5260" font-size="13">ESP-Mosaico</text>
+<!-- 模块板合体 -->
+<path d="M646 222 h44 v148 h-44 v86 h150 v-34 h-116 v-52 h-34 z" fill="#1e3329" stroke="#49b07c" stroke-width="2.2"/>
+<g fill="#8fe0b4">
+<rect x="678" y="230" width="12" height="4" rx="2"/><rect x="678" y="248" width="12" height="4" rx="2"/>
+<rect x="678" y="266" width="12" height="4" rx="2"/><rect x="678" y="284" width="12" height="4" rx="2"/>
+<rect x="678" y="302" width="12" height="4" rx="2"/><rect x="678" y="320" width="12" height="4" rx="2"/>
+</g>
+<!-- 压合的触点 -->
+<g fill="#d2a24c"><circle cx="670" cy="450" r="5"/><circle cx="698" cy="450" r="5"/><circle cx="726" cy="450" r="5"/><circle cx="754" cy="450" r="5"/><circle cx="782" cy="450" r="5"/></g>
+<g stroke="#d2a24c" stroke-width="2.6" stroke-linecap="round">
+<path d="M670 456 v14"/><path d="M698 456 v14"/><path d="M726 456 v14"/><path d="M754 456 v14"/><path d="M782 456 v14"/>
+</g>
+<text x="808" y="458" fill="#d2a24c" font-size="13" font-weight="600">压合</text>
+
+<!-- USB-C 暴露 -->
+<rect x="772" y="390" width="56" height="11" rx="5" fill="#4b5563" stroke="#697384"/>
+<text x="852" y="400" fill="#d2a24c" font-size="12.5">原生 USB-C 仍可用</text>
+<path d="M848 396 L832 396" stroke="#d2a24c" stroke-width="1.2" fill="none"/>
+
+<!-- 右槽空 -->
+<rect x="898" y="222" width="12" height="148" rx="3" fill="#24303f" stroke="#41536b" stroke-width="1.4" stroke-dasharray="4 3"/>
+<text x="928" y="248" fill="#7b8b9e" font-size="12.5">右槽空出</text>
+
+<text x="626" y="562" fill="#9ed0ff" font-size="14" font-weight="600">底座主体</text>
+<text x="626" y="592" fill="#8b93a1" font-size="12.5">取下时只脱开底部撞针，插针那端始终不动</text>
+
+<!-- ===== 底部：三段职责 ===== -->
+<line x1="40" y1="726" x2="1160" y2="726" stroke="#2c323c"/>
+<rect x="40" y="748" width="350" height="84" rx="9" fill="#1a1d23" stroke="#49b07c" stroke-width="1.6"/>
+<text x="60" y="776" fill="#8fe0b4" font-size="14" font-weight="600">插针端 · 常驻</text>
+<text x="60" y="800" fill="#aeb6c2" font-size="12.5">插拔次数 ≈ 1。排针寿命只有几十到</text>
+<text x="60" y="820" fill="#aeb6c2" font-size="12.5">几百次，常驻后这个限制不再成立。</text>
+
+<rect x="412" y="748" width="350" height="84" rx="9" fill="#1a1d23" stroke="#d2a24c" stroke-width="1.6"/>
+<text x="432" y="776" fill="#e8c07a" font-size="14" font-weight="600">撞针端 · 每天插拔</text>
+<text x="432" y="800" fill="#aeb6c2" font-size="12.5">弹簧针额定寿命通常高若干个数量级，</text>
+<text x="432" y="820" fill="#aeb6c2" font-size="12.5">这正是它被用作底座接口的原因。</text>
+
+<rect x="784" y="748" width="376" height="84" rx="9" fill="#1a1d23" stroke="#5db0ff" stroke-width="1.6"/>
+<text x="804" y="776" fill="#9ed0ff" font-size="14" font-weight="600">仍未解除</text>
+<text x="804" y="800" fill="#aeb6c2" font-size="12.5">模块板能否做成这个形状、触点数与位置、</text>
+<text x="804" y="820" fill="#aeb6c2" font-size="12.5">压紧力与保持机构、5V_IN 载流能力。</text>
+</svg>
