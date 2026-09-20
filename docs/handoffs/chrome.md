@@ -69,3 +69,11 @@
 - PR #4：D-011证据完整性已通过，技术结论仍CHANGES_REQUIRED；未合入、未改写其分支。同步main与保留Hiro交接为合入门槛。上方历史交接里的T02相对路径要在PR #4合入后才出现在main，本分支不复制证据；当前可用[绑定提交的原报告](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/3d8ad4cf50afc1ae75c557364c61f1cf4dd545db/review/chrome/T02/REPORT.md)。
 
 本轮最终同步基线为 `1030776`（含 PR #8），本轮 PR 为 [#9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)。同步只针对本轮分支，PR #4未改动。3mf来源与适用对象按主控更正保持unknown，不采纳其整机尺寸推断。
+
+## 第二批：方案H低额度研究
+
+输入main `37ccf53`，分支`chrome/h-low-quota-batch`；执行“第二批派发：低额度模式”及用户最新指示。平台Codex，实际模型`gpt-6-astra`／`ultra`（用户确认）；文件范围见任务板。此前“继续F01/F02”的建议被本批明确排除；不修改`design/build_design.py`。PR #12仍是独立待审包，不混入本轮研究。
+
+| 日期 | 任务 ID | 当前在做什么 | 本次已确认的事实及依据 | 尚未确认 | 阻塞项 | 下一步 |
+| --- | --- | --- | --- | --- | --- | --- |
+| 2026-09-20 17:44 JST | C1/H-01 | 领取；同步main并读取派发与R04 | 方案H方向及受限MCU已定；供电必须不经MCU软件判断；本轮C1至C5严格顺序，各小步单独推送 | V1.2 UART物理映射、日志占用、5V载流均待核 | 无研究开工阻塞，实物未到 | 先查芯片默认UART、IDF控制台默认、公开BSP配置与出厂固件边界 |

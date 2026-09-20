@@ -55,3 +55,9 @@ T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在�
 | T04 子范围 | Chrome／Codex | 同上 | `25c4902` | 同上（串行统一录入接口文件） | `review/chrome/T04/`，限 CoreBoard 官方电气资料核验；不领取全 BOM 审核完成状态 | `docs/handoffs/chrome.md` | 2026-09-20 |
 
 T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](../review/chrome/T14/MEASUREMENT_RECORD.md)、[电气／机械统一接口草案](INTERFACE_CONTROL.md)、[修复顺序](../review/chrome/T14/REPAIR_ORDER.md)。初版技术内容提交 `423a357`；[PR #9](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/9)，分支已同步 `1030776`，无接口冻结。T04 子范围证据见 [CoreBoard 核查](../review/chrome/T04/COREBOARD_INTERFACE_EVIDENCE.md)。
+
+### Chrome 第二批低额度领取（2026-09-20）
+
+| 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| C1 → C2 → C3 → C4 → C5（严格串行） | Codex／`gpt-6-astra`／`ultra`（用户此前确认） | `37ccf53` | `chrome/h-low-quota-batch` | `review/chrome/H01/`、`H02/`、`H03-mcu/`、`H04-power/`；`docs/INTERFACE_CONTROL.md`；本人任务登记及`docs/handoffs/chrome.md` | C1 IN_PROGRESS；C2–C5 QUEUED；不修F01/F02、不改生成器、不做CAD/PCB；各小步推送 |
