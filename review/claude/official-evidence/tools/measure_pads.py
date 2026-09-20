@@ -7,8 +7,12 @@
 重要：官方文档图存在约 6% 的水平拉伸（各向异性）。四个背部焊盘是水平排列，
 因此必须用**水平方向**的标定基准。初版脚本用最近邻距离标定（实际测到的是垂直
 行间距），导致间距被系统性高估约 6%，得出「2.54 mm 被证伪」的错误结论。
-本版改为：从右侧 2x10P 严格提取两列各 10 孔，列间距作水平标定、行长基线作垂直
-标定，并输出圆形焊盘的长宽比作为各向同性自检。
+本版改为：从右侧 2x10P 严格提取两列各 10 孔（断言列数，不足则拒绝标定），
+列间距作水平标定、行长基线作垂直标定，并输出圆形焊盘的长宽比作为各向同性自检。
+
+第二次更正（Chrome 指出）：直径原先用 (h+w)/2 再除以水平标定，把垂直向的 h 按
+水平尺度换算，在 6% 各向异性的图上系统性偏小约 3%。本版改为 w 除水平标定、
+h 除垂直标定，分别报出。
 
 复现：
   pdfimages -f 32 -l 32 -png esp-dev-kits-en-master-esp32s31.pdf fig7
@@ -55,7 +59,9 @@ def grid_pitch(points, x_lo, x_hi, x_split):
     """从 2x10P 严格提取两列，返回 (水平列距, 垂直行距均值)。"""
     p = points[(points[:, 0] > x_lo) & (points[:, 0] < x_hi)]
     c1, c2 = p[p[:, 0] < x_split], p[p[:, 0] >= x_split]
-    if len(c1) < 3 or len(c2) < 3:
+    # 严格断言：2x10P 的两列必须各恰 10 孔，否则标定基准不可信
+    if len(c1) != 10 or len(c2) != 10:
+        print("  断言失败：两列孔数为 %d / %d，期望 10 / 10；不据此标定" % (len(c1), len(c2)))
         return None, None
     horiz = c2[:, 0].mean() - c1[:, 0].mean()
     vert = np.mean([(np.sort(c[:, 1])[-1] - np.sort(c[:, 1])[0]) / (len(c) - 1)
@@ -114,9 +120,13 @@ def main(path):
     print("      垂直 %.2f px/2.54mm → %.3f px/mm" % (vert, px_v))
     print("      各向异性 水平/垂直 = %.4f" % (horiz / vert))
 
-    print("\n四焊盘（像素）：间距 %s 均值 %.2f；直径 %.2f" % (np.round(pad_sp, 2), pad_sp.mean(), pad_d))
+    # 直径必须分轴换算：w 是水平向、h 是垂直向，混用会在各向异性图上引入系统误差
+    dia_x = (pads[:, 4] / px_h).mean()
+    dia_y = (pads[:, 3] / px_v).mean()
+    print("\n四焊盘（像素）：间距 %s 均值 %.2f" % (np.round(pad_sp, 2), pad_sp.mean()))
     print("→ 焊盘间距 %.3f mm（2.54 标称偏差 %+.1f%%）" % (pad_sp.mean() / px_h, (pad_sp.mean() / horiz - 1) * 100))
-    print("→ 焊盘直径 %.3f mm" % (pad_d / px_h))
+    print("→ 焊盘直径 水平向 %.3f mm / 垂直向 %.3f mm（两者接近说明各向异性修正自洽）" % (dia_x, dia_y))
+    print("  注：包围盒含抗锯齿边缘，属上偏估计；不得据此选定 Pogo 针头直径")
     print("→ 四盘中心跨距 %.3f mm（3×2.54 = 7.62）" % (3 * pad_sp.mean() / px_h))
     print("\n结论：设计值极可能为 2.54 mm 标称。derived，实物卡尺复测前不得冻结。")
 

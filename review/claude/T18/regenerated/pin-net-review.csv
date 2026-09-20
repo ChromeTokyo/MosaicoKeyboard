@@ -1,0 +1,243 @@
+﻿Reference,Pin,Pin name,Net,Notes
+U1,1,INT#,IO_INT_N,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,2,A1,GND,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,3,A2,GND,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,4,P00,KEY_UP,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,5,P01,KEY_DOWN,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,6,P02,KEY_LEFT,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,7,P03,KEY_RIGHT,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,8,P04,KEY_A,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,9,P05,KEY_B,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,10,P06,KEY_X,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,11,P07,KEY_Y,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,12,GND,GND,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,13,P10,KEY_L,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,14,P11,KEY_R,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,15,P12,KEY_MODE,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,16,P13,GAUGE_ALERT_N,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,17,P14,POWER_FAULT_N,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,18,P15,SPARE_13,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,19,P16,SPARE_14,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,20,P17,SPARE_15,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,21,A0,GND,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,22,SCL,DOCK_SCL,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,23,SDA,DOCK_SDA,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+U1,24,VCC,DOCK_3V3,7-bit address 0x20; 16 external pull-ups; interrupt test point only
+SW1,2,2,GND,
+SW1,1,1,KEY_UP,
+SW2,2,2,GND,
+SW2,1,1,KEY_DOWN,
+SW3,2,2,GND,
+SW3,1,1,KEY_LEFT,
+SW4,2,2,GND,
+SW4,1,1,KEY_RIGHT,
+SW5,2,2,GND,
+SW5,1,1,KEY_A,
+SW6,2,2,GND,
+SW6,1,1,KEY_B,
+SW7,2,2,GND,
+SW7,1,1,KEY_X,
+SW8,2,2,GND,
+SW8,1,1,KEY_Y,
+SW9,2,2,GND,
+SW9,1,1,KEY_L,
+SW10,2,2,GND,
+SW10,1,1,KEY_R,
+SW11,2,2,GND,
+SW11,1,1,KEY_MODE,
+R1,1,1,DOCK_3V3,
+R1,2,2,KEY_UP,
+R2,1,1,DOCK_3V3,
+R2,2,2,KEY_DOWN,
+R3,1,1,DOCK_3V3,
+R3,2,2,KEY_LEFT,
+R4,1,1,DOCK_3V3,
+R4,2,2,KEY_RIGHT,
+R5,1,1,DOCK_3V3,
+R5,2,2,KEY_A,
+R6,1,1,DOCK_3V3,
+R6,2,2,KEY_B,
+R7,1,1,DOCK_3V3,
+R7,2,2,KEY_X,
+R8,1,1,DOCK_3V3,
+R8,2,2,KEY_Y,
+R9,1,1,DOCK_3V3,
+R9,2,2,KEY_L,
+R10,1,1,DOCK_3V3,
+R10,2,2,KEY_R,
+R11,1,1,DOCK_3V3,
+R11,2,2,KEY_MODE,
+R12,1,1,DOCK_3V3,
+R12,2,2,GAUGE_ALERT_N,
+R13,1,1,DOCK_3V3,
+R13,2,2,POWER_FAULT_N,
+R14,1,1,DOCK_3V3,
+R14,2,2,SPARE_13,
+R15,1,1,DOCK_3V3,
+R15,2,2,SPARE_14,
+R16,1,1,DOCK_3V3,
+R16,2,2,SPARE_15,
+R17,1,1,DOCK_3V3,
+R17,2,2,IO_INT_N,
+C1,1,1,DOCK_3V3,
+C1,2,2,GND,
+C2,1,1,DOCK_3V3,
+C2,2,2,GND,
+J1,A1B12,GND,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,A4B9,VBUS,USB_5V,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B8,SBU2,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,A5,CC1,CC1,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B7,DN2,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,A6,DP1,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,A7,DN1,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B6,DP2,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,A8,SBU1,NC,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B5,CC2,CC2,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B4A9,VBUS,USB_5V,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,B1A12,GND,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,4,EH,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,3,EH,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,2,EH,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+J1,1,EH,GND,Data pins intentionally NC; verify exact PCB-edge datum and shell solder process
+R18,1,1,CC1,
+R18,2,2,GND,
+R19,1,1,CC2,
+R19,2,2,GND,
+U2,1,TS,BAT_NTC,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,2,BAT,PACK_P,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,3,BAT,PACK_P,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,4,CE#,GND,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,5,EN2,GND,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,6,EN1,SYS_RAW,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,7,PGOOD#,CHG_PGOOD_N,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,8,VSS,GND,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,9,CHG#,CHG_ACTIVE_N,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,10,OUT,SYS_RAW,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,11,OUT,SYS_RAW,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,12,ILIM,CHG_ILIM,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,13,IN,USB_5V,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,14,TMR,CHG_TMR,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,15,ITERM,NC,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,16,ISET,CHG_ISET,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+U2,17,EP,GND,EN1=1 EN2=0: <=500mA input; ITERM NC: 10%; actual charge current load-dependent
+J2,1,1,PACK_P,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+J2,2,2,BAT_NTC,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+J2,3,3,GND,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+J2,4,4,GND,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+J2,5,5,GND,"Pin order is OUR specification, not a universal battery standard; pack/cable must match"
+R20,1,1,CHG_ISET,890/1800 = 0.494 A nominal; verify selected pack permits this current
+R20,2,2,GND,890/1800 = 0.494 A nominal; verify selected pack permits this current
+R21,1,1,CHG_ILIM,ILIM must be populated even in fixed USB input-current mode
+R21,2,2,GND,ILIM must be populated even in fixed USB input-current mode
+R22,1,1,CHG_TMR,Fast-charge safety timer approx. 6.27h before DPPM timer extensions
+R22,2,2,GND,Fast-charge safety timer approx. 6.27h before DPPM timer extensions
+R23,1,1,USB_5V,
+R23,2,2,LED_CHG_A,
+R24,1,1,USB_5V,
+R24,2,2,LED_PG_A,
+D1,2,-,LED_CHG_A,
+D1,1,+,CHG_ACTIVE_N,
+D2,2,-,LED_PG_A,
+D2,1,+,CHG_PGOOD_N,
+C3,1,1,USB_5V,
+C3,2,2,GND,
+C4,1,1,PACK_P,
+C4,2,2,GND,
+C5,1,1,SYS_RAW,
+C5,2,2,GND,
+U3,1,FB,BOOST_FB,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+U3,2,EN,DOCK_EN,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+U3,3,VIN,SYS_RAW,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+U3,4,GND,GND,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+U3,5,SW,BOOST_SW,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+U3,6,VOUT,BOOST_5V,"Nominal 4.992V; tolerances, ripple and downstream voltage drop require bench validation"
+L1,2,2,BOOST_SW,
+L1,1,1,SYS_RAW,
+SW12,4,4,GND,Mechanical slide pin map must be checked against exact part drawing
+SW12,3,3,GND,Mechanical slide pin map must be checked against exact part drawing
+SW12,2,2,DOCK_EN,Mechanical slide pin map must be checked against exact part drawing
+SW12,1,1,SYS_RAW,Mechanical slide pin map must be checked against exact part drawing
+R25,1,1,DOCK_EN,
+R25,2,2,GND,
+R26,1,1,BOOST_5V,
+R26,2,2,BOOST_FB,
+R27,1,1,BOOST_FB,
+R27,2,2,GND,
+U8,1,IN,BOOST_5V,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+U8,2,GND,GND,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+U8,3,EN,BOOST_5V,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+U8,4,FAULT_N,POWER_FAULT_N,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+U8,5,ILIM,OUT_ILIM,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+U8,6,OUT,LIMITED_5V,"26.1k gives approx. 0.91-1.08A current limit (TI table); constant-current version, not -1"
+R28,1,1,OUT_ILIM,Exact LCSC procurement code pending
+R28,2,2,GND,Exact LCSC procurement code pending
+U4,1,VIN,LIMITED_5V,CE tied to VOUT is required for reverse-current blocking
+U4,2,GND,GND,CE tied to VOUT is required for reverse-current blocking
+U4,3,CE#,POGO_5V,CE tied to VOUT is required for reverse-current blocking
+U4,4,NC,NC,CE tied to VOUT is required for reverse-current blocking
+U4,5,ST,GND,CE tied to VOUT is required for reverse-current blocking
+U4,6,VOUT,POGO_5V,CE tied to VOUT is required for reverse-current blocking
+U5,1,IN,BOOST_5V,Dock logic supply; does not use Pogo positive as a 3.3V rail
+U5,2,GND,GND,Dock logic supply; does not use Pogo positive as a 3.3V rail
+U5,3,EN,BOOST_5V,Dock logic supply; does not use Pogo positive as a 3.3V rail
+U5,4,NC,NC,Dock logic supply; does not use Pogo positive as a 3.3V rail
+U5,5,OUT,DOCK_3V3,Dock logic supply; does not use Pogo positive as a 3.3V rail
+C6,1,1,SYS_RAW,
+C6,2,2,GND,
+C7,1,1,BOOST_5V,
+C7,2,2,GND,
+C8,1,1,BOOST_5V,
+C8,2,2,GND,
+C9,1,1,BOOST_5V,
+C9,2,2,GND,
+C10,1,1,LIMITED_5V,
+C10,2,2,GND,
+C11,1,1,POGO_5V,
+C11,2,2,GND,
+C12,1,1,BOOST_5V,
+C12,2,2,GND,
+C13,1,1,DOCK_3V3,
+C13,2,2,GND,
+U6,1,VCCA,DOCK_3V3,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,2,SCLA,HOST_SCL,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,3,SDAA,HOST_SDA,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,4,GND,GND,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,5,EN,DOCK_3V3,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,6,SDAB,DOCK_SDA,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,7,SCLB,DOCK_SCL,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+U6,8,VCCB,DOCK_3V3,A side to Mosaico; B side to dock. NO dock-powered pullups on HOST_SDA/HOST_SCL.
+R29,1,1,DOCK_3V3,
+R29,2,2,DOCK_SDA,
+R30,1,1,DOCK_3V3,
+R30,2,2,DOCK_SCL,
+C14,1,1,DOCK_3V3,
+C14,2,2,GND,
+C15,1,1,DOCK_3V3,
+C15,2,2,GND,
+U7,1,CTG,GND,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,2,CELL,PACK_P,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,3,VDD,PACK_P,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,4,GND,GND,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,5,ALRT#,GAUGE_ALERT_N,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,6,QSTRT,GND,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,7,SCL,DOCK_SCL,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,8,SDA,DOCK_SDA,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+U7,9,EP,GND,"7-bit address 0x36; measures dock battery, not Mosaico internal battery"
+C16,1,1,PACK_P,
+C16,2,2,GND,
+J3,1,SCL,HOST_SCL,"2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing."
+J3,2,GND,GND,"2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing."
+J3,3,+5V,POGO_5V,"2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing."
+J3,4,SDA,HOST_SDA,"2.54mm pitch is a placeholder, NOT a released dimension. Replace with verified drawing before routing."
+TP1,1,TP,GND,
+TP2,1,TP,USB_5V,
+TP3,1,TP,PACK_P,
+TP4,1,TP,SYS_RAW,
+TP5,1,TP,BOOST_5V,
+TP6,1,TP,POGO_5V,
+TP7,1,TP,DOCK_3V3,
+TP8,1,TP,HOST_SDA,
+TP9,1,TP,HOST_SCL,
+TP10,1,TP,DOCK_SDA,
+TP11,1,TP,DOCK_SCL,
+TP12,1,TP,IO_INT_N,
