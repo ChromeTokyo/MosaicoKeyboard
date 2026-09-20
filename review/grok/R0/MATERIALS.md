@@ -110,8 +110,8 @@ https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c337
 | 路径 | 是什么 |
 | --- | --- |
 | `review/chrome/D1-module-interface/`（`README.md`、`LEFT_SLOT.md`、`BSP_AND_EEPROM.md`、`DOCUMENT_BOUNDARIES.md`） | Chrome 的 D1 分析文档，是上述设计的输入之一。**它已在 H0 中被独立复核过，本次不重审；且按审查包第 3 节规则，它的数值不得充当你复算题答案的来源** |
-| `review/hiro/H0/REPORT.md`、`review/hiro/H0/MATERIALS.md` | Hiro 的 H0 独立复核报告与索引。可读作背景（尤其其 §9 关于范围边界的声明）；**其审查对象与本次不是同一批文件，其结论不构成本次任何一条的依据** |
-| `docs/handoffs/claude-to-hiro.md` | H0 的派发包，可用于了解本项目审查包的写法 |
+| `review/hiro/H0/REPORT.md`、`review/hiro/H0/MATERIALS.md` | **本次不读。** 这是另一轮（H0）独立复核的报告，其中完整列出该轮提出的发现清单，并包含若干已由该轮算出的数值结果。读它会把你的判断锚定在别人的结论上，而本次要的正是**独立**的一遍。若你确实需要了解 H0 的范围边界，本包正文第 4 节已摘录相关两句，不必打开原文。 |
+| `docs/handoffs/claude-to-hiro.md` | **本次不读。** 这是 H0 的派发包，其正文逐条写出了该轮的技术要点与源码行号。需要审查包写法的示范请看 `docs/handoffs/TEMPLATE.md`。 |
 | `docs/handoffs/claude.md` | 主控交接：当前方案、本轮事实、**第 2 节自述错误**、待用户决定事项、各端状态、未解决问题 |
 | `docs/STATUS.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md` | 项目当前状态、任务队列与领取记录、设计成熟度登记 |
 | `docs/INTERFACE_CONTROL.md` | V1.0 四触点时期的历史接口文档，文首有适用范围警示。**不是本次审查对象**，列出只为避免与 `hardware/ICD-0.2-DRAFT.md` 混淆 |
@@ -134,6 +134,8 @@ https://raw.githubusercontent.com/esp-mosaico/esp-mosaico-bsp/392860b1d1a123c337
 | 第 7 节排期原则 | D-017 主循环：先带假设做完设计 → 实物核尺寸 → 逐条关闭假设 → 打板 → 日本验证。解释了为什么现在的设计文件允许大量 `ASSUMPTION` |
 
 ### 4.2 `docs/DECISIONS.md` 关键条目
+
+> **读取限制：** 本次只读 **D-013、D-015、D-018、D-020** 四条——它们是本次派发的法理依据（非作者复核红线、主控模型切换、Grok 加入与授权边界）。**其余条目本次不读**：该文件还登记了此前各轮复核的结论与数值，读了同样会把判断锚定在他人结论上。
 
 | 编号 | 能证明什么 |
 | --- | --- |
