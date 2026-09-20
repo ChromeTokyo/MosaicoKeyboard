@@ -61,3 +61,9 @@ T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](.
 | 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
 | C1 → C2 → C3 → C4 → C5（严格串行） | Codex／`gpt-6-astra`／`ultra`（用户此前确认） | `37ccf53` | `chrome/h-low-quota-batch` | `review/chrome/H01/`、`H02/`、`H03-mcu/`、`H04-power/`；`docs/INTERFACE_CONTROL.md`；本人任务登记及`docs/handoffs/chrome.md` | C1 STOPPED（用户取消，部分证据保留）；C2 CANCELLED（未开始）；C3–C5 被 D1–D3 新派发替代；不修F01/F02、不改生成器、不做CAD/PCB |
+
+### Chrome 改派：左槽方案 D（2026-09-20）
+
+| 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| D1 → D2 → D3（顺序交付） | Codex／`gpt-6-astra`／`ultra`（用户确认） | `ff24626`（PR #21） | `chrome/h-low-quota-batch`（沿用分支，范围已改为D） | `review/chrome/D1-module-interface/`、`D2-eeprom/`、`D3-power/`；`docs/INTERFACE_CONTROL.md`适用范围；本人任务登记、Chrome交接及新问题状态 | D1 IN_PROGRESS；D2/D3 QUEUED。C1/C2已取消，H仅备份；不修F01/F02、不改生成器、不做CAD/PCB、不冻结接口 |
