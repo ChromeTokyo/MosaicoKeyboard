@@ -1,0 +1,23 @@
+{
+  "access_date": "2026-09-20",
+  "files": [
+    {
+      "file": "user_guide_v10.rst",
+      "url": "https://raw.githubusercontent.com/espressif/esp-dev-kits/3c0f6321d2be0398766dcf5c019990772e0f8e54/docs/en/esp-mosaico/user_guide.rst",
+      "sha256": "04af8924f5efa1d713f0ea8ce8b2b2dfebad3df2368791d3f30405fbe153c36a",
+      "scope": "CoreBoard V1.0 only; pin table cross-check, not V1.2 circuit proof"
+    },
+    {
+      "repository_file": "references/official-v12/expansion_v121_zh.pdf",
+      "sha256": "262b52d2b6939020dcb80e549f3d45b1cea8ddd2fc1bd250c85cb1475212aedc"
+    },
+    {
+      "repository_file": "references/official-v12/expansion_v121_en.pdf",
+      "sha256": "46be85c3cb01271475224d10e6b24867acc1ad0cd90cf8fca4523627b289d97b"
+    },
+    {
+      "repository_file": "review/chrome/T04/evidence/coreboard-v1.0-2026-08-18.pdf",
+      "sha256": "587853ee8493be2fc52b2cba347386febefe33fac51bb6b5a9a47f0067d6e213"
+    }
+  ]
+}
