@@ -122,6 +122,13 @@ ABXY_X = 54.00;
 ABXY_Y = -4.00;
 ABXY_R  = 13.00;      // 四键中心到菱形中心
 ABXY_D  = 10.50;      // 键帽直径
+// 键帽配合（keycaps.scad 用同名参数，二者由 include 共享，不得各写一份）
+// ASSUMPTION: AS-31-mechdock-21 键帽法兰兜深 1.5、法兰厚 1.0 → 限位行程 0.5 mm > 开关行程 0.25
+CAP_FLANGE_MARGIN = 1.50;   // 法兰相对帽体的单边外扩
+CAP_POCKET_T      = 1.50;   // 前壁内侧法兰兜深度
+CAP_FLANGE_T      = 1.00;   // 法兰厚
+CAP_PROUD         = 1.50;   // 帽面高出前面外表面
+CAP_GUIDE_WALL    = 2.00;
 // L/R（每侧握把顶部前倾面，按压方向 −Z）
 LR_X   = 58.00;
 LR_Y   = 27.50;
@@ -452,15 +459,15 @@ module buttons_guides() {
     body_solid(WALL);
     union() {
       translate([DPAD_X, DPAD_Y, 0])
-        cap_guide(CLR_PRINT + 1.5, 1.4, 2.0, BOARD_Z_FRONT + 1.0)
+        cap_guide(CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T, CAP_GUIDE_WALL, BOARD_Z_FRONT + 1.0)
           cross_2d(DPAD_ARM_L, DPAD_ARM_W);
       for (a = [0 : 3])
         translate([ABXY_X + ABXY_R*cos(90*a), ABXY_Y + ABXY_R*sin(90*a), 0])
-          cap_guide(CLR_PRINT + 1.5, 1.4, 2.0, BOARD_Z_FRONT + 1.0)
+          cap_guide(CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T, CAP_GUIDE_WALL, BOARD_Z_FRONT + 1.0)
             circle(d = ABXY_D, $fn = 40);
       for (s = [-1, 1])
         translate([s*LR_X, LR_Y, 0])
-          cap_guide(CLR_PRINT + 1.5, 1.4, 2.0, BOARD_Z_FRONT + 1.0)
+          cap_guide(CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T, CAP_GUIDE_WALL, BOARD_Z_FRONT + 1.0)
             bar_2d(LR_BAR_W, LR_BAR_H);
     }
   }
@@ -468,13 +475,13 @@ module buttons_guides() {
 
 module buttons_openings() {
   translate([DPAD_X, DPAD_Y, 0])
-    cap_opening(CLR_PRINT, CLR_PRINT + 1.5, 1.4) cross_2d(DPAD_ARM_L, DPAD_ARM_W);
+    cap_opening(CLR_PRINT, CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T) cross_2d(DPAD_ARM_L, DPAD_ARM_W);
   for (a = [0 : 3])
     translate([ABXY_X + ABXY_R*cos(90*a), ABXY_Y + ABXY_R*sin(90*a), 0])
-      cap_opening(CLR_PRINT, CLR_PRINT + 1.5, 1.4) circle(d = ABXY_D, $fn = 40);
+      cap_opening(CLR_PRINT, CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T) circle(d = ABXY_D, $fn = 40);
   for (s = [-1, 1])
     translate([s*LR_X, LR_Y, 0])
-      cap_opening(CLR_PRINT, CLR_PRINT + 1.5, 1.4) bar_2d(LR_BAR_W, LR_BAR_H);
+      cap_opening(CLR_PRINT, CLR_PRINT + CAP_FLANGE_MARGIN, CAP_POCKET_T) bar_2d(LR_BAR_W, LR_BAR_H);
 }
 
 /* =====================================================================
@@ -660,6 +667,8 @@ if (PART == "assembly") {
     }
     translate([-BIG/2, -BIG/2, -BIG/2]) cube([BIG/2, BIG, BIG]);
   }
+} else if (PART == "none") {
+  // keycaps.scad 用 include <dock_shell.scad> 借参数时覆盖为 "none"，不渲染外壳
 } else {
-  assert(false, "PART 取值须为 assembly/upper/lower/frame/mockup_upper/mockup_lower/section");
+  assert(false, "PART 取值须为 assembly/upper/lower/frame/mockup_upper/mockup_lower/section/none");
 }
