@@ -207,7 +207,13 @@ def main() -> int:
     # BOM
     if os.path.exists(BOM):
         with open(BOM, encoding="utf-8-sig", newline="") as f:
-            rows = list(csv.DictReader(f))
+            # 允许文件开头的 "#" 注释行（项目要求每个文件带"提案 · 未冻结"抬头），
+            # 表头是第一行非注释行。
+            body = [ln for ln in f if not ln.lstrip().startswith("#")]
+        rows = list(csv.DictReader(body))
+        if rows and "refdes" not in rows[0]:
+            errors.append(f"BOM.csv 表头缺 refdes 列，实际列：{sorted(rows[0])}")
+            rows = []
         bom_refs = set()
         for r in rows:
             for ref in re.split(r"[,\s]+", r["refdes"].strip()):

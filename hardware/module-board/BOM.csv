@@ -1,0 +1,18 @@
+# 提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+# 模块板 BOM，修订 b（2026-09-21）。位号集合必须与 netlist.yaml 的 components 完全一致（check_netlist.py 第 9 项）。
+# 「嘉立创常备」列除 是/否/未查 外增加第四值「不适用」，用于 J2/J3/JP1/TP_* 这些 PCB 图形（焊盘、半孔、锡桥、测试点），
+#   它们不是采购件、不出现在贴片清单，只由板厂工艺实现。理由见 DESIGN_NOTES.md 第 8 节。
+# 未实际打开原厂数据手册的器件，关键参数一律写「待原厂数据手册核对」（ICD EL-D-09、硬约束 9）。
+# 除 U1 与 C1 外，本表的 LCSC 编码均未在本轮打开页面核对，「嘉立创常备」一律记「未查」，下单前须逐项复核库存与封装（AS-27）。
+refdes,value,package,LCSC 候选,嘉立创常备(是/否/未查),备注
+J1,2×10P 2.54 mm 右角公头（配合主机左槽 H2）,HDR-2x10-P2.54-RA,C9144（BOOMELE 2.54-2*10P，右角/公/3 A/黄铜）,未查,"ASSUMPTION AS-06：配对母座 B-2200R20P-B120（Ckmtw，LCSC C124406）图纸 2026-09-21 未能在线打开，配对公头「待原厂核对」。镀层、针截面、插拔寿命待原厂图纸核对。备选 C124359（直插公头，若改板形）。两排配合针相对板面高度 ASSUMPTION AS-31-mb-2。到货按 P1/P2 核 pin 1 朝向再定 1 脚方向"
+U1,AT24C02D-SSHM-T（2 Kbit I²C EEPROM，1.7–3.6 V）,SOIC-8,C34807,未查,"引脚序 A0/A1/A2/GND/SDA/SCL/WP/VCC 已按 Microchip Atmel-8871F（01/2017）Table 1-1 核对：https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet.pdf 。地址 0x50（A2=A1=0，A0 由主机 GPIO14 驱动 0）。SDA 外部上拉 ≤10 kΩ（Table 1-1）。LCSC 编码与嘉立创库别未核，下单前查"
+C1,100 nF ±10% 50 V X7R,C0603,C1591（Samsung CL10B104KB8NNNC）,否,"U1 去耦，就地布放。仓库缓存 references/C1591.json 的 c_para 记 JLCPCB Part Class = Extended Part，故记「否」（扩展库）；该缓存日期未知，下单前复核。行动项：另找同规格基础库 0603 X7R 100 nF 替代以省扩展料工序费"
+R_PU_SDA R_PU_SCL,DNP（阻值待定，≤10 kΩ）,R0603,待选（阻值定下后选常备料）,未查,"DNP。SLOT_SDA/SCL 上拉到 SLOT_3V3 的预留位。阻值由 P6/G6-E1 实测 I²C 上升时间后决定；上限 10 kΩ 来自 AT24C02D 手册 Table 1-1。硬约束 4：不得照搬 V1.0 的 4.7 kΩ 结论（V1.2 模块 I²C1 是 GPIO0/1 独立总线）"
+R_LINK_SDA R_LINK_SCL,0 Ω（DNP）,R0603,待查（0 Ω 0603，嘉立创基础库常见，编码未核）,未查,"DNP。SLOT_SDA/SCL ↔ DOCK_SDA/SCL 的唯一通路，默认断开（ICD EL-D-06、EL-D-10）。装配前提：底座确已装可选电量计、EL-D-10 审核通过、且 AS-08 一级防呆已关闭（装后绕 Y 轴 180° 错放由无损变有损，见 DESIGN_NOTES 第 5 节）"
+R_S_KEY_UP R_S_KEY_DOWN R_S_KEY_LEFT R_S_KEY_RIGHT R_S_KEY_L R_S_KEY_R R_S_KEY_A R_S_KEY_B R_S_KEY_X R_S_KEY_Y,1 kΩ ±1% 1/10 W（提案；备选 0 Ω）,R0603,待查（1 kΩ 0603，嘉立创基础库常见，编码未核）,未查,"10 只，装配件（非 DNP）。pin 1 = H2 侧 SLOT_KEY_*，pin 2 = 弹簧针侧 KEY_*。1 kΩ 为本任务提案值，ICD 第 2 节把数值交模块板提案、Hiro 复核。ASSUMPTION AS-31-mb-4（1 kΩ 下按下电平仍 < V_IL，依赖主机内部上拉量级，unknown）与 AS-31-mb-6（对 5 V 误接触限流有效，GPIO 注入电流限值待核）。P4 若实测按下电平不够低，改 0 Ω"
+JP1,三焊盘锡桥（默认桥 1–2，WP→GND 可写）,SolderJumper-3pad,—,不适用,"PCB 图形，非采购件。1 = DOCK_GND，2 = U1.WP，3 = SLOT_3V3。两侧不得同时桥接（会把 SLOT_3V3 短到 DOCK_GND）。默认可写与 eeprom 分支 PROGRAMMING.md ASSUMPTION P-01 一致；ICD 第 7.1 节写的是 proposed 默认写保护，两者冲突须 Chrome 择一（见 DESIGN_NOTES 第 10 节）"
+J2,2×8 弹簧针接触焊盘阵列 @2.54 mm（触点板底层 −Y 面）,PAD-ARRAY-2x8-P2.54-D1.8,—,不适用,"PCB 图形，非采购件。焊盘 Ø1.8 mm 为 ASSUMPTION AS-31-mb-3，底座选定弹簧针后按「焊盘直径 ≥ 针头直径 + 2 × max(DOCK_X_TOL, DOCK_Z_TOL)」复算（针头直径与定位公差目前均 unknown）。表面处理 ENIG（AS-31-mb-8）；面内硬金焊盘能否做「待嘉立创工艺确认」"
+J3,槽板↔触点板 90° 半孔焊接接头，16 位 @1.50 mm,CASTELLATION-1x16-P1.50-D0.70,—,不适用,"PCB 图形，非采购件。ASSUMPTION AS-31-mb-5：半孔间距 1.5 mm、钻孔 Ø0.7 mm（2026-09-21 检索 jlcpcb.com 半孔规则：钻孔与孔边距均 ≥0.6 mm、板尺寸 ≥10×10 mm，页面未存档，下单前复核）。单个半孔焊点载流 ≥0.5 A 为假设；DOCK_5V/DOCK_GND 各占 2 位并联覆盖 AS-09 峰值 ≤1 A。P10 验证压降与温升"
+TP_5V TP_GND TP_3V3 TP_SDA TP_SCL TP_A0 TP_SPARE TP_WP,测试焊盘（顶面 SMD 圆焊盘，Ø2.0/1.5 mm）,TP-ROUND,—,不适用,"PCB 图形，非采购件。TP_3V3/TP_GND/TP_SDA/TP_SCL 为 ICD 第 7.1 节烧录夹具四点，建议 1×4 @2.54 mm 直线排列以便临时焊排针。pin 18 无测试点（硬约束 2）：P8 直接探 J1 焊针"
+D_ESD_KEY_UP D_ESD_KEY_DOWN D_ESD_KEY_LEFT D_ESD_KEY_RIGHT D_ESD_KEY_L D_ESD_KEY_R D_ESD_KEY_A D_ESD_KEY_B D_ESD_KEY_X D_ESD_KEY_Y D_ESD_SDA D_ESD_SCL D_ESD_5V,双向 TVS VRWM 5 V（DNP）,SOD-523,C2900832（Semitel SES5VD523-2B，VC 18.6 V）,未查,"DNP，13 只。pin 1 = 信号，pin 2 = DOCK_GND。结电容、Ipp、库存均「待原厂数据手册核对」——结电容直接影响 I²C 上升沿与按键沿，装配前必须核。原候选 SOCAY ESD05V88D-LC（C303803）2026-09-21 查为缺货。默认不装的理由见 DESIGN_NOTES 第 7 节"
