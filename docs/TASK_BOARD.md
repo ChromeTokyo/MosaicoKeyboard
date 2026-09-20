@@ -26,6 +26,9 @@
 | T16 | 用户执行，Chrome 定规程，Claude 记录 | 用官方外壳 3mf 打印件标定装配间隙：打印官方件并卡尺实测打印件内腔，与实物模块外形实测值相减，得出乐鑫采用的装配间隙 | 用户 3D 打印机（已具备）；实物到货 | 打印件内腔与模块本体分别实测并留数据与照片；间隙为两者之差，误差来源（打印收缩、层厚、公差）单独记录 | READY（打印可先做，相减待实物） |
 | T17 | Claude 提案，用户打印试握 | 产品体量模型：按 T13 的形态方向出可打印的握持体量件，验证长条形、握把深度、按键落点与拇指可达范围 | T13 视觉与交互方向 | 只验证人机与手感，不含任何硬件配合尺寸；结论回写 T13 | READY |
 
+| T18 | Claude（提案），Chrome 采纳，Hiro 复核 | 修复 F03：建立 `design/` 的可复现基线——缓存缺失或无效时硬失败而非静默回退，登记实际引用缓存的版本与哈希，冻结输入后统一重生成 | Chrome 的 T02 报告 F03；`origin/chrome/t02-a0-eda-validation` | 同一输入两次生成逐字相同，且与仓库产物一致；缓存清单可核验；不引入任何封装或器件的取舍判断 | IN_PROGRESS |
+| T19 | Claude（提案），Chrome 采纳，Hiro 复核 | 修复 F01：消除 `POGO_5V` 与 `BOOST_SW` 的导线共线重叠，使 EDA 解析后网络归属正确 | T18 完成后的可复现基线 | EDA 网表 43 个命名网、242 个引脚归属全部一致、无意外网合并；电路连接关系不变 | BLOCKED（等 T18） |
+
 `READY`：可领取；`IN_PROGRESS`：有明确会话／分支正在执行；`BLOCKED`：前置条件未满足；`IN_REVIEW`：有交付待审；`DONE`：验收通过。领取时增加分支、输入提交号与交接路径，完成时补充 PR／证据链接。
 
 T03 的工具验证和空间研究可先开展；精确机械数据缺失时只能保留草案。Chrome 可以在独立任务中交替研究 T10 与 T11，但同一源文件只允许一个编辑会话，最终装配和制造输出仍受冻结版本约束。应用 UI／固件完整设计与实现待硬件稳定后另建任务。
@@ -41,6 +44,7 @@ Cursor／Grok 默认没有领取任务，不是 T04 或其他核心工作的必�
 | T01 | Claude 会话（Claude Code） | `claude-opus-5`，高推理档位 | `3d5a112` | `docs/t01-lead-handover` | `docs/OWNERSHIP.md`、`docs/DECISIONS.md`、`docs/handoffs/chrome.md`、`docs/handoffs/claude.md`、本文件 | `docs/handoffs/claude.md` | 2026-09-20 |
 | T06 | 同上 | 同上 | `3d5a112` | 同上 | `docs/T06-DOMESTIC-EXECUTION.md` | `docs/handoffs/claude.md` | 2026-09-20 |
 | T13 | 同上 | 同上 | `3d5a112` | 同上 | `docs/product/T13-PRODUCT-DIRECTION.md` | `docs/handoffs/claude.md` | 2026-09-20 |
+| T18 | Claude 会话（Claude Code） | `claude-opus-5`，高推理档位 | `a9d383c` ＋ `origin/chrome/t02-a0-eda-validation` | `claude/t18-reproducible-baseline` | **`design/build_design.py`（自 Chrome 明确移交）**、`design/*.json`、`design/*.csv`、`references/` 的清单文件、`review/claude/T18/` | `docs/handoffs/claude.md` | 2026-09-20 |
 | T02 | Chrome（Codex，系统标识 GPT-6） | 精确模型 ID 与档位未由可核验接口提供，Chrome 声明不猜填 | `3d5a112` | `chrome/t02-a0-eda-validation` | `review/chrome/T02/`、`tools/check_a0_static.py`、`docs/DESIGN_STATUS.md`、`docs/TASK_BOARD.md`、`docs/handoffs/chrome.md` | `docs/handoffs/chrome.md` | 2026-09-20，已交付，PR #4 |
 
 `docs/TEAM_PLAN.md`、`CLAUDE.md`、`README.md` 指定主控使用 Claude Fable 5.1；本轮实际执行模型为 `claude-opus-5`，按 `docs/TEAM_PLAN.md` 第 1 节如实登记，记录见 `docs/DECISIONS.md` D-001，待用户确认是否同步修订文档表述。
