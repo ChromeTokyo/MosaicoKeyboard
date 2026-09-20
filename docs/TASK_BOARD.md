@@ -53,5 +53,5 @@ T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在�
 
 | ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| T14＋接口草案（非 T08 冻结） | Chrome／Codex | 系统标识 GPT-6；精确 ID、档位未暴露，已询问界面值，禁止猜填 | `25c4902` | `chrome/interface-control-draft` | `docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`review/chrome/T14/`、本文件 Chrome 行、Chrome 交接 | `docs/handoffs/chrome.md` | 2026-09-20 |
+| T14＋接口草案（非 T08 冻结） | Chrome／Codex | `gpt-6-astra`（界面 GPT-6 Astra），`ultra`；用户于本会话确认，非运行时反查 | `25c4902` | `chrome/interface-control-draft` | `docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`review/chrome/T14/`、本文件 Chrome 行、Chrome 交接 | `docs/handoffs/chrome.md` | 2026-09-20 |
 | T04 子范围 | Chrome／Codex | 同上 | `25c4902` | 同上（串行统一录入接口文件） | `review/chrome/T04/`，限 CoreBoard 官方电气资料核验；不领取全 BOM 审核完成状态 | `docs/handoffs/chrome.md` | 2026-09-20 |
