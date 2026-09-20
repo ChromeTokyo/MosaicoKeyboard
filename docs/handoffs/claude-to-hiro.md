@@ -180,10 +180,10 @@ Hiro 参与过原 A0 草案的产生（`docs/TEAM_PLAN.md` 第 4 节、`docs/han
 | --- | --- | --- | --- |
 | A-H0-1 | `ASSUMPTION:` V1.2 左槽 20 针的电气定义与官方 V1.0 用户指南 H2 表逐脚一致 | 实拍 `v12-baseboard-back.png` 与官方线图上左槽阵列的丝印集合与 H2 表内容一致（主控本次目视：`55 ADC`、`33 DN`、`34 DP`、`IN`、`3V3`、`14`、`1 SCL`、`0 SDA`、`5V`、`GND` 等可辨，顺序与朝向未逐脚核对）；BSP 左槽映射函数对左槽原样返回 | 按 `docs/MEASUREMENT_PROTOCOL.md` 第 4B.3 节拍左槽特写并逐脚抄丝印；整机断电、隔离电池后，用万用表从模块板一侧对 pin17／pin19／pin20 与背面 `5V`／`GND` 焊盘做通断，对 pin14／pin16 与背面 2×10P 丝印 `1`／`0` 做通断 |
 | A-H0-2 | `ASSUMPTION:` 左槽连接器为 2.54 mm 间距轴向插接排针排母，母座在机身左侧面、开口朝左 | 官方 V1.0 指南 `user_guide_v10.rst:590` 写明 2×10P、2.54 mm；V1.0 原理图标注 `B-2200R20P-B120`；`E-01` 未证实 | 第 4B.3 节拍左右接口特写；卡尺量相邻孔中心距与两排间距各三处取均值；记录母座开口方向与 pin1 位置 |
-| A-H0-3 | `ASSUMPTION:` eFuse 中的 board variant 与 BaseBoard 丝印 `V1.2` 严格对应 | `esp_mosaico.h:42–43` 声明从 eFuse USER_DATA 读；variant 烧在 CoreBoard 芯片内，丝印在 BaseBoard 上 | 刷任意 BSP 示例，抄录串口日志中的板级版本打印；同时按第 0 节抄录 BaseBoard 与 CoreBoard 丝印；三值并列登记 |
-| A-H0-4 | `ASSUMPTION:` V1.2 模块槽 I²C1 外部上拉存在与否及阻值未知；按「可能只有内部上拉」设计并预留 DNP 位 | `subboard.c:93` `enable_internal_pullup = true`；V1.0 的 4.7 kΩ 结论不适用 | 主机上电、槽内无模块时，测 pin14／pin16 对 pin19 的电阻；接示波器看 100 kHz 读 EEPROM 时的上升沿，再决定 DNP 位是否装配 |
+| A-H0-3 | `ASSUMPTION:` eFuse 中的 board variant 与 BaseBoard 丝印 `V1.2` 严格对应 | `esp_mosaico.h:42–43` 从 eFuse USER_DATA 读；variant 烧在 CoreBoard 芯片内、丝印在 BaseBoard 上。**（2026-09-21 Hiro 补查 `onboard/esp_mosaico.c` 指出：eFuse 1.1 与 1.2 都映射到 `variant V1_2`，因此 variant 只能区分 V1_0／V1_2 两档，不能分辨 1.2 与指南所称 1.2.1，也不能证明 CoreBoard 与 BaseBoard 同版。）** | 刷任意 BSP 示例，抄录串口日志中的板级版本打印；同时按第 0 节抄录 BaseBoard 与 CoreBoard 丝印；三值并列登记 |
+| A-H0-4 | `ASSUMPTION:` V1.2 模块槽 I²C1 外部上拉存在与否及阻值未知；按「可能只有内部上拉」设计并预留 DNP 位 | `subboard.c:93` `enable_internal_pullup = true`；V1.0 的 4.7 kΩ 结论不适用 | **（2026-09-21 已更正，原文为「主机上电…测…电阻」，属带电测电阻的错误做法，由 Hiro 在 H0 复核中指出）** 分两步且**严禁带电测电阻**：① **完全断电**（主机关机、断开所有 USB、按官方流程确认无残余供电）后，用万用表电阻档测 pin14／pin16 对 pin19 的直流电阻，读数即外部上拉的存在与阻值；② 上电后**只测电压**，不测电阻：测 pin14／pin16 空闲时对 pin20（GND）的电压，应接近 pin19 电平。有示波器再看 100 kHz 读 EEPROM 时的上升沿。三项结果合并后决定 DNP 位是否装配 |
 | A-H0-5 | `ASSUMPTION:` pin17 输入额定未知；电源预算按「整机峰值 ≤ 1 A、持续 ≤ 0.6 A」假设计算，无官方依据 | 官方仅写「可供电并充电」，无数值（`DOCUMENT_BOUNDARIES.md`） | 用限流可调电源经模块板给 pin17 供电，从 0.3 A 逐级上调，记录整机开机、充电、屏幕满亮与音频满载时的电流与 pin17 压降；任何异常即停 |
-| A-H0-6 | `ASSUMPTION:` 实拍 `V1.2 / 260821` 与官方指南「1.2.1 及以上」为同一版次 | 无直接证据；BSP 只有 `V1_0`／`V1_2` 两档 | 与 A-H0-3 同步登记；若三值一致且背面确无四焊盘，结论 1 可升 confirmed |
+| A-H0-6 | `ASSUMPTION:` 实拍 `V1.2 / 260821` 与官方指南「1.2.1 及以上」为同一版次 | 无直接证据；BSP 只有 `V1_0`／`V1_2` 两档，**且 1.1 与 1.2 同映射 V1_2（Hiro 补查）**，故 variant 无分辨力 | 与 A-H0-3 同步登记。**更正：原写「若三值一致且背面确无四焊盘，结论 1 可升 confirmed」不成立**——eFuse 无法分辨 1.2 与 1.2.1，实物背面无四焊盘只能确证「手上这块无」，要升 confirmed 还需官方给出 V1.2 的版本对照或 BaseBoard 资料 |
 
 ## 完成内容
 

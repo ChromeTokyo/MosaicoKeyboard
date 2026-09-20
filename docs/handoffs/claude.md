@@ -30,7 +30,7 @@
 | **V1.2 给模块槽配了独立 I²C 总线**：主板总线搬到 GPIO56/GPIO3，GPIO0/GPIO1 整条留给模块槽跑 `I2C_NUM_1` | BSP `esp_mosaico.h:63-75` | confirmed（源码） |
 | **官方 V1.2 资料其实已公开**，发在 MakerWorld 模型页而非 docs 站，已归档 | `references/official-v12/` | confirmed |
 
-另：BSP `detect_board_variant()` 从 **eFuse** 读版本号并打印 `Hardware version: vX.Y (variant=v1.N)`。**实物到货刷任意示例看串口日志即可权威判定版本**，不必再靠照片。
+另：BSP `detect_board_variant()` 从 **eFuse** 读版本号并打印 `Hardware version: vX.Y (variant=v1.N)`。刷任意示例看串口日志可读出 variant。**但（2026-09-21 Hiro 指出）eFuse 1.1 与 1.2 都映射到 `V1_2`，只能区分 V1_0／V1_2 两档，不能分辨 1.2 与 1.2.1，也不能证明 CoreBoard 与 BaseBoard 同版**——仍须并列抄录两块板的丝印与日期码。
 
 ## 2. 我在本轮犯的错误（**请重点复核这些**）
 
