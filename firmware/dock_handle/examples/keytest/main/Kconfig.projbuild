@@ -7,8 +7,18 @@ menu "Dock Handle keytest"
         depends on BSP_DISPLAY_ENABLE
         default y
         help
-            使用 bsp_display_start() 与 LVGL 在 480x480 屏上显示连接状态与按键位图。
+            使用 bsp_display_start() 与 LVGL 在屏上显示连接状态与按键位图。
             关闭后只输出到控制台。
+
+    config KEYTEST_I2C_SCAN
+        bool "Read-only I2C1 address scan at boot (G6-C)"
+        default y
+        help
+            启动时对模块 I2C1（GPIO0/1）做一次只读地址扫描：对 0x08-0x77 逐个 i2c_master_probe()，
+            只发地址字节看 ACK，不写任何寄存器。预期只有 0x50（左槽 EEPROM），右槽有模块时再加 0x51；
+            出现其他地址即违反硬约束 6 / ICD EL-D-06，打告警。
+            ASSUMPTION: 与管理器扫描任务并发访问同一总线由 ESP-IDF i2c_master 的总线锁串行化
+            （IDF v5.5.4 i2c_master.c 有 bus_lock_mux；6.2 待核）。
 
     config KEYTEST_HEARTBEAT_S
         int "Heartbeat log interval (s)"
