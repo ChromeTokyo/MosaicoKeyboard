@@ -2,7 +2,7 @@
 
 - 任务 ID：T01、T06、T13、T18、T19，以及本轮产生的方向决策与派发。
 - 负责人／角色：Claude 主控（总控、集成、产品视觉与交互）。
-- 平台、实际模型 ID、推理档位：Claude Code，`claude-opus-5`，高推理档位。**文档指定主控为 Claude Fable 5.1，本轮以 Opus 5 执行并按 `docs/TEAM_PLAN.md` 第 1 节如实登记，见 D-001。**
+- 平台、实际模型 ID、推理档位：Claude Code。本会话主控模型经历两次切换（同一会话、共享上下文）：`claude-opus-5`（2026-09-20 全天）→ `claude-fable-5-1`（2026-09-20 晚至 2026-09-21 08:10，D-015）→ `claude-opus-5`（2026-09-21 08:10 起，Fable 额度耗尽，D-018）。**三段均为同上下文，任何一段对另一段的复核都不构成独立复核。****文档指定主控为 Claude Fable 5.1，本轮以 Opus 5 执行并按 `docs/TEAM_PLAN.md` 第 1 节如实登记，见 D-001。**
 - 接手记录：`claude-fable-5-1`（文档指定的主控模型），2026-09-20 晚接手，复核本文件与前一会话的全部结论，见 D-015。本文件以下各节为 Opus 5 会话所写；接手后的修订以「2026-09-20 晚」标注，其余表述保持原样以便追溯。
 - 日期：2026-09-20。
 - 状态：IN_PROGRESS，交接给下一个主控会话。
@@ -30,7 +30,7 @@
 | **V1.2 给模块槽配了独立 I²C 总线**：主板总线搬到 GPIO56/GPIO3，GPIO0/GPIO1 整条留给模块槽跑 `I2C_NUM_1` | BSP `esp_mosaico.h:63-75` | confirmed（源码） |
 | **官方 V1.2 资料其实已公开**，发在 MakerWorld 模型页而非 docs 站，已归档 | `references/official-v12/` | confirmed |
 
-另：BSP `detect_board_variant()` 从 **eFuse** 读版本号并打印 `Hardware version: vX.Y (variant=v1.N)`。**实物到货刷任意示例看串口日志即可权威判定版本**，不必再靠照片。
+另：BSP `detect_board_variant()` 从 **eFuse** 读版本号并打印 `Hardware version: vX.Y (variant=v1.N)`。刷任意示例看串口日志可读出 variant。**但（2026-09-21 Hiro 指出）eFuse 1.1 与 1.2 都映射到 `V1_2`，只能区分 V1_0／V1_2 两档，不能分辨 1.2 与 1.2.1，也不能证明 CoreBoard 与 BaseBoard 同版**——仍须并列抄录两块板的丝印与日期码。
 
 ## 2. 我在本轮犯的错误（**请重点复核这些**）
 
