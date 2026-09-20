@@ -29,6 +29,7 @@
 - 交接路径：[Chrome 交接](handoffs/chrome.md)；证据：[T02 报告](../review/chrome/T02/REPORT.md)。
 - 验收：记录实际 EDA 导入／编辑／保存／导出及网络核对结果；失败项提供复现步骤与修复建议，由 Claude 核对证据完整性。
 - 本轮结果：原理图导入、编辑、保存重开与可见文本导出完成；原生网表证实 POGO_5V 的 5 个引脚被误并入 BOOST_SW，PCB 导入失败，当前缓存与输出不一致。报告结论 `CHANGES_REQUIRED`，待 Claude 核对；不表示工具链或 A0 通过，T07 等依赖保持未满足。
+- 输出：[PR #4](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/4)；证据提交 `3d8ad4c`。
 
 T03 的工具验证和空间研究可先开展；精确机械数据缺失时只能保留草案。Chrome 可以在独立任务中交替研究 T10 与 T11，但同一源文件只允许一个编辑会话，最终装配和制造输出仍受冻结版本约束。应用 UI／固件完整设计与实现待硬件稳定后另建任务。
 

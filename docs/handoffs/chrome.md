@@ -5,7 +5,7 @@
 - 日期：2026-09-20。
 - 状态：IN_REVIEW；技术结论 CHANGES_REQUIRED，不是硬件通过。
 - 输入：`3d5a112824bd3e94c2065b6a8137d844f3a018da`；共同接口尚未冻结。
-- 输出分支：`chrome/t02-a0-eda-validation`；输出提交由本交接所在提交及 PR 标识。
+- 输出分支：`chrome/t02-a0-eda-validation`；证据提交 `3d8ad4c`；[PR #4](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/4)。
 - 报告：[T02 验证报告](../../review/chrome/T02/REPORT.md)。
 
 ## 已完成
