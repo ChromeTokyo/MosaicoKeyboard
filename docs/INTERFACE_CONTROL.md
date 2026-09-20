@@ -1,5 +1,8 @@
 # ESP-Mosaico 底座统一接口约束
 
+> **适用范围更新（2026-09-20，方案 D，尚未冻结）**：按用户最新指示，主线为左模块槽，方案 H 仅备份，C1/C2取消。本文原 ICD-0.1 的四背部触点、共享I²C及Pogo布局是 **V1.0历史草案**，不得用于V1.2底座设计。V1.2模块总线及EEPROM以本轮 [D1接口合同](../review/chrome/D1-module-interface/README.md)为准；扩展指南自身限1.2.1+。原内容保留供溯源；版本冻结仍由主控记录、Hiro复核。当前写入分支为 `chrome/h-low-quota-batch`，下文旧分支信息仅作历史。
+
+
 版本 **ICD-0.1-DRAFT，2026-09-20；未冻结、禁止作为制造尺寸**。维护／技术责任：Chrome；关键接口独立复核：Hiro；冻结提交与放行记录：Claude。文件唯一写入分支 `chrome/interface-control-draft`。本次输入 main `25c4902`，并已纳入 `a9d383c` 的 D-009-R／D-010／D-011、`1030776` 的 PR #8 来源更正；A0 审查对象仍为 `3d5a112`，没有改动设计源。
 
 `confirmed` 指指定官方文件明确画出／写出，不代表样机实测通过；`derived` 指计算或图面推断；`proposed` 指 Chrome 提出的设计要求或研究值；`unknown` 指仍需证据。**本文没有任何 measured／frozen 尺寸。** 各项变更均须检查末列影响范围；Hiro 复核未完成时不得自批 G1/G2/G3。
