@@ -16,3 +16,6 @@ references/*.pdf
 references/*.png
 references/*.html
 references/*.txt
+
+# Claude Code 工作流临时 worktree
+.claude/worktrees/
