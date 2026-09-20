@@ -1,0 +1,27 @@
+{
+  "source_commit": "56030b99d3cc347e9f4b9d1ca2dd39f19c608198",
+  "main_at_claim": "edb530106911997c894e3a2b7011a42153b0efef",
+  "proposal_branch_at_claim": "94b30d5f09690a3c75d43d4a5e694d4e1e30147b",
+  "recovered_at": "2026-09-20T05:05:01.062602+00:00",
+  "purpose": "Review-only immutable historical candidate. Must be installed into an isolated repo copy to run; not authority design source.",
+  "files": [
+    {
+      "source_path": "design/build_design.py",
+      "saved_path": "candidate/build_design.py",
+      "sha256": "418d7fe1ba99e744fa2bc73d63dbe141d03ef4bca8d75748dec4efa2fd4a3ea6",
+      "bytes": 41696
+    },
+    {
+      "source_path": "design/library-policy.json",
+      "saved_path": "candidate/library-policy.json",
+      "sha256": "b9f4ec8d258b6d1c70cbe2a1da8f3a297c37c56611f7423b7e2a26da1376e4b4",
+      "bytes": 25745
+    },
+    {
+      "source_path": "design/references-lock.json",
+      "saved_path": "candidate/references-lock.json",
+      "sha256": "520e8e48e39b469992c400a6c83e97a4492d3d7cfebfb649234faf3a240a218d",
+      "bytes": 17036
+    }
+  ]
+}
