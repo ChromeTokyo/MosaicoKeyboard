@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="520" viewBox="0 0 900 520">
+<style>
+ text{font-family:"Helvetica Neue",Arial,sans-serif}
+ .lbl{font-size:9px;fill:#333}.ttl{font-size:13px;fill:#111;font-weight:600}
+ .dimtxt{font-size:8px;fill:#0b6}
+ .out{fill:#f7f7f7;stroke:#222;stroke-width:1.2}
+ .grip{fill:#ececec;stroke:#888;stroke-width:0.8}
+ .bay{fill:#fff;stroke:#c33;stroke-width:1.1}
+ .win{fill:#dfeaf5;stroke:#36c;stroke-width:0.9}
+ .key{fill:#fff;stroke:#222;stroke-width:0.9}
+ .hid{fill:none;stroke:#999;stroke-width:0.7;stroke-dasharray:4 3}
+ .pogo{fill:#c33;stroke:none}
+ .dim{stroke:#0b6;stroke-width:0.6}
+ .ctr{stroke:#c9c;stroke-width:0.5;stroke-dasharray:6 2 1 2}
+ .brd{fill:none;stroke:#960;stroke-width:0.9;stroke-dasharray:5 2}
+</style>
+<rect width="100%" height="100%" fill="#ffffff"/>
+<text x="530.5" y="22.0" class="ttl" text-anchor="middle">正视（+Z 朝用户）：屏朝用户、USB-C 朝下、左槽在左</text>
+<rect x="29.50" y="141.00" width="501.00" height="304.50" rx="18.00" class="out"/>
+<rect x="29.50" y="216.00" width="160.50" height="204.00" rx="24.00" class="grip"/>
+<rect x="370.00" y="216.00" width="160.50" height="204.00" rx="24.00" class="grip"/>
+<rect x="196.16" y="141.00" width="152.67" height="176.38" rx="3.00" class="bay"/>
+<rect x="218.22" y="178.22" width="123.57" height="123.57" rx="3.00" class="win"/>
+<text x="280.0" y="243.0" class="lbl" text-anchor="middle">屏窗 41.19²</text>
+<circle cx="202.00" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="202.00" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="209.62" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="209.62" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="217.24" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="217.24" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="224.86" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="224.86" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="232.48" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="232.48" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="240.10" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="240.10" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="247.72" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="247.72" cy="320.38" r="2.10" class="pogo"/>
+<circle cx="255.34" cy="314.38" r="2.10" class="pogo"/>
+<circle cx="255.34" cy="320.38" r="2.10" class="pogo"/>
+<text x="228.7" y="328.4" class="lbl" text-anchor="middle">弹簧针 2×8 列1..8</text>
+<path class="key" d="M 82.0 236.2 h 20.2 v -20.2 h 31.5 v 20.2 h 20.2 v 31.5 h -20.2 v 20.2 h -31.5 v -20.2 h -20.2 Z"/>
+<circle cx="118.00" cy="223.50" r="3.00" class="pogo"/>
+<text x="118.0" y="219.5" class="lbl" text-anchor="middle">UP</text>
+<circle cx="118.00" cy="280.50" r="3.00" class="pogo"/>
+<text x="118.0" y="276.5" class="lbl" text-anchor="middle">DOWN</text>
+<circle cx="89.50" cy="252.00" r="3.00" class="pogo"/>
+<text x="89.5" y="248.0" class="lbl" text-anchor="middle">LEFT</text>
+<circle cx="146.50" cy="252.00" r="3.00" class="pogo"/>
+<text x="146.5" y="248.0" class="lbl" text-anchor="middle">RIGHT</text>
+<circle cx="481.00" cy="252.00" r="15.75" class="key"/>
+<text x="481.0" y="255.0" class="lbl" text-anchor="middle">A</text>
+<circle cx="442.00" cy="213.00" r="15.75" class="key"/>
+<text x="442.0" y="216.0" class="lbl" text-anchor="middle">X</text>
+<circle cx="403.00" cy="252.00" r="15.75" class="key"/>
+<text x="403.0" y="255.0" class="lbl" text-anchor="middle">Y</text>
+<circle cx="442.00" cy="291.00" r="15.75" class="key"/>
+<text x="442.0" y="294.0" class="lbl" text-anchor="middle">B</text>
+<rect x="76.00" y="145.50" width="60.00" height="24.00" rx="6.00" class="key"/>
+<text x="106.0" y="160.5" class="lbl" text-anchor="middle">L</text>
+<rect x="424.00" y="145.50" width="60.00" height="24.00" rx="6.00" class="key"/>
+<text x="454.0" y="160.5" class="lbl" text-anchor="middle">R</text>
+<rect x="100.00" y="321.00" width="150.00" height="102.00" rx="0.00" class="hid"/>
+<text x="175.0" y="375.0" class="lbl" text-anchor="middle">电池仓 50×34×8</text>
+<rect x="262.00" y="317.38" width="36.00" height="128.12" rx="0.00" class="hid"/>
+<text x="280.0" y="359.4" class="lbl" text-anchor="middle">原生</text>
+<text x="280.0" y="371.4" class="lbl" text-anchor="middle">USB-C</text>
+<text x="280.0" y="383.4" class="lbl" text-anchor="middle">直通道</text>
+<rect x="355.60" y="436.50" width="28.80" height="9.00" rx="3.00" class="key"/>
+<text x="370.0" y="456.5" class="lbl" text-anchor="middle">底座 USB-C</text>
+<line x1="280.0" y1="123.0" x2="280.0" y2="463.5" class="ctr"/>
+<line x1="29.50" y1="120.00" x2="530.50" y2="120.00" class="dim"/>
+<text x="280.0" y="116.0" class="dimtxt" text-anchor="middle">总长 167.0</text>
+<line x1="8.50" y1="445.50" x2="8.50" y2="141.00" class="dim"/>
+<text x="3.5" y="293.2" class="dimtxt" text-anchor="end">总高 101.5</text>
+<line x1="196.16" y1="338.38" x2="348.84" y2="338.38" class="dim"/>
+<text x="272.5" y="334.4" class="dimtxt" text-anchor="middle">落入槽 50.89</text>
+<text x="660.0" y="22.0" class="ttl" text-anchor="middle">侧视（自 +X 看，屏面朝右）</text>
+<rect x="676.78" y="141.00" width="69.00" height="304.50" rx="18.00" class="out"/>
+<rect x="745.78" y="216.00" width="15.00" height="204.00" rx="12.00" class="grip"/>
+<rect x="681.73" y="141.00" width="36.54" height="176.38" class="bay"/>
+<text x="700.0" y="243.0" class="lbl" text-anchor="middle">Mosaico 11.48</text>
+<rect x="707.80" y="148.50" width="4.80" height="277.50" class="brd"/>
+<text x="677.8" y="360.0" class="lbl" text-anchor="end">主板 XY 面</text>
+<rect x="713.50" y="321.00" width="24.00" height="102.00" class="hid"/>
+<text x="719.5" y="372.0" class="lbl" text-anchor="end">电池</text>
+<text x="660.0" y="461.5" class="dimtxt" text-anchor="middle">核心板厚 23.0　握把最厚 28.0</text>
+<text x="660.0" y="473.5" class="dimtxt" text-anchor="middle">分型面 Z = −6.09（落入槽背面）</text>
+<text x="20.0" y="506.0" class="lbl" text-anchor="start">提案 · 未冻结 · claude-opus-5 起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造 · 全部尺寸为 ASSUMPTION（AS-01/AS-07/AS-12/AS-22/AS-31-mechdock-*）</text>
+</svg>
