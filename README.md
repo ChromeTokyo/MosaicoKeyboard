@@ -69,6 +69,9 @@ flowchart LR
 
 ## 仓库导航
 
+- [团队分工与放行规则：Claude 主控](docs/TEAM_PLAN.md)
+- [首批工作队列与负责人](docs/TASK_BOARD.md)
+- [Claude 接管入口](CLAUDE.md)
 - [需求、验收与工作计划](docs/PROJECT_PLAN.md)
 - [当前设计状态与待解决问题](docs/DESIGN_STATUS.md)
 - [Agent 协作规则](AGENTS.md)
