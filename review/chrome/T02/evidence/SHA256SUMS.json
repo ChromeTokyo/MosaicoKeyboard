@@ -1,0 +1,19 @@
+{
+  "01-schematic-import.png": "d8ec6868e47d2597e9037df4e9dfb3e742fe3774873eb2f7a4bfa64c2d32f817",
+  "02-schematic-edit.png": "918725427461fb829c65de4b2295c8c1840df3749731974b3ee1179bdc5965fe",
+  "03-netlist-save-required.png": "f2184f6818f8ddbe3f0fd920a4c91522fac6d4d8e61773800c564b950f065bdb",
+  "03-netlist-save-required.txt": "19a999a40ae480a772961526633dd2f94c1a1911ad2bd6e67741aa3db3bc281f",
+  "04-eda-netlist.png": "ad01b06f55a6822692ca8635eff8c5b64e884378f9d83bbab6df7042a363f6b3",
+  "05-pcb-import-failed.png": "21543ce1ff1043c7e3026b57e81b0419b978036f4f12066464284cfc8288b79c",
+  "06-pcb-source-invalid.png": "420a0af6a62397e05495d5669505dd6eb829f56dd2e9ce1fbf6b56c2d89b3384",
+  "07-pcb-layer-diagnostic-failed.png": "861a021bc8b113c9d040fa2c7a63abb45aeb676bb841648280af523817a450a1",
+  "a0-eda-altium.net": "c2188ec2089c452900571237b2ac0caa82161f75dcf3eace1fa77dea4ce70f94",
+  "pcb-diagnostic-layer1.json": "c8c0c4ef8e4b1e41a575bd5b2beae34ed12aeed4e2c87b37b59811f890bf0911",
+  "pcb-diagnostic-without-drcrule.json": "1d7ff259e7eeaa81880ea56f98d06ec28971e7d3397d20e2b313d61001f5f932",
+  "pcb-import-errors.json": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+  "saved-reopened-check.json": "2dee4d1708a91d1c439540120325830f63b0198da58304935dea68be567d61e9",
+  "schematic-edited-source.json": "71030d9f4a6a66071b985308d5129298a2b2e86ee4651ac839bca5388cbbd786",
+  "schematic-import-source.json": "017833310e8bf5eadb8e5f907971883bb2279a8a1286cb3e6b51fb21bf552822",
+  "schematic-saved-reopened.json": "6811fc56aea35c07d40c8c0d5511f65159b3c5b38f99f67ca57faa268389e35d",
+  "static-check.json": "31f48cc36a1b688b40a6895e2ca2d48471b6d7434de67370f2447ebbc052c89c"
+}
