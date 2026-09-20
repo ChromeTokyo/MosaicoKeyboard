@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
+# 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草、修订 b 由 claude-opus-5 修改 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
 """
 模块板网表一致性检查（hardware/module-board）。
 

@@ -322,7 +322,9 @@ def main():
   .bridge { stroke: var(--ln); stroke-width: 4; stroke-linecap: round; }
   .dim { stroke: var(--mut); stroke-width: 1; }
 """
-    svg = (f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
+    svg = ('<!-- 提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造 -->\n'
+           '<!-- 本文件由 hardware/module-board/gen_schematic.py 从 netlist.yaml 生成，请勿手工编辑。 -->\n'
+           f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" width="{W}" height="{H}" '
            f'role="img" aria-label="ESP-Mosaico 左槽模块板原理图">\n'
            f'<title>ESP-Mosaico 左槽模块板 原理图（提案 · 未冻结 · 不得据以制造）</title>\n'
            f'<style>{style}</style>\n' + "\n".join(E) + "\n</svg>\n")
