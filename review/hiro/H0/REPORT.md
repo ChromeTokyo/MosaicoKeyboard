@@ -141,7 +141,7 @@
 
 ## 8. 交付与下一步
 
-本次仅修改 `review/hiro/H0/REPORT.md`、`docs/handoffs/hiro.md`，无设计源／生成文件。领取与中间检查已分别推送 `aa9f4e0`、`3c44f4c`；最终报告提交与 PR 见 Hiro 交接完成记录及本分支历史。
+本次仅修改 `review/hiro/H0/REPORT.md`、`docs/handoffs/hiro.md`，无设计源／生成文件。领取与中间检查已分别推送 `aa9f4e0`、`3c44f4c`；完整报告提交 `a9a77b440641029965d5d75acab2a9bd0fcaef06`，交付 [PR #35](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/35)。后续登记链接的提交不改变上述复核基线；本分支不自行合并。
 
 主控先处理 F01–F05、F08 的文档推理和规程；Chrome 后继者处理 F06／F07、D2 EEPROM 器件与预烧写安排、D3 电源与状态矩阵，并将上拉／额定／连接器验证转入后续设计。两边可在本报告边界内继续 D-017 起草，无需等待 Hiro 持续在线。新的源码、版次证据或实物结果改变上述前提时，再交独立复核；本报告未关闭任何实物 unknown。
 

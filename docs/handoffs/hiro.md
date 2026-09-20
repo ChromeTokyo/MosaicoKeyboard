@@ -42,7 +42,7 @@ Hiro 暂停工作不阻塞其他角色推进无依赖的任务；规定必须完
 - 任务／角色：H0，Hiro 独立审查；审查已完成，结果交付待处理，不等于技术放行。
 - 平台／实际模型／推理：Codex 本地桌面会话；`gpt-6-astra`；`high`。核验来源见领取记录与报告抬头。
 - 完整复核基线：`3aa71469c8a207b02acedbbb217bdd5ce0dacd83`；ICD-0.2-DRAFT 未冻结。交付前只补查 `8dc4c57206c468123bd5d541486a361a2704c4ba` 的两份 H0 相关文档差异，详见报告 §9。
-- 输出分支：`hiro/h0-premise-review`；领取 `aa9f4e0`，中间检查 `3c44f4c`；最终报告提交／PR 将在创建后登记。
+- 输出分支：`hiro/h0-premise-review`；领取 `aa9f4e0`，中间检查 `3c44f4c`；完整报告提交 `a9a77b440641029965d5d75acab2a9bd0fcaef06`；[PR #35](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/35)，已推送并创建，保持 OPEN，后续本记录提交仅登记交付链接。
 - 改动文件：[H0 报告](../../review/hiro/H0/REPORT.md) 与本交接。没有设计源、生成文件或其他角色文件改动。
 - 结论：**(a) CHANGES_REQUIRED；(b) CHANGES_REQUIRED；(c) CHANGES_REQUIRED；总体 CHANGES_REQUIRED。** 降 derived 合理；D＋G 可以有条件优先；D1 的逻辑表与 EEPROM 数据一致，尚不能作为已验证 V1.2 实物合同。
 - 验证：官方 PDF／图片目视、12 份 BSP 原始 blob 与官方 tree 校验、官方固定 RST 字节一致、GPIO 集合／交集和 CRC 布局独立复算，另补查固定 BSP 的板型识别与电源实现；详细位置、哈希、检查边界在报告。文档检查使用 `git diff --check`，没有运行硬件／固件测试。
