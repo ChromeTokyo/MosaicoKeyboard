@@ -60,4 +60,6 @@ T14 本轮交付：[测量手册](MEASUREMENT_PROTOCOL.md)、[空白记录表](.
 
 | ID | 领取人／模型 | 输入 | 分支／文件范围 | 状态与交接 |
 | --- | --- | --- | --- | --- |
-| T02/F03：Claude T18提案复核 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | main `edb5301`；候选实现`56030b9`；未合入领取`94b30d5` | `chrome/t18-proposal-review`；`review/chrome/T18/`、Chrome交接、此登记 | IN_PROGRESS，2026-09-20 14:04 JST；见`docs/handoffs/chrome.md`。不修改生成器权威源，不代表T18/T19已采纳 |
+| T02/F03：Claude T18提案复核 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | main `edb5301`；候选实现`56030b9`；未合入领取`94b30d5` | `chrome/t18-proposal-review`；`review/chrome/T18/`、Chrome交接、此登记 | IN_REVIEW；八项隔离观测完成，CHANGES_REQUIRED，见`review/chrome/T18/REPORT.md`；不代表T18/T19已采纳 |
+
+| T14／T03：开箱视频接口版本核查 | Chrome／`gpt-6-astra`、`ultra`（用户确认） | 用户2026-09-20提供153.84秒视频＋main `edb5301` 官方证据 | `chrome/t18-proposal-review`，用户在接续期间追加；视频技术摘录、ICD／测量规程及记录表、设计状态风险提示、本人交接 | IN_PROGRESS，2026-09-20 14:14 JST；V1.2与Fig.7 V1.0布局差异，先确认到货版本 |
