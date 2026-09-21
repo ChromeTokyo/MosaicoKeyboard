@@ -145,7 +145,17 @@ LR_SW_Y = 26.50;
 LR_SW_OFFSET_Y = LR_Y - LR_SW_Y;   // 键条触动凸台需要覆盖的 Y 偏移
 
 // --- [10] 上压框 --------------------------------------------------------
-// ASSUMPTION: AS-31-mechdock-20 弹簧针总预压力 16 针 x 0.9 N ≈ 14.4 N（选型后回填，AS-26）
+// ASSUMPTION: AS-31-mechdock-20 弹簧针单针工作压力。
+//   2026-09-21 由注释提升为变量：原值只写在注释里不参与任何校验，
+//   这正是它与模块侧 MATING.md 要求的 ≤0.6 N 分歧长期没被发现的原因。
+//   **注意：0.9 与模块侧的 0.6 仍然冲突，未裁定**，此处如实保留底座侧原值，
+//   由 check_cross_branch.py 报出来，不私自改成一致。
+POGO_FORCE_N = 0.9;   // 总预压力 = 16 × 0.9 = 14.4 N
+// 底座当前实现的保持力：可拆上压框，**未给出任何保持力数值**，卡扣数量为 0。
+// 模块侧 MATING.md 第 4.1 节要求 ≥30 N。如实吐 0 让脚本报出缺口。
+RETENTION_PROVIDED_N = 0;
+// 四角硬限位柱的 Y 向尺寸（原为 cube 里的字面量 2.6，提成变量以便参与契约）
+STOP_POST_H = 2.6;
 FRAME_H       = 9.00;
 FRAME_TONGUE_L = 3.00;
 FRAME_TONGUE_H = 4.00;
@@ -348,7 +358,7 @@ module bay_keying_and_stops() {
           translate([sx > 0 ? BAY_X_MAX - 4.5 : BAY_X_MIN + 1.0,
                      BAY_Y_FLOOR,
                      sz * (BAY_Z_MAX - 2.4)])
-            cube([3.5, 2.6, 2.4], center = false);
+            cube([3.5, STOP_POST_H, 2.4], center = false);
     }
   }
 }
@@ -777,3 +787,49 @@ if (PART == "assembly") {
 } else {
   assert(false, "PART 取值须为 assembly/upper/lower/frame/mockup_upper/mockup_lower/section/board_2d/board_dxf/none");
 }
+
+// ====================================================================
+// ICD 契约输出 —— 供 hardware/check_cross_branch.py 自动比对
+// ====================================================================
+// 2026-09-21 增加，与 module_shell.scad 的同名段配对。
+// 起因：双路清点在四个设计分支之间查出 40 条不一致、22 条阻断，而每个分支自己的
+// 自检**全部通过**——自检只查本文件内部自洽，从来没有任何东西比对过两个分支。
+//
+// 键名必须与模块侧一致（按**物理含义**对齐，不按变量名）。
+// 语义分两类：
+//   · 同名等值类（MOSAICO_*、DOCK_PIN_FIELD_* 等）——两边必须相等；
+//   · 需求/供给类——模块侧吐 MODULE_ENV_*（我需要多大空间），
+//     底座侧吐 BAY_*（我提供多大空间），由脚本做包含判定。
+module icd_contract() {
+  echo(str("ICD-CONTRACT|MOSAICO_W|", MOSAICO_W));
+  echo(str("ICD-CONTRACT|MOSAICO_H|", MOSAICO_H));
+  echo(str("ICD-CONTRACT|MOSAICO_T|", MOSAICO_T));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_X0|", DOCK_PIN_FIELD_X0));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_Z0|", DOCK_PIN_FIELD_Z0));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_Y|",  DOCK_PIN_FIELD_Y));
+  echo(str("ICD-CONTRACT|DOCK_PITCH|", DOCK_PITCH));
+  echo(str("ICD-CONTRACT|DOCK_COLS|",  DOCK_COLS));
+  echo(str("ICD-CONTRACT|DOCK_ROWS|",  DOCK_ROWS));
+  echo(str("ICD-CONTRACT|DOCK_X_TOL|", DOCK_X_TOL));
+  echo(str("ICD-CONTRACT|DOCK_Z_TOL|", DOCK_Z_TOL));
+  // 名义工作压缩 = 自由高 − 工作高（底座侧不直接给 TRAVEL，这里派生，便于与模块侧比）
+  echo(str("ICD-CONTRACT|DOCK_PIN_TRAVEL|", POGO_FREE_H - POGO_WORK_H));
+  // 单针压力：原先只写在 AS-31-mechdock-20 的注释里（16 × 0.9 ≈ 14.4 N），
+  // 注释不参与任何校验，正是它与模块侧 0.6 N 分歧半天没被发现的原因。提升为变量。
+  echo(str("ICD-CONTRACT|DOCK_PIN_FORCE_N|", POGO_FORCE_N));
+  echo(str("ICD-CONTRACT|CONTACT_PCB_X|", CONTACT_PCB_W));
+  echo(str("ICD-CONTRACT|CONTACT_PCB_Z|", CONTACT_PCB_D));
+  // 落入槽提供给模块总成的净空间（模块侧的 MODULE_ENV_* 必须落在其内）
+  echo(str("ICD-CONTRACT|BAY_X_LO|", BAY_X_MIN));
+  echo(str("ICD-CONTRACT|BAY_X_HI|", BAY_X_MAX));
+  echo(str("ICD-CONTRACT|BAY_Y_LO|", BAY_Y_FLOOR));
+  echo(str("ICD-CONTRACT|BAY_Y_HI|", FRAME_Y0));
+  echo(str("ICD-CONTRACT|BAY_Z_LO|", BAY_Z_MIN));
+  echo(str("ICD-CONTRACT|BAY_Z_HI|", BAY_Z_MAX));
+  // 四角硬限位柱顶面（配合面的物理落实）
+  echo(str("ICD-CONTRACT|HARD_STOP_Y|", BAY_Y_FLOOR + STOP_POST_H));
+  // 底座当前**没有任何卡扣**，保持力靠可拆上压框且未给数值。如实吐 0，
+  // 让脚本把「模块侧要求 30 N、底座侧供给 0」报出来，而不是靠人读文档发现。
+  echo(str("ICD-CONTRACT|RETENTION_N|", RETENTION_PROVIDED_N));
+}
+icd_contract();
