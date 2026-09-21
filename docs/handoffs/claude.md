@@ -95,3 +95,23 @@
 ## 8. 继续工作的条件
 
 仓库自身完整，接手者按第 0 节与第 5 节即可继续。**无需依赖本会话的对话记忆**——凡未写入仓库的内容一律视为不存在。
+
+## 9. 下一个会话的第一件事：把三块设计从「语法通过」推到「真的能出东西」
+
+2026-09-21 09:30 登记。三块交付的完成度（分母＝可进入 D-017 第④步）：
+
+| 块 | 进度 | 卡在哪 |
+| --- | --- | --- |
+| 电路板 | **35%** | 网表（41＋75 器件）、原理图、BOM 齐；**无 EDA 工程、无布局布线**。布局须等实物定触点位置 |
+| 外壳 | **40%** | 建模 1306 行、语法自检过；**从未用 openscad 编译**，几何是否自洽未知 |
+| 固件 | **50%** | 驱动 773 行、54 个 BSP 符号核实；**从未用 idf.py 编译** |
+
+**本机工具链现状（已查，勿重复排查）：**
+
+- `~/esp/esp-idf/export.sh` **存在**，`~/.espressif/tools` 下已有 6 个工具链 → **ESP-IDF 很可能可直接用**，下一会话先 `source ~/esp/esp-idf/export.sh` 再 `idf.py --version` 确认，然后到 `firmware/dock_handle/examples/keytest/` 跑 `idf.py set-target esp32s31 && idf.py build`。这是把固件从 50% 推到 60% 的最短路径，也关闭 Grok 的 **G07**。
+- OpenSCAD **未装完**（`brew install --cask openscad` 被中断，`/Applications/OpenSCAD.app` 不存在）。装完后对 `mechanical/module-board/module_board.scad`、`mechanical/dock-shell/dock_shell.scad`、`keycaps.scad` 各跑一次 `openscad -o /tmp/x.stl <file>`，导出成功即可把外壳推到 60%，并能交用户打印体量件（T17）。
+- `keycaps.scad` 的「未定义标识符」告警是**误报**：其第 13 行 `include <dock_shell.scad>` 共享参数块；`d1/d2/delta` 是 OpenSCAD 具名参数。两文件语法均干净，不必再查。
+
+**顺序建议：** 先 ESP-IDF（已半装、代价最低）→ 再 OpenSCAD → 之后才是 EDA 工程录入（需用户登录嘉立创）。
+
+**未合入的设计分支**（勿重复生成）：`claude/design-d/module-board`、`dock-board`、`mech-module`、`mech-dock`，各含上表所列文件，自检脚本均在分支内。
