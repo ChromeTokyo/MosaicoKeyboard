@@ -108,9 +108,13 @@ PCB_T_PAD = 1.6;
 DOCK_PITCH = 2.54;
 DOCK_COLS  = 8;
 DOCK_ROWS  = 2;
-// ASSUMPTION: AS-31-mb-3 J2 焊盘圆形 Ø1.8 mm（由 module-board 分支提出）。
-//   本文第 8 节 echo 给出与定位公差的复算，并建议改 Ø2.0（见 MATING.md 第 6 节）。
-DOCK_PAD_D = 1.8;
+// ASSUMPTION: AS-31-mb-3 J2 焊盘圆形 Ø2.0 mm。
+//   **2026-09-21 由 Ø1.8 改为 Ø2.0**：Ø1.8 配 Ø0.9 针尖时允许偏移 (1.8−0.9)/2 = 0.45 mm，
+//   恰好等于定位公差 DOCK_X_TOL = 0.45，检查 6 余量为 0——最坏公差下针尖边缘正好落在焊盘边缘，
+//   无任何裕度。改 Ø2.0 后允许偏移 0.55、余量 0.10 mm；相邻焊盘净间距 2.54 − 2.0 = 0.54 mm，
+//   仍远大于嘉立创常规最小间距。原文件注释已写明「建议改 Ø2.0」，本次执行。
+//   验证：出 Gerber 后核对焊盘实际直径与净间距；G6-H2 量针尖落点。
+DOCK_PAD_D = 2.0;
 // ASSUMPTION: AS-31-mm-5 弹簧针针头直径 Ø0.9 mm、名义工作压缩 1.2 mm、全行程 ≥ 2.5 mm、
 //   工作压缩下单针压力 0.6 N。**全部「待原厂数据手册核对」**，选型归 dock-board 任务。
 //   行程取值理由见 MATING.md 第 5 节：Y 向公差链最坏 ±0.5 mm，名义 1.2 → 实际 0.7～1.7 mm，
@@ -120,13 +124,30 @@ DOCK_PAD_D = 1.8;
 //   验证：dock-board 选定型号后打开原厂数据手册记录 URL 与额定；G6-G2 每 10 次插拔复测压降。
 DOCK_PIN_TIP_D     = 0.9;
 DOCK_PIN_TRAVEL    = 1.2;
-DOCK_PIN_STROKE    = 2.5;
+// **2026-09-21 由 2.5 改为 2.0**：原值 2.5 与本文件自己写的判据自相矛盾。
+//   判据两条：① 最坏公差下的最小工作行程 ≥ 全行程的 1/3；② 最大工作行程 ≤ 全行程 − 0.3（不打底）。
+//   Y 向公差链最坏 ±0.5 mm，名义 1.2 → 实际 0.7～1.7 mm。
+//   代入全行程 2.5：条件 ① 要求 0.7 ≥ 0.833，**不成立**。所以「≥2.5」不是下限，是错的方向。
+//   解联立：stroke/3 + 0.5 ≤ travel ≤ stroke − 0.8，有解需 stroke ≥ 1.95。
+//   取 stroke = 2.0 时 travel 窗口 = [1.167, 1.200]，名义 1.2 正好落在上沿。
+//   结论：全行程应为 **2.0 mm 左右（窗口 1.95～2.1）**，不是 ≥2.5。
+//   副作用是好的：2.0 mm 是 2.54 间距常规弹簧针全行程的**上沿而非之外**，原注释担心的
+//   「很可能选不到常备料」随之缓解；选型仍归 dock-board 任务，须附原厂数据手册 URL。
+//   绑定约束是 ±0.5 mm 的 Y 向公差链：该链一旦放宽，上式无解，必须改双行程针型（MATING 第 5.4 节）。
+DOCK_PIN_STROKE    = 2.0;
+DOCK_PIN_NO_BOTTOM = 0.3;   // 不打底余量：最大工作行程须 ≤ 全行程 − 本值
+DOCK_PIN_MIN_FRAC  = 1/3;   // 最小工作行程须 ≥ 全行程 × 本值
 DOCK_PIN_FORCE_N   = 0.6;
+// Y 向公差链最坏偏差（MATING 第 5 节）。上面两条判据都以它为输入。
+DOCK_Y_TOL = 0.5;
 // ASSUMPTION: AS-31-mm-6 托架对配合的定位公差目标 ±0.45 mm（X、Z 同值），由壳体滑配与导向筋实现。
 //   远小于 1 列间距之半 1.27 mm，满足 AS-08「沿 X 错位不可能达到 2 列」。
 //   验证：首版壳体与托架打印后，用带焊盘的无源模块板样件反复放入 20 次，每次量针尖落点偏移（G6-H2 同时做）。
 DOCK_X_TOL = 0.45;
 DOCK_Z_TOL = 0.45;
+// ASSUMPTION: AS-31-mm-6b 焊盘边缘到板边最小余量 0.5 mm（嘉立创常规工艺可做，留给分板与阻焊）。
+//   验证：出 Gerber 后由工厂 DFM 报告确认。
+PAD_EDGE_MIN = 0.5;
 
 // ---- 六、触点面相对 Mosaico 底面的落差（ME-D-07、AS-22）----
 // ASSUMPTION: AS-31-mm-7 触点面比 Mosaico −Y 面再低 1.5 mm，使模块板底面成为整机最低面。
@@ -153,7 +174,10 @@ PAD_BOARD_W  = 8.0;     // 触点板 Z 向宽
 //   验证：首版壳体装配试配；若 3D 打印柱径偏差大，改 Ø2.4 并在壳体侧加削平。
 MOUNT_HOLE_D = 2.2;
 MOUNT_A_X = -46.10;  MOUNT_A_Y = 11.50;    // 主定位（圆柱）
-MOUNT_B_X = -26.00;  MOUNT_B_Y = -18.00;   // 副定位（壳体侧用菱形/削边柱，避免过定位）
+// 2026-09-21：孔 B 原为 X = -26.00，到右板边 FIN_X_MAX = -23.595 仅 2.405 mm，
+// 小于禁布圆半径 MOUNT_KEEPOUT_D/2 = 2.5（检查 10 不通过），沿 −X 移 0.30 mm 至 -26.30，
+// 右边距 2.705 mm。Y 不动，检查 11（孔 B 须低于 J1 本体下沿 -12.93）不受影响。
+MOUNT_B_X = -26.30;  MOUNT_B_Y = -18.00;   // 副定位（壳体侧用菱形/削边柱，避免过定位）
 MOUNT_KEEPOUT_D = 5.0;   // 焊盘/走线禁布圆直径
 
 // ---- 九、显示/导出控制（非尺寸）----
@@ -358,7 +382,9 @@ if (MODE == "assembly") {
 } else if (MODE == "fin_dxf") {
     projection(cut = false) fin_board_3d();
 } else if (MODE == "pad_dxf") {
-    projection(cut = false) rotate([90, 0, 0]) pad_board_3d();
+    projection(cut = false) rotate([-90, 0, 0]) pad_board_3d();
+} else if (MODE == "none") {
+    // 被 module_shell.scad include 时使用：只提供参数与模块，不输出任何几何。
 } else {
     echo("未知 MODE：", MODE);
 }
@@ -383,26 +409,39 @@ echo(str("J2 行 A Z = ", j2_z(0), "  行 B Z = ", j2_z(1), "（行 A 在 +Z 屏
 echo(str("J3 位 1 X = ", j3_x(1), "  位 16 X = ", j3_x(J3_N), "  跨距 = ", J3_SPAN,
          "  边距 = ", J3_EDGE_MARGIN));
 
+// 判定辅助：每条检查都必须自己给出通过/不通过，不能只吐数字让人肉眼比对。
+// 2026-09-21 增加。此前「检查 10 孔 B 2.405 < 2.5」与「检查 6 余量 = 0」两条不通过的检查
+// 混在一堆 ECHO 里没人发现，直到首次真编译才暴露。
+function V(c) = c ? "  → 通过" : "  → ✗ 不通过（须改设计）";
+EPS = 1e-6;
 echo("---- 几何检查（不通过则须改设计，不是实测结论）----");
+echo("     每条末尾的「通过／✗ 不通过」为模型自判。grep '不通过' 即可定位全部失败项。");
 echo(str("[检查 1] 槽板背面到 Mosaico 同侧外表面余量 = ", Z_MARGIN_BACK,
          " mm；> 0 表示槽板不外凸。近排针高上限 J1_ROW_NEAR_H ≤ ", J1_ROW_NEAR_H_MAX,
-         " mm（当前 ", J1_ROW_NEAR_H, "）"));
+         " mm（当前 ", J1_ROW_NEAR_H, "）",
+         V(Z_MARGIN_BACK > 0 && J1_ROW_NEAR_H <= J1_ROW_NEAR_H_MAX + EPS)));
 echo(str("[检查 2] 两排配合针高差 = ", J1_ROW_FAR_H - J1_ROW_NEAR_H,
-         " mm，应等于 SLOT_ROW_PITCH = ", SLOT_ROW_PITCH));
+         " mm，应等于 SLOT_ROW_PITCH = ", SLOT_ROW_PITCH,
+         V(abs((J1_ROW_FAR_H - J1_ROW_NEAR_H) - SLOT_ROW_PITCH) < EPS)));
 echo(str("[检查 3] 触点面 Y = ", MODULE_PAD_FACE_Y, " 应 < Mosaico 底面 ", MOSAICO_Y_LO,
-         "（ICD ME-D-07），余量 = ", MOSAICO_Y_LO - MODULE_PAD_FACE_Y));
+         "（ICD ME-D-07），余量 = ", MOSAICO_Y_LO - MODULE_PAD_FACE_Y,
+         V(MODULE_PAD_FACE_Y < MOSAICO_Y_LO)));
 echo(str("[检查 4] 触点板在 X 上完全落在 Mosaico 投影之外：J2 列 8 外缘 X = ",
          j2_x(DOCK_COLS) + DOCK_PAD_D / 2, " 应 < ", SLOT_FACE_X,
-         "（成立则不遮挡原生 USB-C，AS-22 只需核对 Z 向）"));
+         "（成立则不遮挡原生 USB-C，AS-22 只需核对 Z 向）",
+         V(j2_x(DOCK_COLS) + DOCK_PAD_D / 2 < SLOT_FACE_X)));
 echo(str("[检查 5] J2 焊盘到触点板边缘余量：X 向 = ", J2_X_EDGE_MARGIN,
-         " mm，Z 向 = ", J2_Z_EDGE_MARGIN, " mm"));
+         " mm，Z 向 = ", J2_Z_EDGE_MARGIN, " mm；应 ≥ ", PAD_EDGE_MIN,
+         V(J2_X_EDGE_MARGIN >= PAD_EDGE_MIN - EPS && J2_Z_EDGE_MARGIN >= PAD_EDGE_MIN - EPS)));
 echo(str("[检查 6] 定位公差 ±", DOCK_X_TOL, " mm 对 Ø", DOCK_PAD_D, " 焊盘／Ø",
          DOCK_PIN_TIP_D, " 针尖：允许偏移 = ", PAD_ALLOW_OFFSET,
          " mm，余量 = ", PAD_ALLOW_OFFSET - DOCK_X_TOL,
-         " mm（≤ 0 时建议 J2 焊盘改 Ø2.0，净间距仍有 ",
-         DOCK_PITCH - 2.0, " mm）"));
+         " mm（须 > 0；2026-09-21 已由 Ø1.8 改 Ø2.0 才满足。相邻焊盘净间距 ",
+         DOCK_PITCH - DOCK_PAD_D, " mm）",
+         V(PAD_ALLOW_OFFSET - DOCK_X_TOL > EPS)));
 echo(str("[检查 7] 错位不可达 2 列：定位公差 ", DOCK_X_TOL, " 应远小于半间距 ",
-         DOCK_PITCH / 2, "（AS-08 一级防呆的数值依据）"));
+         DOCK_PITCH / 2, "（AS-08 一级防呆的数值依据）",
+         V(DOCK_X_TOL < DOCK_PITCH / 2)));
 echo(str("[检查 8] 绕 Y 轴 180° 错放时触点场映射到 X [",
          -(j2_x(DOCK_COLS)), " , ", -(j2_x(1)), "]，位于 +X 握把侧，底座该处无针（ICD 第 3.3 节）"));
 echo(str("[检查 9] 16 针总压力 = ", F_PIN_TOTAL, " N；Mosaico 自重 = ", W_MOSAICO_N,
@@ -411,12 +450,23 @@ echo(str("[检查 9b] Y 向配合链：触点面 Y = ", MODULE_PAD_FACE_Y,
          "；弹簧针自由针尖应位于 Y = ", MODULE_PAD_FACE_Y + DOCK_PIN_TRAVEL,
          "；名义压缩 ", DOCK_PIN_TRAVEL, " mm，占全行程 ",
          DOCK_PIN_TRAVEL / DOCK_PIN_STROKE * 100, " %（详见 MATING.md 第 5 节）"));
+echo(str("[检查 9c] 弹簧针行程窗口：最坏公差 ±", DOCK_Y_TOL, " → 工作行程 ",
+         DOCK_PIN_TRAVEL - DOCK_Y_TOL, " ～ ", DOCK_PIN_TRAVEL + DOCK_Y_TOL,
+         " mm；判据 ① 最小 ≥ 全行程×", DOCK_PIN_MIN_FRAC, " = ",
+         DOCK_PIN_STROKE * DOCK_PIN_MIN_FRAC,
+         "；判据 ② 最大 ≤ 全行程−", DOCK_PIN_NO_BOTTOM, " = ",
+         DOCK_PIN_STROKE - DOCK_PIN_NO_BOTTOM,
+         V(DOCK_PIN_TRAVEL - DOCK_Y_TOL >= DOCK_PIN_STROKE * DOCK_PIN_MIN_FRAC - EPS
+           && DOCK_PIN_TRAVEL + DOCK_Y_TOL <= DOCK_PIN_STROKE - DOCK_PIN_NO_BOTTOM + EPS)));
 echo(str("[检查 10] 定位孔 A 到最近板边距离 = ",
          min(MOUNT_A_X - FIN_X_MIN, FIN_X_MAX - MOUNT_A_X, MOUNT_A_Y - FIN_Y_MIN, FIN_Y_MAX - MOUNT_A_Y),
          " mm；孔 B = ",
          min(MOUNT_B_X - FIN_X_MIN, FIN_X_MAX - MOUNT_B_X, MOUNT_B_Y - FIN_Y_MIN, FIN_Y_MAX - MOUNT_B_Y),
-         " mm；应 ≥ ", MOUNT_KEEPOUT_D / 2));
+         " mm；应 ≥ ", MOUNT_KEEPOUT_D / 2,
+         V(min(MOUNT_A_X - FIN_X_MIN, FIN_X_MAX - MOUNT_A_X, MOUNT_A_Y - FIN_Y_MIN, FIN_Y_MAX - MOUNT_A_Y) >= MOUNT_KEEPOUT_D / 2 - EPS
+           && min(MOUNT_B_X - FIN_X_MIN, FIN_X_MAX - MOUNT_B_X, MOUNT_B_Y - FIN_Y_MIN, FIN_Y_MAX - MOUNT_B_Y) >= MOUNT_KEEPOUT_D / 2 - EPS)));
 echo(str("[检查 11] 定位孔 B 与 J1 本体包络：本体 X [", J1_BODY_X_MIN, " , ", J1_BODY_FRONT_X,
          "] Y [", J1_BODY_Y_LO, " , ", J1_BODY_Y_HI, "]；孔 B Y = ", MOUNT_B_Y,
-         "，应低于本体下沿"));
+         "，应低于本体下沿",
+         V(MOUNT_B_Y + MOUNT_KEEPOUT_D / 2 < J1_BODY_Y_LO)));
 echo("==== 结束 ====");

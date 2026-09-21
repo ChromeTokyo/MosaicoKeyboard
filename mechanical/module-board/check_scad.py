@@ -9,10 +9,53 @@
 #       一旦本机装上 openscad，应改用 `openscad -o /tmp/mb.stl module_board.scad` 编译。
 import re, sys, collections
 
+import os
 path = sys.argv[1]
 src = open(path, encoding='utf-8').read()
 
+# include <x.scad> / use <x.scad>：把被包含文件一并读入做定义收集（不递归展开几何）
+included_src = ''
+for m in re.finditer(r'\b(?:include|use)\s*<([^>]+)>', src):
+    ip = os.path.join(os.path.dirname(os.path.abspath(path)), m.group(1))
+    if os.path.exists(ip):
+        included_src += '\n' + open(ip, encoding='utf-8').read()
+        print(f'[INFO] 已并入 include 文件：{m.group(1)}')
+    else:
+        print(f'[WARN] include 的文件不存在：{m.group(1)}')
+
 # --- 去掉注释与字符串（保留换行，便于报行号）---
+def strip_scad(text):
+    out = []
+    i = 0
+    n = len(text)
+    state = 'code'
+    while i < n:
+        c = text[i]
+        if state == 'code':
+            if text.startswith('//', i):
+                state = 'line'; out.append(' '); i += 2; continue
+            if text.startswith('/*', i):
+                state = 'block'; out.append(' '); i += 2; continue
+            if c == '"':
+                state = 'str'; out.append(' '); i += 1; continue
+            out.append(c); i += 1
+        elif state == 'line':
+            out.append('\n' if c == '\n' else ' ')
+            if c == '\n':
+                state = 'code'
+            i += 1
+        elif state == 'block':
+            if text.startswith('*/', i):
+                state = 'code'; out.append('  '); i += 2; continue
+            out.append('\n' if c == '\n' else ' '); i += 1
+        elif state == 'str':
+            if c == '\\':
+                out.append('  '); i += 2; continue
+            if c == '"':
+                state = 'code'
+            out.append('\n' if c == '\n' else ' '); i += 1
+    return ''.join(out)
+
 out = []
 i = 0
 n = len(src)
@@ -75,13 +118,14 @@ assign_re = re.compile(r'(?:^|;)\s*([A-Za-z_]\w*)\s*=(?!=)', re.M)
 mod_re    = re.compile(r'\bmodule\s+([A-Za-z_]\w*)\s*\(')
 fun_re    = re.compile(r'\bfunction\s+([A-Za-z_]\w*)\s*\(')
 
-defined_vars = set(assign_re.findall(clean))
-defined_mods = set(mod_re.findall(clean))
-defined_funs = set(fun_re.findall(clean))
+clean_all = clean + strip_scad(included_src)
+defined_vars = set(assign_re.findall(clean_all))
+defined_mods = set(mod_re.findall(clean_all))
+defined_funs = set(fun_re.findall(clean_all))
 
 # 形参与 for/let 局部变量
 params = set()
-for m in re.finditer(r'\b(?:module|function)\s+[A-Za-z_]\w*\s*\(([^)]*)\)', clean):
+for m in re.finditer(r'\b(?:module|function)\s+[A-Za-z_]\w*\s*\(([^)]*)\)', clean_all):
     for p in m.group(1).split(','):
         p = p.strip()
         if not p:
@@ -89,7 +133,7 @@ for m in re.finditer(r'\b(?:module|function)\s+[A-Za-z_]\w*\s*\(([^)]*)\)', clea
         name = p.split('=')[0].strip()
         if re.fullmatch(r'[A-Za-z_]\w*', name):
             params.add(name)
-for m in re.finditer(r'\bfor\s*\(([^)]*)\)', clean):
+for m in re.finditer(r'\bfor\s*\(([^)]*)\)', clean_all):
     for p in m.group(1).split(','):
         p = p.strip()
         mm = re.match(r'([A-Za-z_]\w*)\s*=', p)
@@ -104,11 +148,11 @@ echo assert let for if else each function module include use children
 min max abs sign sin cos tan asin acos atan atan2 pow sqrt exp ln log round
 ceil floor len concat chr ord str search version version_num norm cross lookup
 rands is_undef is_list is_num is_bool is_string undef true false PI
-d h r r1 r2 height center cut convexity size file layer scale twist slices
+d h r r1 r2 d1 d2 height center cut convexity size file layer scale twist slices include use
 $fn $fa $fs $t $vpr $vpt $vpd $children $preview
 '''.split())
 
-used = set(re.findall(r'\$?[A-Za-z_]\w*', clean))
+used = set(re.findall(r'\$?[A-Za-z_]\w*', re.sub(r'<[^>]*>', ' ', clean)))
 known = defined_vars | defined_mods | defined_funs | params | builtins
 unknown = sorted(u for u in used if u not in known)
 if unknown:
