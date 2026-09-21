@@ -131,9 +131,18 @@ CAP_PROUD         = 1.50;   // 帽面高出前面外表面
 CAP_GUIDE_WALL    = 2.00;
 // L/R（每侧握把顶部前倾面，按压方向 −Z）
 LR_X   = 58.00;
-LR_Y   = 27.50;
+LR_Y   = 27.50;       // L/R 键条（外露件）中心，人机位置，由 ERGONOMICS 定
 LR_BAR_W = 20.00;     // X
 LR_BAR_H =  8.00;     // Y
+// ASSUMPTION: AS-31-mechdock-24 L/R **开关**中心与键条中心在 Y 上错开 1.0 mm。
+//   2026-09-21 增加：开关若与键条同在 Y = 27.50，其 7 见方禁布区上沿到 Y = 31.00，
+//   而主板上缘只到 BOARD_TOP_Y = 30.50，开关有 0.5 mm 悬在板外——
+//   由 check_board_outline.py 查出（此前无人发现，因为板外形此前根本不存在）。
+//   键条不动（人机位置不改），只把开关下移到 26.50，禁布上沿 30.00，留 0.5 mm 余量；
+//   键条底面出一道 1.0 mm 的触动凸台压到开关柱头，是常规肩键做法。
+//   验证：首版板与壳到手后，量键条行程终点是否仍能可靠触动开关。
+LR_SW_Y = 26.50;
+LR_SW_OFFSET_Y = LR_Y - LR_SW_Y;   // 键条触动凸台需要覆盖的 Y 偏移
 
 // --- [10] 上压框 --------------------------------------------------------
 // ASSUMPTION: AS-31-mechdock-20 弹簧针总预压力 16 针 x 0.9 N ≈ 14.4 N（选型后回填，AS-26）
@@ -643,6 +652,95 @@ module mockup_solid() {
   }
 }
 
+/* =====================================================================
+   底座主板外形与元件锚点 —— 由外壳几何**导出**，不是另写一份
+   ---------------------------------------------------------------------
+   2026-09-21 增加。此前主板只有网表没有外形，外壳这边只定义了板厚与板面 Z，
+   两边谁也不知道板的 XY 长什么样；那样先做外壳，板一画出来必然要回头改外壳。
+   这里把因果理顺：**板外形 = 外壳内腔在板中面的截面 − 装配间隙 − 落入槽投影**，
+   元件锚点直接取外壳里已有的按键／接口坐标。外壳改一次，板框和锚点自动跟着变，
+   不存在「两份数各自漂移」的可能。PCB 那边只消费 DXF 与本文件 echo 出的锚点表。
+   ===================================================================== */
+
+BOARD_Z_MID = BOARD_Z_FRONT - BOARD_T / 2;      // 主板中面 Z
+
+// ASSUMPTION: AS-31-mechdock-22 板四周留 BOARD_EDGE_CLR = 0.40 mm 装配间隙；
+//   落入槽外壁与板之间另留 0.60 mm，避免槽壁根部圆角压到板边。
+//   验证：首版壳与板到手后实测板能否无干涉落位。
+BAY_BOARD_CLR = 0.60;
+
+// ASSUMPTION: AS-31-mechdock-23 主板固定用 4 个 Ø2.2 螺钉孔，位于四角内侧 6 mm，
+//   对应下壳的空心柱。禁布圆 Ø5.0。
+BOARD_MOUNT_D       = 2.20;
+BOARD_MOUNT_KEEPOUT = 5.00;
+BOARD_MOUNT_INSET   = 6.00;
+
+// 板外形（2D，XY 平面）
+module board_outline_2d() {
+  difference() {
+    // 内腔在板中面的截面，再内缩装配间隙
+    offset(r = -BOARD_EDGE_CLR)
+      projection(cut = true)
+        translate([0, 0, -BOARD_Z_MID]) body_solid(WALL);
+
+    // 落入槽在同一平面的投影（含槽壁），外扩后挖掉——Mosaico 与模块板从这里穿过
+    offset(r = BAY_BOARD_CLR)
+      projection(cut = true)
+        translate([0, 0, -BOARD_Z_MID]) bay_cavity(BAY_WALL);
+
+    // 上缘截平到 BOARD_TOP_Y（再往上是上压框与落入口，没有放板的空间）
+    translate([0, BOARD_TOP_Y + BIG / 2, 0]) square([BIG, BIG], center = true);
+  }
+}
+
+// 四个固定孔的中心（从板外形的包络角内缩取，写死为参数便于 PCB 直接用）
+BOARD_MH = [
+  [-(W_TOTAL / 2 - WALL - BOARD_EDGE_CLR - BOARD_MOUNT_INSET),  BOARD_TOP_Y - BOARD_MOUNT_INSET],
+  [ (W_TOTAL / 2 - WALL - BOARD_EDGE_CLR - BOARD_MOUNT_INSET),  BOARD_TOP_Y - BOARD_MOUNT_INSET],
+  [-(W_TOTAL / 2 - WALL - BOARD_EDGE_CLR - BOARD_MOUNT_INSET),  Y_BOT_OUT + WALL + BOARD_EDGE_CLR + BOARD_MOUNT_INSET],
+  [ (W_TOTAL / 2 - WALL - BOARD_EDGE_CLR - BOARD_MOUNT_INSET),  Y_BOT_OUT + WALL + BOARD_EDGE_CLR + BOARD_MOUNT_INSET],
+];
+
+module board_2d() {
+  difference() {
+    board_outline_2d();
+    for (m = BOARD_MH) translate(m) circle(d = BOARD_MOUNT_D, $fn = 32);
+  }
+}
+
+// D-pad 四个开关中心（上右下左）
+function dpad_sw(i) = [DPAD_X + DPAD_SW_R * cos(i * 90 + 90),
+                       DPAD_Y + DPAD_SW_R * sin(i * 90 + 90)];
+// ABXY 四个开关中心（上右下左 = X A B Y 的菱形，命名由 mech-dock 定）
+function abxy_sw(i) = [ABXY_X + ABXY_R * cos(i * 90 + 90),
+                       ABXY_Y + ABXY_R * sin(i * 90 + 90)];
+
+module board_anchors_echo() {
+  echo("==== 底座主板锚点（由 dock_shell.scad 导出，PCB 直接用）====");
+  echo(str("板中面 Z = ", BOARD_Z_MID, "  板厚 = ", BOARD_T,
+           "  元件面 Z = ", BOARD_Z_FRONT, "  焊接面 Z = ", BOARD_Z_BACK));
+  echo(str("板上缘 Y = ", BOARD_TOP_Y, "  板下缘 Y ≈ ", Y_BOT_OUT + WALL + BOARD_EDGE_CLR,
+           "  板最大宽 X ≈ ±", W_TOTAL / 2 - WALL - BOARD_EDGE_CLR));
+  echo(str("落入槽开窗（板上必须让开）X [", BAY_X_MIN - BAY_WALL - BAY_BOARD_CLR,
+           " , ", BAY_X_MAX + BAY_WALL + BAY_BOARD_CLR,
+           "]  上至板上缘，下至 Y = ", BAY_Y_FLOOR - BAY_WALL - BAY_BOARD_CLR));
+  echo(str("固定孔 Ø", BOARD_MOUNT_D, " x4，中心 = ", BOARD_MH,
+           "，禁布圆 Ø", BOARD_MOUNT_KEEPOUT));
+  echo(str("D-pad 开关中心（上/右/下/左）= ",
+           [for (i = [0 : 3]) dpad_sw(i)], "  开关体 ", SW_SIZE, " 见方"));
+  echo(str("ABXY 开关中心（上/右/下/左）= ",
+           [for (i = [0 : 3]) abxy_sw(i)]));
+  echo(str("L/R 开关中心 = ", [[-LR_X, LR_SW_Y], [LR_X, LR_SW_Y]],
+           "  （键条中心 Y = ", LR_Y, "，开关下移 ", LR_SW_OFFSET_Y,
+           " mm 以避开板上缘）按压方向 −Z"));
+  echo(str("弹簧针小板：X 中心 = ", DOCK_FIELD_XC, "  宽 ", DOCK_FIELD_W,
+           "  以 90 度半孔焊在板**元件面**，小板上表面 Y = ", POGO_PCB_Y_TOP));
+  echo(str("底座 USB-C：X = ", DOCK_USB_X, "  位于板下缘，朝 −Y"));
+  echo(str("电池仓（板背面，不穿板）X [", BATT_X_MIN, " , ", BATT_X_MAX,
+           "]  Y [", BATT_Y_BOT, " , ", BATT_Y_TOP, "]  Z [", BATT_Z_MIN, " , ", BATT_Z_MAX, "]"));
+  echo("元件面朝 +Z（朝屏幕一侧）；开关、弹簧针小板在元件面，电池在背面。");
+}
+
 /* ---------- 顶层分发 ---------- */
 if (PART == "assembly") {
   color("Gainsboro") upper_shell();
@@ -667,8 +765,15 @@ if (PART == "assembly") {
     }
     translate([-BIG/2, -BIG/2, -BIG/2]) cube([BIG/2, BIG, BIG]);
   }
+} else if (PART == "board_2d") {
+  board_2d();
+  board_anchors_echo();
+} else if (PART == "board_dxf") {
+  // openscad -o dock_board_outline.dxf -D 'PART="board_dxf"' dock_shell.scad
+  board_2d();
+  board_anchors_echo();
 } else if (PART == "none") {
   // keycaps.scad 用 include <dock_shell.scad> 借参数时覆盖为 "none"，不渲染外壳
 } else {
-  assert(false, "PART 取值须为 assembly/upper/lower/frame/mockup_upper/mockup_lower/section/none");
+  assert(false, "PART 取值须为 assembly/upper/lower/frame/mockup_upper/mockup_lower/section/board_2d/board_dxf/none");
 }
