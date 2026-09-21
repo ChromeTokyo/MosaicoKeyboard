@@ -8,9 +8,9 @@ GitHub 仓库：[ChromeTokyo/MosaicoKeyboard](https://github.com/ChromeTokyo/Mos
 
 **当前阶段：需求基线与 A0 硬件草案。现有设计文件不能用于生产。**
 
-> **重要：实际出货硬件为 BaseBoard V1.2（日期码 260821），而官方公开资料只有 V1.0（260710）。两版背面不同——V1.0 的四个背部扩展焊盘 `SDA`／`+`／`−`／`SCL` 在 V1.2 上已取消，背面改为 7 个焊盘 `GND BOOT RST RX TX 5V GND`。** 详见 [硬件版本差异](review/claude/hardware-revision/README.md)。本文中凡涉及「四个背部触点」的表述均属 V1.0 遗留，已逐条标注。当前已定方向为[方案 H](review/claude/option-h-pogo-uart-mcu.md)。
+> **重要：实际出货硬件为 BaseBoard V1.2（日期码 260821），而官方公开资料只有 V1.0（260710）。两版背面不同——V1.0 的四个背部扩展焊盘 `SDA`／`+`／`−`／`SCL` 在 V1.2 上已取消，背面改为 7 个焊盘 `GND BOOT RST RX TX 5V GND`。** 详见 [硬件版本差异](review/claude/hardware-revision/README.md)。本文中凡涉及「四个背部触点」的表述均属 V1.0 遗留，已逐条标注。**当前架构为[方案 J（落座式）](review/claude/option-j-seated.md)——那份文件是架构的唯一权威描述。** 早先的方案 H（走背面 7 焊盘 UART ＋ 底座 MCU）**已撤回**，撤回理由见 [REVERSAL](review/claude/REVERSAL-option-d.md)：当时误以为左侧模块槽不可用，实际上 H2 一直提供 I²C ＋ 5V_IN ＋ 12 个 GPIO。
 
-分工：Claude Fable 负责主控、产品视觉与后期交互；Chrome GPT-6 负责电路、PCB 和外壳结构；Hiro GPT-6 分批独立复核。Cursor／Grok 仅作可选辅助。按质量节点推进，允许延长工期。
+分工：Claude 负责主控、产品视觉与后期交互；Chrome 负责电路、PCB 和外壳结构；Hiro 与 Grok 各自独立复核（两条互不通气的复核线）。按质量节点推进，允许延长工期。详见 [团队分工](docs/TEAM_PLAN.md)。
 
 ## 目标
 
