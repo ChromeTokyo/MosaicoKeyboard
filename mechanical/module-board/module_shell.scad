@@ -355,3 +355,53 @@ echo(str("[壳-10] 硬限位落地面：X [", SHELL_X_LO, " , ", SEAT_X + LINER 
          "]（含下唇），力偶臂 ≈ ", ((SEAT_X + LINER + COLLAR_LIP_BOTTOM) - SHELL_X_LO) / 2 - 1,
          " mm；Z [", FOOT_Z_LO, " , ", FOOT_Z_HI, "]，力偶臂 ≈ ", (FOOT_Z_HI - FOOT_Z_LO) / 2 - 1, " mm"));
 echo("==== 结束 ====");
+
+// ====================================================================
+// ICD 契约输出 —— 供 hardware/check_cross_branch.py 自动比对
+// ====================================================================
+// 2026-09-21 增加。起因：2026-09-21 的双路清点在四个设计分支之间查出 40 条不一致、
+// 22 条阻断，而每个分支自己的自检**全部通过**——因为自检只查本文件内部自洽，
+// 从来没有任何东西比对过两个分支。这一段就是补那个缺口。
+//
+// 规则：**凡是两个分支都要知道的物理量，必须在这里吐一行**，格式
+//     ICD-CONTRACT|<键>|<值>
+// 键名由 ICD 第 1 节定义，两边必须用同一个键名指同一个物理量（**按物理含义，不按变量名**）。
+// 新增任何跨件量时，两边同时加键，否则 check_cross_branch.py 会报「只有一侧给了值」。
+module icd_contract() {
+  // —— Mosaico 本体包络（两边必须完全一致）——
+  echo(str("ICD-CONTRACT|MOSAICO_W|", MOSAICO_W));
+  echo(str("ICD-CONTRACT|MOSAICO_H|", MOSAICO_H));
+  echo(str("ICD-CONTRACT|MOSAICO_T|", MOSAICO_T));
+  // —— 弹簧针场（ICD 第 1 节留空，正是 40 条冲突的震中）——
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_X0|", DOCK_PIN_FIELD_X0));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_Z0|", DOCK_PIN_FIELD_Z0));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FIELD_Y|",  DOCK_PIN_FIELD_Y));
+  echo(str("ICD-CONTRACT|DOCK_PITCH|", DOCK_PITCH));
+  echo(str("ICD-CONTRACT|DOCK_COLS|",  DOCK_COLS));
+  echo(str("ICD-CONTRACT|DOCK_ROWS|",  DOCK_ROWS));
+  echo(str("ICD-CONTRACT|DOCK_PAD_D|", DOCK_PAD_D));
+  // —— 弹簧针选型契约 ——
+  echo(str("ICD-CONTRACT|DOCK_PIN_TIP_D|",  DOCK_PIN_TIP_D));
+  echo(str("ICD-CONTRACT|DOCK_PIN_TRAVEL|", DOCK_PIN_TRAVEL));
+  echo(str("ICD-CONTRACT|DOCK_PIN_STROKE|", DOCK_PIN_STROKE));
+  echo(str("ICD-CONTRACT|DOCK_PIN_FORCE_N|",DOCK_PIN_FORCE_N));
+  // —— 定位公差 ——
+  echo(str("ICD-CONTRACT|DOCK_X_TOL|", DOCK_X_TOL));
+  echo(str("ICD-CONTRACT|DOCK_Z_TOL|", DOCK_Z_TOL));
+  // —— 触点板外形 ——
+  echo(str("ICD-CONTRACT|CONTACT_PCB_X|", PAD_BOARD_L));
+  echo(str("ICD-CONTRACT|CONTACT_PCB_Z|", PAD_BOARD_W));
+  // —— 模块总成（含壳体）的实际包络：底座的落入槽必须容得下它 ——
+  echo(str("ICD-CONTRACT|MODULE_ENV_X_LO|", SHELL_X_LO - KEY_TAB_L));
+  echo(str("ICD-CONTRACT|MODULE_ENV_X_HI|", SEAT_X + LINER + COLLAR_LIP_BACK));
+  echo(str("ICD-CONTRACT|MODULE_ENV_Y_LO|", SHELL_FOOT_Y));
+  echo(str("ICD-CONTRACT|MODULE_ENV_Y_HI|", SHELL_TOP_Y));
+  echo(str("ICD-CONTRACT|MODULE_ENV_Z_LO|", FOOT_Z_LO));
+  echo(str("ICD-CONTRACT|MODULE_ENV_Z_HI|", SHELL_Z_HI));
+  // —— 承力闭环 ——
+  echo(str("ICD-CONTRACT|HARD_STOP_Y|", SHELL_FOOT_Y));
+  // MATING.md 第 4.1 节：卡扣保持力要求 ≥30 N（两处各 ≥15）。D-026 后改由 M2 螺钉承担，
+  // 数值待触点场心确定后回填；在此之前吐出需求值，供比对底座侧是否给出了实现。
+  echo(str("ICD-CONTRACT|RETENTION_N|", 30));
+}
+icd_contract();
