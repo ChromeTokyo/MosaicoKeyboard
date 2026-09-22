@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regression controls for fixed WIP inputs at module-board commit 94e393c.
 
-Usage: python3 test_check_j2_contract.py --pinmap /tmp/PINMAP.md --netlist /tmp/netlist.yaml
+Usage: python3 test_check_j2_contract.py --left-slot review/chrome/D1-module-interface/LEFT_SLOT.md --pinmap /tmp/PINMAP.md --netlist /tmp/netlist.yaml
 Extract inputs with the two `git show 94e393c:hardware/module-board/...` commands in README.md.
 """
 
@@ -20,19 +20,25 @@ import check_j2_contract as checker
 
 PINMAP_SHA = "fc986a2c00b0f0f264136f228376064c790a2cc309e869f69441728322e03727"
 NETLIST_SHA = "70668e5391ebd599037322850c1e63e755cb35b44fdf27a7905d0472327179bf"
+LEFT_SLOT_SHA = "d7922f2106e388dd4a6648465b07724f59301751923405d55eba38aa5a2e55ca"
 
 
 class ContractTests(unittest.TestCase):
+    left_slot_path: Path
     pinmap_path: Path
     netlist_path: Path
 
     @classmethod
     def setUpClass(cls) -> None:
+        left_slot_bytes = cls.left_slot_path.read_bytes()
         pinmap_bytes = cls.pinmap_path.read_bytes()
         netlist_bytes = cls.netlist_path.read_bytes()
-        if hashlib.sha256(pinmap_bytes).hexdigest() != PINMAP_SHA or hashlib.sha256(netlist_bytes).hexdigest() != NETLIST_SHA:
+        if (hashlib.sha256(left_slot_bytes).hexdigest() != LEFT_SLOT_SHA or
+            hashlib.sha256(pinmap_bytes).hexdigest() != PINMAP_SHA or
+            hashlib.sha256(netlist_bytes).hexdigest() != NETLIST_SHA):
             raise ValueError("测试输入哈希不等于固定的 94e393c 提案；不要用此测试给其他版次背书")
-        cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios = checker.parse_pinmap(pinmap_bytes.decode())
+        cls.h2_contract = checker.parse_left_slot(left_slot_bytes.decode())
+        cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios = checker.parse_pinmap(pinmap_bytes.decode(), cls.h2_contract)
         cls.original = yaml.safe_load(netlist_bytes.decode())
 
     @classmethod
@@ -57,7 +63,7 @@ class ContractTests(unittest.TestCase):
     @classmethod
     def errors(cls, data: dict) -> list[str]:
         actual, parsed = checker.parse_netlist(data)
-        return checker.compare(cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios, actual, parsed)
+        return checker.compare(cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios, cls.h2_contract, actual, parsed)
 
     def test_wip_drift_fails(self) -> None:
         errors = self.errors(self.original)
@@ -95,6 +101,23 @@ class ContractTests(unittest.TestCase):
         data["nets"]["DOCK_5V"]["pins"].append(["J1", 18])
         self.assertTrue(any("J1.18" in e for e in self.errors(data)))
 
+    def test_eeprom_a0_pin_redirect_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["SLOT_EEPROM_A0"]["pins"].remove(["J1", 10])
+        data["nets"]["SLOT_KEY_UP"]["pins"].remove(["J1", 1])
+        data["nets"]["SLOT_EEPROM_A0"]["pins"].append(["J1", 1])
+        data["nets"]["SLOT_KEY_UP"]["pins"].append(["J1", 10])
+        self.assertTrue(any("J1.10" in e for e in self.errors(data)))
+
+    def test_pinmap_reserved_h2_rejected_even_when_consistent(self) -> None:
+        source = self.pinmap_path.read_text()
+        self.assertIn("KEY_UP | 1 | GPIO55", source)
+        self.assertIn("`KEY_UP` | 1 | GPIO55", source)
+        source = source.replace("KEY_UP | 1 | GPIO55", "KEY_UP | 10 | GPIO14")
+        source = source.replace("`KEY_UP` | 1 | GPIO55", "`KEY_UP` | 10 | GPIO14")
+        with self.assertRaisesRegex(ValueError, "违反 LEFT_SLOT"):
+            checker.parse_pinmap(source, self.h2_contract)
+
     def test_j2_power_to_key_swap_fails(self) -> None:
         data = self.valid_control()
         data["nets"]["DOCK_5V"]["pins"].remove(["J2", "1A"])
@@ -121,9 +144,11 @@ class ContractTests(unittest.TestCase):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--left-slot", required=True, type=Path)
     parser.add_argument("--pinmap", required=True, type=Path)
     parser.add_argument("--netlist", required=True, type=Path)
     options = parser.parse_args()
+    ContractTests.left_slot_path = options.left_slot
     ContractTests.pinmap_path = options.pinmap
     ContractTests.netlist_path = options.netlist
     unittest.main(argv=[__file__], verbosity=2)

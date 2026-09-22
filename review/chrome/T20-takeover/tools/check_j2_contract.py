@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Fail-closed J2 cross-source check; document/netlist agreement is not hardware approval.
 
-Usage: python3 check_j2_contract.py --pinmap PINMAP.md --netlist netlist.yaml
+Usage: python3 check_j2_contract.py --left-slot LEFT_SLOT.md --pinmap PINMAP.md --netlist netlist.yaml
 Requires PyYAML, as does the module-board proposal's existing check_netlist.py.
 """
 
@@ -37,7 +37,25 @@ def cells(line: str) -> list[str]:
     return [cell.strip().strip("`") for cell in line.strip().strip("|").split("|")]
 
 
-def parse_pinmap(text: str) -> tuple[dict[str, tuple[str, int]], dict[str, int], tuple[int, int, float, float], dict[str, str], dict[str, int]]:
+def parse_left_slot(text: str) -> dict[int, tuple[str, int | None, bool]]:
+    table = section(text, r"^## 完整20脚与12根通用GPIO", r"^## V1\.2的I²C与电源状态")
+    pins: dict[int, tuple[str, int | None, bool]] = {}
+    for line in table.splitlines():
+        fields = cells(line) if line.startswith("|") else []
+        if len(fields) != 3 or not fields[0].isdigit():
+            continue
+        pin = int(fields[0])
+        if pin in pins:
+            raise ValueError(f"LEFT_SLOT H2.{pin} 重复")
+        gpio = re.match(r"GPIO(\d+)\b", fields[1])
+        signal = f"GPIO{gpio.group(1)}" if gpio else fields[1]
+        pins[pin] = (signal, int(gpio.group(1)) if gpio else None, "可作直接按键输入" in fields[2])
+    if set(pins) != set(range(1, 21)):
+        raise ValueError(f"LEFT_SLOT 20 针表不完整：缺 {sorted(set(range(1,21))-set(pins))}")
+    return pins
+
+
+def parse_pinmap(text: str, h2_contract: dict[int, tuple[str, int | None, bool]]) -> tuple[dict[str, tuple[str, int]], dict[str, int], tuple[int, int, float, float], dict[str, str], dict[str, int]]:
     title = re.search(r"^## 4\. J2[^\n]*?(\d+)\s*行\s*×\s*(\d+)\s*列", text, re.MULTILINE)
     if title is None:
         raise ValueError("§4 J2 标题缺行列数")
@@ -119,6 +137,12 @@ def parse_pinmap(text: str) -> tuple[dict[str, tuple[str, int]], dict[str, int],
         raise ValueError(f"PINMAP §2 与 §4.2 KEY→H2 不同：§2={key_h2}，§4.2={key_pads}")
     if key_gpios != row_gpios:
         raise ValueError(f"PINMAP §2 与 §4.2 KEY→GPIO 不同：§2={key_gpios}，§4.2={row_gpios}")
+    if len(set(key_h2.values())) != 10:
+        raise ValueError("PINMAP 十个按键必须占互异 H2 针")
+    for key, h2 in key_h2.items():
+        contract = h2_contract.get(h2)
+        if contract is None or not contract[2] or contract[1] != key_gpios[key]:
+            raise ValueError(f"PINMAP {key} 的 H2.{h2}/GPIO{key_gpios[key]} 违反 LEFT_SLOT 20 针合同")
     for pad, (net, h2) in pads.items():
         expected_h2 = 17 if net == "DOCK_5V" else 20 if net == "DOCK_GND" else key_h2[net]
         if h2 != expected_h2:
@@ -145,9 +169,18 @@ def parse_netlist(data: object) -> tuple[dict[str, set[str]], dict[str, object]]
 
 
 def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tuple[int, int, float, float],
-            j3_nets: dict[str, str], gpios: dict[str, int], actual: dict[str, set[str]], data: dict[str, object]) -> list[str]:
+            j3_nets: dict[str, str], gpios: dict[str, int], h2_contract: dict[int, tuple[str, int | None, bool]],
+            actual: dict[str, set[str]], data: dict[str, object]) -> list[str]:
     errors: list[str] = []
     components = data["components"]
+    h2_mirror = data.get("h2_contract")
+    if not isinstance(h2_mirror, dict):
+        errors.append("netlist 缺 H2 20 针镜像合同")
+    else:
+        for pin, (signal, _, _) in h2_contract.items():
+            mirrored = str(h2_mirror.get(pin, ""))
+            if not re.fullmatch(re.escape(signal) + r"(?:_[A-Z0-9]+)*", mirrored):
+                errors.append(f"netlist h2_contract.{pin}={mirrored} != LEFT_SLOT {signal}")
     j2 = components.get("J2")
     if not isinstance(j2, dict):
         return ["netlist 缺 J2 器件"]
@@ -194,9 +227,20 @@ def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tu
     only("J1.20", "DOCK_GND")
     only("J1.19", "SLOT_3V3")
     only("J1.18", "SLOT_5V_OUT_NC")
+    only("J1.10", "SLOT_EEPROM_A0")
+    only("U1.A0", "SLOT_EEPROM_A0")
+    only("J1.12", "SLOT_SPARE_GPIO4")
+    only("J1.13", "SLOT_USJ_DN")
+    only("J1.15", "SLOT_USJ_DP")
+    only("J1.14", "SLOT_SCL")
+    only("J1.16", "SLOT_SDA")
     nc = data["nets"].get("SLOT_5V_OUT_NC")
     if not isinstance(nc, dict) or nc.get("class") != "no-connect" or nc.get("pins") != [["J1", 18]]:
         errors.append("pin18 必须是只有 J1.18 的 no-connect 网")
+    for net, pin in (("SLOT_USJ_DN", 13), ("SLOT_USJ_DP", 15)):
+        spec = data["nets"].get(net)
+        if not isinstance(spec, dict) or spec.get("class") != "no-connect" or spec.get("pins") != [["J1", pin]]:
+            errors.append(f"{net} 必须是只有 J1.{pin} 的 no-connect 网")
     for net in ("SLOT_3V3", "SLOT_5V_OUT_NC", "SLOT_SDA", "SLOT_SCL"):
         if any(pin.startswith("J2.") for pin, nets in actual.items() if net in nets):
             errors.append(f"{net} 不得进入 J2")
@@ -213,26 +257,30 @@ def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tu
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--left-slot", required=True, type=Path)
     parser.add_argument("--pinmap", required=True, type=Path)
     parser.add_argument("--netlist", required=True, type=Path)
     args = parser.parse_args()
     try:
+        left_slot_bytes = args.left_slot.read_bytes()
         pinmap_bytes = args.pinmap.read_bytes()
         netlist_bytes = args.netlist.read_bytes()
-        pads, keys, geometry, j3_nets, gpios = parse_pinmap(pinmap_bytes.decode("utf-8-sig"))
+        h2_contract = parse_left_slot(left_slot_bytes.decode("utf-8-sig"))
+        pads, keys, geometry, j3_nets, gpios = parse_pinmap(pinmap_bytes.decode("utf-8-sig"), h2_contract)
         actual, data = parse_netlist(yaml.safe_load(netlist_bytes.decode("utf-8-sig")))
     except (OSError, UnicodeError, ValueError, yaml.YAMLError) as exc:
         print(f"INPUT ERROR: {exc}", file=sys.stderr)
         return 2
+    print(f"LEFT_SLOT sha256={hashlib.sha256(left_slot_bytes).hexdigest()}")
     print(f"PINMAP sha256={hashlib.sha256(pinmap_bytes).hexdigest()}")
     print(f"netlist sha256={hashlib.sha256(netlist_bytes).hexdigest()}")
-    errors = compare(pads, keys, geometry, j3_nets, gpios, actual, data)
+    errors = compare(pads, keys, geometry, j3_nets, gpios, h2_contract, actual, data)
     if errors:
         print(f"FAIL: {len(errors)} 处跨源不一致")
         for error in errors:
             print(f"- {error}")
         return 1
-    print(f"PASS: {len(pads)} 个 J2/J3 接点、封装行列/节距/直径、H2 供电/按键路径与 GPIO 镜像字段跨源一致；不代表 PCB/G2 通过")
+    print(f"PASS: LEFT_SLOT 20 针合同、{len(pads)} 个 J2/J3 接点、名义行列/节距/直径及 GPIO 镜像字段跨源一致；不代表 PCB/G2 通过")
     return 0
 
 
