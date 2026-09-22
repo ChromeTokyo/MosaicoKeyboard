@@ -21,7 +21,7 @@
 #       本脚本编译两边、抓这些行、按下面的关系表判定。
 #
 # **加新的跨件量时，两边同时加键并在 RELATIONS 里加一行。** 只加一边会被报成「只有一侧给值」。
-import subprocess, sys, re, argparse, tempfile, os
+import subprocess, sys, re, argparse, tempfile, os, math
 
 # ---- 关系表 ----
 # EQ   两边必须相等（在 tol 内）
@@ -58,22 +58,39 @@ GE = [
     ('RETENTION_N', '保持力：底座提供值须 ≥ 模块侧要求值'),
 ]
 
-def read_contract(path):
+def read_contract(path, timeout_s):
     # 注意：不能用 -o /dev/null —— openscad 靠扩展名判断导出格式，无后缀会直接报
     # 「Invalid suffix」而根本不执行脚本，于是一行 ECHO 也拿不到。必须给个真后缀。
     with tempfile.NamedTemporaryFile(suffix='.stl', delete=False) as tf:
         tmp = tf.name
     try:
-        r = subprocess.run(['openscad', '-o', tmp, path],
-                           capture_output=True, text=True)
+        try:
+            r = subprocess.run(['openscad', '-o', tmp, path],
+                               capture_output=True, text=True, timeout=timeout_s)
+        except subprocess.TimeoutExpired:
+            print(f'FAIL: {path} 的 OpenSCAD 运行超过 {timeout_s:g} 秒，契约未验证。')
+            return None
+        except OSError as exc:
+            print(f'FAIL: 无法启动 OpenSCAD 读取 {path}：{exc}')
+            return None
     finally:
         try: os.unlink(tmp)
         except OSError: pass
+    diagnostic = r.stderr + r.stdout
+    if r.returncode != 0 or 'ERROR' in diagnostic or 'WARNING' in diagnostic:
+        print(f'FAIL: {path} 的 OpenSCAD 退出码 {r.returncode} 或有诊断警告；'
+              '即使吐出旧 ECHO，也不能作已验证契约。\n'
+              + '\n'.join(diagnostic.splitlines()[-5:]))
+        return None
     out = {}
-    for line in (r.stderr + r.stdout).splitlines():
-        m = re.search(r'ICD-CONTRACT\|([A-Za-z0-9_]+)\|([-0-9.eE]+)', line)
+    for line in diagnostic.splitlines():
+        m = re.search(r'ICD-CONTRACT\|([A-Za-z0-9_]+)\|([-+0-9.eE]+)', line)
         if m:
-            out[m.group(1)] = float(m.group(2))
+            key, value = m.group(1), float(m.group(2))
+            if not math.isfinite(value) or (key in out and out[key] != value):
+                print(f'FAIL: {path} 的契约键 {key} 非有限数或重复值冲突。')
+                return None
+            out[key] = value
     if not out:
         print(f'FAIL: {path} 没有吐出任何 ICD-CONTRACT 行。'
               f'该文件是否缺 icd_contract() 段？\nopenscad stderr 尾部:\n'
@@ -84,29 +101,36 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--module', required=True)
     ap.add_argument('--dock',   required=True)
+    ap.add_argument('--case-timeout', type=float, default=120.0,
+                    help='每侧 OpenSCAD 最长运行秒数（默认 120）')
     a = ap.parse_args()
+    if a.case_timeout <= 0:
+        ap.error('--case-timeout 必须大于 0')
 
-    M, D = read_contract(a.module), read_contract(a.dock)
+    M, D = read_contract(a.module, a.case_timeout), read_contract(a.dock, a.case_timeout)
     if not M or not D:
         return 2
     print(f'模块侧给出 {len(M)} 个键，底座侧给出 {len(D)} 个键\n')
 
     fails, warns = [], []
+    checked_eq = checked_fit = checked_ge = 0
 
     for key, tol, desc in EQ:
         if key not in M or key not in D:
-            warns.append(f'{key}（{desc}）：只有 '
+            fails.append(f'{key}（{desc}）：只有 '
                          f'{"模块" if key in M else "底座" if key in D else "没有一"}侧给了值 '
                          f'—— 另一侧必须补上，否则这个量没有任何东西在管')
             continue
+        checked_eq += 1
         if abs(M[key] - D[key]) > tol:
             fails.append(f'{key}（{desc}）：模块 {M[key]} ≠ 底座 {D[key]}，'
                          f'差 {abs(M[key]-D[key]):.3f}（容差 {tol}）')
 
     for mk, dk, op, desc in FIT:
         if mk not in M or dk not in D:
-            warns.append(f'{mk} / {dk}（{desc}）：缺一侧的值')
+            fails.append(f'{mk} / {dk}（{desc}）：缺一侧的值')
             continue
+        checked_fit += 1
         ok = (M[mk] >= D[dk] - 1e-9) if op == '>=' else (M[mk] <= D[dk] + 1e-9)
         if not ok:
             gap = abs(M[mk] - D[dk])
@@ -115,8 +139,9 @@ def main():
 
     for key, desc in GE:
         if key not in M or key not in D:
-            warns.append(f'{key}（{desc}）：缺一侧的值')
+            fails.append(f'{key}（{desc}）：缺一侧的值')
             continue
+        checked_ge += 1
         if D[key] < M[key] - 1e-9:
             fails.append(f'{key}（{desc}）：模块侧要求 {M[key]}，底座侧只提供 {D[key]}，'
                          f'缺 {M[key]-D[key]:.3f}')
@@ -132,17 +157,19 @@ def main():
             warns.append(f'{k}：只有底座侧给了值（{D[k]}），模块侧无对应键')
 
     if warns:
-        print(f'⚠ 警告 {len(warns)} 条（不阻断，但说明契约有洞）：')
+        print(f'⚠ 额外未登记键 {len(warns)} 条（不阻断必需关系）：')
         for w in warns:
             print(f'  - {w}')
         print()
+    print(f'实际检查：等值 {checked_eq}/{len(EQ)}，包含 {checked_fit}/{len(FIT)}，'
+          f'供需 {checked_ge}/{len(GE)}。')
     if fails:
         print(f'✗ 不通过，{len(fails)} 条阻断：')
         for f in fails:
             print(f'  - {f}')
         print('\n以上每一条都会在打样后变成废板或装不上。合并前必须清零。')
         return 1
-    print(f'✓ 全部通过：{len(EQ)} 条等值、{len(FIT)} 条包含、{len(GE)} 条供需关系')
+    print(f'✓ 全部通过：{checked_eq} 条等值、{checked_fit} 条包含、{checked_ge} 条供需关系')
     return 0
 
 if __name__ == '__main__':
