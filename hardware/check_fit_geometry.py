@@ -80,7 +80,8 @@ def run(tmpdir, module, dock, frag, timeout_s):
     src = (f'use <{os.path.abspath(dock)}>\nuse <{os.path.abspath(module)}>\n{MOS}\n'
            'module modsolid(){ union(){ shell_front(); shell_back(); } }\n' + frag + '\n')
     p = os.path.join(tmpdir, 'p.scad'); o = os.path.join(tmpdir, 'p.stl')
-    open(p, 'w', encoding='utf8').write(src)
+    with open(p, 'w', encoding='utf8') as f:
+        f.write(src)
     if os.path.exists(o): os.unlink(o)
     try:
         r = subprocess.run(['openscad', '-o', o, p], capture_output=True, text=True,
