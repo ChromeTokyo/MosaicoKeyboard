@@ -95,4 +95,4 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| J2 跨文件一致性闸门 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`，待审模块板 `94e393c` | `chrome/j2-cross-source-check` | `review/chrome/T20-takeover/` 下的核对器、复现证据；本人任务登记与 `docs/handoffs/chrome.md` | IN_PROGRESS；只比对 PINMAP 与 netlist/J1 安全边界，不改 Claude 电路源或 PCB，不批准 4×4 或 G2；交 Hiro/Grok 非作者复核。现有接手包为 draft PR #51，门禁修补 draft PR #50。 |
+| J2/J3 跨文件一致性闸门 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`，待审模块板 `94e393c` | `chrome/j2-cross-source-check` | `review/chrome/T20-takeover/` 下的核对器、复现证据；本人任务登记与 `docs/handoffs/chrome.md` | IN_REVIEW；[draft PR #53](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/53)。固定待审输入报 J2/J3 两组版本漂移，17 项正负控制通过；仅文本与名义封装合同，不改 Claude 设计源、不批准 G2；交 Hiro/Grok 非作者复核。 |
