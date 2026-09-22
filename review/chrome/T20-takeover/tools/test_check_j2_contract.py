@@ -118,6 +118,13 @@ class ContractTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "违反 LEFT_SLOT"):
             checker.parse_pinmap(source, self.h2_contract)
 
+    def test_negative_phrase_cannot_enable_reserved_h2(self) -> None:
+        source = self.left_slot_path.read_text().replace(
+            "EEPROM A0地址选择，专用；不得接按键",
+            "EEPROM A0地址选择，专用；不可作直接按键输入",
+        )
+        self.assertFalse(checker.parse_left_slot(source)[10][2])
+
     def test_j2_power_to_key_swap_fails(self) -> None:
         data = self.valid_control()
         data["nets"]["DOCK_5V"]["pins"].remove(["J2", "1A"])
@@ -139,11 +146,37 @@ class ContractTests(unittest.TestCase):
     def test_j3_pin_names_missing_fails(self) -> None:
         data = self.valid_control()
         del data["components"]["J3"]["pin_names"]
-        self.assertTrue(any("J3.pin_names" in e for e in self.errors(data)))
+        with self.assertRaisesRegex(ValueError, "J3 越界引脚"):
+            self.errors(data)
 
     def test_yaml_duplicate_net_name_fails(self) -> None:
         with self.assertRaisesRegex(ValueError, "YAML 映射键重复"):
             yaml.load("nets:\n  DOCK_5V: 1\n  DOCK_5V: 2\n", Loader=checker.UniqueKeyLoader)
+
+    def test_j1_pin_count_and_coverage_fail(self) -> None:
+        data = self.valid_control()
+        data["components"]["J1"]["pins"] = 19
+        with self.assertRaisesRegex(ValueError, "J1 越界引脚"):
+            self.errors(data)
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].append(["J1", 21])
+        with self.assertRaisesRegex(ValueError, "J1 越界引脚"):
+            self.errors(data)
+
+    def test_undeclared_component_pin_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].append(["U1", "X"])
+        with self.assertRaisesRegex(ValueError, "U1 未声明引脚"):
+            self.errors(data)
+
+    def test_j3_section_internal_drift_fails(self) -> None:
+        source = self.pinmap_path.read_text()
+        title_drift = source.replace("双排 8＋8 @1.27 SMD 对接焊", "单排 16 @1.50 SMD 对接焊")
+        with self.assertRaisesRegex(ValueError, "§5.3 J3 必须"):
+            checker.parse_pinmap(title_drift, self.h2_contract)
+        table_drift = source.replace("`DOCK_5V` ← J2.1A", "`KEY_UP` ← J2.1A")
+        with self.assertRaisesRegex(ValueError, "§5.3 J3 逐位"):
+            checker.parse_pinmap(table_drift, self.h2_contract)
 
 
 if __name__ == "__main__":

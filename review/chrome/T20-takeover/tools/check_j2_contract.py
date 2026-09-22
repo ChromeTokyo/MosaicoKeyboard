@@ -70,7 +70,7 @@ def parse_left_slot(text: str) -> dict[int, tuple[str, int | None, bool]]:
             raise ValueError(f"LEFT_SLOT H2.{pin} 重复")
         gpio = re.match(r"GPIO(\d+)\b", fields[1])
         signal = f"GPIO{gpio.group(1)}" if gpio else fields[1]
-        pins[pin] = (signal, int(gpio.group(1)) if gpio else None, "可作直接按键输入" in fields[2])
+        pins[pin] = (signal, int(gpio.group(1)) if gpio else None, fields[2].startswith("可作直接按键输入"))
     if set(pins) != set(range(1, 21)):
         raise ValueError(f"LEFT_SLOT 20 针表不完整：缺 {sorted(set(range(1,21))-set(pins))}")
     return pins
@@ -96,6 +96,7 @@ def parse_pinmap(text: str, h2_contract: dict[int, tuple[str, int | None, bool]]
     table = section(text, r"^### 4\.2\b", r"^### 4\.3\b")
     pads: dict[str, tuple[str, int]] = {}
     j3_nets: dict[str, str] = {}
+    j3_pads: dict[str, str] = {}
     row_gpios: dict[str, int] = {}
     ordinals: set[int] = set()
     for line in table.splitlines():
@@ -122,6 +123,7 @@ def parse_pinmap(text: str, h2_contract: dict[int, tuple[str, int | None, bool]]
         if not J3_NAME.fullmatch(j3) or j3 in j3_nets:
             raise ValueError(f"§4.2 {label} J3 位非法或重复：{j3}")
         j3_nets[j3] = net
+        j3_pads[j3] = pad.group(1)
         if KEY_NAME.fullmatch(net):
             gpio = re.fullmatch(r"GPIO(\d+)", fields[7])
             if gpio is None:
@@ -140,6 +142,25 @@ def parse_pinmap(text: str, h2_contract: dict[int, tuple[str, int | None, bool]]
     expected_j3 = {f"r{side}.{position}" for side in range(2) for position in range(1, 9)}
     if set(j3_nets) != expected_j3:
         raise ValueError(f"§4.2 J3 位不完整：缺 {sorted(expected_j3 - set(j3_nets))}")
+
+    j3_section = section(text, r"^### 5\.3\b", r"^## 6\.")
+    title_pitch = re.search(r"双排\s*8＋8\s*@\s*([0-9.]+)", j3_section)
+    joint_pad = re.search(r"焊盘\s*([0-9.]+)\s*×\s*([0-9.]+)\s*mm\s*@\s*([0-9.]+)", j3_section)
+    if title_pitch is None or joint_pad is None or float(title_pitch.group(1)) != 1.27 or float(joint_pad.group(1)) != 0.70 or float(joint_pad.group(3)) != 1.27:
+        raise ValueError("PINMAP §5.3 J3 必须明确双排 8＋8 @1.27，焊盘宽 0.70 mm")
+    j3_table: dict[str, tuple[str, str]] = {}
+    for line in j3_section.splitlines():
+        fields = [cell.strip() for cell in line.strip().strip("|").split("|")] if line.startswith("|") else []
+        if len(fields) != 3 or fields[0] not in {str(n) for n in range(1, 9)}:
+            continue
+        position = fields[0]
+        for side, cell in (("r1", fields[1]), ("r0", fields[2])):
+            match = re.search(r"`([^`]+)`\s*←\s*J2\.([1-9][0-9]*[A-Z])", cell)
+            if match is None or f"{side}.{position}" in j3_table:
+                raise ValueError(f"PINMAP §5.3 J3 {side}.{position} 位表非法或重复")
+            j3_table[f"{side}.{position}"] = (match.group(1), match.group(2))
+    if set(j3_table) != expected_j3 or any(j3_table[pin] != (j3_nets[pin], j3_pads[pin]) for pin in expected_j3):
+        raise ValueError("PINMAP §5.3 J3 逐位网名/J2 位与 §4.2 不一致")
 
     key_table = section(text, r"^## 2\.\s", r"^## 3\.\s")
     key_h2: dict[str, int] = {}
@@ -175,6 +196,13 @@ def parse_netlist(data: object) -> tuple[dict[str, set[str]], dict[str, object]]
     if not isinstance(data, dict) or not isinstance(data.get("components"), dict) or not isinstance(data.get("nets"), dict):
         raise ValueError("netlist 缺 components/nets 字典")
     pin_nets: dict[str, set[str]] = {}
+    components = data["components"]
+    for ref, spec in components.items():
+        if not isinstance(spec, dict) or not isinstance(spec.get("pins"), int) or spec["pins"] < 1:
+            raise ValueError(f"netlist {ref} 缺正整数 pins 声明")
+        names = spec.get("pin_names")
+        if names is not None and (not isinstance(names, list) or len(names) != spec["pins"] or len(set(str(name) for name in names)) != len(names)):
+            raise ValueError(f"netlist {ref}.pin_names 与 pins 数量/唯一性不符")
     for net, spec in data["nets"].items():
         if not isinstance(spec, dict) or not isinstance(spec.get("pins"), list):
             raise ValueError(f"netlist 网 {net} 缺 pins 列表")
@@ -182,6 +210,15 @@ def parse_netlist(data: object) -> tuple[dict[str, set[str]], dict[str, object]]
             if not isinstance(pair, list) or len(pair) != 2:
                 raise ValueError(f"netlist 网 {net} 引脚条目非法：{pair}")
             ref, pin = pair
+            component = components.get(ref)
+            if not isinstance(component, dict):
+                raise ValueError(f"netlist 网 {net} 引用了未声明器件 {ref}")
+            names = component.get("pin_names")
+            if names is not None:
+                if str(pin) not in {str(name) for name in names}:
+                    raise ValueError(f"netlist 网 {net} 引用了 {ref} 未声明引脚 {pin}")
+            elif not isinstance(pin, int) or pin < 1 or pin > component["pins"]:
+                raise ValueError(f"netlist 网 {net} 引用了 {ref} 越界引脚 {pin}")
             refpin = f"{ref}.{pin}"
             if refpin in pin_nets:
                 raise ValueError(f"netlist 引脚重复列出（同网或跨网）：{refpin}")
@@ -194,6 +231,13 @@ def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tu
             actual: dict[str, set[str]], data: dict[str, object]) -> list[str]:
     errors: list[str] = []
     components = data["components"]
+    j1 = components.get("J1")
+    if not isinstance(j1, dict) or j1.get("pins") != 20:
+        errors.append("J1 必须声明 20 针")
+    actual_j1 = {pin[3:] for pin in actual if pin.startswith("J1.")}
+    expected_j1 = {str(pin) for pin in range(1, 21)}
+    if actual_j1 != expected_j1:
+        errors.append(f"J1 网表须恰好覆盖 1…20 针：缺 {sorted(expected_j1-actual_j1)}，多 {sorted(actual_j1-expected_j1)}")
     h2_mirror = data.get("h2_contract")
     if not isinstance(h2_mirror, dict):
         errors.append("netlist 缺 H2 20 针镜像合同")
