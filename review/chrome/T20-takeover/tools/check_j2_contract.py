@@ -168,6 +168,10 @@ def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tu
     j3 = components.get("J3")
     if not isinstance(j3, dict) or not J3_PACKAGE.fullmatch(str(j3.get("package", ""))) or j3.get("pins") != 16 or j3.get("crossing_nets") != 12:
         errors.append("J3 必须为 2×8 @1.27 mm/Ø0.70 mm、16 位、12 个跨板网络的提案")
+    if isinstance(j3, dict):
+        j3_names = j3.get("pin_names")
+        if not isinstance(j3_names, list) or len(j3_names) != 16 or set(j3_names) != set(j3_nets):
+            errors.append("J3.pin_names 必须完整声明 r0.1…r1.8，且与 PINMAP §4.2 相同")
     actual_j2 = {pin[3:]: nets for pin, nets in actual.items() if pin.startswith("J2.")}
     if set(actual_j2) != set(pads):
         errors.append(f"J2 网表接点集合不同：缺 {sorted(set(pads)-set(actual_j2))}，多 {sorted(set(actual_j2)-set(pads))}")
