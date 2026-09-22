@@ -90,3 +90,9 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 | ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
+
+### Chrome 2026-09-23 T14 V1.2 执行表补齐
+
+| 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| T14 V1.2 首轮记录与交回清单 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`；现有 T14 v0.2 | `chrome/t14-v12-record` | `docs/MEASUREMENT_PROTOCOL.md`、`review/chrome/T14/MEASUREMENT_RECORD.md`、本人任务登记及 `docs/handoffs/chrome.md` | IN_PROGRESS；使 V1.2 第 4B 节 Q01–Q11 与记录表/第一轮交回一致，剔除旧 6 点/四触点要求造成的歧义；不要求用户自行拆板、蜂鸣或上电。 |
