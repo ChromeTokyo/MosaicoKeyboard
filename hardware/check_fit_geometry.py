@@ -57,49 +57,83 @@ CASES = [
      "intersection(){ translate([0,-0.10,0]) top_frame(); modsolid(); }"),
 ]
 
-def run(tmpdir, module, dock, frag):
+def valid_nonempty_stl(path):
+    """只有可解析且含面片的 STL 才是 solid，文件存在本身不是证据。"""
+    if not os.path.isfile(path):
+        return False
+    size = os.path.getsize(path)
+    with open(path, 'rb') as f:
+        head = f.read(4096)
+        if size >= 84:
+            triangles = int.from_bytes(head[80:84], 'little')
+            if triangles > 0 and size == 84 + 50 * triangles:
+                return True
+        f.seek(max(0, size - 256))
+        tail = f.read()
+    # OpenSCAD 也可生成 ASCII STL。空文件、诊断文本不能当几何输出。
+    return (head.lstrip().startswith(b'solid') and
+            b'facet normal' in head and b'endfacet' in head and
+            b'endsolid' in tail)
+
+
+def run(tmpdir, module, dock, frag, timeout_s):
     src = (f'use <{os.path.abspath(dock)}>\nuse <{os.path.abspath(module)}>\n{MOS}\n'
            'module modsolid(){ union(){ shell_front(); shell_back(); } }\n' + frag + '\n')
     p = os.path.join(tmpdir, 'p.scad'); o = os.path.join(tmpdir, 'p.stl')
     open(p, 'w', encoding='utf8').write(src)
     if os.path.exists(o): os.unlink(o)
-    r = subprocess.run(['openscad', '-o', o, p], capture_output=True, text=True)
+    try:
+        r = subprocess.run(['openscad', '-o', o, p], capture_output=True, text=True,
+                           timeout=timeout_s)
+    except subprocess.TimeoutExpired:
+        return 'error', f'OpenSCAD 超过 {timeout_s:g} 秒仍未完成'
+    except OSError as exc:
+        return 'error', f'无法启动 OpenSCAD：{exc}'
     out = r.stderr + r.stdout
     # 未定义的 module 会被 OpenSCAD 静默忽略 —— intersection 于是只剩一个子件，
     # 结果必然非空。这会把「检查没跑」伪装成「检查失败」，必须单独报出来。
     m0 = re.search(r'Ignoring unknown (?:module|function) \'([^\']+)\'', out)
     if m0:
         return 'n/a', f'被测文件里没有 {m0.group(1)}()，该项无法判定'
-    if 'Current top level object is empty' in out:
+    if r.returncode != 0 or 'ERROR' in out or 'WARNING' in out:
+        tail = out.strip().splitlines()[-1][:120] if out.strip() else '无诊断文本'
+        return 'error', f'OpenSCAD 退出码 {r.returncode}：{tail}'
+    empty = 'Current top level object is empty' in out
+    solid = valid_nonempty_stl(o)
+    if empty and solid:
+        return 'error', '同时出现空结果标记与非空 STL，无法信任本次判定'
+    if empty:
         return 'empty', ''
-    m = re.search(r'Vertices:\s+(\d+)', out)
-    if m: return 'solid', f'{m.group(1)} 顶点'
-    if 'ERROR' in out:
-        return 'error', out.strip().splitlines()[-1][:120]
-    return ('solid', '') if os.path.exists(o) and os.path.getsize(o) > 200 else ('empty', '')
+    if solid:
+        m = re.search(r'Vertices:\s+(\d+)', out)
+        return 'solid', f'{m.group(1)} 顶点' if m else '有效非空 STL'
+    return 'error', '无空结果标记，也无有效非空 STL'
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--module', required=True)
     ap.add_argument('--dock', required=True)
+    ap.add_argument('--case-timeout', type=float, default=120.0,
+                    help='每项 OpenSCAD 最长运行秒数（默认 120）')
     a = ap.parse_args()
+    if a.case_timeout <= 0:
+        ap.error('--case-timeout 必须大于 0')
     fails, na = [], []
     with tempfile.TemporaryDirectory() as td:
         for name, want, frag in CASES:
-            got, info = run(td, a.module, a.dock, frag)
+            got, info = run(td, a.module, a.dock, frag, a.case_timeout)
             ok = (got == want)
-            if got == 'n/a': ok = None
-            mark = '✓' if ok else ('–' if ok is None else '✗')
+            mark = '✓' if ok else ('–' if got == 'n/a' else '✗')
             print(f'{mark} {name}：期望 {want}，实得 {got} {info}')
-            if ok is False: fails.append(name)
-            if ok is None: na.append(name)
+            if got == 'n/a': na.append(name)
+            elif not ok: fails.append(name)
     if na:
         print(f'\n– 无法判定 {len(na)} 条（被测 .scad 缺少检查所需的 module，须先补上）：')
         for f in na: print('  - ' + f)
-    if fails:
-        print(f'\n✗ 不通过，{len(fails)} 条：')
+    if fails or na:
+        print(f'\n✗ 不通过：{len(fails)} 条判定失败、{len(na)} 条未判定：')
         for f in fails: print('  - ' + f)
-        print('\n每一条都是「变量对、形状错」，打样后会变成装不上或放不进。合并前必须清零。')
+        print('\n所有检查须真实运行并得到可判定结果；碰撞、超时和模型缺失都阻止放行。')
         return 1
     print(f'\n✓ 全部通过：{len(CASES)} 项布尔求交判定')
     return 0
