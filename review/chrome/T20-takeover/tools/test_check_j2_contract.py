@@ -1,0 +1,191 @@
+#!/usr/bin/env python3
+"""Regression controls for fixed WIP inputs at module-board commit 94e393c.
+
+Usage: python3 test_check_j2_contract.py --left-slot review/chrome/D1-module-interface/LEFT_SLOT.md --pinmap /tmp/PINMAP.md --netlist /tmp/netlist.yaml
+Extract inputs with the two `git show 94e393c:hardware/module-board/...` commands in README.md.
+"""
+
+from __future__ import annotations
+
+import argparse
+import copy
+import hashlib
+from pathlib import Path
+import unittest
+
+import yaml
+
+import check_j2_contract as checker
+
+
+PINMAP_SHA = "fc986a2c00b0f0f264136f228376064c790a2cc309e869f69441728322e03727"
+NETLIST_SHA = "70668e5391ebd599037322850c1e63e755cb35b44fdf27a7905d0472327179bf"
+LEFT_SLOT_SHA = "d7922f2106e388dd4a6648465b07724f59301751923405d55eba38aa5a2e55ca"
+
+
+class ContractTests(unittest.TestCase):
+    left_slot_path: Path
+    pinmap_path: Path
+    netlist_path: Path
+
+    @classmethod
+    def setUpClass(cls) -> None:
+        left_slot_bytes = cls.left_slot_path.read_bytes()
+        pinmap_bytes = cls.pinmap_path.read_bytes()
+        netlist_bytes = cls.netlist_path.read_bytes()
+        if (hashlib.sha256(left_slot_bytes).hexdigest() != LEFT_SLOT_SHA or
+            hashlib.sha256(pinmap_bytes).hexdigest() != PINMAP_SHA or
+            hashlib.sha256(netlist_bytes).hexdigest() != NETLIST_SHA):
+            raise ValueError("测试输入哈希不等于固定的 94e393c 提案；不要用此测试给其他版次背书")
+        cls.h2_contract = checker.parse_left_slot(left_slot_bytes.decode())
+        cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios = checker.parse_pinmap(pinmap_bytes.decode(), cls.h2_contract)
+        cls.original = yaml.load(netlist_bytes.decode(), Loader=checker.UniqueKeyLoader)
+
+    @classmethod
+    def valid_control(cls) -> dict:
+        """Keep all non-J2/J3 circuitry; align only the two connectors to PINMAP."""
+        data = copy.deepcopy(cls.original)
+        for spec in data["nets"].values():
+            spec["pins"] = [pair for pair in spec["pins"] if pair[0] not in ("J2", "J3")]
+        data["components"]["J2"].update(
+            package="PAD-ARRAY-4x4-P2.54-D2.0", pin_names=list(cls.pads)
+        )
+        data["components"]["J3"].update(
+            package="SMD-JOINT-2x8-P1.27-D0.70", crossing_nets=12,
+            pin_names=list(cls.j3_nets)
+        )
+        for pad, (net, _) in cls.pads.items():
+            data["nets"][net]["pins"].append(["J2", pad])
+        for pin, net in cls.j3_nets.items():
+            data["nets"][net]["pins"].append(["J3", pin])
+        return data
+
+    @classmethod
+    def errors(cls, data: dict) -> list[str]:
+        actual, parsed = checker.parse_netlist(data)
+        return checker.compare(cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios, cls.h2_contract, actual, parsed)
+
+    def test_wip_drift_fails(self) -> None:
+        errors = self.errors(self.original)
+        self.assertTrue(any("J2 封装行列" in e for e in errors))
+        self.assertTrue(any("J3 必须" in e for e in errors))
+        self.assertTrue(any("J3 网表接点集合" in e for e in errors))
+
+    def test_consistent_control_passes(self) -> None:
+        self.assertEqual([], self.errors(self.valid_control()))
+
+    def test_j3_power_key_swap_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].remove(["J3", "r1.7"])
+        data["nets"]["KEY_UP"]["pins"].remove(["J3", "r0.7"])
+        data["nets"]["DOCK_5V"]["pins"].append(["J3", "r0.7"])
+        data["nets"]["KEY_UP"]["pins"].append(["J3", "r1.7"])
+        self.assertTrue(any("J3.r1.7" in e for e in self.errors(data)))
+
+    def test_gpio_mirror_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["KEY_UP"]["gpio"] = 99
+        self.assertTrue(any("KEY_UP.gpio" in e for e in self.errors(data)))
+
+    def test_duplicate_j1_or_j2_pin_fails(self) -> None:
+        for pin in (["J1", 17], ["J2", "1A"]):
+            with self.subTest(pin=pin):
+                data = self.valid_control()
+                data["nets"]["DOCK_5V"]["pins"].append(pin)
+                with self.assertRaisesRegex(ValueError, "重复列出"):
+                    self.errors(data)
+
+    def test_pin18_backfeed_fails_even_without_duplicate(self) -> None:
+        data = self.valid_control()
+        data["nets"]["SLOT_5V_OUT_NC"]["pins"].remove(["J1", 18])
+        data["nets"]["DOCK_5V"]["pins"].append(["J1", 18])
+        self.assertTrue(any("J1.18" in e for e in self.errors(data)))
+
+    def test_eeprom_a0_pin_redirect_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["SLOT_EEPROM_A0"]["pins"].remove(["J1", 10])
+        data["nets"]["SLOT_KEY_UP"]["pins"].remove(["J1", 1])
+        data["nets"]["SLOT_EEPROM_A0"]["pins"].append(["J1", 1])
+        data["nets"]["SLOT_KEY_UP"]["pins"].append(["J1", 10])
+        self.assertTrue(any("J1.10" in e for e in self.errors(data)))
+
+    def test_pinmap_reserved_h2_rejected_even_when_consistent(self) -> None:
+        source = self.pinmap_path.read_text()
+        self.assertIn("KEY_UP | 1 | GPIO55", source)
+        self.assertIn("`KEY_UP` | 1 | GPIO55", source)
+        source = source.replace("KEY_UP | 1 | GPIO55", "KEY_UP | 10 | GPIO14")
+        source = source.replace("`KEY_UP` | 1 | GPIO55", "`KEY_UP` | 10 | GPIO14")
+        with self.assertRaisesRegex(ValueError, "违反 LEFT_SLOT"):
+            checker.parse_pinmap(source, self.h2_contract)
+
+    def test_negative_phrase_cannot_enable_reserved_h2(self) -> None:
+        source = self.left_slot_path.read_text().replace(
+            "EEPROM A0地址选择，专用；不得接按键",
+            "EEPROM A0地址选择，专用；不可作直接按键输入",
+        )
+        self.assertFalse(checker.parse_left_slot(source)[10][2])
+
+    def test_j2_power_to_key_swap_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].remove(["J2", "1A"])
+        data["nets"]["KEY_UP"]["pins"].remove(["J2", "3A"])
+        data["nets"]["DOCK_5V"]["pins"].append(["J2", "3A"])
+        data["nets"]["KEY_UP"]["pins"].append(["J2", "1A"])
+        self.assertTrue(any("J2.1A" in e for e in self.errors(data)))
+
+    def test_pad_diameter_drift_fails(self) -> None:
+        data = self.valid_control()
+        data["components"]["J2"]["package"] = "PAD-ARRAY-4x4-P2.54-D1.8"
+        self.assertTrue(any("节距/直径" in e for e in self.errors(data)))
+
+    def test_j3_old_package_fails(self) -> None:
+        data = self.valid_control()
+        data["components"]["J3"]["package"] = "CASTELLATION-1x16-P1.50-D0.70"
+        self.assertTrue(any("J3 必须" in e for e in self.errors(data)))
+
+    def test_j3_pin_names_missing_fails(self) -> None:
+        data = self.valid_control()
+        del data["components"]["J3"]["pin_names"]
+        with self.assertRaisesRegex(ValueError, "J3 越界引脚"):
+            self.errors(data)
+
+    def test_yaml_duplicate_net_name_fails(self) -> None:
+        with self.assertRaisesRegex(ValueError, "YAML 映射键重复"):
+            yaml.load("nets:\n  DOCK_5V: 1\n  DOCK_5V: 2\n", Loader=checker.UniqueKeyLoader)
+
+    def test_j1_pin_count_and_coverage_fail(self) -> None:
+        data = self.valid_control()
+        data["components"]["J1"]["pins"] = 19
+        with self.assertRaisesRegex(ValueError, "J1 越界引脚"):
+            self.errors(data)
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].append(["J1", 21])
+        with self.assertRaisesRegex(ValueError, "J1 越界引脚"):
+            self.errors(data)
+
+    def test_undeclared_component_pin_fails(self) -> None:
+        data = self.valid_control()
+        data["nets"]["DOCK_5V"]["pins"].append(["U1", "X"])
+        with self.assertRaisesRegex(ValueError, "U1 未声明引脚"):
+            self.errors(data)
+
+    def test_j3_section_internal_drift_fails(self) -> None:
+        source = self.pinmap_path.read_text()
+        title_drift = source.replace("双排 8＋8 @1.27 SMD 对接焊", "单排 16 @1.50 SMD 对接焊")
+        with self.assertRaisesRegex(ValueError, "§5.3 J3 必须"):
+            checker.parse_pinmap(title_drift, self.h2_contract)
+        table_drift = source.replace("`DOCK_5V` ← J2.1A", "`KEY_UP` ← J2.1A")
+        with self.assertRaisesRegex(ValueError, "§5.3 J3 逐位"):
+            checker.parse_pinmap(table_drift, self.h2_contract)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--left-slot", required=True, type=Path)
+    parser.add_argument("--pinmap", required=True, type=Path)
+    parser.add_argument("--netlist", required=True, type=Path)
+    options = parser.parse_args()
+    ContractTests.left_slot_path = options.left_slot
+    ContractTests.pinmap_path = options.pinmap
+    ContractTests.netlist_path = options.netlist
+    unittest.main(argv=[__file__], verbosity=2)
