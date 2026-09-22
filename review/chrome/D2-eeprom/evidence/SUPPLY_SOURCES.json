@@ -1,0 +1,48 @@
+{
+  "date": "2026-09-23",
+  "items": [
+    {
+      "code": "C34807",
+      "manufacturer": "Microchip Tech",
+      "mpn": "AT24C02D-SSHM-T",
+      "url": "https://jlcpcb.com/partdetail/MicrochipTech-AT24C02D_SSHMT/C34807",
+      "http_status": 200,
+      "fetched_utc": "2026-09-22T23:07:20.610132+00:00",
+      "page_sha256": "edc4801f888ee6611fb6ac12ec03644cfaff1ffa5238ed78103c890b64713df7",
+      "source_excerpt": "Manufacturer Microchip Tech MFR.Part # AT24C02D-SSHM-T JLCPCB Part # C34807 Package SOIC-8 Description -40℃~+85℃ 1,000,000 cycles 1.7V~3.6V 100 Years 1MHz 2Kbit 5ms Hardware write protection function、Noise suppression function、Built-in power-on reset (POR) I2C SOIC-8 EEPROM ROHS EasyEDA Libraries PCB Footprint or Symbol ECCN EAR99 Datasheet Download Source J",
+      "visible_listing_checks": {
+        "part_number": true,
+        "manufacturer": true,
+        "package_SOIC8": true,
+        "extended": true,
+        "SMT_assembly": true
+      },
+      "allocated_stock": "not determinable from visible server response; reconfirm at BOM checkout"
+    },
+    {
+      "code": "C6203",
+      "manufacturer": "Microchip Tech",
+      "mpn": "AT24C02C-SSHM-T",
+      "url": "https://jlcpcb.com/partdetail/MicrochipTech-AT24C02C_SSHMT/C6203",
+      "http_status": 200,
+      "fetched_utc": "2026-09-22T23:07:21.534538+00:00",
+      "page_sha256": "7d8ebe5d4ee3fd9fea44090ba45e52135f9106d882ab9c7bf4cb3a00c4c14bd1",
+      "source_excerpt": "Manufacturer Microchip Tech MFR.Part # AT24C02C-SSHM-T JLCPCB Part # C6203 Package SOIC-8 Description -40℃~+85℃ 1,000,000 cycles 1.7V~5.5V 100 Years 1MHz 2Kbit 5ms Hardware write protection function、Noise suppression function I2C SOIC-8 EEPROM ROHS EasyEDA Libraries PCB Footprint or Symbol ECCN EAR99 Datasheet Download Source JLCPCB Assembly Type SMT Assembl",
+      "visible_listing_checks": {
+        "part_number": true,
+        "manufacturer": true,
+        "package_SOIC8": true,
+        "extended": true,
+        "SMT_assembly": true
+      },
+      "allocated_stock": "not determinable from visible server response; reconfirm at BOM checkout"
+    },
+    {
+      "datasheet_file": "AT24C02D-Microchip.pdf",
+      "url": "https://ww1.microchip.com/downloads/en/DeviceDoc/Atmel-8871F-SEEPROM-AT24C01D-02D-Datasheet.pdf",
+      "fetched_utc": "2026-09-22T23:07:21.534874+00:00",
+      "sha256": "397ff061aa7a4ae36864592813831e9386e9467f10049064d7f139f26be6475e",
+      "bytes": 1288069
+    }
+  ]
+}
