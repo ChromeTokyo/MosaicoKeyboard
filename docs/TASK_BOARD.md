@@ -95,6 +95,6 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| D2 EEPROM候选、嘉立创供货与主控提案技术核查 | Codex／当前模型切换后精确ID及档位未由可核验接口暴露；不沿用此前用户确认的上一段`gpt-6-astra`／`ultra` | `96fd823` | `chrome/sep23-technical-takeover` | `review/chrome/D2-eeprom/`、本人领取/交接；主控 `hardware/eeprom/` 先只读核查 | IN_PROGRESS；缺厂家数据表和当天库存的地方保留unknown；交Hiro/Grok非作者复核 |
-| D3 模块pin17电源拓扑和双USB状态矩阵 | 同上 | `96fd823` | 同上（与D2顺序执行） | `review/chrome/D3-power/`、`docs/INTERFACE_CONTROL.md`、本人领取/交接 | QUEUED；不接pin18，不把V1.0内部链当V1.2实测，不自行放行 |
+| D2 EEPROM候选、嘉立创供货与主控提案技术核查 | Codex／当前模型切换后精确ID及档位未由可核验接口暴露；不沿用此前用户确认的上一段`gpt-6-astra`／`ultra` | `96fd823` | `chrome/sep23-technical-takeover` | `review/chrome/D2-eeprom/`、本人领取/交接；主控 `hardware/eeprom/` 先只读核查 | IN_REVIEW / CHANGES_REQUIRED；[技术复核](../review/chrome/D2-eeprom/TECHNICAL_REVIEW.md)明确首选C34807与WP验收漏洞，上拉/实物/库存未闭；交Hiro/Grok非作者复核 |
+| D3 模块pin17电源拓扑和双USB状态矩阵 | 同上 | `96fd823` | 同上（与D2顺序执行） | `review/chrome/D3-power/`、`docs/INTERFACE_CONTROL.md`、本人领取/交接 | IN_PROGRESS；不接pin18，不把V1.0内部链当V1.2实测，不自行放行 |
 | T20衔接子范围：AS-31-mm-3原厂规格及G2设计阻断核查 | 同上 | `96fd823`＋待审`sweep/consistency-20260921` tip另记 | 同上（D2/D3后） | `review/chrome/T20-takeover/`、本人领取/交接；Claude设计分支先只读 | AS-31-mm-3证据已交付、G2适用性复核待续；[J1原厂图核对](../review/chrome/T20-takeover/AS31_J1_SPEC.md)。PR #47/#48/#49及sweep均未合入，不能把其裁定称已生效 |
