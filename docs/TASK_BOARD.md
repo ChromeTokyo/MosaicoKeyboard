@@ -95,4 +95,4 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| V1.2 左槽 pin17 输入边界与 J1 公母配合候选 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`；官方 1.2.1+ 归档与厂家图纸 | `chrome/v12-input-j1-boundaries` | `review/chrome/T20-takeover/` 独立来源报告与必要证据；本人任务登记及 `docs/handoffs/chrome.md` | IN_PROGRESS；只研究官方/厂家可证事实与未决项，不改电路、机械 CAD 或 PCB，不自批供电额定与 J1 配对。 |
+| V1.2 左槽 pin17 输入边界与 J1 公母配合候选 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`；官方 1.2.1+ 归档与厂家图纸 | `chrome/v12-input-j1-boundaries` | `review/chrome/T20-takeover/` 独立来源报告与必要证据；本人任务登记及 `docs/handoffs/chrome.md` | IN_REVIEW；[draft PR #54](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/54)，只核官方/厂家可证事实与 unknown；不改电路/CAD/PCB，不自批 V1.2 供电额定或 J1 配对；待非作者复核。 |
