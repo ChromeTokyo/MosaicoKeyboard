@@ -1,0 +1,194 @@
+#!/usr/bin/env python3
+"""Fail-closed J2 cross-source check; document/netlist agreement is not hardware approval.
+
+Usage: python3 check_j2_contract.py --pinmap PINMAP.md --netlist netlist.yaml
+Requires PyYAML, as does the module-board proposal's existing check_netlist.py.
+"""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+from pathlib import Path
+import re
+import sys
+
+import yaml
+
+
+PAD_PACKAGE = re.compile(r"^PAD-ARRAY-(\d+)x(\d+)-P([0-9.]+)-D([0-9.]+)$")
+PAD_NAME = re.compile(r"^J2\.([1-9][0-9]*[A-Z])$")
+KEY_NAME = re.compile(r"^KEY_[A-Z_]+$")
+
+
+def section(text: str, start: str, stop: str) -> str:
+    first = re.search(start, text, re.MULTILINE)
+    if first is None:
+        raise ValueError(f"缺少必需章节 {start}")
+    last = re.search(stop, text[first.end():], re.MULTILINE)
+    if last is None:
+        raise ValueError(f"缺少必需章节终点 {stop}")
+    return text[first.end():first.end() + last.start()]
+
+
+def cells(line: str) -> list[str]:
+    return [cell.strip().strip("`") for cell in line.strip().strip("|").split("|")]
+
+
+def parse_pinmap(text: str) -> tuple[dict[str, tuple[str, int]], dict[str, int], tuple[int, int, float, float]]:
+    title = re.search(r"^## 4\. J2[^\n]*?(\d+)\s*行\s*×\s*(\d+)\s*列", text, re.MULTILINE)
+    if title is None:
+        raise ValueError("§4 J2 标题缺行列数")
+    rows, cols = map(int, title.groups())
+    if rows * cols != 16 or rows > 26 or cols < 1:
+        raise ValueError(f"§4 行列 {rows}×{cols} 不等于 16 个接点")
+    geometry = section(text, r"^### 4\.1\b", r"^### 4\.2\b")
+    pitch_match = re.search(r"ASSUMPTION: AS-07[^\n]*?([0-9.]+)\s*mm\s*间距", geometry)
+    if pitch_match is None:
+        raise ValueError("§4.1 AS-07 缺接点节距")
+    pitch = float(pitch_match.group(1))
+    pad_match = re.search(r"ASSUMPTION: AS-31-mb-3[^\n]*?焊盘为圆形\s*\*\*Ø\s*([0-9.]+)\s*mm", text)
+    if pad_match is None:
+        raise ValueError("AS-31-mb-3 缺当前焊盘直径；历史值不可代入")
+    diameter = float(pad_match.group(1))
+
+    table = section(text, r"^### 4\.2\b", r"^### 4\.3\b")
+    pads: dict[str, tuple[str, int]] = {}
+    ordinals: set[int] = set()
+    for line in table.splitlines():
+        fields = cells(line) if line.startswith("|") else []
+        if not fields or not fields[0].isdigit():
+            continue
+        if len(fields) < 7:
+            raise ValueError(f"§4.2 表行缺列：{line}")
+        ordinal, label, net = int(fields[0]), fields[1], fields[5]
+        pad = PAD_NAME.fullmatch(label)
+        if pad is None:
+            raise ValueError(f"§4.2 第 {ordinal} 行焊盘名非法：{label}")
+        if ordinal in ordinals or pad.group(1) in pads:
+            raise ValueError(f"§4.2 重复序号或焊盘：{ordinal} / {label}")
+        ordinals.add(ordinal)
+        if net not in {"DOCK_5V", "DOCK_GND"} and not KEY_NAME.fullmatch(net):
+            raise ValueError(f"§4.2 {label} 网名非法：{net}")
+        try:
+            h2 = int(fields[6])
+        except ValueError as exc:
+            raise ValueError(f"§4.2 {label} H2 针号非法：{fields[6]}") from exc
+        pads[pad.group(1)] = (net, h2)
+    expected = {f"{col}{chr(ord('A') + row)}" for col in range(1, cols + 1) for row in range(rows)}
+    if set(pads) != expected or ordinals != set(range(1, rows * cols + 1)):
+        raise ValueError(f"§4.2 接点不完整：缺 {sorted(expected - set(pads))}，多 {sorted(set(pads) - expected)}")
+    if sum(net == "DOCK_5V" for net, _ in pads.values()) != 2 or sum(net == "DOCK_GND" for net, _ in pads.values()) != 4:
+        raise ValueError("§4.2 供电接点数不满足当前 5V×2、GND×4 提案")
+    key_pads = {net: h2 for net, h2 in pads.values() if KEY_NAME.fullmatch(net)}
+    if len(key_pads) != 10:
+        raise ValueError("§4.2 必须有 10 个互异 KEY 网络")
+
+    key_table = section(text, r"^## 2\.\s", r"^## 3\.\s")
+    key_h2: dict[str, int] = {}
+    for line in key_table.splitlines():
+        fields = cells(line) if line.startswith("|") else []
+        if len(fields) >= 3 and KEY_NAME.fullmatch(fields[0]) and fields[1].isdigit():
+            if fields[0] in key_h2:
+                raise ValueError(f"§2 重复按键 {fields[0]}")
+            key_h2[fields[0]] = int(fields[1])
+    if key_h2 != key_pads:
+        raise ValueError(f"PINMAP §2 与 §4.2 KEY→H2 不同：§2={key_h2}，§4.2={key_pads}")
+    for pad, (net, h2) in pads.items():
+        expected_h2 = 17 if net == "DOCK_5V" else 20 if net == "DOCK_GND" else key_h2[net]
+        if h2 != expected_h2:
+            raise ValueError(f"PINMAP {pad} 的 H2.{h2} 与 {net} 预期 H2.{expected_h2} 不同")
+    return pads, key_h2, (rows, cols, pitch, diameter)
+
+
+def parse_netlist(data: object) -> tuple[dict[str, set[str]], dict[str, object]]:
+    if not isinstance(data, dict) or not isinstance(data.get("components"), dict) or not isinstance(data.get("nets"), dict):
+        raise ValueError("netlist 缺 components/nets 字典")
+    pin_nets: dict[str, set[str]] = {}
+    for net, spec in data["nets"].items():
+        if not isinstance(spec, dict) or not isinstance(spec.get("pins"), list):
+            raise ValueError(f"netlist 网 {net} 缺 pins 列表")
+        for pair in spec["pins"]:
+            if not isinstance(pair, list) or len(pair) != 2:
+                raise ValueError(f"netlist 网 {net} 引脚条目非法：{pair}")
+            ref, pin = pair
+            pin_nets.setdefault(f"{ref}.{pin}", set()).add(str(net))
+    return pin_nets, data
+
+
+def compare(pads: dict[str, tuple[str, int]], keys: dict[str, int], geometry: tuple[int, int, float, float],
+            actual: dict[str, set[str]], data: dict[str, object]) -> list[str]:
+    errors: list[str] = []
+    components = data["components"]
+    j2 = components.get("J2")
+    if not isinstance(j2, dict):
+        return ["netlist 缺 J2 器件"]
+    package = PAD_PACKAGE.fullmatch(str(j2.get("package", "")))
+    if package is None:
+        errors.append(f"J2 package 无法解析：{j2.get('package')}")
+    else:
+        nr, nc, pitch, diameter = int(package[1]), int(package[2]), float(package[3]), float(package[4])
+        if (nr, nc) != geometry[:2]:
+            errors.append(f"J2 封装行列 {nr}×{nc} != PINMAP {geometry[0]}×{geometry[1]}")
+        if abs(pitch - geometry[2]) > 1e-6 or abs(diameter - geometry[3]) > 1e-6:
+            errors.append(f"J2 封装节距/直径 {pitch}/{diameter} mm != PINMAP {geometry[2]}/{geometry[3]} mm")
+    names = [str(name) for name in j2.get("pin_names", [])]
+    if len(names) != len(set(names)) or len(names) != 16 or set(names) != set(pads):
+        errors.append(f"J2 pin_names 与 PINMAP 不同：缺 {sorted(set(pads)-set(names))}，多 {sorted(set(names)-set(pads))}")
+    if j2.get("pins") != 16:
+        errors.append(f"J2 声明引脚数 {j2.get('pins')} != 16")
+    actual_j2 = {pin[3:]: nets for pin, nets in actual.items() if pin.startswith("J2.")}
+    if set(actual_j2) != set(pads):
+        errors.append(f"J2 网表接点集合不同：缺 {sorted(set(pads)-set(actual_j2))}，多 {sorted(set(actual_j2)-set(pads))}")
+    for pad, (net, _) in pads.items():
+        got = actual_j2.get(pad)
+        if got is not None and got != {net}:
+            errors.append(f"J2.{pad} 网 {sorted(got)} != PINMAP {net}")
+    def only(refpin: str, want: str) -> None:
+        got = actual.get(refpin)
+        if got != {want}:
+            errors.append(f"{refpin} 网 {sorted(got) if got else []} != {want}")
+    only("J1.17", "DOCK_5V")
+    only("J1.20", "DOCK_GND")
+    only("J1.19", "SLOT_3V3")
+    only("J1.18", "SLOT_5V_OUT_NC")
+    nc = data["nets"].get("SLOT_5V_OUT_NC")
+    if not isinstance(nc, dict) or nc.get("class") != "no-connect" or nc.get("pins") != [["J1", 18]]:
+        errors.append("pin18 必须是只有 J1.18 的 no-connect 网")
+    for net in ("SLOT_3V3", "SLOT_5V_OUT_NC", "SLOT_SDA", "SLOT_SCL"):
+        if any(pin.startswith("J2.") for pin, nets in actual.items() if net in nets):
+            errors.append(f"{net} 不得进入 J2")
+    for key, h2 in keys.items():
+        only(f"J1.{h2}", f"SLOT_{key}")
+        only(f"R_S_{key}.1", f"SLOT_{key}")
+        only(f"R_S_{key}.2", key)
+    return errors
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--pinmap", required=True, type=Path)
+    parser.add_argument("--netlist", required=True, type=Path)
+    args = parser.parse_args()
+    try:
+        pinmap_bytes = args.pinmap.read_bytes()
+        netlist_bytes = args.netlist.read_bytes()
+        pads, keys, geometry = parse_pinmap(pinmap_bytes.decode("utf-8-sig"))
+        actual, data = parse_netlist(yaml.safe_load(netlist_bytes.decode("utf-8-sig")))
+    except (OSError, UnicodeError, ValueError, yaml.YAMLError) as exc:
+        print(f"INPUT ERROR: {exc}", file=sys.stderr)
+        return 2
+    print(f"PINMAP sha256={hashlib.sha256(pinmap_bytes).hexdigest()}")
+    print(f"netlist sha256={hashlib.sha256(netlist_bytes).hexdigest()}")
+    errors = compare(pads, keys, geometry, actual, data)
+    if errors:
+        print(f"FAIL: {len(errors)} 处跨源不一致")
+        for error in errors:
+            print(f"- {error}")
+        return 1
+    print(f"PASS: {len(pads)} 个 J2 接点、封装几何与 H2 供电/按键路径跨源一致；不代表 PCB/G2 通过")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
