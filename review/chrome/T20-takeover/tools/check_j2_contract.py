@@ -23,6 +23,27 @@ J3_NAME = re.compile(r"^r[01]\.[1-8]$")
 KEY_NAME = re.compile(r"^KEY_[A-Z_]+$")
 
 
+class UniqueKeyLoader(yaml.SafeLoader):
+    """Reject YAML duplicate mapping keys instead of silently taking the last one."""
+
+
+def unique_mapping(loader: UniqueKeyLoader, node: yaml.MappingNode) -> dict:
+    seen: set[object] = set()
+    for key_node, _ in node.value:
+        key = loader.construct_object(key_node, deep=True)
+        try:
+            duplicate = key in seen
+            seen.add(key)
+        except TypeError as exc:
+            raise ValueError(f"netlist 使用不可哈希的映射键：{key}") from exc
+        if duplicate:
+            raise ValueError(f"netlist YAML 映射键重复：{key}")
+    return yaml.SafeLoader.construct_mapping(loader, node, deep=True)
+
+
+UniqueKeyLoader.add_constructor(yaml.resolver.BaseResolver.DEFAULT_MAPPING_TAG, unique_mapping)
+
+
 def section(text: str, start: str, stop: str) -> str:
     first = re.search(start, text, re.MULTILINE)
     if first is None:
@@ -267,7 +288,7 @@ def main() -> int:
         netlist_bytes = args.netlist.read_bytes()
         h2_contract = parse_left_slot(left_slot_bytes.decode("utf-8-sig"))
         pads, keys, geometry, j3_nets, gpios = parse_pinmap(pinmap_bytes.decode("utf-8-sig"), h2_contract)
-        actual, data = parse_netlist(yaml.safe_load(netlist_bytes.decode("utf-8-sig")))
+        actual, data = parse_netlist(yaml.load(netlist_bytes.decode("utf-8-sig"), Loader=UniqueKeyLoader))
     except (OSError, UnicodeError, ValueError, yaml.YAMLError) as exc:
         print(f"INPUT ERROR: {exc}", file=sys.stderr)
         return 2

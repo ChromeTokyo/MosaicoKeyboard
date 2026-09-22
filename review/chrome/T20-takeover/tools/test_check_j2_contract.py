@@ -39,7 +39,7 @@ class ContractTests(unittest.TestCase):
             raise ValueError("测试输入哈希不等于固定的 94e393c 提案；不要用此测试给其他版次背书")
         cls.h2_contract = checker.parse_left_slot(left_slot_bytes.decode())
         cls.pads, cls.keys, cls.geometry, cls.j3_nets, cls.gpios = checker.parse_pinmap(pinmap_bytes.decode(), cls.h2_contract)
-        cls.original = yaml.safe_load(netlist_bytes.decode())
+        cls.original = yaml.load(netlist_bytes.decode(), Loader=checker.UniqueKeyLoader)
 
     @classmethod
     def valid_control(cls) -> dict:
@@ -140,6 +140,10 @@ class ContractTests(unittest.TestCase):
         data = self.valid_control()
         del data["components"]["J3"]["pin_names"]
         self.assertTrue(any("J3.pin_names" in e for e in self.errors(data)))
+
+    def test_yaml_duplicate_net_name_fails(self) -> None:
+        with self.assertRaisesRegex(ValueError, "YAML 映射键重复"):
+            yaml.load("nets:\n  DOCK_5V: 1\n  DOCK_5V: 2\n", Loader=checker.UniqueKeyLoader)
 
 
 if __name__ == "__main__":
