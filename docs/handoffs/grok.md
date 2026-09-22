@@ -17,7 +17,8 @@
 
 **PR #51：CHANGES_REQUIRED，合并 HOLD。** 头 `caa29c2ddb0068cc6b8169cf73cfde9670e27677`，基线 `main` `96fd823e93f264280207eb34b7a97e139ace7378`。  
 **PR #50：闸门语义 PASS。** 头 `dea6c8fdace4cf74b35596cb0b4bf97947c6affb`，基线 sweep `3eb5cf8a28d1e2bfafbf2cbda118cb986500e541`。可先合入 sweep，再重跑真实 G2；不合 `main`。  
-**G2 HOLD 仍在。** 不批准上电或制造，不替代 Hiro。
+**G2 HOLD 仍在。** 不批准上电或制造，不替代 Hiro。  
+**本报告 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/52 分支 `grok/g3-d2d3-gates-review`。
 
 用户所述 merge SHA `e8ecde65…` 与 `edf43c63…` 不在仓库中，未当作冻结点。
 
