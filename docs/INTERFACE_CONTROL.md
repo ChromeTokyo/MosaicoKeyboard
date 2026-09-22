@@ -1,5 +1,7 @@
 # ESP-Mosaico 底座统一接口约束
 
+> **当前方案 D＋G 补充合同（Chrome，2026-09-23；未冻结）：** 下文旧四触点章节仅供 V1.0 历史追溯。V1.2 左槽逐脚物理适用仍为 `ASSUMPTION: A-H0-1`，见 [D1 合同](../review/chrome/D1-module-interface/LEFT_SLOT.md)。底座 USB-C／底座电池经独立电源路径、升压、输出限流和反灌阻断到模块槽 **pin17 5V_IN**；使能不依赖主机/底座 MCU 判断、EEPROM 或 GPIO60。**pin18 5V_OUT 留空；pin19 VCC_3V3 仅由主机供 EEPROM。** 双 USB、两电池、关机/耗尽、输出故障的电流方向与 G6 八态测试条件见 [D3 电源合同](../review/chrome/D3-power/TOPOLOGY_REVIEW.md)。pin17 输入额定和 V1.2 内部电源合并未知，不冻结 5 V 容差或限流阈值；Hiro H0 F07 只在约束层补齐，硬件实现继续待审。
+
 > **主控插入（2026-09-21，Chrome 下线期间按 D-012 代维护，仅此一段，正文未改）：** 本文件正文中关于「背部四触点」「建议优先验证方案 A」的内容为 **V1.0 历史草案**，V1.2 无背部四焊盘（D-016，derived）。当前方向为方案 D＋G，其接口约束分册见 **`hardware/ICD-0.2-DRAFT.md`**（弹簧针 2×8 分配、模块板 NC 规则、失效安全约束），假设总表见 `hardware/ASSUMPTIONS.md`。两文件冲突时以本文件（Chrome 所有）为准，但本文件恢复维护前请以分册为工作依据。
 
 

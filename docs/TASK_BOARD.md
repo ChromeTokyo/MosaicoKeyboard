@@ -90,3 +90,14 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 | ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
+
+### Chrome 2026-09-23 技术接手登记（Claude 额度耗尽）
+
+| 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| D2 EEPROM候选、嘉立创供货与主控提案技术核查 | Codex／当前模型切换后精确ID及档位未由可核验接口暴露；不沿用此前用户确认的上一段`gpt-6-astra`／`ultra` | `96fd823` | `chrome/sep23-technical-takeover` | `review/chrome/D2-eeprom/`、本人领取/交接；主控 `hardware/eeprom/` 先只读核查 | IN_REVIEW / CHANGES_REQUIRED；[技术复核](../review/chrome/D2-eeprom/TECHNICAL_REVIEW.md)明确首选C34807与WP验收漏洞，上拉/实物/库存未闭；交Hiro/Grok非作者复核 |
+| D3 模块pin17电源拓扑和双USB状态矩阵 | 同上 | `96fd823` | 同上（与D2顺序执行） | `review/chrome/D3-power/`、`docs/INTERFACE_CONTROL.md`、本人领取/交接 | IN_REVIEW / CHANGES_REQUIRED；[电源拓扑与八态审查](../review/chrome/D3-power/TOPOLOGY_REVIEW.md)已交；固定输入1.46A及反馈替换值须修，pin17额定/双供电实测仍unknown，不自行放行 |
+| T20衔接子范围：AS-31-mm-3原厂规格及G2设计阻断核查 | 同上 | `96fd823`＋待审`sweep/consistency-20260921` tip另记 | 同上（D2/D3后） | `review/chrome/T20-takeover/`、本人领取/交接；Claude设计分支先只读 | IN_REVIEW/部分待续；[项目快照](../review/chrome/T20-takeover/PROJECT_STATE_20260923.md)、[J1原厂图](../review/chrome/T20-takeover/AS31_J1_SPEC.md)、[D4断电通断表](../review/chrome/T20-takeover/D4_PREPOWER_CONTINUITY.md)已交。G2修正与非作者复核未完；PR #47/#48/#49及sweep未合入 |
+| G2机器闸门止误报（承接Claude待审sweep子项） | Codex／当前模型切换后精确ID及档位未由可核验接口暴露 | `3eb5cf8`（未合入sweep tip；main=`96fd823`） | `chrome/g2-gates-fail-closed`（单独从sweep分支出） | `hardware/check_fit_geometry.py`、`hardware/check_cross_branch.py`、最小stub测试；本人领取/交接 | [draft PR #50](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/50) 待非作者复核；8项替身回归通过，只修假绿，真实G2碰撞/超时仍HOLD |
+
+本次 D2/D3/T20 接手资料统一在 [draft PR #51](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/51) 待审；上表技术报告状态不等于 G1/G2/G3 节点通过，主控 `docs/STATUS.md` 由主控本人恢复后更新。
