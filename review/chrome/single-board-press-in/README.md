@@ -42,11 +42,9 @@ openscad -o /tmp/single-board-12.stl -D 'ROWS=6' -D 'SHOW_DOCK=false' single_boa
 
 ## 追加纠偏：阶梯剖面与居中按键（2026-09-23）
 
-用户进一步要求：薄转接板的背面触点应比 Mosaico 背面**更靠屏侧**，底座的撞针台则比 Mosaico 仓底**局部抬高**，以免为接触区把整个握把加厚。这个剖面概念是合理的，但原 `single_board_press_in_concept.scad` 仍是更早的朝向草图：它把 Mosaico 假设背面放在 Z=−5.74 mm，却把板背触点放在 Z=−6.60 mm，即**触点比主机背面低了 0.86 mm，方向与用户的阶梯要求相反**。下图纠正相对高低关系；剖面未按比例，右角连接器真实高度、针行程和电池叠层未验证。
+用户进一步要求：薄转接板的背面触点应比 Mosaico 背面**更靠屏侧**，底座的撞针台则比 Mosaico 仓底**局部抬高**，以免为接触区把整个握把加厚。原 `single_board_press_in_concept.scad` 是更早的朝向草图：它把 Mosaico 假设背面放在 Z=−5.74 mm，却把板背触点放在 Z=−6.60 mm，即**触点比主机背面低了 0.86 mm，方向与用户的阶梯要求相反**。
 
-![薄转接板与局部抬高的底座撞针台剖面](stepped-contact-section.png)
-
-[可编辑矢量源](stepped-contact-section.svg)。局部抬高最多先改善左侧触点区的堆叠；整机厚度仍受电池、主板、壳壁和两处止挡约束，不能凭示意宣布已变薄。新压入方向要重新证明先导向、后触电、最后压到硬止挡的顺序。旧 −Y 入座的尺寸链与防呆证明不能直接转用。
+**撤图记录（2026-09-23 10:38 JST）：** 首次追加的 `stepped-contact-section.svg/png` 把应处于 Mosaico 左侧（−X）的转接板画到右侧，且未标定剖切方向，连接器与针座画法不能用于解释装配。用户指出后已从当前 PR 撤下；不以该图推出任何高度、厚度、接触次序或成本结论。后续只能在前视中标清 −X 左侧转接板及剖切线，再按 X–Z 剖面绘制相互一致的主机／板／底座。实际右角连接器高度、针行程和电池叠层仍未验证。
 
 用户还指出旧按键组过高。未合并 `claude/design-d/mech-dock` [`999ee0d` 的 SCAD](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/dock_shell.scad) 给出 D-pad 与 ABXY 原中心 Y=−4.0 mm、外形顶部 Y=+33.0 mm；电池位置修订后的底部由公式派生为 Y=−72.0 mm，所以**机身中线为 Y=−19.5 mm，原键组高了 15.5 mm**。本稿只将两组中心提议下移到 Y=−19.5 mm，L/R 保持原位置。该提交的旧 [`LAYOUT-front.svg`](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/LAYOUT-front.svg) 仍标总高 101.5 mm／2×8 旧触点，与同提交 SCAD 派生的 105.0 mm 高度不一致；它只能用于辨认旧键位，不能作为最新机械外形的证据。
 

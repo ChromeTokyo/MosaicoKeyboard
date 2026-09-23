@@ -95,4 +95,4 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| T20 单板压入候选评估 | Codex／`gpt-6-astra`／`ultra`（本会话此前由用户确认；本轮未重新暴露运行时标识） | main `96fd823`；机械提案 `42172f7`、`999ee0d`；模块电气提案 `94e393c`；G5 PR #58 | `chrome/single-board-press-in` | `review/chrome/single-board-press-in/`、本领取记录、`docs/handoffs/chrome.md`；不改任何设计源或冻结接口 | IN_REVIEW；[draft PR #59](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/59) 含用户朝向／阶梯纠偏、单板与按键居中图（外观图非等比，另有按 CAD 假设等比例图）、12／14／16 数量与错位风险；待 Claude／Hiro／Grok 复核，不作为硬件放行 |
+| T20 单板压入候选评估 | Codex／`gpt-6-astra`／`ultra`（本会话此前由用户确认；本轮未重新暴露运行时标识） | main `96fd823`；机械提案 `42172f7`、`999ee0d`；模块电气提案 `94e393c`；G5 PR #58 | `chrome/single-board-press-in` | `review/chrome/single-board-press-in/`、本领取记录、`docs/handoffs/chrome.md`；不改任何设计源或冻结接口 | CHANGES_REQUIRED；[draft PR #59](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/59) 有单板与键位图，但首次阶梯剖面左右画反、未标视角，已撤图并待重画；12／14／16 数量及风险仍可审，不作为硬件放行 |
