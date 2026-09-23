@@ -15,7 +15,8 @@
 | `review/grok/G4/MATERIALS.md` | 已读 / 未读 |
 | `review/grok/G4/EVIDENCE-NOTES.md` | 冻结点、字段与链接 |
 
-**PR #55：CHANGES_REQUIRED，合并 HOLD。** 头 `82df4c6534c3aa534e5ec67381e4a7767708c749`，基线 `main` `96fd823e93f264280207eb34b7a97e139ace7378`。用户所述 `14186ea98e686e061f13291c85443e4ce64d0373` 是 GitHub 预览合并，树与头相同，`mergeCommit` 为 null，不在 `main` 上。
+**PR #55：CHANGES_REQUIRED，合并 HOLD。** 头 `82df4c6534c3aa534e5ec67381e4a7767708c749`，基线 `main` `96fd823e93f264280207eb34b7a97e139ace7378`。用户所述 `14186ea98e686e061f13291c85443e4ce64d0373` 是 GitHub 预览合并，树与头相同，`mergeCommit` 为 null，不在 `main` 上。  
+**本报告 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/57 分支 `grok/g4-t14-review`。
 
 实物尺寸未放行。G1 未放行。本复核不构成尺寸冻结或上电批准，不替代 Hiro H1–H4。
 
