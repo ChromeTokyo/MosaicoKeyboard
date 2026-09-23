@@ -50,7 +50,7 @@ openscad -o /tmp/single-board-12.stl -D 'ROWS=6' -D 'SHOW_DOCK=false' single_boa
 
 ![同坐标的正视与剖面方向校核](corrected-orthographic-views.png)
 
-图内 Z 高差仅是**说明几何方向的示例**：假设 Mosaico 背面 −5.74 mm，触点面 −4.74 mm（比主机背面靠屏侧 1 mm），底座针区周围台面 −5.14 mm，主机仓底面 −6.14 mm。针根示在更低的 −7.94 mm，以区分「台面抬高」与「针安装平面必须抬高」这两件事。针型号、实际压缩量、接触先后、Z 止挡、H2 连接器与板子的可靠配合均未确定；此图不能用于装配验收或厚度定版。旧 OpenSCAD 图仍把板背触点置于 −6.60 mm，不能冒充该阶梯示例的新模型。
+图内 Z 高差仅是**说明几何方向的示例**：假设 Mosaico 背面 −5.74 mm，触点面 −4.74 mm（比主机背面靠屏侧 1 mm），底座针区周围台面 −5.14 mm，主机仓底面 −6.14 mm。针根示在更低的 −7.94 mm，以区分「台面抬高」与「针安装平面必须抬高」这两件事。前视虚线框和剖面虚线小桥只标识板与左槽**需要连接**，不代表真实右角接插件形状；图上的空隙也不能用于判断能否插入。针型号、实际压缩量、接触先后、Z 止挡、H2 连接器与板子的可靠配合均未确定；此图不能用于装配验收或厚度定版。旧 OpenSCAD 图仍把板背触点置于 −6.60 mm，不能冒充该阶梯示例的新模型。
 
 用户还指出旧按键组过高。未合并 `claude/design-d/mech-dock` [`999ee0d` 的 SCAD](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/dock_shell.scad) 给出 D-pad 与 ABXY 原中心 Y=−4.0 mm、外形顶部 Y=+33.0 mm；电池位置修订后的底部由公式派生为 Y=−72.0 mm，所以**机身中线为 Y=−19.5 mm，原键组高了 15.5 mm**。本稿只将两组中心提议下移到 Y=−19.5 mm，L/R 保持原位置。该提交的旧 [`LAYOUT-front.svg`](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/LAYOUT-front.svg) 仍标总高 101.5 mm／2×8 旧触点，与同提交 SCAD 派生的 105.0 mm 高度不一致；它只能用于辨认旧键位，不能作为最新机械外形的证据。
 
