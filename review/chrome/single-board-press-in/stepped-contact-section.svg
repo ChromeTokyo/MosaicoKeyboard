@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="720" viewBox="0 0 1280 720" role="img" aria-label="Mosaico 与薄转接板压入阶梯底座的示意剖面">
+  <defs>
+    <linearGradient id="bg" x2="0" y2="1"><stop stop-color="#f9fbff"/><stop offset="1" stop-color="#e9eff7"/></linearGradient>
+    <linearGradient id="host" x2="0" y2="1"><stop stop-color="#53677e"/><stop offset="1" stop-color="#28384c"/></linearGradient>
+    <linearGradient id="dock" x2="0" y2="1"><stop stop-color="#e7e9ec"/><stop offset="1" stop-color="#c4ccd4"/></linearGradient>
+    <linearGradient id="pcb" x2="0" y2="1"><stop stop-color="#15704f"/><stop offset="1" stop-color="#06402d"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="150%"><feDropShadow dx="0" dy="8" stdDeviation="12" flood-color="#23344d" flood-opacity=".16"/></filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="4.5" refY="4.5" orient="auto"><path d="M1 1 L8 4.5 L1 8" fill="none" stroke="#e45444" stroke-width="1.6"/></marker>
+  </defs>
+  <rect width="1280" height="720" fill="url(#bg)"/>
+  <text x="80" y="65" fill="#1e3148" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="32" font-weight="700">薄转接板＋局部抬高的撞针台</text>
+  <text x="80" y="103" fill="#576b7f" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="19">沿屏幕法向压入的阶梯剖面 · 方向示意，未按实物比例</text>
+
+  <!-- The dock floor is lower under Mosaico and locally raised under the adapter. -->
+  <path d="M110 504 H616 V470 H1090 V622 H110 Z" fill="url(#dock)" stroke="#8c99a6" stroke-width="3" filter="url(#shadow)"/>
+  <path d="M110 504 H616 V470 H1090" fill="none" stroke="#8796a4" stroke-width="4"/>
+  <rect x="232" y="539" width="310" height="58" rx="11" fill="#bec8d3" stroke="#94a3b2" stroke-width="2"/>
+  <text x="387" y="575" fill="#45586a" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="19" text-anchor="middle">电池／主板空间仍需核算</text>
+
+  <!-- Host section; screen faces +Z, toward the top of the figure. -->
+  <rect x="175" y="185" width="422" height="305" rx="18" fill="url(#host)" stroke="#1b2d40" stroke-width="3" filter="url(#shadow)"/>
+  <rect x="194" y="203" width="384" height="21" rx="6" fill="#091c31"/>
+  <path d="M214 204 H556" stroke="#87a5bc" stroke-width="2" opacity=".6"/>
+  <text x="386" y="341" fill="#eef5fb" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="30" font-weight="700" text-anchor="middle">Mosaico</text>
+  <text x="386" y="374" fill="#c2d0df" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="19" text-anchor="middle">较厚的完整主机</text>
+
+  <!-- Unverified side-slot right-angle connector. -->
+  <rect x="586" y="301" width="76" height="153" rx="8" fill="#222a31" stroke="#111b24" stroke-width="3"/>
+  <path d="M596 326 H650 M596 352 H650 M596 378 H650 M596 404 H650 M596 430 H650" stroke="#d5ae58" stroke-width="7"/>
+  <text x="780" y="320" fill="#5a6470" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17" text-anchor="middle">侧槽连接器待验证</text>
+
+  <!-- One thin PCB, with contacts on its back face. -->
+  <rect x="652" y="417" width="416" height="40" rx="5" fill="url(#pcb)" stroke="#053624" stroke-width="3" filter="url(#shadow)"/>
+  <path d="M695 456 H1039" stroke="#e9b741" stroke-width="9" stroke-linecap="round" stroke-dasharray="28 42"/>
+  <text x="868" y="396" fill="#14533d" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="22" font-weight="700" text-anchor="middle">单块薄转接板</text>
+
+  <!-- Raised pogo region with the spring tips touching PCB underside. -->
+  <rect x="740" y="469" width="31" height="22" rx="6" fill="#7e8a95" stroke="#53616d" stroke-width="2"/>
+  <rect x="755" y="455" width="10" height="18" rx="5" fill="#dfb963" stroke="#99732c" stroke-width="2"/>
+  <rect x="892" y="469" width="31" height="22" rx="6" fill="#7e8a95" stroke="#53616d" stroke-width="2"/>
+  <rect x="907" y="455" width="10" height="18" rx="5" fill="#dfb963" stroke="#99732c" stroke-width="2"/>
+  <text x="865" y="547" fill="#34495f" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="20" text-anchor="middle">底座撞针区局部抬高</text>
+  <text x="386" y="533" fill="#34495f" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="20" text-anchor="middle">Mosaico 仓较低</text>
+
+  <line x1="1146" y1="185" x2="1146" y2="264" stroke="#e45444" stroke-width="4"/>
+  <path d="M1135 257 L1146 278 L1157 257 Z" fill="#e45444"/>
+  <text x="1146" y="160" fill="#c63d36" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="21" font-weight="700" text-anchor="middle">整体向下压入</text>
+  <path d="M1105 470 h34 M1105 504 h34" stroke="#697e91" stroke-width="2"/>
+  <path d="M1122 473 V501" stroke="#697e91" stroke-width="2" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
+  <text x="1146" y="496" fill="#496073" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">局部台阶</text>
+
+  <rect x="75" y="645" width="1130" height="47" rx="11" fill="#ffffff" opacity=".88"/>
+  <text x="95" y="675" fill="#5a6977" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">概念图：实际高度由 H2 配合、针行程、导向与止挡、电池叠层决定；不代表已完成装配或厚度验证。</text>
+</svg>

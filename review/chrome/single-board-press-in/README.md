@@ -40,6 +40,24 @@
 openscad -o /tmp/single-board-12.stl -D 'ROWS=6' -D 'SHOW_DOCK=false' single_board_press_in_concept.scad
 ```
 
+## 追加纠偏：阶梯剖面与居中按键（2026-09-23）
+
+用户进一步要求：薄转接板的背面触点应比 Mosaico 背面**更靠屏侧**，底座的撞针台则比 Mosaico 仓底**局部抬高**，以免为接触区把整个握把加厚。这个剖面概念是合理的，但原 `single_board_press_in_concept.scad` 仍是更早的朝向草图：它把 Mosaico 假设背面放在 Z=−5.74 mm，却把板背触点放在 Z=−6.60 mm，即**触点比主机背面低了 0.86 mm，方向与用户的阶梯要求相反**。下图纠正相对高低关系；剖面未按比例，右角连接器真实高度、针行程和电池叠层未验证。
+
+![薄转接板与局部抬高的底座撞针台剖面](stepped-contact-section.png)
+
+[可编辑矢量源](stepped-contact-section.svg)。局部抬高最多先改善左侧触点区的堆叠；整机厚度仍受电池、主板、壳壁和两处止挡约束，不能凭示意宣布已变薄。新压入方向要重新证明先导向、后触电、最后压到硬止挡的顺序。旧 −Y 入座的尺寸链与防呆证明不能直接转用。
+
+用户还指出旧按键组过高。未合并 `claude/design-d/mech-dock` [`999ee0d` 的 SCAD](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/dock_shell.scad) 给出 D-pad 与 ABXY 原中心 Y=−4.0 mm、外形顶部 Y=+33.0 mm；电池位置修订后的底部由公式派生为 Y=−72.0 mm，所以**机身中线为 Y=−19.5 mm，原键组高了 15.5 mm**。本稿只将两组中心提议下移到 Y=−19.5 mm，L/R 保持原位置。该提交的旧 [`LAYOUT-front.svg`](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/LAYOUT-front.svg) 仍标总高 101.5 mm／2×8 旧触点，与同提交 SCAD 派生的 105.0 mm 高度不一致；它只能用于辨认旧键位，不能作为最新机械外形的证据。
+
+![按假设尺寸作 X/Y 同比例的居中按键正视图](centered-controls-proportional.png)
+
+[可编辑矢量源](centered-controls-proportional.svg) 的全部物理轮廓在同一变换下按 **X/Y 均 6 px/mm** 画出：机身 167 × 105 mm、Mosaico 外形占位 45.19 mm、屏窗占位 41.19 mm、十字帽全跨 24 mm、ABXY 帽直径 10.5 mm／中心半径 13 mm、L/R 帽 20 × 8 mm。**这些是未实测 CAD 假设；41.19 mm 是窗口占位，不是已确认的显示屏有效尺寸。** 图内相互尺寸比例准确，但不可按屏幕显示像素直接打印作实物 1:1 样板，亦未验证手指可达、壳内干涉和 PCB 落点。
+
+![居中按键的外观效果图](centered-controls-concept.png)
+
+这张产品效果图使用内置图像生成工具按 [提示词与输入来源](centered-controls-prompt.txt) 制作，**不是等比例 CAD、不是 Mosaico 实物照片**；它仅供判断整体观感。需要评估尺寸与中心线时，应以前一张同尺 SVG 为准。十键来自现有首版范围（四向＋ABXY＋L/R），并非电气强制最少数；[T13 交互表](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/96fd823e93f264280207eb34b7a97e139ace7378/docs/product/T13-PRODUCT-DIRECTION.md#L70-L90) 本身注明全部动作是提案，Y 的用途未定，L/R 高频假设未经过使用验证。用户决定删键之前，本文不改 PINMAP、EEPROM、固件和 PCB。
+
 ## 十键需要多少触点
 
 现有电气提案的 16 个触点是 **10 路直连按键信号 + 2 路并联 5V + 4 路并联 GND**，并没有十几路额外按键。[现行 PINMAP 逐针表](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/94e393c55328cedca387affc7dd21aa316603b9c/hardware/module-board/PINMAP.md#L110-L159) 只适用于旧 J2 位置和旧入座方向，不能把网名位置原样搬到本图。
