@@ -46,6 +46,12 @@ openscad -o /tmp/single-board-12.stl -D 'ROWS=6' -D 'SHOW_DOCK=false' single_boa
 
 **撤图记录（2026-09-23 10:38 JST）：** 首次追加的 `stepped-contact-section.svg/png` 把应处于 Mosaico 左侧（−X）的转接板画到右侧，且未标定剖切方向，连接器与针座画法不能用于解释装配。用户指出后已从当前 PR 撤下；不以该图推出任何高度、厚度、接触次序或成本结论。后续只能在前视中标清 −X 左侧转接板及剖切线，再按 X–Z 剖面绘制相互一致的主机／板／底座。实际右角连接器高度、针行程和电池叠层仍未验证。
 
+**重画的方向校核图（2026-09-23 10:46 JST）：** [可编辑前视＋A–A 剖面](corrected-orthographic-views.svg) 用同一坐标，避免混画视角。前视从屏幕侧 +Z 看，+X 向右、+Y 向上；剖切线取 Y=+1.27 mm（穿过旧 2×6 占位图的一排触点）。剖面从 −Y 朝 +Y 看，+X 仍向右、+Z 向上，所以薄板始终在 Mosaico **左侧**。两图各自内部等比，分别使用 4.7 和 10 px/mm；它们不是同一画面比例。背面触点只在剖面可见，落在薄板 −Z 面，底座针沿 +Z 顶住，整体沿 −Z 压入。
+
+![同坐标的正视与剖面方向校核](corrected-orthographic-views.png)
+
+图内 Z 高差仅是**说明几何方向的示例**：假设 Mosaico 背面 −5.74 mm，触点面 −4.74 mm（比主机背面靠屏侧 1 mm），底座针区周围台面 −5.14 mm，主机仓底面 −6.14 mm。针根示在更低的 −7.94 mm，以区分「台面抬高」与「针安装平面必须抬高」这两件事。针型号、实际压缩量、接触先后、Z 止挡、H2 连接器与板子的可靠配合均未确定；此图不能用于装配验收或厚度定版。旧 OpenSCAD 图仍把板背触点置于 −6.60 mm，不能冒充该阶梯示例的新模型。
+
 用户还指出旧按键组过高。未合并 `claude/design-d/mech-dock` [`999ee0d` 的 SCAD](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/dock_shell.scad) 给出 D-pad 与 ABXY 原中心 Y=−4.0 mm、外形顶部 Y=+33.0 mm；电池位置修订后的底部由公式派生为 Y=−72.0 mm，所以**机身中线为 Y=−19.5 mm，原键组高了 15.5 mm**。本稿只将两组中心提议下移到 Y=−19.5 mm，L/R 保持原位置。该提交的旧 [`LAYOUT-front.svg`](https://github.com/ChromeTokyo/MosaicoKeyboard/blob/999ee0d20b54ff3d6dcf67297de0088a742a99a5/mechanical/dock-shell/LAYOUT-front.svg) 仍标总高 101.5 mm／2×8 旧触点，与同提交 SCAD 派生的 105.0 mm 高度不一致；它只能用于辨认旧键位，不能作为最新机械外形的证据。
 
 ![按假设尺寸作 X/Y 同比例的居中按键正视图](centered-controls-proportional.png)
