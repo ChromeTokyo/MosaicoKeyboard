@@ -95,4 +95,4 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| T14／AS 第一轮安全勘误 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`；T14 draft PR #55 | `chrome/arrival-assumption-safety` | `hardware/ASSUMPTIONS.md`、`hardware/ICD-0.2-DRAFT.md`、本人任务登记及 `docs/handoffs/chrome.md` | IN_REVIEW；[draft PR #56](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/56) 已交；AS-02/03/04/05/06/17/24 和 ME-D 验证列改为首轮照片/后续专项步骤，30 条假设仍 OPEN；不采纳或冻结设计。 |
+| T14／AS 第一轮安全勘误 | Codex／当前模型切换后的精确 ID 与档位未由可核验接口暴露 | main `96fd823`；T14 draft PR #55 | `chrome/arrival-assumption-safety` | `hardware/ASSUMPTIONS.md`、`hardware/ICD-0.2-DRAFT.md`、本人任务登记及 `docs/handoffs/chrome.md` | IN_REVIEW；[draft PR #56](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/56) 以 #55 分支为 base，须先集成 #55；AS-02/03/04/05/06/17/24 和 ME-D 验证列改为首轮照片/后续专项步骤，30 条假设仍 OPEN；不采纳或冻结设计。 |
