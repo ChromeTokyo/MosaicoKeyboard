@@ -15,6 +15,7 @@
 | `review/grok/G5/MATERIALS.md` | 已读范围 |
 | `review/grok/G5/EVIDENCE.md` | 头 SHA、行数与检索 |
 
+**本报告 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/58 ，分支 `grok/g5-assumptions-icd-errata`。  
 **PR #56：PASS（仅验证措辞）。** 头 `b15a0487f49010c3efdf75fe27ee62050fb59f48`，基线 `96fd823e93f264280207eb34b7a97e139ace7378`。`mergeCommit` 为空；派发消息中的 `3c6b25cc` 不在对象库。  
 **30 条 AS 仍全部 OPEN。** 不冻结尺寸、针位、连接器或 G1，不采纳设计草案，不替代 Hiro。  
 建议合入时在合并说明里写上这三条。G5-04（AS-22／ME-D-07 开口仍写卡尺）、G5-05（表前旧句仍说每条都可到货执行）不阻挡合入。
