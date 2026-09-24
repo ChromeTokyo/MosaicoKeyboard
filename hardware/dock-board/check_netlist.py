@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# 历史记录（2026-09-24 C7）：此脚本只检查已作废的旧网表内部一致性；退出 0 不代表现行方案 J 安全/可制造。见 ARCHIVED.md。
 # 提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
 """
 底座主板网表一致性检查（hardware/dock-board）。
@@ -225,7 +226,7 @@ def main() -> int:
         for e in errors:
             print("  - " + e)
         return 1
-    print("全部检查通过。")
+    print("历史网表内部检查通过；现行方案 J 的电气、机械及制造安全未验证。")
     return 0
 
 
