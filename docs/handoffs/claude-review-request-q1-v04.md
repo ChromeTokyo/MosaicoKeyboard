@@ -16,19 +16,22 @@ v0.4 改为「设计 agent／闸门 agent／两名对抗审核 agent／修正」
 
 官方模块解析：`references/official-module-interaction/ANALYSIS.md`。方案 J 权威描述：`review/claude/option-j-seated.md`。
 
-## 2. 文件（分支 `sweep/consistency-20260921`，目录 `mechanical/quickstart/`）
+## 2. 文件（分支 `quickstart/v04-r2`，目录 `mechanical/quickstart/`）
 
 | 文件 | 是什么 | SHA-256（前 16） |
 | --- | --- | --- |
-| `extended_baseplate.scad` | 参数化源；PART = tray / bezel / both | 【待填】 |
-| `extended_baseplate.stl` | 托盘 | 【待填】 |
-| `bezel.stl` | 压框 | 【待填】 |
-| `check_quickstart.py` | 机器闸门（与几何**不同 agent** 写） | 【待填】 |
-| `official_plate_fullres.stl` | 官方底板（import 用，一个面未改） | 【待填】 |
+| `extended_baseplate.scad` | 参数化源；PART = tray / bezel / both | 760827cdf8d656d3 |
+| `extended_baseplate.stl` | 托盘 | e9e498e403222c42 |
+| `bezel.stl` | 压框 | 9697f9d3a9492d5b |
+| `check_quickstart.py` | 机器闸门（与几何**不同 agent** 写） | 44814def9a547fcf |
+| `official_plate_fullres.stl` | 官方底板（import 用，一个面未改） | ba96ee93b79ec70c |
 | `README.md` | 装配顺序、假设表 Q1-* | — |
-| `q1_*.png` | 三视角渲染 | — |
+| `v04_*.png` | 五视角渲染（iso/top/end/tray_iso/bezel_under） | — |
 
-PR：【待填 #】
+PR：#66  https://github.com/ChromeTokyo/MosaicoKeyboard/pull/66
+
+闸门实跑输出：`mechanical/quickstart/GATE-OUTPUT-v04r2.txt`（15 条：0 FAIL，3 WARN——螺钉盘头高出屏面 2.7／GAP 0.5 下无止挡／导向裕量 0.095）。
+**分支：`quickstart/v04-r2`**（基于 sweep/consistency-20260921）。
 
 ## 3. 八条硬要求（闸门逐条断言）
 
@@ -51,6 +54,19 @@ PR：【待填 #】
 | v0.3 | 压条本体盖到 Mosaico 顶面上方 | 与被约束件顶面干涉 |
 | v0.3 | 保持只有远端一根 0.5 薄唇，模块端无约束 → 可绕排针翘起掰针 | 保持不闭合 |
 | v0.3 | OpenSCAD 变量先用后定义（占位赋值）→ undef | 语言坑 |
+
+## 4b. 内部两名对抗审核对 v0.4 首版的判决（r2 已按此修，供你们核「修对了没」）
+
+| 项 | 首版问题 | r2 处置 |
+| --- | --- | --- |
+| **方向** | 排针出口边认错 90°，Mosaico 放在螺柱边 | `rotate(−90)`；闸门 #0 由底板本体内缩＋外壳开口独立判 |
+| 压框排针侧边 | 倒角后顶宽 0.73 < 1.2 | 该边不倒角 |
+| 夹紧 | 柱顶低于压框底 0.3，需 325 N/颗才到止点，全进玻璃边；实测厚 ≤11.18 则四边全松 | 柱顶 = 压框本体底（真止点），压边处让一层 0.2 游隙；闸门报 MOS_T 可用窗口 [11.30, 11.65] |
+| 导向 | 先于触针 0.095，CLR 0.3 下偏摆 2.47°/1.95 mm | CLR 0.15 + 1.5 导入斜角 → 1.55°/1.22 mm（< 半针距 1.27）；仍 WARN |
+| 环形沿 | 远端只托 16% | 四边闭合 |
+| 外壳高度 | 按 Z=0 起 10.9 | 按底板台阶 1.2 起，顶 12.1 |
+| GAP 容差 | 方向写反 | 实际 GAP ∈ [0, 1.3]，变大失效 |
+| 闸门 | 与 scad 共用方向假设，互证无效；不查运动学、间隙、显示区 | 15 条，新增 #0/#11/#12/#13/#14 |
 
 ## 5. 请你们回答的
 

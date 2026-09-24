@@ -10,13 +10,14 @@
 //   F3/F4 POST_GAP 0.3 的「硬止点」实际要 ~300 N 才碰到柱顶、螺钉力全进玻璃边：改为 **柱顶 = 压框本体底 = 硬止点**
 //       （螺钉力进 PLA 柱、不进玻璃），压框压边处底面再抬一层 LIP_RECESS=0.2 → Mosaico 名义游隙 ∈ (0, 0.2]，是**限位**不是**预压**。
 //       柱顶按 0.2 层高量化（托盘总高 = 67 层 = 13.4 → 柱顶 11.40）。
-//   F4/F3 Q1-13 裕量 0.095 mm ≈ 0：CLR 0.3→0.20（导轨与角柱同面），+Y 角柱 −Y 端加 1.0 导入斜角；R5b 改判「注意」并给偏摆数。
+//   F4/F3 Q1-13 裕量 0.095 mm ≈ 0（= (MOS_D−34)/2 − (PIN_LEN−GAP)，被硬要求 7 锁死，与 CLR/SLIDE_L 无关）：CLR 0.3→0.15（导轨与角柱同面），
+//       +Y 角柱 −Y 端加 1.5 导入斜角（接住 ≤1.5 的横向偏差）；R5b 改判「注意」并给偏摆数。
 //       导向长度在触针瞬间 = POST_L + (PIN_LEN−GAP)，与 SLIDE_L 无关，加长滑入区没用（审核建议②不采）。
 //   F5/F7 环形沿：改 **四边闭合**（RIM_OPEN_FAR=false），远端 −Y 边下也有 4.0 沿；Q1-9 改写为「背面凸出物距 −Y 边 <12 mm 则装不进」。
 //   F6/F8 外壳坐在底板 Z=1.20 台阶上（底板 Z<1.2 全尺寸 ±21.807、Z≥1.2 本体 ±21.25 = 外壳内壁）→ 外壳顶 ≈12.1，比屏面高 0.62。
 //       删掉「压框在外壳顶之上」的判据，只靠横向 0.3 让位。
 //   F7  螺钉盘头：压框四孔加 Ø4.2×0.4 沉台（留 1.2 底），盘头高出压框顶 0.9～1.2（屏面上 2.4～2.7）；仍超硬要求 2 字面，ECHO 标「注意」。
-//   F6（使用）远端墙中央开 25 mm 宽、Z≥4 拇指口，推 Mosaico 时拇指从远端顶它的 −Y 面。
+//   F6（使用）远端墙中央开 28 mm 宽、通高（Z 0～柱顶）的手指口，推 Mosaico 时指尖从远端顶它的 −Y 面（墙只剩两端 15.2 mm 短墩，靠 Z<0 底板连接）。
 //   F9  新增 MOS_XC（Q1-23：Mosaico X 中心相对底板中心偏置，默认 0）。
 //   F5（使用）GAP 容差窗口写反：正确为 实际 GAP ∈ [0, 1.3] 可用（变大失效）。
 //   SCREW 参数：M2（默认）/ M1.4，底孔/过孔/沉台随之切换。
@@ -72,8 +73,8 @@ MOS_W = 45.19;  MOS_D = 45.19;  MOS_T = 11.48;
 MOS_XC = 0;
 // ASSUMPTION: Q1-18b 显示区 41.19 见方、居中（任务给屏窗 41.19，未核）→ 每边边框 2.0，压边 ≤1.2 不进显示区
 DISP_W = 41.19;
-// ASSUMPTION: Q1-4 托位与 Mosaico 单边间隙 0.20（导轨与角柱同面；FDM 滑配偏紧一档；标定件 C 组回填）
-CLR = 0.20;
+// ASSUMPTION: Q1-4 托位与 Mosaico 单边间隙 0.15（导轨与角柱同面；双边 0.30 = FDM 紧滑配；卡涩则砂 −Y 导轨内面、松则改 0.10；标定件 C 组回填）
+CLR = 0.15;
 // ASSUMPTION: Q1-6 Mosaico ±X 面各有一整条功能面（USB-C+侧键 / 顶键+扬声器，3mf 分析），Z≈2～6 不得遮挡 → ±X 侧中央 34 mm 留空
 SIDE_CUT_W = 34.0;
 // ASSUMPTION: Q1-7 2×10 排针沿 X 半跨 = 外壳开口半宽 12.9（开口 |X|<12.88/12.92，STL 切片）
@@ -89,18 +90,18 @@ RIM_W = 4.0;  RIM_OPEN_FAR = false;
 // ASSUMPTION: Q1-10 止挡：条件生成，只有 GAP − CLR − STOP_SHELL_CLR ≥ 1.2 时才有；默认 GAP 下放不下，插入深度由排针座到底定义
 STOP_H = 1.0;  STOP_SHELL_CLR = 0.2;  MIN_WALL = 1.2;
 // ASSUMPTION: Q1-15 螺钉/立柱：M2 底孔 Ø1.7、过孔 Ø2.3、盘头 Ø4.0×1.6（ISO 7045）；M1.4 底孔 Ø1.2、过孔 Ø1.7、盘头 Ø2.8×1.1。
-//   沉台 Ø(头+0.2)×0.4（压框留 1.2 底）。立柱 6.0 宽、底孔深 7、孔周壁 ≥1.5。柱顶 = 压框本体底 = 硬止点。
+//   沉台 Ø(头+0.2)×0.4（压框留 1.2 底）。立柱 6.5 宽（沉台外侧要在倒角之后仍留 1.2 壁：2.1+1.2+0.5=3.8 从柱外缘量）、底孔深 7、孔周壁 ≥1.5。柱顶 = 压框本体底 = 硬止点。
 SCR_PILOT  = (SCREW == "M2") ? 1.7 : 1.2;
 SCR_THRU   = (SCREW == "M2") ? 2.3 : 1.7;
 SCR_HEAD_D = (SCREW == "M2") ? 4.0 : 2.8;
 SCR_HEAD_H = (SCREW == "M2") ? 1.6 : 1.1;
 CBORE_D = SCR_HEAD_D + 0.2;  CBORE_H = 0.4;
-POST_W = 6.0;  POST_HOLE_DEPTH = 7.0;  POST_WALL_MIN = 1.5;  POST_LEADIN = 1.0;
+POST_W = 6.5;  POST_HOLE_DEPTH = 7.0;  POST_WALL_MIN = 1.5;  POST_LEADIN = 1.5;
 // ASSUMPTION: Q1-15b 压框：每边压 1.0、厚 1.6、−Y/±X 外缘倒角 0.5×45°、+Y（排针侧）边不倒角（1.2 宽夹死）；
 //   压边处底面抬 LIP_RECESS = 一层 → Mosaico 名义 Z 游隙 (0, 0.2]（限位，不预压）
 BEZ_PRESS = 1.0;  BEZ_T = 1.6;  BEZ_CHAMF = 0.5;  LIP_RECESS = LAYER_H;  RECESS_M = 0.3;
-// ASSUMPTION: Q1-16 滑入区长 8.0（≥ PIN_LEN − GAP + 1.5，落位时距针尖 ≥1.5、拔出行程够）；远端墙厚 1.5；拇指口 25 宽、Z≥4
-SLIDE_L = 8.0;  END_T = 1.5;  NOTCH_W = 25.0;  NOTCH_Z = 4.0;
+// ASSUMPTION: Q1-16 滑入区长 8.0（≥ PIN_LEN − GAP + 1.5，落位时距针尖 ≥1.5、拔出行程够）；远端墙厚 1.5；手指口 28 宽、通高（NOTCH_Z=0）
+SLIDE_L = 8.0;  END_T = 1.5;  NOTCH_W = 28.0;  NOTCH_Z = 0.0;
 // ASSUMPTION: Q1-17 压框后裙：厚 1.5、高 4.0，内面在 Mosaico −Y 面后方 SKIRT_CLR=0.8（容许实际 GAP 比假设大 ≤0.8）
 SKIRT_T = 1.5;  SKIRT_H = 4.0;  SKIRT_CLR = 0.8;  SKIRT_SIDE_CLR = 0.3;
 // ASSUMPTION: Q1-20 压框排针侧外缘到外壳脚印 0.3（横向让位；外壳顶 12.1 高于压框底 11.4，不能靠高度差）
@@ -133,7 +134,7 @@ PY_Y0 = ENV_Y1 - POST_L;  PY_Y1 = BEZ_Y1;                         // +Y 角柱 �
 NY_Y0 = ENV_Y0 - SLIDE_L;  NY_Y1 = ENV_Y0 + POST_L;               // −Y 长块 −76.34 ～ −62.545
 END_Y0 = NY_Y0 - END_T;  END_Y1 = NY_Y0;                          // 远端墙
 TRAY_Y0 = END_Y0;                                                 // 托盘 −Y 端 −77.84
-HOLE_X   = BLK_X1 - (CBORE_D / 2 + MIN_WALL);                     // 25.495：沉台外侧留 1.2
+HOLE_X   = BLK_X1 - (CBORE_D / 2 + MIN_WALL + BEZ_CHAMF);         // 25.445：沉台外侧在压框倒角之后仍留 1.2（闸门 #9 抓过 0.7）
 HOLE_Y_P = BEZ_Y1 - (CBORE_D / 2 + MIN_WALL);                     // −26.05：沉台到排针侧边留 1.2
 HOLE_Y_N = ENV_Y0 - HOLE_N_SETBACK;                               // −70.84
 CUT_X  = ENV_X - RIM_W;
@@ -188,7 +189,7 @@ module side_blocks() {
   }
 }
 
-// 远端墙：封住滑入区 −Y 端，连接两侧长块；中央拇指口（Z ≥ NOTCH_Z 挖掉）
+// 远端墙：滑入区 −Y 端的两个短墩（落位止面），中央手指口 NOTCH_W 宽、Z ≥ NOTCH_Z 全部挖掉；两墩靳 Z<0 底板相连
 module end_wall() {
   translate([MOS_XC, 0, 0]) difference() {
     translate([-TRAY_X, END_Y0, 0]) cube([2 * TRAY_X, END_T, POST_TOP]);
@@ -256,7 +257,9 @@ TRAY_SOLIDS = concat(
   STOP_ON ? [ ["+X止挡", [MOS_XC + ENV_X - RIM_W, STOP_Y0, 0], [MOS_XC + ENV_X, STOP_Y1, STOP_H]],
               ["-X止挡", [MOS_XC - ENV_X, STOP_Y0, 0], [MOS_XC - (ENV_X - RIM_W), STOP_Y1, STOP_H]] ] : []);
 PLATE_BOX  = [["官方底板", [-PLATE_W / 2, -PLATE_D / 2, 0], [PLATE_W / 2, PLATE_D / 2, PLATE_H]]];
-BEZ_BOX0 = [MOS_XC - BEZ_X, BEZ_Y0, SKIRT_Z0];  BEZ_BOX1 = [MOS_XC + BEZ_X, BEZ_Y1, BEZ_Z1];
+BEZ_BODY0 = [MOS_XC - BEZ_X, BEZ_Y0, BEZ_Z0];  BEZ_BODY1 = [MOS_XC + BEZ_X, BEZ_Y1, BEZ_Z1];          // 压框本体（Z ≥ 柱顶）
+SKIRT_BOX0 = [MOS_XC - SKIRT_X, SKIRT_Y0, SKIRT_Z0];  SKIRT_BOX1 = [MOS_XC + SKIRT_X, SKIRT_Y1, BEZ_Z0]; // 后裙（滑入区内）
+function bez_hits(b0, b1) = isect(BEZ_BODY0, BEZ_BODY1, b0, b1) || isect(SKIRT_BOX0, SKIRT_BOX1, b0, b1);
 MOS_ENV0 = [MOS_XC - ENV_X, ENV_Y0, 0];  MOS_ENV1 = [MOS_XC + ENV_X, ENV_Y1, MOS_T];
 SHELL0   = [-SHELL_XH, -SHELL_YH, 0];  SHELL1 = [SHELL_XH, SHELL_YH, SHELL_TOP];   // 从 Z=0 起算（保守，覆盖坐 0 或坐 1.2 两种）
 PIN_ZTOP = max(HDR_Z1 + 1.5, 9.0);                                                    // 排针区检查上限 9.0（针在 1.2～7.35；压框 +Y 边在 11.6 以上悬于 GAP 之上）
@@ -269,10 +272,12 @@ R1_bars   = min(BAR_W_X, BAR_W_YN, BAR_W_YP) >= MIN_WALL - EPS && min(TOPW_X, TO
 R1_holes_in_posts = (HOLE_X - SCR_PILOT / 2 - BLK_X0 >= POST_WALL_MIN - EPS) && (BLK_X1 - HOLE_X - SCR_PILOT / 2 >= POST_WALL_MIN - EPS)
                  && (HOLE_Y_P - SCR_PILOT / 2 - PY_Y0 >= POST_WALL_MIN - EPS) && (PY_Y1 - HOLE_Y_P - SCR_PILOT / 2 >= POST_WALL_MIN - EPS)
                  && (HOLE_Y_N - SCR_PILOT / 2 - NY_Y0 >= POST_WALL_MIN - EPS) && (NY_Y1 - HOLE_Y_N - SCR_PILOT / 2 >= POST_WALL_MIN - EPS)
-                 && (HOLE_Y_P - SCR_PILOT / 2 - (PY_Y0 + POST_LEADIN) >= 0);   // 导入斜角不切到孔
+                 && (HOLE_Y_P - SCR_PILOT / 2 - (PY_Y0 + POST_LEADIN) >= 0)     // 导入斜角不切到孔
+                 && (((HOLE_X - BLK_X0) + (HOLE_Y_P - PY_Y0) - POST_LEADIN) / sqrt(2) - SCR_PILOT / 2 >= POST_WALL_MIN - EPS);   // 孔到斜角面的壁 ≥1.5
 R1_cbore_in_bezel = (BEZ_X - HOLE_X - CBORE_D / 2 >= MIN_WALL - EPS) && (HOLE_X - CBORE_D / 2 - WIN_X >= MIN_WALL - EPS)
                  && (HOLE_Y_N - CBORE_D / 2 - BEZ_Y0 >= MIN_WALL - EPS) && (WIN_Y0 - HOLE_Y_N - CBORE_D / 2 >= MIN_WALL - EPS)
-                 && (BEZ_Y1 - HOLE_Y_P - CBORE_D / 2 >= MIN_WALL - EPS) && (BEZ_X - HOLE_X - CBORE_D / 2 >= BEZ_CHAMF - EPS)
+                 && (BEZ_Y1 - HOLE_Y_P - CBORE_D / 2 >= MIN_WALL - EPS) && (BEZ_X - HOLE_X - CBORE_D / 2 - BEZ_CHAMF >= MIN_WALL - EPS)   // 倒角后顶面处仍 ≥1.2
+                 && (HOLE_Y_N - CBORE_D / 2 - BEZ_Y0 - BEZ_CHAMF >= MIN_WALL - EPS)
                  && (BEZ_T - CBORE_H >= MIN_WALL - EPS);
 R1_stop   = abs(BEZ_Z0 - POST_TOP) < EPS;                        // 压框本体底 = 柱顶 → 硬止点在柱
 R1_play   = LIP_PLAY > 0 && LIP_PLAY <= LAYER_H + 0.05;          // 名义游隙 ∈ (0, 0.25]
@@ -289,18 +294,18 @@ R3_hits = hits(concat(TRAY_SOLIDS, PLATE_BOX), MOS_ENV0, MOS_ENV1);
 R3 = len(R3_hits) == 0 && BASE_T > 0;
 // R4 不碰官方外壳（Z>0 外壳脚印内只允许官方底板；压框也不进）
 R4_hits = hits(TRAY_SOLIDS, SHELL0, SHELL1);
-R4_bez  = isect(BEZ_BOX0, BEZ_BOX1, SHELL0, SHELL1);
+R4_bez  = bez_hits(SHELL0, SHELL1);
 R4 = len(R4_hits) == 0 && !R4_bez;
 // R5 排针安全靠顺序
 R5_drop   = SLIDE_L + GAP - PIN_LEN;                             // 落位时 Mosaico +Y 面到针尖 2.5
 R5_guide  = (MOS_Y_MAX - PY_Y0) - (PIN_LEN - GAP);               // +Y 角柱导向比针尖触面早 0.095
-R5_ovl    = POST_L + (PIN_LEN - GAP);                            // 触针瞬间 −Y 导轨有效长 11.3
+R5_ovl    = (NY_Y1 - MOS_Y_MIN) + (PIN_LEN - GAP);               // 触针瞬间 −Y 导轨与 Mosaico 侧面的重叠长 ≈11.1（与 SLIDE_L 无关）
 R5_yaw    = atan(2 * CLR / R5_ovl);                              // 最大偏摆角
 R5_lat    = tan(R5_yaw) * (MOS_D - R5_ovl / 2) + CLR;            // +Y 面处最大横向偏移
 R5_travel = SLIDE_L - (PIN_LEN - GAP);                           // 拔出行程余量 2.5
 R5a = R5_drop >= 1.5 - EPS;
 R5b = R5_guide >= 1.0 - EPS;                                     // 需 ≥1.0 才算「先导向」（审核 F4/F3）
-R5c = len(hits(TRAY_SOLIDS, PINZONE0, PINZONE1)) == 0 && !isect(BEZ_BOX0, BEZ_BOX1, PINZONE0, PINZONE1) && HDR_XH + 2 < ENV_X;
+R5c = len(hits(TRAY_SOLIDS, PINZONE0, PINZONE1)) == 0 && !bez_hits(PINZONE0, PINZONE1) && HDR_XH + 2 < ENV_X;
 R5d = BEZ_Y1 <= MOD_FACE_Y - BEZ_SHELL_CLR + EPS && BAR_W_YP >= MIN_WALL - EPS;
 R5e = SKIRT_CLR > 0 && SKIRT_Y0 >= END_Y1 + SKIRT_SIDE_CLR - EPS && SKIRT_X <= ENV_X - SKIRT_SIDE_CLR + EPS && SKIRT_Z0 > 0
    && SKIRT_Y1 <= WIN_Y0 - EPS && abs(SKIRT_Y0 - (HOLE_Y_N + CBORE_D / 2)) > 0 && SKIRT_X < HOLE_X - CBORE_D / 2;
@@ -340,7 +345,7 @@ echo(str("R3 不进 Mosaico 脚印（含 CLR ", CLR, "）：Z>0 实体与包络�
 echo(str("R4 不碰官方外壳（脚印 X±", r3(SHELL_XH), " Y±", r3(SHELL_YH), " Z[0,", r2(SHELL_TOP), "]）：托盘相交 = ", R4_hits, "；压框相交 = ", R4_bez, "；+Y 柱到外壳角 dx ", r3(MOS_XC + BLK_X0 - SHELL_XH), " dy ", r3(MOD_FACE_Y - PY_Y1), " -> ", ok(R4)));
 echo(str("R5 排针安全靠顺序：落位时距针尖 ", r2(R5_drop), " ≥1.5 ", ok(R5a), "；排针区（|X|≤", HDR_XH + 2, " GAP 内 Z(0.2,", r2(PIN_ZTOP), "]）托盘/压框为空 ", ok(R5c),
          "；排针侧边外缘 ", r2(BEZ_Y1), " ≤ 外脸−", BEZ_SHELL_CLR, " 且宽≥", MIN_WALL, " ", ok(R5d), "；后裙防退出（在滑入区内、不碰墙/块/沉台）", ok(R5e), "；拔出行程余量 ", r2(R5_travel), " ≥1.5 ", ok(R5f), " -> ", ok(R5)));
-echo(str("R5b 导向先于触针：+Y 角柱开始导向比针尖触面早 ", r3(R5_guide), " mm（需≥1.0）-> ", okn(R5b),
+echo(str("R5b 导向先于触针：+Y 角柱开始导向比针尖触面早 ", r3(R5_guide), " mm（需≥1.0；= (MOS_D−", SIDE_CUT_W, ")/2 − (PIN_LEN−GAP)，被硬要求 7 锁死）-> ", okn(R5b),
          "：触针瞬间只有 −Y 导轨 ", r2(R5_ovl), " mm 长、双边隙 ", 2 * CLR, " → 偏摆 ≤", r2(R5_yaw), "°、+Y 面横向 ≤", r2(R5_lat), " mm（半个针距 1.27）。角柱长受硬要求 7 的 34 mm 锁死，加长滑入区无效；**目视对准槽口**，同官方裸用。PIN_LEN 实测后回填"));
 echo(str("R5 止挡：GAP=", GAP, " 下可用厚度 ", r2(STOP_T), "（需≥", MIN_WALL, "）→ ", STOP_ON ? str("生成，Y[", r2(STOP_Y0), ",", r2(STOP_Y1), "] 高 ", STOP_H, " -> OK") : str("**不生成**（设计决定）：插入深度由排针座到底定义（同官方裸用）；Q1-2 实测 GAP ≥ ", r2(CLR + STOP_SHELL_CLR + MIN_WALL), " 后自动生成 -> 注意")));
 echo(str("R5 GAP 容差：实际 GAP ∈ [", r2(GAP_MIN_OK), ", ", r2(GAP_MAX_OK), "] 可用（+Y 压边 1−δ、−Y 压边 1+δ、后裙隙 0.8−δ，δ=GAP−", GAP, "；变大失效：>", r2(GAP_MAX_OK), " 后裙压到 Mosaico）"));
