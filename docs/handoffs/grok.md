@@ -15,6 +15,7 @@
 | `review/grok/G8/MATERIALS.md` | 已读范围 |
 | `review/grok/G8/EVIDENCE.md` | SHA、7 行诊断、退出码与探针 |
 
+**本报告 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/65 ，分支 `grok/g8-j2-contract-checker`。  
 **PR #53：检查器语义 PASS。** 头 `85c1fb896ca32e9c256827e18b5ae165391d4e88`，基线 `96fd823e93f264280207eb34b7a97e139ace7378`。试合并 `753e818bf6e26fa82dc30ad97e206dfda7d4f7a4` 与头同树。  
 **不可以当作配合、安全或制造闸门。** 不关闭 G2 HOLD、G3 HOLD 或 G3-07。`94e393c` 的 PINMAP 修订 c 与网表修订 b 仍不一致，设计源仍是 CHANGES_REQUIRED。  
 建议把 #53 作为只读工具合入 `main`。合并说明写明：退出码 0 只代表三份文本的名义合同；固定输入现在必须失败。
