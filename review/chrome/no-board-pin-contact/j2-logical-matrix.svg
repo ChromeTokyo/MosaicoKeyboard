@@ -1,0 +1,78 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="365" viewBox="0 0 1240 365">
+<rect width="1240" height="365" fill="#f7f9fc"/>
+<text x="50" y="45" font-size="27" font-family="sans-serif" font-weight="700" fill="#172c42">J2：20 个排针尾尖，底座只装 12 根弹簧针</text>
+<text x="50" y="75" font-size="16" font-family="sans-serif" fill="#51667b">排针塑胶本体局部坐标 · 逻辑示意，非实物朝向 / 非可制造封装</text>
+<rect x="85" y="105" width="1040" height="180" rx="18" fill="#e5ebf2" stroke="#9caebf" stroke-width="2"/>
+<text x="1160" y="179" font-size="16" font-family="sans-serif" fill="#51667b">v</text>
+<path d="M1150 240 L1150 135 M1143 142 L1150 135 L1157 142" fill="none" stroke="#51667b" stroke-width="2"/>
+<text x="597" y="314" font-size="16" font-family="sans-serif" fill="#51667b">u：pin1 → pin19（2.54 mm 节距，十列跨距 22.86 mm）</text>
+<path d="M176 300 L1034 300 M1027 293 L1034 300 L1027 307" fill="none" stroke="#51667b" stroke-width="2"/>
+<circle cx="150" cy="165" r="27" fill="#137e78"/>
+<text x="150" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">1</text>
+<text x="150" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">UP</text>
+<circle cx="150" cy="235" r="27" fill="#137e78"/>
+<text x="150" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">2</text>
+<text x="150" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">A</text>
+<circle cx="255" cy="165" r="27" fill="#137e78"/>
+<text x="255" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">3</text>
+<text x="255" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">DOWN</text>
+<circle cx="255" cy="235" r="27" fill="#137e78"/>
+<text x="255" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">4</text>
+<text x="255" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">B</text>
+<circle cx="360" cy="165" r="27" fill="#137e78"/>
+<text x="360" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">5</text>
+<text x="360" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">LEFT</text>
+<circle cx="360" cy="235" r="27" fill="#137e78"/>
+<text x="360" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">6</text>
+<text x="360" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">X</text>
+<circle cx="465" cy="165" r="27" fill="#137e78"/>
+<text x="465" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">7</text>
+<text x="465" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">RIGHT</text>
+<circle cx="465" cy="235" r="27" fill="#137e78"/>
+<text x="465" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">8</text>
+<text x="465" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">Y</text>
+<circle cx="570" cy="165" r="27" fill="#137e78"/>
+<text x="570" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">9</text>
+<text x="570" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">L</text>
+<circle cx="570" cy="235" r="27" fill="#a7b3bf"/>
+<text x="570" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">10</text>
+<text x="570" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="675" cy="165" r="27" fill="#137e78"/>
+<text x="675" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">11</text>
+<text x="675" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">R</text>
+<circle cx="675" cy="235" r="27" fill="#a7b3bf"/>
+<text x="675" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">12</text>
+<text x="675" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="780" cy="165" r="27" fill="#a7b3bf"/>
+<text x="780" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">13</text>
+<text x="780" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="780" cy="235" r="27" fill="#a7b3bf"/>
+<text x="780" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">14</text>
+<text x="780" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="885" cy="165" r="27" fill="#a7b3bf"/>
+<text x="885" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">15</text>
+<text x="885" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="885" cy="235" r="27" fill="#a7b3bf"/>
+<text x="885" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">16</text>
+<text x="885" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="990" cy="165" r="27" fill="#d44943"/>
+<text x="990" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">17</text>
+<text x="990" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">5V IN</text>
+<circle cx="990" cy="235" r="27" fill="#a7b3bf"/>
+<text x="990" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">18</text>
+<text x="990" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="1095" cy="165" r="27" fill="#a7b3bf"/>
+<text x="1095" y="162" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">19</text>
+<text x="1095" y="180" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">—</text>
+<circle cx="1095" cy="235" r="27" fill="#2b3948"/>
+<text x="1095" y="232" text-anchor="middle" font-size="16" font-family="sans-serif" font-weight="700" fill="white">20</text>
+<text x="1095" y="250" text-anchor="middle" font-size="11" font-family="sans-serif" fill="white">GND</text>
+<circle cx="81" cy="340" r="7" fill="#d44943"/>
+<text x="92" y="345" font-size="14" font-family="sans-serif" fill="#51667b">红＝底座供电输入</text>
+<circle cx="290" cy="340" r="7" fill="#2b3948"/>
+<text x="301" y="345" font-size="14" font-family="sans-serif" fill="#51667b">黑＝回流</text>
+<circle cx="410" cy="340" r="7" fill="#137e78"/>
+<text x="421" y="345" font-size="14" font-family="sans-serif" fill="#51667b">绿＝键线</text>
+<circle cx="520" cy="340" r="7" fill="#a7b3bf"/>
+<text x="531" y="345" font-size="14" font-family="sans-serif" fill="#51667b">灰＝底座不装针（主机尾针仍存在）</text>
+</svg>
