@@ -1,3 +1,4 @@
+// ⚠ 2026-09-24 作废：本文件属 −Y 落入／两板／J3 时代，架构已转向直排针穿透＋撞针横顶＋−Z 压入（D-028）。仅存档供追溯，不得据以设计或复核。现行描述见 review/claude/option-j-seated.md，分工见 docs/WORK-SPLIT-20260924.md。
 // 提案 · 未冻结 · 由 Claude 主控（claude-opus-5）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
 //
 // module_shell.scad —— 模块板保护壳体（可 3D 打印）
