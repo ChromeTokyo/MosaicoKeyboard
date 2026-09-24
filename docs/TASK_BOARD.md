@@ -48,6 +48,12 @@ Cursor／Grok 默认没有领取任务，不是 T04 或其他核心工作的必�
 
 T02–T05 的交接包在 `docs/handoffs/claude-to-chrome.md`。交接包存在只表示 Chrome 可以直接领取，不表示已开始工作。T03、T05 仍为 READY；T04 本轮仅领取 CoreBoard 接口证据子范围，其余供应与封装核验待继续。
 
+### Chrome 2026-09-24 新派工领取
+
+| ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 状态 |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| C24-01～06（无转接板方案：排针、弹簧针、脚位、无 EEPROM、串阻、电源模块） | Chrome／Codex | 本轮运行时未暴露精确 ID／档位；上一会话用户确认 `gpt-6-astra`／`ultra`，不冒充本轮核验值 | `2d16b93`（`sweep/consistency-20260921`，含 D-028～030 与新派工） | `chrome/no-board-pin-contact` | `review/chrome/no-board-pin-contact/`、必要的电气草案 `hardware/no-board-dock/`、本登记、`docs/handoffs/chrome.md`；不改 Claude 机械与旧版设计源 | `docs/handoffs/chrome.md` | IN_PROGRESS；先核 3.1，3.4／3.6 并行只读调查；接口与制造均未冻结 |
+
 **主控裁决 D-006（2026-09-20）：** `docs/handoffs/chrome.md` 曾出现两个互不相同的版本（主控派发包与 Chrome 自写的 T02 交接），属同一源文件双编辑者。裁决为分离职责：`docs/handoffs/chrome.md` 唯一归属 Chrome，登记自己的领取、进展日志与交接，主控不写入；主控派发包改名为 `docs/handoffs/claude-to-chrome.md`，Chrome 只读。Chrome 无需做任何合并。`docs/OWNERSHIP.md` 的 U-34 据此关闭。
 
 ### Chrome 本轮增量领取（2026-09-20）
