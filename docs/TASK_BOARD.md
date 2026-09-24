@@ -90,3 +90,9 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 | ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
+
+### Chrome 2026-09-24 新分工领取（以 WORK-SPLIT-20260924 为准）
+
+| ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- | --- |
+| C1～C5（先 C1；C2/C4/C5 并行研究；C3 依赖 C1/C4）、C6/C7 后续 | Chrome／Codex | 本轮运行时未暴露精确模型 ID／档位；上一会话用户确认过 `gpt-6-astra`／`ultra`，不冒充本轮核验 | `ead27bb`（`sweep/consistency-20260921`，09-24 新分工及权威架构） | `chrome/straight-header-side-contact` | `review/chrome/straight-header-side-contact/`、必要的手柄主板电气源、`docs/DESIGN_STATUS.md`、本登记、`docs/handoffs/chrome.md`；不编辑 Claude 机械源／三道闸门 | IN_PROGRESS；先核裸直排针与左槽外壳，前轮 `chrome/no-board-pin-contact` 的右角排针和 +Z 撞针方向已作废；硬件未冻结 |
