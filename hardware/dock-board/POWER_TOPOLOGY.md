@@ -1,3 +1,5 @@
+**历史记录（2026-09-24 C7）：方案 D＋G 分立电源链已被 D-029 的现成模块方向取代；本文件与旧 J2 几何不可用于现行方案 J 或制造。见 [ARCHIVED.md](ARCHIVED.md)。以下原文保留供追溯。**
+
 提案 · 未冻结 · 由 Claude 主控（claude-fable-5-1）起草 · 待 Chrome 采纳、Hiro 复核 · 不得据以制造
 
 # 底座主板电源拓扑（POWER_TOPOLOGY）
