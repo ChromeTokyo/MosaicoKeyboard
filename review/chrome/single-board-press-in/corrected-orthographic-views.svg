@@ -1,0 +1,74 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="960" viewBox="0 0 1280 960" role="img" aria-label="转接板在 Mosaico 左侧的前视与 X-Z 剖面，均标明观察方向">
+  <defs>
+    <linearGradient id="page" x2="0" y2="1"><stop stop-color="#fbfdff"/><stop offset="1" stop-color="#eaf0f7"/></linearGradient>
+    <linearGradient id="host" x2="0" y2="1"><stop stop-color="#5b7187"/><stop offset="1" stop-color="#263c52"/></linearGradient>
+    <linearGradient id="board" x2="0" y2="1"><stop stop-color="#16815d"/><stop offset="1" stop-color="#07503a"/></linearGradient>
+    <linearGradient id="base" x2="0" y2="1"><stop stop-color="#d9e0e6"/><stop offset="1" stop-color="#abb9c5"/></linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%"><feDropShadow dx="0" dy="7" stdDeviation="10" flood-color="#263b50" flood-opacity=".13"/></filter>
+  </defs>
+  <rect width="1280" height="960" fill="url(#page)"/>
+  <text x="70" y="57" fill="#23384e" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="31" font-weight="700">长边单板＋阶梯接触：先定视角，再谈高度</text>
+  <text x="70" y="89" fill="#5a6f82" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="18">两视图共用 +X 向右；转接板始终在 Mosaico 左侧（−X）。尺寸仅为待核假设。</text>
+
+  <!-- View 1: FRONT, looking from +Z, X right, Y up. Metric transform = 6 px/mm. -->
+  <rect x="65" y="112" width="1150" height="350" rx="20" fill="#fff" stroke="#d3dee7" stroke-width="2"/>
+  <text x="95" y="150" fill="#1f405b" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="23" font-weight="700">① 前视：从屏幕一侧（+Z）看</text>
+  <text x="95" y="177" fill="#6a7c8b" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">左槽＝−X；图上转接板在左，长边沿 Y</text>
+  <g transform="translate(525 326) scale(4.7 -4.7)">
+    <rect x="-22.595" y="-22.595" width="45.19" height="45.19" rx="2" fill="url(#host)" stroke="#1e3549" stroke-width=".45" filter="url(#shadow)"/>
+    <rect x="-20.595" y="-20.595" width="41.19" height="41.19" rx="1" fill="#d5e5ee" stroke="#8facba" stroke-width=".3"/>
+    <rect x="-36" y="-20" width="12.2" height="40" rx=".7" fill="url(#board)" stroke="#064633" stroke-width=".4" filter="url(#shadow)"/>
+    <rect x="-25.5" y="-12.7" width="5" height="25.4" rx=".6" fill="none" stroke="#ab6e38" stroke-width=".3" stroke-dasharray=".6 .45"/>
+    <!-- A-A crosses one actual 2x6 pogo row at Y=+1.27 mm. -->
+    <path d="M-42 1.27 H31" stroke="#de624e" stroke-width=".38" stroke-dasharray="1.5 1.2"/>
+  </g>
+  <text x="525" y="288" fill="#2f5167" font-family="Arial, sans-serif" font-size="22" text-anchor="middle">Mosaico</text>
+  <text x="265" y="411" fill="#145c43" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="18">左侧单板</text>
+  <path d="M345 402 L364 392" fill="none" stroke="#145c43" stroke-width="2"/>
+  <text x="305" y="310" fill="#c34839" font-family="Arial, sans-serif" font-size="21" font-weight="700">A</text>
+  <text x="685" y="310" fill="#c34839" font-family="Arial, sans-serif" font-size="21" font-weight="700">A</text>
+  <text x="775" y="237" fill="#49647a" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="20">剖切线 A–A：Y=+1.27 mm</text>
+  <text x="775" y="270" fill="#49647a" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="18">穿过一排触点，从 −Y 朝 +Y 看</text>
+  <path d="M777 335 H922" stroke="#476c82" stroke-width="3"/>
+  <path d="M922 335 L910 328 M922 335 L910 342" fill="none" stroke="#476c82" stroke-width="3"/>
+  <text x="931" y="342" fill="#476c82" font-family="Arial, sans-serif" font-size="18">+X</text>
+  <path d="M790 413 V363" stroke="#476c82" stroke-width="3"/>
+  <path d="M790 363 L783 375 M790 363 L797 375" fill="none" stroke="#476c82" stroke-width="3"/>
+  <text x="801" y="374" fill="#476c82" font-family="Arial, sans-serif" font-size="18">+Y</text>
+
+  <!-- View 2: X-Z section at Y=+1.27, looking +Y from -Y; X right, Z up. Metric transform = 10 px/mm. -->
+  <rect x="65" y="481" width="1150" height="403" rx="20" fill="#fff" stroke="#d3dee7" stroke-width="2"/>
+  <text x="95" y="520" fill="#1f405b" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="23" font-weight="700">② A–A 剖面：从 −Y 朝 +Y 看</text>
+  <text x="95" y="547" fill="#6a7c8b" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">+Z 向上＝屏幕侧；整机压入方向 −Z 向下；转接板仍在左侧</text>
+  <g transform="translate(505 708) scale(10 -10)">
+    <!-- Mosaico assumption: 45.19 mm X width, 11.48 mm Z thickness. -->
+    <rect x="-22.595" y="-5.74" width="45.19" height="11.48" rx=".7" fill="url(#host)" stroke="#20394d" stroke-width=".28" filter="url(#shadow)"/>
+    <rect x="-21" y="4.6" width="42" height=".55" rx=".2" fill="#a9bfce"/>
+    <!-- User's raised-pad example: one XY PCB, 1.6 mm thick, at X<0. Pad face -4.74, 1.0 mm closer to screen than host back. -->
+    <rect x="-36" y="-4.74" width="12.2" height="1.6" rx=".18" fill="url(#board)" stroke="#064331" stroke-width=".22"/>
+    <path d="M-33.9 -4.74 H-32.1 M-31.36 -4.74 H-29.56" stroke="#efbd58" stroke-width=".35"/>
+    <!-- Dashed bridge shows the required connection only, not H2/right-angle connector geometry. -->
+    <path d="M-23.8 -3.94 H-22.595" stroke="#ab6e38" stroke-width=".22" stroke-dasharray=".35 .25"/>
+    <!-- Plastic ledge is raised relative to Mosaico recess; pin mounting plane may still be deeper. -->
+    <path d="M-39 -10 V-5.14 H-23 V-6.14 H26 V-10 Z" fill="url(#base)" stroke="#7e94a4" stroke-width=".25"/>
+    <rect x="-33.6" y="-7.94" width="1.2" height="3.0" fill="#fff" stroke="#8fa1ad" stroke-width=".14"/>
+    <rect x="-31.06" y="-7.94" width="1.2" height="3.0" fill="#fff" stroke="#8fa1ad" stroke-width=".14"/>
+    <path d="M-33 -7.94 V-4.74 M-30.46 -7.94 V-4.74" stroke="#bb9347" stroke-width=".42"/>
+  </g>
+  <text x="505" y="695" fill="#e5eff5" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">Mosaico</text>
+  <text x="198" y="651" fill="#126145" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="18" text-anchor="middle">薄单板</text>
+  <text x="380" y="786" fill="#3b5569" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17" text-anchor="middle">针区周边台面较高</text>
+  <text x="665" y="800" fill="#3b5569" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17" text-anchor="middle">主机仓底面较低</text>
+  <text x="858" y="623" fill="#8b603c" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">虚线仅表示待定义连接，非实体形状</text>
+  <text x="858" y="656" fill="#485f72" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">示例：触点面比主机背面高 1 mm</text>
+  <text x="858" y="689" fill="#485f72" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">针根可低于仓底；不能只看凸台高度</text>
+  <path d="M940 765 V714" stroke="#d95547" stroke-width="3"/>
+  <path d="M931 724 L940 708 L949 724" fill="none" stroke="#d95547" stroke-width="3"/>
+  <text x="954" y="722" fill="#c2473a" font-family="Arial, sans-serif" font-size="18">+Z</text>
+  <path d="M1065 697 V750" stroke="#d95547" stroke-width="3"/>
+  <path d="M1056 740 L1065 756 L1074 740" fill="none" stroke="#d95547" stroke-width="3"/>
+  <text x="1080" y="746" fill="#c2473a" font-family="Arial, sans-serif" font-size="18">压入 −Z</text>
+
+  <rect x="66" y="899" width="1147" height="47" rx="11" fill="#fff" opacity=".9"/>
+  <text x="83" y="928" fill="#63778a" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">方向校核图，各视图内部等比而比例不同；H2 配合、真实厚度、针行程、止挡及电池叠层均未验证。</text>
+</svg>

@@ -90,3 +90,9 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 | ID | 领取人／平台 | 实际模型与档位 | 输入提交 | 分支 | 文件范围 | 交接路径 | 登记日期 |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Chrome 遗留整合（PR #12 ＋ `chrome/h-low-quota-batch`） | Claude 主控（Claude Code） | `claude-fable-5-1`；推理档位未由可核验接口提供，不猜填 | main `6953715`；`chrome/h-low-quota-batch` `b44c728`；`chrome/t18-proposal-review` `009a488` | `integrate/chrome-leftovers` | 仅合并与冲突解决：`docs/MEASUREMENT_PROTOCOL.md`、`docs/INTERFACE_CONTROL.md`、`docs/TASK_BOARD.md`、`docs/DESIGN_STATUS.md`、`docs/handoffs/chrome.md`、`review/chrome/**`；`design/`、`references/` 相对 main 无改动 | 合并提交说明及本节 | 2026-09-20 |
+
+### Chrome 用户纠偏：单板正面压入方案（2026-09-23）
+
+| 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
+| --- | --- | --- | --- | --- | --- |
+| T20 单板压入候选评估 | Codex／`gpt-6-astra`／`ultra`（本会话此前由用户确认；本轮未重新暴露运行时标识） | main `96fd823`；机械提案 `42172f7`、`999ee0d`；模块电气提案 `94e393c`；G5 PR #58 | `chrome/single-board-press-in` | `review/chrome/single-board-press-in/`、本领取记录、`docs/handoffs/chrome.md`；不改任何设计源或冻结接口 | CHANGES_REQUIRED；[draft PR #59](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/59) 中首次阶梯图已撤，现补同坐标前视与 X–Z 剖面方向校核图；用户／独立审查尚未认可方向，H2、针行程及厚度未验证；12／14／16 数量及风险仍可审，不作为硬件放行 |

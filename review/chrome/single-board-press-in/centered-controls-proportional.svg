@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="900" viewBox="0 0 1280 900" role="img" aria-label="按未冻结 CAD 假设尺寸等比例绘制的居中按键正视图">
+  <defs>
+    <linearGradient id="paper" x2="0" y2="1"><stop stop-color="#fbfcff"/><stop offset="1" stop-color="#eaf0f6"/></linearGradient>
+    <linearGradient id="body" x2="0" y2="1"><stop stop-color="#fbfcfb"/><stop offset="1" stop-color="#dce2e5"/></linearGradient>
+    <linearGradient id="key" x2="0" y2="1"><stop stop-color="#4e5a66"/><stop offset="1" stop-color="#18232f"/></linearGradient>
+    <filter id="shadow" x="-15%" y="-15%" width="130%" height="140%"><feDropShadow dx="0" dy="9" stdDeviation="13" flood-color="#1e3042" flood-opacity=".18"/></filter>
+  </defs>
+  <rect width="1280" height="900" fill="url(#paper)"/>
+  <text x="88" y="52" fill="#1f3349" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="30" font-weight="700">按键下移至机身中线 · 正视比例图</text>
+  <text x="88" y="82" fill="#617284" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="17">同图 X/Y 均为 6 px/mm；数值来自未冻结 CAD 假设，屏幕有效显示区仍未知</text>
+
+  <!-- All physical features in this group share exactly the same 6 px/mm X and Y scale. -->
+  <g transform="translate(640 330) scale(6 -6)">
+    <!-- Updated CAD-derived outer envelope: X +/-83.5, Y -72..+33. -->
+    <rect x="-83.5" y="-72" width="167" height="105" rx="6" fill="url(#body)" stroke="#7f8d99" stroke-width=".55" filter="url(#shadow)"/>
+    <rect x="-80.5" y="-62" width="50.5" height="68" rx="10" fill="#edf0f0" stroke="#b5c0c8" stroke-width=".35"/>
+    <rect x="30" y="-62" width="50.5" height="68" rx="10" fill="#edf0f0" stroke="#b5c0c8" stroke-width=".35"/>
+    <!-- Mosaico outer placeholder 45.19 square; window 41.19 square. -->
+    <rect x="-22.595" y="-22.595" width="45.19" height="45.19" rx="2.5" fill="#263c50" stroke="#223b51" stroke-width=".4"/>
+    <rect x="-20.595" y="-20.595" width="41.19" height="41.19" rx="1.8" fill="#152a3a" stroke="#81a7b2" stroke-width=".32"/>
+    <path d="M-17 15 H17" stroke="#8ca8b6" stroke-width=".4" opacity=".65"/>
+    <!-- Physical body midline Y=(33-72)/2=-19.5; both thumb clusters share it. -->
+    <path d="M-83.5 -19.5 H-23 M23 -19.5 H83.5" stroke="#64a8ba" stroke-width=".34" stroke-dasharray="1.4 1.4"/>
+    <g transform="translate(-54 -19.5)" fill="url(#key)" stroke="#0e1924" stroke-width=".45">
+      <path d="M-5.25 12 H5.25 V5.25 H12 V-5.25 H5.25 V-12 H-5.25 V-5.25 H-12 V5.25 H-5.25 Z"/>
+      <circle cx="0" cy="0" r="1.35" fill="#6c7d88" stroke="none"/>
+    </g>
+    <g fill="url(#key)" stroke="#152230" stroke-width=".38">
+      <circle cx="54" cy="-6.5" r="5.25"/>
+      <circle cx="67" cy="-19.5" r="5.25"/>
+      <circle cx="54" cy="-32.5" r="5.25"/>
+      <circle cx="41" cy="-19.5" r="5.25"/>
+    </g>
+    <rect x="-68" y="23.5" width="20" height="8" rx="2" fill="url(#key)" stroke="#192735" stroke-width=".35"/>
+    <rect x="48" y="23.5" width="20" height="8" rx="2" fill="url(#key)" stroke="#192735" stroke-width=".35"/>
+  </g>
+
+  <!-- Human-readable labels and dimensions are outside the metric transform. -->
+  <text x="640" y="317" fill="#b8d4df" font-family="Arial, sans-serif" font-size="20" text-anchor="middle">MOSAICO</text>
+  <text x="964" y="376" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">X</text>
+  <text x="1042" y="454" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">A</text>
+  <text x="964" y="532" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">B</text>
+  <text x="886" y="454" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">Y</text>
+  <text x="292" y="173" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">L</text>
+  <text x="988" y="173" fill="#fff" font-family="Arial, sans-serif" font-size="21" text-anchor="middle">R</text>
+
+  <path d="M139 112 H1141 M139 106 V118 M1141 106 V118" stroke="#63859b" stroke-width="2"/>
+  <text x="640" y="107" fill="#416377" font-family="Arial, sans-serif" font-size="18" text-anchor="middle">167 mm（机身假设）</text>
+  <path d="M1180 132 V762 M1174 132 H1186 M1174 762 H1186" stroke="#63859b" stroke-width="2"/>
+  <text x="1195" y="456" fill="#416377" font-family="Arial, sans-serif" font-size="18">105 mm</text>
+  <rect x="91" y="804" width="1098" height="67" rx="13" fill="#ffffff" opacity=".9"/>
+  <text x="111" y="832" fill="#33495e" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="18">改动：D-pad 与 ABXY 中心均由 Y=−4 mm 下移到 Y=−19.5 mm；L/R 保持原位置。</text>
+  <text x="111" y="855" fill="#6a7a89" font-family="Arial, Noto Sans CJK SC, sans-serif" font-size="15">屏窗 41.19 mm、键帽 24/10.5 mm、壳体 167×105 mm 均为 CAD 假设；到货测量与手持样件前不冻结。</text>
+</svg>
