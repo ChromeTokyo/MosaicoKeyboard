@@ -3,7 +3,8 @@
 **更新：** 2026-09-24  
 **角色：** D-023 第二道独立复核（EspBot）  
 **Model ID：** `grok-4.7-high-fast`（`cursor-cloud` `run-info` 的 `originalModelName`；bcId `bc-853c2418-e080-5d41-a84a-02ba47d5f3aa`）  
-**状态：** IN_REVIEW
+**状态：** IN_REVIEW  
+**审查 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/64
 
 本文件在当前 `main`（`96fd823`）上此前不存在。R0/G1–G7 的交接在各自审查分支，本轮不合并那些正文。
 

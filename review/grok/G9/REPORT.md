@@ -13,6 +13,7 @@
 | 推理档位 | 同一字段中的 `high-fast`；没有单独的 reasoning 档位字段 |
 | 核验 | 本会话调用 `cursor-cloud` `run-info`，读取返回的 `originalModelName`。运行 `bcId` = `bc-853c2418-e080-5d41-a84a-02ba47d5f3aa`。这是可核验接口给出的字段（D-024） |
 | 派发材料里的其他 Grok 型号称呼 | 不作为本会话的模型 ID |
+| 本报告 PR | https://github.com/ChromeTokyo/MosaicoKeyboard/pull/64 |
 
 ## 实际冻结的提交
 
