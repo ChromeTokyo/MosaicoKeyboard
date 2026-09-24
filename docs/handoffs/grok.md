@@ -15,7 +15,7 @@
 | `review/grok/G6/MATERIALS.md` | 已读范围 |
 | `review/grok/G6/EVIDENCE.md` | 头 SHA、哈希与重算 |
 
-**本报告 PR：** 见分支 `grok/g6-scheme-j-electrical`（基线 `main` `96fd823`）。  
+**本报告 PR：** https://github.com/ChromeTokyo/MosaicoKeyboard/pull/63 ，分支 `grok/g6-scheme-j-electrical`（基线 `main` `96fd823`）。审查提交 `ca031f1b6adb798d05ae46677a48769325a03878`。  
 **PR #61：记录成立，阻断维持。** 头 `665f38472ace3eecb3edc5ec619b3a30a91cb1c3`，基线 `ead27bba0f9e8f8635a6dfe5280e234bab8dd2db`。`mergeCommit` 为空。`5d1ec685dbfb2a2a1cbdefbff4b7ce7d721915da` 是 GitHub 试合并，树与头相同。  
 **PR #60：可合入旧分支作档案。** 头 `2d0c045627cd3d217af37b14dd998df0ceca4feb`，基线 `8068ce2d`。不要并进 sweep 或 main。  
 不批准上电，不批准制造，C6 继续停，不替代 Hiro。G2 / G3 HOLD 仍在。#50 仍只是 fail-closed 语义 PASS。
