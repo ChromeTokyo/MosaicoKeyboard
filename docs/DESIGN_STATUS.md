@@ -76,3 +76,16 @@
 | D-IF-01 | pin17功能为主机5V输入；V1.2内部路径、输入额定与pin20回流载流未知 | 不以V1.0位号、USB source或模块output额定替代；电源电流/保护值冻结须取得额定及实物测试 |
 | D-IF-02 | BSP要求134字节身份镜像、三段CRC；EEPROM存在≠十键可用 | 确认ID与参数格式、量产烧录回读、最小十键主机驱动及拔出处理后关闭 |
 | D-IF-03 | V1.2模块专用I2C1，仅源码确认内部上拉开启 | 不沿用V1.0的外部4.7k/2.2k断言；实物上拉、上升时间、断电注入与双模块状态核验后关闭 |
+
+## Chrome增量问题：方案 J 09-24 直排针／−Z 落座（未冻结）
+
+方案 J 的细节以主控[现行描述](../review/claude/option-j-seated.md)为准；以下是 Chrome 选件与接口复核中新发现的**待解决问题**，不替主控改写架构决策。证据及条件见 [C1](../review/chrome/straight-header-side-contact/C1_STRAIGHT_HEADER.md)、[C2](../review/chrome/straight-header-side-contact/C2_SIDE_WIPE_CONTACT.md)、[C3](../review/chrome/straight-header-side-contact/C3_CONTACT_FIELD.md)、[C4](../review/chrome/straight-header-side-contact/C4_EEPROM_FORM.md)。
+
+| ID | 事实边界 | 影响与关闭条件 |
+| --- | --- | --- |
+| J-IF-01 | 裸直排针 `C5116480` 仅是 6/2.54/3 mm **试插候选**；H2 母座凹深、实际有效插深、针尾端面镀层及滑擦寿命未实测 | U3 断电量/试插、H2 配对与保持力记录；未闭环不冻结仓槽 |
+| J-IF-02 | 暂未找到同时满足侧擦、2×10 安装和 M5 暂定 X 压缩 0.7–1.7 mm 全区间的触点 | C2 需合格原厂图、安装与供货，M5 用实测重算；未闭环不画生产 PCB |
+| **J-IF-03** | 静态“单触头不同时桥接两尾”不能覆盖 −Z 入仓扫掠；若 X 先接合，按两排前后朝向，底座 p17 5V 可先触主机 p18 `5V_OUT`，或底座 p20 GND 先触主机 p19 `VCC_3V3` | **上电／打样阻断**。U3 确认行朝向，M1/M5 定 X 接合时序，M6 建全行程错接闸门；断电实物逐位导通后由非作者复核。旧 4×4 静态脚本不能代替 |
+| J-IF-04 | 坐底后撞针法向力沿 +X；落座时 −Z 擦触摩擦仍可能把剪力／弯矩传给 H2，现行“H2 只受压不受剪”尚未由完整力路径证明 | M1/M5 设计壳体承力/导向并验证摩擦力和 H2 位移；独立复核后才能声称不经 H2 剪切 |
+| J-IF-05 | BSP 可直接配置十键 GPIO，但现有 `dock_handle` 要求 EEPROM 身份、PRESENT 和 manager claim | 若用无 EEPROM 裸直排针，须明确固件静态模式、测试及“离座”语义；不能把旧固件当即用 |
+| J-IF-06 | [C5 筛选](../review/chrome/straight-header-side-contact/C5_POWER_MODULE.md)暂未找到七项全过的原装现成电源板；最接近的 Adafruit 6106 以固定 10 kΩ 代电芯 NTC，成板纹波和 >200 mA 瞬时启动适配未知 | 电源模块/电芯需样件验证或合格替代；无电池 USB 分步供电、p17 额定、限流值及双 USB 状态闭环前不出生产网表 |
