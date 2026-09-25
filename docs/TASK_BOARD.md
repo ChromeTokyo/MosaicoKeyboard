@@ -95,4 +95,4 @@ Chrome（Codex／`gpt-6-astra`）已于 2026-09-20 彻底耗尽额度下线。�
 
 | 任务 | 平台／实际模型／推理档位 | 输入提交 | 分支 | 文件范围 | 状态／交接 |
 | --- | --- | --- | --- | --- | --- |
-| Q1 v0.4-r2 托盘独立复核，PR #66 | Codex／`gpt-6-astra`／`ultra`（用户此前确认，本会话运行时未反查） | 协调基线 `eb56b33`；受审件 `8b458ee`；旧件 `8418d95` | `chrome/q1-v04-review` | `review/chrome/Q1-v04/REPORT.md`、本领取记录、`docs/handoffs/chrome.md`；只读 `mechanical/quickstart/` 与官方参考 | IN_REVIEW；[独立报告](../review/chrome/Q1-v04/REPORT.md) `CHANGES_REQUIRED`；旧 v0.3 默认参数 9 FAIL，新件 0 FAIL／3 WARN；不自批制造或实物通过 |
+| Q1 v0.4-r2 托盘独立复核，PR #66 | Codex／`gpt-6-astra`／`ultra`（用户此前确认，本会话运行时未反查） | 协调基线 `eb56b33`；受审件 `8b458ee`；旧件 `8418d95` | `chrome/q1-v04-review` | `review/chrome/Q1-v04/REPORT.md`、本领取记录、`docs/handoffs/chrome.md`；只读 `mechanical/quickstart/` 与官方参考 | IN_REVIEW；[独立报告](../review/chrome/Q1-v04/REPORT.md) `CHANGES_REQUIRED`，已推送 [PR #67](https://github.com/ChromeTokyo/MosaicoKeyboard/pull/67)；旧 v0.3 默认参数 9 FAIL，新件 0 FAIL／3 WARN；不自批制造或实物通过 |
